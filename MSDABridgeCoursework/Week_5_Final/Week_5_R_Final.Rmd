@@ -1,0 +1,111 @@
+---
+title: "Week_5_Final"
+author: "Christophe"
+date: "July 18, 2015"
+output: html_document
+---
+
+####Analysis of hflights data set  
+
+This dataset contains all flights departing from Houston airports IAH (George Bush Intercontinental) and HOU (Houston Hobby) in 2011. The data comes from the Research and Innovation Technology Administration at the Bureau of Transporation statistics.
+
+hflights: Flights that departed Houston in 2011  
+
+A data only package containing commercial domestic flights that departed Houston (IAH and HOU) in 2011.  
+
+Version:	0.1  
+Depends:	R (??? 2.10)  
+Published:	2013-12-07  
+Author:	Hadley Wickham  
+Maintainer:	Hadley Wickham <h.wickham at gmail.com>  
+
+---
+
+The questions I hope to answer is "what factors are associated with cancelled flights? Is there any unusual circumstances associated with cancelled flights?"
+
+I begin by loading the necessary packages and transforming the data
+
+```{r, echo = FALSE}
+suppressWarnings(suppressMessages(library(hflights)))
+suppressMessages(library(plyr))
+suppressWarnings(suppressMessages(library(lubridate)))
+suppressMessages(library(ggplot2))
+
+```
+
+
+```{r}
+library(hflights)
+library(plyr)
+library(lubridate)
+library(ggplot2)
+
+#set the data frame
+df <- data.frame(hflights)
+
+#sub set of observations where the flight was cancelled
+cancelled_df <- subset(df, Cancelled == 1)
+
+#create date column by combining the month, day, and year field 
+cancelled_df$Date <- lubridate::mdy(sprintf('%s %s %s', cancelled_df$Month, cancelled_df$DayofMonth, cancelled_df$Year))
+
+#drop columns not needed
+drop_col <- names(cancelled_df) %in% c("Year","Month", "DayofMonth",      
+                                       "DepTime","ArrTime","ActualElapsedTime","AirTime",
+                                      "ArrDelay","DepDelay","TaxiIn","TaxiOut","Diverted",
+                                      "FlightNum","TailNum","UniqueCarrier",
+                                      "Dest","Distance","DayOfWeek")
+new_df <- cancelled_df[!drop_col]
+
+#Map CancellationCode to factor
+CCode <- c("A","B","C","D")
+CName <- c("carrier","weather","national air system","security")
+new_df$CancellationCode <- as.factor(mapvalues(new_df$CancellationCode, CCode,CName))
+
+#verification of the data transformation
+head(new_df)
+
+#Sum cancellations by date of the year
+sumdf <- data.frame(new_df$Date, new_df$Cancelled)
+colnames(sumdf) <- c("Date","Cancelled")
+
+x <- ddply(sumdf,~Date,summarise,"Count" = sum(Cancelled))
+```
+
+So lets look at the summary data
+
+```{r}
+summary(x)
+```
+
+Whoa, where is this max coming from? This looks like a huge outlier and could be an interesting situtation so lets graph the time series and see what we can see.  
+
+```{r, echo = FALSE}
+#plot the number of cancelled flights over 2011
+ggplot(x, aes(x = Date, y = Count)) + geom_line(aes(color = Count)) + xlab("\nDate of Flight") + ylab("# of Cancelled Flights\n") + ggtitle("Time Series of Cancelled Flights\n") 
+```
+
+Looks like we have this huge spike in cancelled flights between Jan and Apr, so lets get the dates with the highest amount of cancelled flights. 
+
+```{r}
+Most_Cancelled <- subset(x, x$Count > 100) 
+Most_Cancelled
+```
+
+Ok, so we have the dates with the highest observation of cancelled flights. I am going to take the observations from Feb 01 to Feb 04.  
+
+Now lets look at the timeframe and the reasons associated with the cancelleations. 
+
+```{r}
+k <- subset(new_df, new_df$Date  >= 2011-02-01 | new_df$Date <= 2011-02-04)
+k$CancellationCode <- ordered(k$CancellationCode, levels = CName)
+
+```
+---
+```{r, echo = FALSE}
+qplot(k$CancellationCode, xlab = "\nCancellation Type", ylab = "# of Cancelled Flights\n", main = "What type of cancellation was most common?\n",fill=I("lightblue"), col=I("gray33") )
+
+```
+
+So looks like weather caused this spike in cancellations. Knowing that the spike is weather related we can do a quick google search for extreme weather conditions and we find that there was a record breaking blizzard during the time
+http://www.srh.noaa.gov/tsa/?n=weather_event_2011feb1. While this describes conditions in Oklahoma it borders Texas and is close to Houston so we can see this blizzard had a large impact of air travel in the region.

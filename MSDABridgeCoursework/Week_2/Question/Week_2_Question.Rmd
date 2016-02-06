@@ -1,0 +1,34 @@
+---
+title: "Question"
+author: "Christophe"
+date: "July 5, 2015"
+output: html_document
+---
+
+I am new to R and trying out using rpart. I am trying to run the below code from the HairEyeColor dataset just to get a sense of the results
+
+
+```{r}
+library(rpart)
+
+x <- data.frame(HairEyeColor)
+
+y <- rpart(Sex ~ Hair + Eye + Freq , method = class, data = x)
+
+y
+
+```
+
+But when I run the code I get the following `error in as.character(x): ` error and I can not figure out why:
+
+```{r, echo=FALSE}
+> library(rpart)
+> x <- data.frame(HairEyeColor)
+> y <- rpart(Sex ~ Hair + Eye + Freq , method = class, data = x)
+Error in as.character(x) : 
+  cannot coerce type 'builtin' to vector of type 'character'
+> y
+Error: object 'y' not found
+```
+
+

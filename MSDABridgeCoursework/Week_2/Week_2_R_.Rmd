@@ -1,0 +1,61 @@
+---
+title: "Week_2_R_"
+author: "Christophe"
+date: "July 9, 2015"
+output: html_document
+---
+
+##### Due end of day on Sunday July 12th. 
+###### Please work alone on this assignment. Please place your solution in a single R Markdown (.Rmd) file in your GitHub repository, and provide the URL in your assignment link.
+
+
+In probability, "n choose r" means `n! / (( n - r)! * r!)`.
+For example, "5 choose 3" evaluates to 10.
+R has built in functions for `choose()` and `factorial()`. Your task is to write your own variation of the `choose()`
+function, that does not use either of these functions.
+Your code should adhere to the style guidelines provided by Hadley Wickham in this week's reading.
+You need to create your code and some test code, and deliver your code, results, and documentation in a single R
+Markdown file.
+
+
+#### Function to calculate n! / (( n - r)! * r!)
+
+
+```{r}
+
+prob.choose <- function(n,choose) {   
+
+   # This function calculates the following equation n! / (( n - r)! * r!) 
+   # It will determine the probability of combinations
+   
+    n <- n 
+    k <- (n-choose)
+    r <- choose
+   
+     if (n > r) {
+     f <- 1 
+     for (i in 1:n) { 
+       f <- f * i 
+      }
+     n <- f 
+     t <- 1
+     for (s in 1:k) { 
+       t <- t * s 
+      }
+     k <- t 
+     y <- 1
+     for (u in 1:r) { 
+       y <- y * u 
+      }
+     r <- y
+     answer <- n/(k*r)
+     } else if (n == r) {
+       answer <- 1
+     } else {
+       answer <- 0
+    }
+   print(answer)
+ }
+
+prob.choose(5,choose = 3)
+```

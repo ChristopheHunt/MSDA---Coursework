@@ -1,0 +1,170 @@
+---
+title: "Week_3_"
+author: "Christophe"
+date: "July 11, 2015"
+output: html_document
+---
+
+   Data Set Title: Mushroom Database
+
+   Sources: 
+    (a) Mushroom records drawn from The Audubon Society Field Guide to North
+        American Mushrooms (1981). G. H. Lincoff (Pres.), New York: Alfred
+        A. Knopf
+    (b) Donor: Jeff Schlimmer 
+    (c) Date: 27 April 1987
+    (d) Data Set: https://archive.ics.uci.edu/ml/datasets/Mushroom.
+    
+In the following R markdown I am converting the Mushroom Dataset from variables to their full attribute information. 
+
+The actual data set is found here: https://archive.ics.uci.edu/ml/machine-learning-databases/mushroom/agaricus-lepiota.data
+
+I chose the first 6 columns from the data set and transform the information based on the data dictionary here: https://archive.ics.uci.edu/ml/machine-learning-databases/mushroom/agaricus-lepiota.names. 
+
+I produced the conversion using three methods, the first is basic whereas the second and third uses the package plyr. 
+
+##1st Method
+
+The below method is the least elegant but can be accomplished without a package
+
+```{r}
+f <- file("https://archive.ics.uci.edu/ml/machine-learning-databases/mushroom/agaricus-lepiota.data", open="r" )
+data <- read.table(f, sep=",", header=FALSE, stringsAsFactors = FALSE)
+newdata <- data[1:6]
+y <- data.frame(newdata)
+colnames(y) <-  c("CLASS","cap-shape","cap-surface","cap-color","bruises?","odor")
+
+
+y$CLASS[y$CLASS == "p"] <- "poisonous"
+y$CLASS[y$CLASS == "e"] <- "edible"
+y$CLASS <- as.factor(y$CLASS)
+
+
+y$`cap-shape`[y$`cap-shape` == "b"] <- "bell"
+y$`cap-shape`[y$`cap-shape` == "c"] <- "conical"
+y$`cap-shape`[y$`cap-shape` == "x"] <- "convex"
+y$`cap-shape`[y$`cap-shape` == "f"] <- "flat"
+y$`cap-shape`[y$`cap-shape` == "k"] <- "knobbed"
+y$`cap-shape`[y$`cap-shape` == "s"] <- "suken"
+y$`cap-shape` <- as.factor(y$`cap-shape`)
+
+
+y$`cap-surface`[y$`cap-surface` == "f"] <- "fibrous"
+y$`cap-surface`[y$`cap-surface` == "g"] <- "grooves"
+y$`cap-surface`[y$`cap-surface` == "y"] <- "scaly"
+y$`cap-surface`[y$`cap-surface` == "s"] <- "smooth"
+y$`cap-surface` <- as.factor(y$`cap-surface`)
+
+
+y$`cap-color`[y$`cap-color` == "n"] <- "brown"
+y$`cap-color`[y$`cap-color` == "b"] <- "buff"
+y$`cap-color`[y$`cap-color` == "c"] <- "cinnamon"
+y$`cap-color`[y$`cap-color` == "g"] <- "gray"
+y$`cap-color`[y$`cap-color` == "r"] <- "green"
+y$`cap-color`[y$`cap-color` == "p"] <- "pink"
+y$`cap-color`[y$`cap-color` == "u"] <- "purple"
+y$`cap-color`[y$`cap-color` == "e"] <- "red"
+y$`cap-color`[y$`cap-color` == "w"] <- "white"
+y$`cap-color`[y$`cap-color` == "y"] <- "yellow"
+y$`cap-color` <- as.factor(y$`cap-color`)
+
+
+y$`bruises?`[y$`bruises?` == "t"] <- "bruises"
+y$`bruises?`[y$`bruises?` == "f"] <- "no"
+y$`bruises?` <- as.factor(y$`bruises?`)
+
+
+y$odor[y$odor == "a"] <- "almond"
+y$odor[y$odor == "l"] <- "anise"
+y$odor[y$odor == "c"] <- "creosote"
+y$odor[y$odor == "y"] <- "fishy"
+y$odor[y$odor == "f"] <- "foul"
+y$odor[y$odor == "m"] <- "musty"
+y$odor[y$odor == "n"] <- "none"
+y$odor[y$odor == "p"] <- "pungent"
+y$odor[y$odor == "s"] <- "spicy"
+y$odor <- as.factor(y$odor)
+
+close(f)
+
+```
+
+The below is provided for verification of the variable conversion  
+
+```{r}
+summary(y)
+
+str(y)
+
+head(y)
+
+
+```
+
+##2nd method
+
+The below uses mapvalues from the plyr package which I personally preferred 
+
+```{r}
+f <- file("https://archive.ics.uci.edu/ml/machine-learning-databases/mushroom/agaricus-lepiota.data", open="r" )
+data <- read.table(f, sep=",", header=FALSE, stringsAsFactors = FALSE)
+newdata <- data[1:6]
+t <- data.frame(newdata)
+colnames(t) <-  c("CLASS","cap-shape","cap-surface","cap-color","bruises?","odor")
+
+library(plyr)
+t$CLASS <- as.factor(mapvalues(t$CLASS,c("p", "e"),c("poisonous","edible")))
+t$`cap-shape` <- as.factor(mapvalues(t$`cap-shape`, c("b","c","x","f","k","s"), c("bell","conical","convex","flat","knobbed","suken")))
+t$`cap-surface` <- as.factor(mapvalues(t$`cap-surface`, c("f","g","y","s"), c("fibrous","grooves","scaly","smooth")))
+t$`cap-color` <- as.factor(mapvalues(t$`cap-color`,c("n","b","c","g","r","p","u","e","w","y"), c("brown","buff","cinnamon","gray","green","pink","purple","red","white","yellow")))
+t$`bruises?` <- as.factor(mapvalues(t$`bruises?`, c("t","f"), c("bruises","no")))
+t$odor <- as.factor(mapvalues(t$odor, c("a","l","c","y","f","m","n","p","s"), c("almond","anise","creosote","fishy","foul","musty","none","pungent","spicy")))
+
+close(f)
+
+```
+
+The below is provided for verification of the variable conversion  
+
+```{r}
+
+summary(t)
+
+str(t)
+
+head(t)
+```
+
+##3rd Method
+
+The below method uses the revalue function from the plyr package and is the clearest conversion method
+
+```{r}
+f <- file("https://archive.ics.uci.edu/ml/machine-learning-databases/mushroom/agaricus-lepiota.data", open="r" )
+data <- read.table(f, sep=",", header=FALSE, stringsAsFactors = FALSE)
+newdata <- data[1:6]
+k <- data.frame(newdata)
+colnames(k) <-  c("CLASS","cap-shape","cap-surface","cap-color","bruises?","odor")
+
+library(plyr)
+k$CLASS <- as.factor(revalue(k$CLASS, c("p" = "poisonous", "e" = "edible")))
+k$`cap-shape` <- as.factor(revalue(k$`cap-shape`, c("b" = "bell", "c" = "conical", "x" = "convex", "f" = "flat", "k" = "knobbed", "s" = "suken")))
+k$`cap-surface` <- as.factor(revalue(k$`cap-surface`, c("f" = "fibrous", "g" = "grooves", "y" = "scaly", "s" = "smooth")))
+k$`cap-color` <- as.factor(revalue(k$`cap-color`, c("n" = "brown", "b" = "buff", "c" = "cinnamon", "g" = "gray", "r" = "green", "p" = "pink", "u" = "purple", "e" = "red", "w" = "white", "y" = "yellow")))
+k$`bruises?` <- as.factor(revalue(k$`bruises?`, c("t" = "bruises", "f" = "no")))
+k$odor <- as.factor(revalue(k$odor, c("a" = "almond","l" = "anise","c" = "creosote","y" = "fishy","f" = "foul","m" = "musty","n" = "none","p" = "pungent","s" = "spicy")))
+
+close(f)
+
+```
+
+The below is provided for verification of the variable conversion 
+
+```{r}
+summary(k)
+
+str(k)
+
+head(k)
+```
+

@@ -1,0 +1,19 @@
+% You know, for landscape
+\usepackage{lscape}
+\usepackage{pdfpages}
+\usepackage{rotating}
+
+
+% pandoc does not parse latex env - https://groups.google.com/forum/?fromgroups=#!topic/pandoc-discuss/oZETB5Ii1Cw
+\newcommand{\blandscape}{\begin{landscape}}
+\newcommand{\elandscape}{\end{landscape}}
+
+% Make new page before each section
+\let\stdsection\section
+\renewcommand\section{\newpage\stdsection}
+
+% Highlight inline `code`
+\usepackage{soul}
+\usepackage{xcolor}
+
+% credit for this file goes to https://github.com/jacbar/studia/blob/master/semestr-vii/inz-tymon/main/header.pandoc#L10

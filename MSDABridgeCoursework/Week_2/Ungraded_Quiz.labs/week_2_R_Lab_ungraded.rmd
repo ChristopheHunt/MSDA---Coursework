@@ -1,0 +1,34 @@
+
+
+  ```r
+  u <- c(1,2,4,5,6,7,34,2,45)
+  
+  test <- function(u)
+  
+   { 
+     i <- length(u)
+     y <- sum(u)/i
+     z <- sort(u)
+     
+  	if (i %% 2 == 0) = TRUE
+  	{
+    	  t <- z[i/2] 
+  	 
+  	}esle 
+       	
+  	{ 
+  	  t <- (z[i/2-.5] + z[i/2+.5])/2 ##this doesnt work, I am doing something mathematically wrong
+  	}
+      list(y,t)
+    }
+  
+  test(u)
+  
+  median(u)
+  
+  z <- sort(u)
+  k <- z[i/2-.5]
+  k
+  l <- z[i/2+.5]
+  l
+   

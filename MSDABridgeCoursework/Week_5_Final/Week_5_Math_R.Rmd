@@ -1,0 +1,69 @@
+---
+title: "Week_5_R_Presentation"
+author: "Christophe"
+date: "July 23, 2015"
+output: html_document
+---
+
+###Data Science - Spam Anaylsis 
+
+The below is a very high level attempt at a email spam filter.   
+
+I created a word values table with random values between 1 and 10 for words commonly found in Financial Spam Emails.  
+
+For the purposes of this presentation lets assume that these word values came from some training data and the emails had been marked "Spam" / "Not Spam" by a human for accuracy.  
+
+In actuality the list of words being used came from http://blog.hubspot.com/blog/tabid/6307/bid/30684/The-Ultimate-List-of-Email-SPAM-Trigger-Words.aspx, and the section regarding Financial emails. 
+
+This filter is using naive Bayes in that I am using words appearance only and not looking at other information. For example, I am assuming that the value of "Income"  and "Additional" should be scored the same as "Additional Income" but intuitatively the phase should have more value when scoring spam than counting each word separately. However, there is research that naive Bayes is still an optimal classifier because dependencies may cancel each other out. [(Zhang, 2004)](http://www.cs.unb.ca/profs/hzhang/publications/FLAIRS04ZhangH.pdf)
+
+My function below parse out the string from my test email to just get the word, then matches to words in my value table and finally scores the email.  
+
+Limitations: My model is very overfitted for my test emails, in that it probably won't work with most other examples. 
+
+There are also a vast number of other factors that a more in depth filter would go into that are outside the scope of this presentation.
+
+```{r, echo = FALSE}
+suppressMessages(suppressWarnings(require(RCurl)))  
+f <- getURL("https://raw.githubusercontent.com/ChristopheHunt/MSDABridgeCoursework/master/Week_5_Final/Data/Words.Value.csv")
+df <- read.csv(text = f)
+```
+
+```{r}
+
+library(plyr)
+
+email_score <- function(x){
+  
+### the following function scores the email and determines if its spam or not
+
+new_email <- x
+a <- strsplit(new_email,split = " " )#splits the string into individual words and returns a list
+b <- sort(a[[1]]) #sorts the list into separate elements 
+count_of_words <- length(b) #gets the count of words before we clear unmatched words
+suppressMessages(c <- mapvalues(b, as.vector(df$Word), as.vector(df$Value))) #maps values from the words document with the training data
+d <- as.numeric(gsub("[^\\d]+", "", c, perl=TRUE)) #returns numeric after removing everything non-numeric
+emailvalue <- sum(d, na.rm = TRUE)/count_of_words #adds the values together and divides by the count of words to get your average value per word
+print(emailvalue)
+if ((emailvalue) <= 1) { #the threshold value is based on my training strings below 
+    print("not spam")
+   } else {
+   print("spam")
+  }
+}
+```
+ ---
+```{r}
+
+x <- ("Hi Christophe, will you have the project done today? It has be sent out COB")
+email_score(x)
+y <- ("Want to make $ money working from home? I did and the additional income was great")
+email_score(y)
+z <- ("Do you want to be your own boss? You could earn double your money from home")
+email_score(z)
+```
+
+ ---
+###References
+[Harry Zhang. The optimality of naive bayes. In Valerie Barr and Zdravko Markov, editors, FLAIRS Conference. AAAI Press, 2004.](http://www.cs.unb.ca/profs/hzhang/publications/FLAIRS04ZhangH.pdf)
+

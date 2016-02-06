@@ -1,0 +1,919 @@
+Disease,Disease Code,State,State Code,Gender,Gender Code,Race/Ethnicity,Race/Ethnicity Code,Year,Year Code,STD Cases,Population,Rate
+Chlamydia,274,Alabama,1,Female,F,American Indian or Alaska Native,1002-5,2013,2013,30,14724,2.04
+Chlamydia,274,Alabama,1,Female,F,Asian or Pacific Islander,A-PI,2013,2013,62,34099,1.82
+Chlamydia,274,Alabama,1,Female,F,Black or African American,2054-5,2013,2013,9825,687266,14.3
+Chlamydia,274,Alabama,1,Female,F,Hispanic,Hispanic,2013,2013,143,88045,1.62
+Chlamydia,274,Alabama,1,Female,F,White,2106-3,2013,2013,3510,1659332,2.12
+Chlamydia,274,Alabama,1,Female,F,Unknown,Unknown,2013,2013,7526,Not Applicable,Not Applicable
+Chlamydia,274,Alabama,1,Male,M,American Indian or Alaska Native,1002-5,2013,2013,7,14169,0.49
+Chlamydia,274,Alabama,1,Male,M,Asian or Pacific Islander,A-PI,2013,2013,32,30262,1.06
+Chlamydia,274,Alabama,1,Male,M,Black or African American,2054-5,2013,2013,4838,599224,8.07
+Chlamydia,274,Alabama,1,Male,M,Hispanic,Hispanic,2013,2013,44,107987,0.41
+Chlamydia,274,Alabama,1,Male,M,White,2106-3,2013,2013,1254,1586915,0.79
+Chlamydia,274,Alabama,1,Male,M,Unknown,Unknown,2013,2013,2026,Not Applicable,Not Applicable
+Chlamydia,274,Alabama,1,Unknown,U,American Indian or Alaska Native,1002-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Alabama,1,Unknown,U,Asian or Pacific Islander,A-PI,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Alabama,1,Unknown,U,Black or African American,2054-5,2013,2013,12,Not Applicable,Not Applicable
+Chlamydia,274,Alabama,1,Unknown,U,Hispanic,Hispanic,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Alabama,1,Unknown,U,White,2106-3,2013,2013,4,Not Applicable,Not Applicable
+Chlamydia,274,Alabama,1,Unknown,U,Unknown,Unknown,2013,2013,151,Not Applicable,Not Applicable
+Chlamydia,274,Alaska,2,Female,F,American Indian or Alaska Native,1002-5,2013,2013,2001,58271,34.34
+Chlamydia,274,Alaska,2,Female,F,Asian or Pacific Islander,A-PI,2013,2013,232,27682,8.38
+Chlamydia,274,Alaska,2,Female,F,Black or African American,2054-5,2013,2013,234,14180,16.5
+Chlamydia,274,Alaska,2,Female,F,Hispanic,Hispanic,2013,2013,118,21358,5.52
+Chlamydia,274,Alaska,2,Female,F,White,2106-3,2013,2013,1284,228720,5.61
+Chlamydia,274,Alaska,2,Female,F,Unknown,Unknown,2013,2013,30,Not Applicable,Not Applicable
+Chlamydia,274,Alaska,2,Male,M,American Indian or Alaska Native,1002-5,2013,2013,631,59095,10.68
+Chlamydia,274,Alaska,2,Male,M,Asian or Pacific Islander,A-PI,2013,2013,77,25591,3.01
+Chlamydia,274,Alaska,2,Male,M,Black or African American,2054-5,2013,2013,306,17567,17.42
+Chlamydia,274,Alaska,2,Male,M,Hispanic,Hispanic,2013,2013,88,23511,3.74
+Chlamydia,274,Alaska,2,Male,M,White,2106-3,2013,2013,754,255474,2.95
+Chlamydia,274,Alaska,2,Male,M,Unknown,Unknown,2013,2013,19,Not Applicable,Not Applicable
+Chlamydia,274,Alaska,2,Unknown,U,American Indian or Alaska Native,1002-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Alaska,2,Unknown,U,Asian or Pacific Islander,A-PI,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Alaska,2,Unknown,U,Black or African American,2054-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Alaska,2,Unknown,U,Hispanic,Hispanic,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Alaska,2,Unknown,U,White,2106-3,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Alaska,2,Unknown,U,Unknown,Unknown,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Arizona,4,Female,F,American Indian or Alaska Native,1002-5,2013,2013,2826,141779,19.93
+Chlamydia,274,Arizona,4,Female,F,Asian or Pacific Islander,A-PI,2013,2013,261,113631,2.3
+Chlamydia,274,Arizona,4,Female,F,Black or African American,2054-5,2013,2013,1623,136750,11.87
+Chlamydia,274,Arizona,4,Female,F,Hispanic,Hispanic,2013,2013,7574,980688,7.72
+Chlamydia,274,Arizona,4,Female,F,White,2106-3,2013,2013,4929,1921924,2.56
+Chlamydia,274,Arizona,4,Female,F,Unknown,Unknown,2013,2013,4737,Not Applicable,Not Applicable
+Chlamydia,274,Arizona,4,Male,M,American Indian or Alaska Native,1002-5,2013,2013,705,134445,5.24
+Chlamydia,274,Arizona,4,Male,M,Asian or Pacific Islander,A-PI,2013,2013,97,101818,0.95
+Chlamydia,274,Arizona,4,Male,M,Black or African American,2054-5,2013,2013,1224,149919,8.16
+Chlamydia,274,Arizona,4,Male,M,Hispanic,Hispanic,2013,2013,2670,995418,2.68
+Chlamydia,274,Arizona,4,Male,M,White,2106-3,2013,2013,2251,1876883,1.2
+Chlamydia,274,Arizona,4,Male,M,Unknown,Unknown,2013,2013,1663,Not Applicable,Not Applicable
+Chlamydia,274,Arizona,4,Unknown,U,American Indian or Alaska Native,1002-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Arizona,4,Unknown,U,Asian or Pacific Islander,A-PI,2013,2013,Suppressed,Not Applicable,Not Applicable
+Chlamydia,274,Arizona,4,Unknown,U,Black or African American,2054-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Arizona,4,Unknown,U,Hispanic,Hispanic,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Arizona,4,Unknown,U,White,2106-3,2013,2013,Suppressed,Not Applicable,Not Applicable
+Chlamydia,274,Arizona,4,Unknown,U,Unknown,Unknown,2013,2013,Suppressed,Not Applicable,Not Applicable
+Chlamydia,274,Arkansas,5,Female,F,American Indian or Alaska Native,1002-5,2013,2013,23,12041,1.91
+Chlamydia,274,Arkansas,5,Female,F,Asian or Pacific Islander,A-PI,2013,2013,137,25571,5.36
+Chlamydia,274,Arkansas,5,Female,F,Black or African American,2054-5,2013,2013,4882,244371,19.98
+Chlamydia,274,Arkansas,5,Female,F,Hispanic,Hispanic,2013,2013,431,93113,4.63
+Chlamydia,274,Arkansas,5,Female,F,White,2106-3,2013,2013,4149,1125545,3.69
+Chlamydia,274,Arkansas,5,Female,F,Unknown,Unknown,2013,2013,1712,Not Applicable,Not Applicable
+Chlamydia,274,Arkansas,5,Male,M,American Indian or Alaska Native,1002-5,2013,2013,5,11669,0.43
+Chlamydia,274,Arkansas,5,Male,M,Asian or Pacific Islander,A-PI,2013,2013,35,23436,1.49
+Chlamydia,274,Arkansas,5,Male,M,Black or African American,2054-5,2013,2013,2137,221613,9.64
+Chlamydia,274,Arkansas,5,Male,M,Hispanic,Hispanic,2013,2013,161,106580,1.51
+Chlamydia,274,Arkansas,5,Male,M,White,2106-3,2013,2013,1331,1085192,1.23
+Chlamydia,274,Arkansas,5,Male,M,Unknown,Unknown,2013,2013,435,Not Applicable,Not Applicable
+Chlamydia,274,Arkansas,5,Unknown,U,American Indian or Alaska Native,1002-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Arkansas,5,Unknown,U,Asian or Pacific Islander,A-PI,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Arkansas,5,Unknown,U,Black or African American,2054-5,2013,2013,3,Not Applicable,Not Applicable
+Chlamydia,274,Arkansas,5,Unknown,U,Hispanic,Hispanic,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Arkansas,5,Unknown,U,White,2106-3,2013,2013,Suppressed,Not Applicable,Not Applicable
+Chlamydia,274,Arkansas,5,Unknown,U,Unknown,Unknown,2013,2013,4,Not Applicable,Not Applicable
+Chlamydia,274,California,6,Female,F,American Indian or Alaska Native,1002-5,2013,2013,355,106790,3.32
+Chlamydia,274,California,6,Female,F,Asian or Pacific Islander,A-PI,2013,2013,4553,2860131,1.59
+Chlamydia,274,California,6,Female,F,Black or African American,2054-5,2013,2013,12598,1209540,10.42
+Chlamydia,274,California,6,Female,F,Hispanic,Hispanic,2013,2013,38344,7191217,5.33
+Chlamydia,274,California,6,Female,F,White,2106-3,2013,2013,15369,7755188,1.98
+Chlamydia,274,California,6,Female,F,Unknown,Unknown,2013,2013,41241,Not Applicable,Not Applicable
+Chlamydia,274,California,6,Male,M,American Indian or Alaska Native,1002-5,2013,2013,130,102454,1.27
+Chlamydia,274,California,6,Male,M,Asian or Pacific Islander,A-PI,2013,2013,1941,2585562,0.75
+Chlamydia,274,California,6,Male,M,Black or African American,2054-5,2013,2013,7451,1183415,6.3
+Chlamydia,274,California,6,Male,M,Hispanic,Hispanic,2013,2013,15956,7346449,2.17
+Chlamydia,274,California,6,Male,M,White,2106-3,2013,2013,9543,7700684,1.24
+Chlamydia,274,California,6,Male,M,Unknown,Unknown,2013,2013,19658,Not Applicable,Not Applicable
+Chlamydia,274,California,6,Unknown,U,American Indian or Alaska Native,1002-5,2013,2013,Suppressed,Not Applicable,Not Applicable
+Chlamydia,274,California,6,Unknown,U,Asian or Pacific Islander,A-PI,2013,2013,4,Not Applicable,Not Applicable
+Chlamydia,274,California,6,Unknown,U,Black or African American,2054-5,2013,2013,17,Not Applicable,Not Applicable
+Chlamydia,274,California,6,Unknown,U,Hispanic,Hispanic,2013,2013,26,Not Applicable,Not Applicable
+Chlamydia,274,California,6,Unknown,U,White,2106-3,2013,2013,10,Not Applicable,Not Applicable
+Chlamydia,274,California,6,Unknown,U,Unknown,Unknown,2013,2013,149,Not Applicable,Not Applicable
+Chlamydia,274,Colorado,8,Female,F,American Indian or Alaska Native,1002-5,2013,2013,111,19585,5.67
+Chlamydia,274,Colorado,8,Female,F,Asian or Pacific Islander,A-PI,2013,2013,164,91150,1.8
+Chlamydia,274,Colorado,8,Female,F,Black or African American,2054-5,2013,2013,1182,106741,11.07
+Chlamydia,274,Colorado,8,Female,F,Hispanic,Hispanic,2013,2013,3213,532848,6.03
+Chlamydia,274,Colorado,8,Female,F,White,2106-3,2013,2013,3325,1833553,1.81
+Chlamydia,274,Colorado,8,Female,F,Unknown,Unknown,2013,2013,6341,Not Applicable,Not Applicable
+Chlamydia,274,Colorado,8,Male,M,American Indian or Alaska Native,1002-5,2013,2013,44,19748,2.23
+Chlamydia,274,Colorado,8,Male,M,Asian or Pacific Islander,A-PI,2013,2013,47,77678,0.61
+Chlamydia,274,Colorado,8,Male,M,Black or African American,2054-5,2013,2013,701,120042,5.84
+Chlamydia,274,Colorado,8,Male,M,Hispanic,Hispanic,2013,2013,1176,555896,2.12
+Chlamydia,274,Colorado,8,Male,M,White,2106-3,2013,2013,1761,1830341,0.96
+Chlamydia,274,Colorado,8,Male,M,Unknown,Unknown,2013,2013,2321,Not Applicable,Not Applicable
+Chlamydia,274,Colorado,8,Unknown,U,American Indian or Alaska Native,1002-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Colorado,8,Unknown,U,Asian or Pacific Islander,A-PI,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Colorado,8,Unknown,U,Black or African American,2054-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Colorado,8,Unknown,U,Hispanic,Hispanic,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Colorado,8,Unknown,U,White,2106-3,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Colorado,8,Unknown,U,Unknown,Unknown,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Connecticut,9,Female,F,American Indian or Alaska Native,1002-5,2013,2013,8,4722,1.69
+Chlamydia,274,Connecticut,9,Female,F,Asian or Pacific Islander,A-PI,2013,2013,28,79821,0.35
+Chlamydia,274,Connecticut,9,Female,F,Black or African American,2054-5,2013,2013,1767,190564,9.27
+Chlamydia,274,Connecticut,9,Female,F,Hispanic,Hispanic,2013,2013,842,255226,3.3
+Chlamydia,274,Connecticut,9,Female,F,White,2106-3,2013,2013,802,1310098,0.61
+Chlamydia,274,Connecticut,9,Female,F,Unknown,Unknown,2013,2013,5763,Not Applicable,Not Applicable
+Chlamydia,274,Connecticut,9,Male,M,American Indian or Alaska Native,1002-5,2013,2013,Suppressed,4465,Suppressed
+Chlamydia,274,Connecticut,9,Male,M,Asian or Pacific Islander,A-PI,2013,2013,9,74373,0.12
+Chlamydia,274,Connecticut,9,Male,M,Black or African American,2054-5,2013,2013,761,174297,4.37
+Chlamydia,274,Connecticut,9,Male,M,Hispanic,Hispanic,2013,2013,200,255419,0.78
+Chlamydia,274,Connecticut,9,Male,M,White,2106-3,2013,2013,222,1241362,0.18
+Chlamydia,274,Connecticut,9,Male,M,Unknown,Unknown,2013,2013,2287,Not Applicable,Not Applicable
+Chlamydia,274,Connecticut,9,Unknown,U,American Indian or Alaska Native,1002-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Connecticut,9,Unknown,U,Asian or Pacific Islander,A-PI,2013,2013,Suppressed,Not Applicable,Not Applicable
+Chlamydia,274,Connecticut,9,Unknown,U,Black or African American,2054-5,2013,2013,Suppressed,Not Applicable,Not Applicable
+Chlamydia,274,Connecticut,9,Unknown,U,Hispanic,Hispanic,2013,2013,Suppressed,Not Applicable,Not Applicable
+Chlamydia,274,Connecticut,9,Unknown,U,White,2106-3,2013,2013,Suppressed,Not Applicable,Not Applicable
+Chlamydia,274,Connecticut,9,Unknown,U,Unknown,Unknown,2013,2013,79,Not Applicable,Not Applicable
+Chlamydia,274,Delaware,10,Female,F,American Indian or Alaska Native,1002-5,2013,2013,Suppressed,1676,Suppressed
+Chlamydia,274,Delaware,10,Female,F,Asian or Pacific Islander,A-PI,2013,2013,20,17441,1.15
+Chlamydia,274,Delaware,10,Female,F,Black or African American,2054-5,2013,2013,2026,106123,19.09
+Chlamydia,274,Delaware,10,Female,F,Hispanic,Hispanic,2013,2013,293,37993,7.71
+Chlamydia,274,Delaware,10,Female,F,White,2106-3,2013,2013,1222,309501,3.95
+Chlamydia,274,Delaware,10,Female,F,Unknown,Unknown,2013,2013,152,Not Applicable,Not Applicable
+Chlamydia,274,Delaware,10,Male,M,American Indian or Alaska Native,1002-5,2013,2013,0,1689,0
+Chlamydia,274,Delaware,10,Male,M,Asian or Pacific Islander,A-PI,2013,2013,3,16093,0.19
+Chlamydia,274,Delaware,10,Male,M,Black or African American,2054-5,2013,2013,959,94691,10.13
+Chlamydia,274,Delaware,10,Male,M,Hispanic,Hispanic,2013,2013,99,40820,2.43
+Chlamydia,274,Delaware,10,Male,M,White,2106-3,2013,2013,347,291065,1.19
+Chlamydia,274,Delaware,10,Male,M,Unknown,Unknown,2013,2013,91,Not Applicable,Not Applicable
+Chlamydia,274,Delaware,10,Unknown,U,American Indian or Alaska Native,1002-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Delaware,10,Unknown,U,Asian or Pacific Islander,A-PI,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Delaware,10,Unknown,U,Black or African American,2054-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Delaware,10,Unknown,U,Hispanic,Hispanic,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Delaware,10,Unknown,U,White,2106-3,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Delaware,10,Unknown,U,Unknown,Unknown,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,District of Columbia,11,Female,F,American Indian or Alaska Native,1002-5,2013,2013,8,989,8.09
+Chlamydia,274,District of Columbia,11,Female,F,Asian or Pacific Islander,A-PI,2013,2013,14,14917,0.94
+Chlamydia,274,District of Columbia,11,Female,F,Black or African American,2054-5,2013,2013,2182,171706,12.71
+Chlamydia,274,District of Columbia,11,Female,F,Hispanic,Hispanic,2013,2013,64,30434,2.1
+Chlamydia,274,District of Columbia,11,Female,F,White,2106-3,2013,2013,101,115236,0.88
+Chlamydia,274,District of Columbia,11,Female,F,Unknown,Unknown,2013,2013,1623,Not Applicable,Not Applicable
+Chlamydia,274,District of Columbia,11,Male,M,American Indian or Alaska Native,1002-5,2013,2013,11,832,13.22
+Chlamydia,274,District of Columbia,11,Male,M,Asian or Pacific Islander,A-PI,2013,2013,14,10795,1.3
+Chlamydia,274,District of Columbia,11,Male,M,Black or African American,2054-5,2013,2013,975,142121,6.86
+Chlamydia,274,District of Columbia,11,Male,M,Hispanic,Hispanic,2013,2013,52,32292,1.61
+Chlamydia,274,District of Columbia,11,Male,M,White,2106-3,2013,2013,123,113001,1.09
+Chlamydia,274,District of Columbia,11,Male,M,Unknown,Unknown,2013,2013,1225,Not Applicable,Not Applicable
+Chlamydia,274,District of Columbia,11,Unknown,U,American Indian or Alaska Native,1002-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,District of Columbia,11,Unknown,U,Asian or Pacific Islander,A-PI,2013,2013,Suppressed,Not Applicable,Not Applicable
+Chlamydia,274,District of Columbia,11,Unknown,U,Black or African American,2054-5,2013,2013,4,Not Applicable,Not Applicable
+Chlamydia,274,District of Columbia,11,Unknown,U,Hispanic,Hispanic,2013,2013,Suppressed,Not Applicable,Not Applicable
+Chlamydia,274,District of Columbia,11,Unknown,U,White,2106-3,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,District of Columbia,11,Unknown,U,Unknown,Unknown,2013,2013,16,Not Applicable,Not Applicable
+Chlamydia,274,Florida,12,Female,F,American Indian or Alaska Native,1002-5,2013,2013,58,28466,2.04
+Chlamydia,274,Florida,12,Female,F,Asian or Pacific Islander,A-PI,2013,2013,429,294662,1.46
+Chlamydia,274,Florida,12,Female,F,Black or African American,2054-5,2013,2013,21452,1593954,13.46
+Chlamydia,274,Florida,12,Female,F,Hispanic,Hispanic,2013,2013,6291,2263994,2.78
+Chlamydia,274,Florida,12,Female,F,White,2106-3,2013,2013,14456,5688665,2.54
+Chlamydia,274,Florida,12,Female,F,Unknown,Unknown,2013,2013,14002,Not Applicable,Not Applicable
+Chlamydia,274,Florida,12,Male,M,American Indian or Alaska Native,1002-5,2013,2013,22,28448,0.77
+Chlamydia,274,Florida,12,Male,M,Asian or Pacific Islander,A-PI,2013,2013,127,253423,0.5
+Chlamydia,274,Florida,12,Male,M,Black or African American,2054-5,2013,2013,9813,1474484,6.66
+Chlamydia,274,Florida,12,Male,M,Hispanic,Hispanic,2013,2013,2621,2220205,1.18
+Chlamydia,274,Florida,12,Male,M,White,2106-3,2013,2013,5103,5471267,0.93
+Chlamydia,274,Florida,12,Male,M,Unknown,Unknown,2013,2013,5614,Not Applicable,Not Applicable
+Chlamydia,274,Florida,12,Unknown,U,American Indian or Alaska Native,1002-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Florida,12,Unknown,U,Asian or Pacific Islander,A-PI,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Florida,12,Unknown,U,Black or African American,2054-5,2013,2013,29,Not Applicable,Not Applicable
+Chlamydia,274,Florida,12,Unknown,U,Hispanic,Hispanic,2013,2013,5,Not Applicable,Not Applicable
+Chlamydia,274,Florida,12,Unknown,U,White,2106-3,2013,2013,16,Not Applicable,Not Applicable
+Chlamydia,274,Florida,12,Unknown,U,Unknown,Unknown,2013,2013,144,Not Applicable,Not Applicable
+Chlamydia,274,Georgia,13,Female,F,American Indian or Alaska Native,1002-5,2013,2013,42,13078,3.21
+Chlamydia,274,Georgia,13,Female,F,Asian or Pacific Islander,A-PI,2013,2013,110,190246,0.58
+Chlamydia,274,Georgia,13,Female,F,Black or African American,2054-5,2013,2013,14929,1631376,9.15
+Chlamydia,274,Georgia,13,Female,F,Hispanic,Hispanic,2013,2013,981,421236,2.33
+Chlamydia,274,Georgia,13,Female,F,White,2106-3,2013,2013,4202,2812985,1.49
+Chlamydia,274,Georgia,13,Female,F,Unknown,Unknown,2013,2013,16295,Not Applicable,Not Applicable
+Chlamydia,274,Georgia,13,Male,M,American Indian or Alaska Native,1002-5,2013,2013,10,12573,0.8
+Chlamydia,274,Georgia,13,Male,M,Asian or Pacific Islander,A-PI,2013,2013,44,177858,0.25
+Chlamydia,274,Georgia,13,Male,M,Black or African American,2054-5,2013,2013,7286,1443336,5.05
+Chlamydia,274,Georgia,13,Male,M,Hispanic,Hispanic,2013,2013,397,488666,0.81
+Chlamydia,274,Georgia,13,Male,M,White,2106-3,2013,2013,1334,2728591,0.49
+Chlamydia,274,Georgia,13,Male,M,Unknown,Unknown,2013,2013,4992,Not Applicable,Not Applicable
+Chlamydia,274,Georgia,13,Unknown,U,American Indian or Alaska Native,1002-5,2013,2013,Suppressed,Not Applicable,Not Applicable
+Chlamydia,274,Georgia,13,Unknown,U,Asian or Pacific Islander,A-PI,2013,2013,Suppressed,Not Applicable,Not Applicable
+Chlamydia,274,Georgia,13,Unknown,U,Black or African American,2054-5,2013,2013,74,Not Applicable,Not Applicable
+Chlamydia,274,Georgia,13,Unknown,U,Hispanic,Hispanic,2013,2013,7,Not Applicable,Not Applicable
+Chlamydia,274,Georgia,13,Unknown,U,White,2106-3,2013,2013,27,Not Applicable,Not Applicable
+Chlamydia,274,Georgia,13,Unknown,U,Unknown,Unknown,2013,2013,338,Not Applicable,Not Applicable
+Chlamydia,274,Hawaii,15,Female,F,American Indian or Alaska Native,1002-5,2013,2013,5,1692,2.96
+Chlamydia,274,Hawaii,15,Female,F,Asian or Pacific Islander,A-PI,2013,2013,1494,441169,3.39
+Chlamydia,274,Hawaii,15,Female,F,Black or African American,2054-5,2013,2013,66,14505,4.55
+Chlamydia,274,Hawaii,15,Female,F,Hispanic,Hispanic,2013,2013,158,63844,2.47
+Chlamydia,274,Hawaii,15,Female,F,White,2106-3,2013,2013,311,169138,1.84
+Chlamydia,274,Hawaii,15,Female,F,Unknown,Unknown,2013,2013,2612,Not Applicable,Not Applicable
+Chlamydia,274,Hawaii,15,Male,M,American Indian or Alaska Native,1002-5,2013,2013,5,1999,2.5
+Chlamydia,274,Hawaii,15,Male,M,Asian or Pacific Islander,A-PI,2013,2013,359,410308,0.87
+Chlamydia,274,Hawaii,15,Male,M,Black or African American,2054-5,2013,2013,122,21845,5.58
+Chlamydia,274,Hawaii,15,Male,M,Hispanic,Hispanic,2013,2013,105,67900,1.55
+Chlamydia,274,Hawaii,15,Male,M,White,2106-3,2013,2013,217,199913,1.09
+Chlamydia,274,Hawaii,15,Male,M,Unknown,Unknown,2013,2013,1186,Not Applicable,Not Applicable
+Chlamydia,274,Hawaii,15,Unknown,U,American Indian or Alaska Native,1002-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Hawaii,15,Unknown,U,Asian or Pacific Islander,A-PI,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Hawaii,15,Unknown,U,Black or African American,2054-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Hawaii,15,Unknown,U,Hispanic,Hispanic,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Hawaii,15,Unknown,U,White,2106-3,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Hawaii,15,Unknown,U,Unknown,Unknown,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Idaho,16,Female,F,American Indian or Alaska Native,1002-5,2013,2013,88,10318,8.53
+Chlamydia,274,Idaho,16,Female,F,Asian or Pacific Islander,A-PI,2013,2013,19,13970,1.36
+Chlamydia,274,Idaho,16,Female,F,Black or African American,2054-5,2013,2013,24,6013,3.99
+Chlamydia,274,Idaho,16,Female,F,Hispanic,Hispanic,2013,2013,502,88963,5.64
+Chlamydia,274,Idaho,16,Female,F,White,2106-3,2013,2013,1811,677852,2.67
+Chlamydia,274,Idaho,16,Female,F,Unknown,Unknown,2013,2013,1441,Not Applicable,Not Applicable
+Chlamydia,274,Idaho,16,Male,M,American Indian or Alaska Native,1002-5,2013,2013,24,10271,2.34
+Chlamydia,274,Idaho,16,Male,M,Asian or Pacific Islander,A-PI,2013,2013,9,11787,0.76
+Chlamydia,274,Idaho,16,Male,M,Black or African American,2054-5,2013,2013,33,7878,4.19
+Chlamydia,274,Idaho,16,Male,M,Hispanic,Hispanic,2013,2013,169,96197,1.76
+Chlamydia,274,Idaho,16,Male,M,White,2106-3,2013,2013,697,672479,1.04
+Chlamydia,274,Idaho,16,Male,M,Unknown,Unknown,2013,2013,596,Not Applicable,Not Applicable
+Chlamydia,274,Idaho,16,Unknown,U,American Indian or Alaska Native,1002-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Idaho,16,Unknown,U,Asian or Pacific Islander,A-PI,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Idaho,16,Unknown,U,Black or African American,2054-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Idaho,16,Unknown,U,Hispanic,Hispanic,2013,2013,Suppressed,Not Applicable,Not Applicable
+Chlamydia,274,Idaho,16,Unknown,U,White,2106-3,2013,2013,Suppressed,Not Applicable,Not Applicable
+Chlamydia,274,Idaho,16,Unknown,U,Unknown,Unknown,2013,2013,13,Not Applicable,Not Applicable
+Chlamydia,274,Illinois,17,Female,F,American Indian or Alaska Native,1002-5,2013,2013,35,13295,2.63
+Chlamydia,274,Illinois,17,Female,F,Asian or Pacific Islander,A-PI,2013,2013,367,338001,1.09
+Chlamydia,274,Illinois,17,Female,F,Black or African American,2054-5,2013,2013,19986,1004826,19.89
+Chlamydia,274,Illinois,17,Female,F,Hispanic,Hispanic,2013,2013,5327,1016810,5.24
+Chlamydia,274,Illinois,17,Female,F,White,2106-3,2013,2013,10684,4182868,2.55
+Chlamydia,274,Illinois,17,Female,F,Unknown,Unknown,2013,2013,9365,Not Applicable,Not Applicable
+Chlamydia,274,Illinois,17,Male,M,American Indian or Alaska Native,1002-5,2013,2013,10,12378,0.81
+Chlamydia,274,Illinois,17,Male,M,Asian or Pacific Islander,A-PI,2013,2013,152,315477,0.48
+Chlamydia,274,Illinois,17,Male,M,Black or African American,2054-5,2013,2013,8679,886783,9.79
+Chlamydia,274,Illinois,17,Male,M,Hispanic,Hispanic,2013,2013,1717,1084398,1.58
+Chlamydia,274,Illinois,17,Male,M,White,2106-3,2013,2013,3782,4020419,0.94
+Chlamydia,274,Illinois,17,Male,M,Unknown,Unknown,2013,2013,3603,Not Applicable,Not Applicable
+Chlamydia,274,Illinois,17,Unknown,U,American Indian or Alaska Native,1002-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Illinois,17,Unknown,U,Asian or Pacific Islander,A-PI,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Illinois,17,Unknown,U,Black or African American,2054-5,2013,2013,26,Not Applicable,Not Applicable
+Chlamydia,274,Illinois,17,Unknown,U,Hispanic,Hispanic,2013,2013,9,Not Applicable,Not Applicable
+Chlamydia,274,Illinois,17,Unknown,U,White,2106-3,2013,2013,14,Not Applicable,Not Applicable
+Chlamydia,274,Illinois,17,Unknown,U,Unknown,Unknown,2013,2013,41,Not Applicable,Not Applicable
+Chlamydia,274,Indiana,18,Female,F,American Indian or Alaska Native,1002-5,2013,2013,22,9113,2.41
+Chlamydia,274,Indiana,18,Female,F,Asian or Pacific Islander,A-PI,2013,2013,98,63840,1.54
+Chlamydia,274,Indiana,18,Female,F,Black or African American,2054-5,2013,2013,6730,330390,20.37
+Chlamydia,274,Indiana,18,Female,F,Hispanic,Hispanic,2013,2013,1071,196282,5.46
+Chlamydia,274,Indiana,18,Female,F,White,2106-3,2013,2013,10073,2719519,3.7
+Chlamydia,274,Indiana,18,Female,F,Unknown,Unknown,2013,2013,2313,Not Applicable,Not Applicable
+Chlamydia,274,Indiana,18,Male,M,American Indian or Alaska Native,1002-5,2013,2013,8,8616,0.93
+Chlamydia,274,Indiana,18,Male,M,Asian or Pacific Islander,A-PI,2013,2013,30,59937,0.5
+Chlamydia,274,Indiana,18,Male,M,Black or African American,2054-5,2013,2013,3461,306224,11.3
+Chlamydia,274,Indiana,18,Male,M,Hispanic,Hispanic,2013,2013,492,216327,2.27
+Chlamydia,274,Indiana,18,Male,M,White,2106-3,2013,2013,3023,2627086,1.15
+Chlamydia,274,Indiana,18,Male,M,Unknown,Unknown,2013,2013,694,Not Applicable,Not Applicable
+Chlamydia,274,Indiana,18,Unknown,U,American Indian or Alaska Native,1002-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Indiana,18,Unknown,U,Asian or Pacific Islander,A-PI,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Indiana,18,Unknown,U,Black or African American,2054-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Indiana,18,Unknown,U,Hispanic,Hispanic,2013,2013,Suppressed,Not Applicable,Not Applicable
+Chlamydia,274,Indiana,18,Unknown,U,White,2106-3,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Indiana,18,Unknown,U,Unknown,Unknown,2013,2013,7,Not Applicable,Not Applicable
+Chlamydia,274,Iowa,19,Female,F,American Indian or Alaska Native,1002-5,2013,2013,55,5042,10.91
+Chlamydia,274,Iowa,19,Female,F,Asian or Pacific Islander,A-PI,2013,2013,139,32202,4.32
+Chlamydia,274,Iowa,19,Female,F,Black or African American,2054-5,2013,2013,1143,51244,22.31
+Chlamydia,274,Iowa,19,Female,F,Hispanic,Hispanic,2013,2013,553,76973,7.18
+Chlamydia,274,Iowa,19,Female,F,White,2106-3,2013,2013,5246,1384237,3.79
+Chlamydia,274,Iowa,19,Female,F,Unknown,Unknown,2013,2013,759,Not Applicable,Not Applicable
+Chlamydia,274,Iowa,19,Male,M,American Indian or Alaska Native,1002-5,2013,2013,11,4851,2.27
+Chlamydia,274,Iowa,19,Male,M,Asian or Pacific Islander,A-PI,2013,2013,29,31762,0.91
+Chlamydia,274,Iowa,19,Male,M,Black or African American,2054-5,2013,2013,821,57542,14.27
+Chlamydia,274,Iowa,19,Male,M,Hispanic,Hispanic,2013,2013,216,85921,2.51
+Chlamydia,274,Iowa,19,Male,M,White,2106-3,2013,2013,1686,1344412,1.25
+Chlamydia,274,Iowa,19,Male,M,Unknown,Unknown,2013,2013,295,Not Applicable,Not Applicable
+Chlamydia,274,Iowa,19,Unknown,U,American Indian or Alaska Native,1002-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Iowa,19,Unknown,U,Asian or Pacific Islander,A-PI,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Iowa,19,Unknown,U,Black or African American,2054-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Iowa,19,Unknown,U,Hispanic,Hispanic,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Iowa,19,Unknown,U,White,2106-3,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Iowa,19,Unknown,U,Unknown,Unknown,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Kansas,20,Female,F,American Indian or Alaska Native,1002-5,2013,2013,Suppressed,14708,Suppressed
+Chlamydia,274,Kansas,20,Female,F,Asian or Pacific Islander,A-PI,2013,2013,62,41661,1.49
+Chlamydia,274,Kansas,20,Female,F,Black or African American,2054-5,2013,2013,1289,92605,13.92
+Chlamydia,274,Kansas,20,Female,F,Hispanic,Hispanic,2013,2013,812,151696,5.35
+Chlamydia,274,Kansas,20,Female,F,White,2106-3,2013,2013,2676,1149954,2.33
+Chlamydia,274,Kansas,20,Female,F,Unknown,Unknown,2013,2013,3483,Not Applicable,Not Applicable
+Chlamydia,274,Kansas,20,Male,M,American Indian or Alaska Native,1002-5,2013,2013,Suppressed,14333,Suppressed
+Chlamydia,274,Kansas,20,Male,M,Asian or Pacific Islander,A-PI,2013,2013,13,38341,0.34
+Chlamydia,274,Kansas,20,Male,M,Black or African American,2054-5,2013,2013,599,97209,6.16
+Chlamydia,274,Kansas,20,Male,M,Hispanic,Hispanic,2013,2013,230,165365,1.39
+Chlamydia,274,Kansas,20,Male,M,White,2106-3,2013,2013,772,1120033,0.69
+Chlamydia,274,Kansas,20,Male,M,Unknown,Unknown,2013,2013,1073,Not Applicable,Not Applicable
+Chlamydia,274,Kansas,20,Unknown,U,American Indian or Alaska Native,1002-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Kansas,20,Unknown,U,Asian or Pacific Islander,A-PI,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Kansas,20,Unknown,U,Black or African American,2054-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Kansas,20,Unknown,U,Hispanic,Hispanic,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Kansas,20,Unknown,U,White,2106-3,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Kansas,20,Unknown,U,Unknown,Unknown,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Kentucky,21,Female,F,American Indian or Alaska Native,1002-5,2013,2013,27,4622,5.84
+Chlamydia,274,Kentucky,21,Female,F,Asian or Pacific Islander,A-PI,2013,2013,48,31724,1.51
+Chlamydia,274,Kentucky,21,Female,F,Black or African American,2054-5,2013,2013,2661,185455,14.35
+Chlamydia,274,Kentucky,21,Female,F,Hispanic,Hispanic,2013,2013,255,63470,4.02
+Chlamydia,274,Kentucky,21,Female,F,White,2106-3,2013,2013,5149,1937433,2.66
+Chlamydia,274,Kentucky,21,Female,F,Unknown,Unknown,2013,2013,3946,Not Applicable,Not Applicable
+Chlamydia,274,Kentucky,21,Male,M,American Indian or Alaska Native,1002-5,2013,2013,8,4734,1.69
+Chlamydia,274,Kentucky,21,Male,M,Asian or Pacific Islander,A-PI,2013,2013,21,28714,0.73
+Chlamydia,274,Kentucky,21,Male,M,Black or African American,2054-5,2013,2013,1707,182437,9.36
+Chlamydia,274,Kentucky,21,Male,M,Hispanic,Hispanic,2013,2013,184,78558,2.34
+Chlamydia,274,Kentucky,21,Male,M,White,2106-3,2013,2013,1725,1863268,0.93
+Chlamydia,274,Kentucky,21,Male,M,Unknown,Unknown,2013,2013,1344,Not Applicable,Not Applicable
+Chlamydia,274,Kentucky,21,Unknown,U,American Indian or Alaska Native,1002-5,2013,2013,Suppressed,Not Applicable,Not Applicable
+Chlamydia,274,Kentucky,21,Unknown,U,Asian or Pacific Islander,A-PI,2013,2013,Suppressed,Not Applicable,Not Applicable
+Chlamydia,274,Kentucky,21,Unknown,U,Black or African American,2054-5,2013,2013,5,Not Applicable,Not Applicable
+Chlamydia,274,Kentucky,21,Unknown,U,Hispanic,Hispanic,2013,2013,16,Not Applicable,Not Applicable
+Chlamydia,274,Kentucky,21,Unknown,U,White,2106-3,2013,2013,8,Not Applicable,Not Applicable
+Chlamydia,274,Kentucky,21,Unknown,U,Unknown,Unknown,2013,2013,26,Not Applicable,Not Applicable
+Chlamydia,274,Louisiana,22,Female,F,American Indian or Alaska Native,1002-5,2013,2013,62,15907,3.9
+Chlamydia,274,Louisiana,22,Female,F,Asian or Pacific Islander,A-PI,2013,2013,115,41670,2.76
+Chlamydia,274,Louisiana,22,Female,F,Black or African American,2054-5,2013,2013,15294,784676,19.49
+Chlamydia,274,Louisiana,22,Female,F,Hispanic,Hispanic,2013,2013,556,94108,5.91
+Chlamydia,274,Louisiana,22,Female,F,White,2106-3,2013,2013,4774,1413482,3.38
+Chlamydia,274,Louisiana,22,Female,F,Unknown,Unknown,2013,2013,457,Not Applicable,Not Applicable
+Chlamydia,274,Louisiana,22,Male,M,American Indian or Alaska Native,1002-5,2013,2013,14,15408,0.91
+Chlamydia,274,Louisiana,22,Male,M,Asian or Pacific Islander,A-PI,2013,2013,41,40238,1.02
+Chlamydia,274,Louisiana,22,Male,M,Black or African American,2054-5,2013,2013,5610,711985,7.88
+Chlamydia,274,Louisiana,22,Male,M,Hispanic,Hispanic,2013,2013,190,114217,1.66
+Chlamydia,274,Louisiana,22,Male,M,White,2106-3,2013,2013,1471,1370202,1.07
+Chlamydia,274,Louisiana,22,Male,M,Unknown,Unknown,2013,2013,155,Not Applicable,Not Applicable
+Chlamydia,274,Louisiana,22,Unknown,U,American Indian or Alaska Native,1002-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Louisiana,22,Unknown,U,Asian or Pacific Islander,A-PI,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Louisiana,22,Unknown,U,Black or African American,2054-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Louisiana,22,Unknown,U,Hispanic,Hispanic,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Louisiana,22,Unknown,U,White,2106-3,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Louisiana,22,Unknown,U,Unknown,Unknown,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Maine,23,Female,F,American Indian or Alaska Native,1002-5,2013,2013,9,5076,1.77
+Chlamydia,274,Maine,23,Female,F,Asian or Pacific Islander,A-PI,2013,2013,13,9060,1.43
+Chlamydia,274,Maine,23,Female,F,Black or African American,2054-5,2013,2013,62,9025,6.87
+Chlamydia,274,Maine,23,Female,F,Hispanic,Hispanic,2013,2013,4,9217,0.43
+Chlamydia,274,Maine,23,Female,F,White,2106-3,2013,2013,1648,646536,2.55
+Chlamydia,274,Maine,23,Female,F,Unknown,Unknown,2013,2013,668,Not Applicable,Not Applicable
+Chlamydia,274,Maine,23,Male,M,American Indian or Alaska Native,1002-5,2013,2013,3,4862,0.62
+Chlamydia,274,Maine,23,Male,M,Asian or Pacific Islander,A-PI,2013,2013,Suppressed,7012,Suppressed
+Chlamydia,274,Maine,23,Male,M,Black or African American,2054-5,2013,2013,76,11058,6.87
+Chlamydia,274,Maine,23,Male,M,Hispanic,Hispanic,2013,2013,11,9382,1.17
+Chlamydia,274,Maine,23,Male,M,White,2106-3,2013,2013,607,617964,0.98
+Chlamydia,274,Maine,23,Male,M,Unknown,Unknown,2013,2013,333,Not Applicable,Not Applicable
+Chlamydia,274,Maine,23,Unknown,U,American Indian or Alaska Native,1002-5,2013,2013,Suppressed,Not Applicable,Not Applicable
+Chlamydia,274,Maine,23,Unknown,U,Asian or Pacific Islander,A-PI,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Maine,23,Unknown,U,Black or African American,2054-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Maine,23,Unknown,U,Hispanic,Hispanic,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Maine,23,Unknown,U,White,2106-3,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Maine,23,Unknown,U,Unknown,Unknown,2013,2013,Suppressed,Not Applicable,Not Applicable
+Chlamydia,274,Maryland,24,Female,F,American Indian or Alaska Native,1002-5,2013,2013,26,9180,2.83
+Chlamydia,274,Maryland,24,Female,F,Asian or Pacific Islander,A-PI,2013,2013,152,194237,0.78
+Chlamydia,274,Maryland,24,Female,F,Black or African American,2054-5,2013,2013,10704,940499,11.38
+Chlamydia,274,Maryland,24,Female,F,Hispanic,Hispanic,2013,2013,830,243739,3.41
+Chlamydia,274,Maryland,24,Female,F,White,2106-3,2013,2013,2469,1646505,1.5
+Chlamydia,274,Maryland,24,Female,F,Unknown,Unknown,2013,2013,4868,Not Applicable,Not Applicable
+Chlamydia,274,Maryland,24,Male,M,American Indian or Alaska Native,1002-5,2013,2013,20,8336,2.4
+Chlamydia,274,Maryland,24,Male,M,Asian or Pacific Islander,A-PI,2013,2013,58,175800,0.33
+Chlamydia,274,Maryland,24,Male,M,Black or African American,2054-5,2013,2013,4405,819784,5.37
+Chlamydia,274,Maryland,24,Male,M,Hispanic,Hispanic,2013,2013,273,268271,1.02
+Chlamydia,274,Maryland,24,Male,M,White,2106-3,2013,2013,882,1578212,0.56
+Chlamydia,274,Maryland,24,Male,M,Unknown,Unknown,2013,2013,2016,Not Applicable,Not Applicable
+Chlamydia,274,Maryland,24,Unknown,U,American Indian or Alaska Native,1002-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Maryland,24,Unknown,U,Asian or Pacific Islander,A-PI,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Maryland,24,Unknown,U,Black or African American,2054-5,2013,2013,Suppressed,Not Applicable,Not Applicable
+Chlamydia,274,Maryland,24,Unknown,U,Hispanic,Hispanic,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Maryland,24,Unknown,U,White,2106-3,2013,2013,Suppressed,Not Applicable,Not Applicable
+Chlamydia,274,Maryland,24,Unknown,U,Unknown,Unknown,2013,2013,16,Not Applicable,Not Applicable
+Chlamydia,274,Massachusetts,25,Female,F,American Indian or Alaska Native,1002-5,2013,2013,20,7495,2.67
+Chlamydia,274,Massachusetts,25,Female,F,Asian or Pacific Islander,A-PI,2013,2013,348,208300,1.67
+Chlamydia,274,Massachusetts,25,Female,F,Black or African American,2054-5,2013,2013,2470,238109,10.37
+Chlamydia,274,Massachusetts,25,Female,F,Hispanic,Hispanic,2013,2013,2527,341713,7.4
+Chlamydia,274,Massachusetts,25,Female,F,White,2106-3,2013,2013,4255,2630154,1.62
+Chlamydia,274,Massachusetts,25,Female,F,Unknown,Unknown,2013,2013,6231,Not Applicable,Not Applicable
+Chlamydia,274,Massachusetts,25,Male,M,American Indian or Alaska Native,1002-5,2013,2013,4,7446,0.54
+Chlamydia,274,Massachusetts,25,Male,M,Asian or Pacific Islander,A-PI,2013,2013,119,191520,0.62
+Chlamydia,274,Massachusetts,25,Male,M,Black or African American,2054-5,2013,2013,1424,223907,6.36
+Chlamydia,274,Massachusetts,25,Male,M,Hispanic,Hispanic,2013,2013,1015,332360,3.05
+Chlamydia,274,Massachusetts,25,Male,M,White,2106-3,2013,2013,1865,2465140,0.76
+Chlamydia,274,Massachusetts,25,Male,M,Unknown,Unknown,2013,2013,2914,Not Applicable,Not Applicable
+Chlamydia,274,Massachusetts,25,Unknown,U,American Indian or Alaska Native,1002-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Massachusetts,25,Unknown,U,Asian or Pacific Islander,A-PI,2013,2013,Suppressed,Not Applicable,Not Applicable
+Chlamydia,274,Massachusetts,25,Unknown,U,Black or African American,2054-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Massachusetts,25,Unknown,U,Hispanic,Hispanic,2013,2013,Suppressed,Not Applicable,Not Applicable
+Chlamydia,274,Massachusetts,25,Unknown,U,White,2106-3,2013,2013,4,Not Applicable,Not Applicable
+Chlamydia,274,Massachusetts,25,Unknown,U,Unknown,Unknown,2013,2013,12,Not Applicable,Not Applicable
+Chlamydia,274,Michigan,26,Female,F,American Indian or Alaska Native,1002-5,2013,2013,143,35338,4.05
+Chlamydia,274,Michigan,26,Female,F,Asian or Pacific Islander,A-PI,2013,2013,148,142749,1.04
+Chlamydia,274,Michigan,26,Female,F,Black or African American,2054-5,2013,2013,11313,762095,14.84
+Chlamydia,274,Michigan,26,Female,F,Hispanic,Hispanic,2013,2013,811,224473,3.61
+Chlamydia,274,Michigan,26,Female,F,White,2106-3,2013,2013,8537,3868194,2.21
+Chlamydia,274,Michigan,26,Female,F,Unknown,Unknown,2013,2013,11104,Not Applicable,Not Applicable
+Chlamydia,274,Michigan,26,Male,M,American Indian or Alaska Native,1002-5,2013,2013,46,33925,1.36
+Chlamydia,274,Michigan,26,Male,M,Asian or Pacific Islander,A-PI,2013,2013,62,135041,0.46
+Chlamydia,274,Michigan,26,Male,M,Black or African American,2054-5,2013,2013,5391,691005,7.8
+Chlamydia,274,Michigan,26,Male,M,Hispanic,Hispanic,2013,2013,353,231857,1.52
+Chlamydia,274,Michigan,26,Male,M,White,2106-3,2013,2013,2690,3758683,0.72
+Chlamydia,274,Michigan,26,Male,M,Unknown,Unknown,2013,2013,4141,Not Applicable,Not Applicable
+Chlamydia,274,Michigan,26,Unknown,U,American Indian or Alaska Native,1002-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Michigan,26,Unknown,U,Asian or Pacific Islander,A-PI,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Michigan,26,Unknown,U,Black or African American,2054-5,2013,2013,12,Not Applicable,Not Applicable
+Chlamydia,274,Michigan,26,Unknown,U,Hispanic,Hispanic,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Michigan,26,Unknown,U,White,2106-3,2013,2013,14,Not Applicable,Not Applicable
+Chlamydia,274,Michigan,26,Unknown,U,Unknown,Unknown,2013,2013,70,Not Applicable,Not Applicable
+Chlamydia,274,Minnesota,27,Female,F,American Indian or Alaska Native,1002-5,2013,2013,343,32892,10.43
+Chlamydia,274,Minnesota,27,Female,F,Asian or Pacific Islander,A-PI,2013,2013,438,126269,3.47
+Chlamydia,274,Minnesota,27,Female,F,Black or African American,2054-5,2013,2013,2570,156212,16.45
+Chlamydia,274,Minnesota,27,Female,F,Hispanic,Hispanic,2013,2013,666,124970,5.33
+Chlamydia,274,Minnesota,27,Female,F,White,2106-3,2013,2013,4986,2266627,2.2
+Chlamydia,274,Minnesota,27,Female,F,Unknown,Unknown,2013,2013,3947,Not Applicable,Not Applicable
+Chlamydia,274,Minnesota,27,Male,M,American Indian or Alaska Native,1002-5,2013,2013,63,31974,1.97
+Chlamydia,274,Minnesota,27,Male,M,Asian or Pacific Islander,A-PI,2013,2013,153,119773,1.28
+Chlamydia,274,Minnesota,27,Male,M,Black or African American,2054-5,2013,2013,1532,162264,9.44
+Chlamydia,274,Minnesota,27,Male,M,Hispanic,Hispanic,2013,2013,290,139389,2.08
+Chlamydia,274,Minnesota,27,Male,M,White,2106-3,2013,2013,1889,2218769,0.85
+Chlamydia,274,Minnesota,27,Male,M,Unknown,Unknown,2013,2013,1864,Not Applicable,Not Applicable
+Chlamydia,274,Minnesota,27,Unknown,U,American Indian or Alaska Native,1002-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Minnesota,27,Unknown,U,Asian or Pacific Islander,A-PI,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Minnesota,27,Unknown,U,Black or African American,2054-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Minnesota,27,Unknown,U,Hispanic,Hispanic,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Minnesota,27,Unknown,U,White,2106-3,2013,2013,Suppressed,Not Applicable,Not Applicable
+Chlamydia,274,Minnesota,27,Unknown,U,Unknown,Unknown,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Mississippi,28,Female,F,American Indian or Alaska Native,1002-5,2013,2013,66,7828,8.43
+Chlamydia,274,Mississippi,28,Female,F,Asian or Pacific Islander,A-PI,2013,2013,31,16007,1.94
+Chlamydia,274,Mississippi,28,Female,F,Black or African American,2054-5,2013,2013,8072,592685,13.62
+Chlamydia,274,Mississippi,28,Female,F,Hispanic,Hispanic,2013,2013,59,36247,1.63
+Chlamydia,274,Mississippi,28,Female,F,White,2106-3,2013,2013,1653,882868,1.87
+Chlamydia,274,Mississippi,28,Female,F,Unknown,Unknown,2013,2013,2795,Not Applicable,Not Applicable
+Chlamydia,274,Mississippi,28,Male,M,American Indian or Alaska Native,1002-5,2013,2013,9,7180,1.25
+Chlamydia,274,Mississippi,28,Male,M,Asian or Pacific Islander,A-PI,2013,2013,9,14492,0.62
+Chlamydia,274,Mississippi,28,Male,M,Black or African American,2054-5,2013,2013,3438,527224,6.52
+Chlamydia,274,Mississippi,28,Male,M,Hispanic,Hispanic,2013,2013,16,49013,0.33
+Chlamydia,274,Mississippi,28,Male,M,White,2106-3,2013,2013,553,851382,0.65
+Chlamydia,274,Mississippi,28,Male,M,Unknown,Unknown,2013,2013,763,Not Applicable,Not Applicable
+Chlamydia,274,Mississippi,28,Unknown,U,American Indian or Alaska Native,1002-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Mississippi,28,Unknown,U,Asian or Pacific Islander,A-PI,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Mississippi,28,Unknown,U,Black or African American,2054-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Mississippi,28,Unknown,U,Hispanic,Hispanic,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Mississippi,28,Unknown,U,White,2106-3,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Mississippi,28,Unknown,U,Unknown,Unknown,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Missouri,29,Female,F,American Indian or Alaska Native,1002-5,2013,2013,33,15978,2.07
+Chlamydia,274,Missouri,29,Female,F,Asian or Pacific Islander,A-PI,2013,2013,134,63224,2.12
+Chlamydia,274,Missouri,29,Female,F,Black or African American,2054-5,2013,2013,7436,382741,19.43
+Chlamydia,274,Missouri,29,Female,F,Hispanic,Hispanic,2013,2013,594,107959,5.5
+Chlamydia,274,Missouri,29,Female,F,White,2106-3,2013,2013,7758,2501050,3.1
+Chlamydia,274,Missouri,29,Female,F,Unknown,Unknown,2013,2013,3348,Not Applicable,Not Applicable
+Chlamydia,274,Missouri,29,Male,M,American Indian or Alaska Native,1002-5,2013,2013,7,15739,0.44
+Chlamydia,274,Missouri,29,Male,M,Asian or Pacific Islander,A-PI,2013,2013,34,57590,0.59
+Chlamydia,274,Missouri,29,Male,M,Black or African American,2054-5,2013,2013,3956,347306,11.39
+Chlamydia,274,Missouri,29,Male,M,Hispanic,Hispanic,2013,2013,238,117355,2.03
+Chlamydia,274,Missouri,29,Male,M,White,2106-3,2013,2013,2590,2413046,1.07
+Chlamydia,274,Missouri,29,Male,M,Unknown,Unknown,2013,2013,1200,Not Applicable,Not Applicable
+Chlamydia,274,Missouri,29,Unknown,U,American Indian or Alaska Native,1002-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Missouri,29,Unknown,U,Asian or Pacific Islander,A-PI,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Missouri,29,Unknown,U,Black or African American,2054-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Missouri,29,Unknown,U,Hispanic,Hispanic,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Missouri,29,Unknown,U,White,2106-3,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Missouri,29,Unknown,U,Unknown,Unknown,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Montana,30,Female,F,American Indian or Alaska Native,1002-5,2013,2013,732,33653,21.75
+Chlamydia,274,Montana,30,Female,F,Asian or Pacific Islander,A-PI,2013,2013,7,5060,1.38
+Chlamydia,274,Montana,30,Female,F,Black or African American,2054-5,2013,2013,26,3357,7.75
+Chlamydia,274,Montana,30,Female,F,Hispanic,Hispanic,2013,2013,61,15487,3.94
+Chlamydia,274,Montana,30,Female,F,White,2106-3,2013,2013,1712,442635,3.87
+Chlamydia,274,Montana,30,Female,F,Unknown,Unknown,2013,2013,163,Not Applicable,Not Applicable
+Chlamydia,274,Montana,30,Male,M,American Indian or Alaska Native,1002-5,2013,2013,274,32948,8.32
+Chlamydia,274,Montana,30,Male,M,Asian or Pacific Islander,A-PI,2013,2013,9,3640,2.47
+Chlamydia,274,Montana,30,Male,M,Black or African American,2054-5,2013,2013,31,4680,6.62
+Chlamydia,274,Montana,30,Male,M,Hispanic,Hispanic,2013,2013,25,16065,1.56
+Chlamydia,274,Montana,30,Male,M,White,2106-3,2013,2013,686,447616,1.53
+Chlamydia,274,Montana,30,Male,M,Unknown,Unknown,2013,2013,91,Not Applicable,Not Applicable
+Chlamydia,274,Montana,30,Unknown,U,American Indian or Alaska Native,1002-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Montana,30,Unknown,U,Asian or Pacific Islander,A-PI,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Montana,30,Unknown,U,Black or African American,2054-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Montana,30,Unknown,U,Hispanic,Hispanic,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Montana,30,Unknown,U,White,2106-3,2013,2013,Suppressed,Not Applicable,Not Applicable
+Chlamydia,274,Montana,30,Unknown,U,Unknown,Unknown,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Nebraska,31,Female,F,American Indian or Alaska Native,1002-5,2013,2013,71,8534,8.32
+Chlamydia,274,Nebraska,31,Female,F,Asian or Pacific Islander,A-PI,2013,2013,55,20198,2.72
+Chlamydia,274,Nebraska,31,Female,F,Black or African American,2054-5,2013,2013,889,46352,19.18
+Chlamydia,274,Nebraska,31,Female,F,Hispanic,Hispanic,2013,2013,444,85341,5.2
+Chlamydia,274,Nebraska,31,Female,F,White,2106-3,2013,2013,1627,772798,2.11
+Chlamydia,274,Nebraska,31,Female,F,Unknown,Unknown,2013,2013,1859,Not Applicable,Not Applicable
+Chlamydia,274,Nebraska,31,Male,M,American Indian or Alaska Native,1002-5,2013,2013,26,8085,3.22
+Chlamydia,274,Nebraska,31,Male,M,Asian or Pacific Islander,A-PI,2013,2013,10,18666,0.54
+Chlamydia,274,Nebraska,31,Male,M,Black or African American,2054-5,2013,2013,578,48174,12
+Chlamydia,274,Nebraska,31,Male,M,Hispanic,Hispanic,2013,2013,209,94629,2.21
+Chlamydia,274,Nebraska,31,Male,M,White,2106-3,2013,2013,639,752748,0.85
+Chlamydia,274,Nebraska,31,Male,M,Unknown,Unknown,2013,2013,734,Not Applicable,Not Applicable
+Chlamydia,274,Nebraska,31,Unknown,U,American Indian or Alaska Native,1002-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Nebraska,31,Unknown,U,Asian or Pacific Islander,A-PI,2013,2013,Suppressed,Not Applicable,Not Applicable
+Chlamydia,274,Nebraska,31,Unknown,U,Black or African American,2054-5,2013,2013,Suppressed,Not Applicable,Not Applicable
+Chlamydia,274,Nebraska,31,Unknown,U,Hispanic,Hispanic,2013,2013,Suppressed,Not Applicable,Not Applicable
+Chlamydia,274,Nebraska,31,Unknown,U,White,2106-3,2013,2013,Suppressed,Not Applicable,Not Applicable
+Chlamydia,274,Nebraska,31,Unknown,U,Unknown,Unknown,2013,2013,156,Not Applicable,Not Applicable
+Chlamydia,274,Nevada,32,Female,F,American Indian or Alaska Native,1002-5,2013,2013,103,14339,7.18
+Chlamydia,274,Nevada,32,Female,F,Asian or Pacific Islander,A-PI,2013,2013,287,130243,2.2
+Chlamydia,274,Nevada,32,Female,F,Black or African American,2054-5,2013,2013,1241,120802,10.27
+Chlamydia,274,Nevada,32,Female,F,Hispanic,Hispanic,2013,2013,1615,366981,4.4
+Chlamydia,274,Nevada,32,Female,F,White,2106-3,2013,2013,1838,735359,2.5
+Chlamydia,274,Nevada,32,Female,F,Unknown,Unknown,2013,2013,3099,Not Applicable,Not Applicable
+Chlamydia,274,Nevada,32,Male,M,American Indian or Alaska Native,1002-5,2013,2013,33,13341,2.47
+Chlamydia,274,Nevada,32,Male,M,Asian or Pacific Islander,A-PI,2013,2013,100,108983,0.92
+Chlamydia,274,Nevada,32,Male,M,Black or African American,2054-5,2013,2013,793,122265,6.49
+Chlamydia,274,Nevada,32,Male,M,Hispanic,Hispanic,2013,2013,750,385068,1.95
+Chlamydia,274,Nevada,32,Male,M,White,2106-3,2013,2013,942,761550,1.24
+Chlamydia,274,Nevada,32,Male,M,Unknown,Unknown,2013,2013,972,Not Applicable,Not Applicable
+Chlamydia,274,Nevada,32,Unknown,U,American Indian or Alaska Native,1002-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Nevada,32,Unknown,U,Asian or Pacific Islander,A-PI,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Nevada,32,Unknown,U,Black or African American,2054-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Nevada,32,Unknown,U,Hispanic,Hispanic,2013,2013,3,Not Applicable,Not Applicable
+Chlamydia,274,Nevada,32,Unknown,U,White,2106-3,2013,2013,Suppressed,Not Applicable,Not Applicable
+Chlamydia,274,Nevada,32,Unknown,U,Unknown,Unknown,2013,2013,4,Not Applicable,Not Applicable
+Chlamydia,274,New Hampshire,33,Female,F,American Indian or Alaska Native,1002-5,2013,2013,7,1809,3.87
+Chlamydia,274,New Hampshire,33,Female,F,Asian or Pacific Islander,A-PI,2013,2013,18,17265,1.04
+Chlamydia,274,New Hampshire,33,Female,F,Black or African American,2054-5,2013,2013,45,8471,5.31
+Chlamydia,274,New Hampshire,33,Female,F,Hispanic,Hispanic,2013,2013,101,19740,5.12
+Chlamydia,274,New Hampshire,33,Female,F,White,2106-3,2013,2013,1799,621196,2.9
+Chlamydia,274,New Hampshire,33,Female,F,Unknown,Unknown,2013,2013,217,Not Applicable,Not Applicable
+Chlamydia,274,New Hampshire,33,Male,M,American Indian or Alaska Native,1002-5,2013,2013,3,1848,1.62
+Chlamydia,274,New Hampshire,33,Male,M,Asian or Pacific Islander,A-PI,2013,2013,5,15814,0.32
+Chlamydia,274,New Hampshire,33,Male,M,Black or African American,2054-5,2013,2013,60,10561,5.68
+Chlamydia,274,New Hampshire,33,Male,M,Hispanic,Hispanic,2013,2013,53,20302,2.61
+Chlamydia,274,New Hampshire,33,Male,M,White,2106-3,2013,2013,654,603712,1.08
+Chlamydia,274,New Hampshire,33,Male,M,Unknown,Unknown,2013,2013,157,Not Applicable,Not Applicable
+Chlamydia,274,New Hampshire,33,Unknown,U,American Indian or Alaska Native,1002-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,New Hampshire,33,Unknown,U,Asian or Pacific Islander,A-PI,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,New Hampshire,33,Unknown,U,Black or African American,2054-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,New Hampshire,33,Unknown,U,Hispanic,Hispanic,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,New Hampshire,33,Unknown,U,White,2106-3,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,New Hampshire,33,Unknown,U,Unknown,Unknown,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,New Jersey,34,Female,F,American Indian or Alaska Native,1002-5,2013,2013,14,8690,1.61
+Chlamydia,274,New Jersey,34,Female,F,Asian or Pacific Islander,A-PI,2013,2013,195,413146,0.47
+Chlamydia,274,New Jersey,34,Female,F,Black or African American,2054-5,2013,2013,4906,627250,7.82
+Chlamydia,274,New Jersey,34,Female,F,Hispanic,Hispanic,2013,2013,2849,813678,3.5
+Chlamydia,274,New Jersey,34,Female,F,White,2106-3,2013,2013,1836,2678141,0.69
+Chlamydia,274,New Jersey,34,Female,F,Unknown,Unknown,2013,2013,10971,Not Applicable,Not Applicable
+Chlamydia,274,New Jersey,34,Male,M,American Indian or Alaska Native,1002-5,2013,2013,8,8182,0.98
+Chlamydia,274,New Jersey,34,Male,M,Asian or Pacific Islander,A-PI,2013,2013,84,392703,0.21
+Chlamydia,274,New Jersey,34,Male,M,Black or African American,2054-5,2013,2013,2346,555203,4.23
+Chlamydia,274,New Jersey,34,Male,M,Hispanic,Hispanic,2013,2013,801,827720,0.97
+Chlamydia,274,New Jersey,34,Male,M,White,2106-3,2013,2013,649,2539877,0.26
+Chlamydia,274,New Jersey,34,Male,M,Unknown,Unknown,2013,2013,3588,Not Applicable,Not Applicable
+Chlamydia,274,New Jersey,34,Unknown,U,American Indian or Alaska Native,1002-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,New Jersey,34,Unknown,U,Asian or Pacific Islander,A-PI,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,New Jersey,34,Unknown,U,Black or African American,2054-5,2013,2013,Suppressed,Not Applicable,Not Applicable
+Chlamydia,274,New Jersey,34,Unknown,U,Hispanic,Hispanic,2013,2013,Suppressed,Not Applicable,Not Applicable
+Chlamydia,274,New Jersey,34,Unknown,U,White,2106-3,2013,2013,Suppressed,Not Applicable,Not Applicable
+Chlamydia,274,New Jersey,34,Unknown,U,Unknown,Unknown,2013,2013,76,Not Applicable,Not Applicable
+Chlamydia,274,New Mexico,35,Female,F,American Indian or Alaska Native,1002-5,2013,2013,1281,95193,13.46
+Chlamydia,274,New Mexico,35,Female,F,Asian or Pacific Islander,A-PI,2013,2013,21,18017,1.17
+Chlamydia,274,New Mexico,35,Female,F,Black or African American,2054-5,2013,2013,126,19663,6.41
+Chlamydia,274,New Mexico,35,Female,F,Hispanic,Hispanic,2013,2013,2992,493013,6.07
+Chlamydia,274,New Mexico,35,Female,F,White,2106-3,2013,2013,1130,426945,2.65
+Chlamydia,274,New Mexico,35,Female,F,Unknown,Unknown,2013,2013,3483,Not Applicable,Not Applicable
+Chlamydia,274,New Mexico,35,Male,M,American Indian or Alaska Native,1002-5,2013,2013,290,88276,3.29
+Chlamydia,274,New Mexico,35,Male,M,Asian or Pacific Islander,A-PI,2013,2013,5,15019,0.33
+Chlamydia,274,New Mexico,35,Male,M,Black or African American,2054-5,2013,2013,174,24436,7.12
+Chlamydia,274,New Mexico,35,Male,M,Hispanic,Hispanic,2013,2013,1093,486709,2.25
+Chlamydia,274,New Mexico,35,Male,M,White,2106-3,2013,2013,595,418267,1.42
+Chlamydia,274,New Mexico,35,Male,M,Unknown,Unknown,2013,2013,1052,Not Applicable,Not Applicable
+Chlamydia,274,New Mexico,35,Unknown,U,American Indian or Alaska Native,1002-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,New Mexico,35,Unknown,U,Asian or Pacific Islander,A-PI,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,New Mexico,35,Unknown,U,Black or African American,2054-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,New Mexico,35,Unknown,U,Hispanic,Hispanic,2013,2013,Suppressed,Not Applicable,Not Applicable
+Chlamydia,274,New Mexico,35,Unknown,U,White,2106-3,2013,2013,Suppressed,Not Applicable,Not Applicable
+Chlamydia,274,New Mexico,35,Unknown,U,Unknown,Unknown,2013,2013,5,Not Applicable,Not Applicable
+Chlamydia,274,New York,36,Female,F,American Indian or Alaska Native,1002-5,2013,2013,136,36515,3.72
+Chlamydia,274,New York,36,Female,F,Asian or Pacific Islander,A-PI,2013,2013,1025,824695,1.24
+Chlamydia,274,New York,36,Female,F,Black or African American,2054-5,2013,2013,15325,1583440,9.68
+Chlamydia,274,New York,36,Female,F,Hispanic,Hispanic,2013,2013,8837,1797646,4.92
+Chlamydia,274,New York,36,Female,F,White,2106-3,2013,2013,10561,5838748,1.81
+Chlamydia,274,New York,36,Female,F,Unknown,Unknown,2013,2013,28570,Not Applicable,Not Applicable
+Chlamydia,274,New York,36,Male,M,American Indian or Alaska Native,1002-5,2013,2013,41,33906,1.21
+Chlamydia,274,New York,36,Male,M,Asian or Pacific Islander,A-PI,2013,2013,474,763343,0.62
+Chlamydia,274,New York,36,Male,M,Black or African American,2054-5,2013,2013,9258,1370858,6.75
+Chlamydia,274,New York,36,Male,M,Hispanic,Hispanic,2013,2013,3789,1755135,2.16
+Chlamydia,274,New York,36,Male,M,White,2106-3,2013,2013,4512,5565975,0.81
+Chlamydia,274,New York,36,Male,M,Unknown,Unknown,2013,2013,13199,Not Applicable,Not Applicable
+Chlamydia,274,New York,36,Unknown,U,American Indian or Alaska Native,1002-5,2013,2013,Suppressed,Not Applicable,Not Applicable
+Chlamydia,274,New York,36,Unknown,U,Asian or Pacific Islander,A-PI,2013,2013,Suppressed,Not Applicable,Not Applicable
+Chlamydia,274,New York,36,Unknown,U,Black or African American,2054-5,2013,2013,23,Not Applicable,Not Applicable
+Chlamydia,274,New York,36,Unknown,U,Hispanic,Hispanic,2013,2013,30,Not Applicable,Not Applicable
+Chlamydia,274,New York,36,Unknown,U,White,2106-3,2013,2013,4,Not Applicable,Not Applicable
+Chlamydia,274,New York,36,Unknown,U,Unknown,Unknown,2013,2013,16,Not Applicable,Not Applicable
+Chlamydia,274,North Carolina,37,Female,F,American Indian or Alaska Native,1002-5,2013,2013,424,60898,6.96
+Chlamydia,274,North Carolina,37,Female,F,Asian or Pacific Islander,A-PI,2013,2013,284,131277,2.16
+Chlamydia,274,North Carolina,37,Female,F,Black or African American,2054-5,2013,2013,18912,1138107,16.62
+Chlamydia,274,North Carolina,37,Female,F,Hispanic,Hispanic,2013,2013,2318,398570,5.82
+Chlamydia,274,North Carolina,37,Female,F,White,2106-3,2013,2013,9518,3270323,2.91
+Chlamydia,274,North Carolina,37,Female,F,Unknown,Unknown,2013,2013,5690,Not Applicable,Not Applicable
+Chlamydia,274,North Carolina,37,Male,M,American Indian or Alaska Native,1002-5,2013,2013,36,56708,0.63
+Chlamydia,274,North Carolina,37,Male,M,Asian or Pacific Islander,A-PI,2013,2013,54,120614,0.45
+Chlamydia,274,North Carolina,37,Male,M,Black or African American,2054-5,2013,2013,6017,1004308,5.99
+Chlamydia,274,North Carolina,37,Male,M,Hispanic,Hispanic,2013,2013,583,452283,1.29
+Chlamydia,274,North Carolina,37,Male,M,White,2106-3,2013,2013,2225,3118985,0.71
+Chlamydia,274,North Carolina,37,Male,M,Unknown,Unknown,2013,2013,2339,Not Applicable,Not Applicable
+Chlamydia,274,North Carolina,37,Unknown,U,American Indian or Alaska Native,1002-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,North Carolina,37,Unknown,U,Asian or Pacific Islander,A-PI,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,North Carolina,37,Unknown,U,Black or African American,2054-5,2013,2013,10,Not Applicable,Not Applicable
+Chlamydia,274,North Carolina,37,Unknown,U,Hispanic,Hispanic,2013,2013,Suppressed,Not Applicable,Not Applicable
+Chlamydia,274,North Carolina,37,Unknown,U,White,2106-3,2013,2013,Suppressed,Not Applicable,Not Applicable
+Chlamydia,274,North Carolina,37,Unknown,U,Unknown,Unknown,2013,2013,4,Not Applicable,Not Applicable
+Chlamydia,274,North Dakota,38,Female,F,American Indian or Alaska Native,1002-5,2013,2013,416,19756,21.06
+Chlamydia,274,North Dakota,38,Female,F,Asian or Pacific Islander,A-PI,2013,2013,8,4376,1.83
+Chlamydia,274,North Dakota,38,Female,F,Black or African American,2054-5,2013,2013,74,5043,14.67
+Chlamydia,274,North Dakota,38,Female,F,Hispanic,Hispanic,2013,2013,45,7979,5.64
+Chlamydia,274,North Dakota,38,Female,F,White,2106-3,2013,2013,992,306732,3.23
+Chlamydia,274,North Dakota,38,Female,F,Unknown,Unknown,2013,2013,388,Not Applicable,Not Applicable
+Chlamydia,274,North Dakota,38,Male,M,American Indian or Alaska Native,1002-5,2013,2013,134,18997,7.05
+Chlamydia,274,North Dakota,38,Male,M,Asian or Pacific Islander,A-PI,2013,2013,7,4350,1.61
+Chlamydia,274,North Dakota,38,Male,M,Black or African American,2054-5,2013,2013,115,7156,16.07
+Chlamydia,274,North Dakota,38,Male,M,Hispanic,Hispanic,2013,2013,37,9251,4
+Chlamydia,274,North Dakota,38,Male,M,White,2106-3,2013,2013,452,315988,1.43
+Chlamydia,274,North Dakota,38,Male,M,Unknown,Unknown,2013,2013,264,Not Applicable,Not Applicable
+Chlamydia,274,North Dakota,38,Unknown,U,American Indian or Alaska Native,1002-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,North Dakota,38,Unknown,U,Asian or Pacific Islander,A-PI,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,North Dakota,38,Unknown,U,Black or African American,2054-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,North Dakota,38,Unknown,U,Hispanic,Hispanic,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,North Dakota,38,Unknown,U,White,2106-3,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,North Dakota,38,Unknown,U,Unknown,Unknown,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Ohio,39,Female,F,American Indian or Alaska Native,1002-5,2013,2013,19,14818,1.28
+Chlamydia,274,Ohio,39,Female,F,Asian or Pacific Islander,A-PI,2013,2013,135,117944,1.14
+Chlamydia,274,Ohio,39,Female,F,Black or African American,2054-5,2013,2013,13621,778183,17.5
+Chlamydia,274,Ohio,39,Female,F,Hispanic,Hispanic,2013,2013,688,182520,3.77
+Chlamydia,274,Ohio,39,Female,F,White,2106-3,2013,2013,12177,4808140,2.53
+Chlamydia,274,Ohio,39,Female,F,Unknown,Unknown,2013,2013,11653,Not Applicable,Not Applicable
+Chlamydia,274,Ohio,39,Male,M,American Indian or Alaska Native,1002-5,2013,2013,12,14007,0.86
+Chlamydia,274,Ohio,39,Male,M,Asian or Pacific Islander,A-PI,2013,2013,50,109856,0.46
+Chlamydia,274,Ohio,39,Male,M,Black or African American,2054-5,2013,2013,6477,712412,9.09
+Chlamydia,274,Ohio,39,Male,M,Hispanic,Hispanic,2013,2013,273,194599,1.4
+Chlamydia,274,Ohio,39,Male,M,White,2106-3,2013,2013,3630,4611746,0.79
+Chlamydia,274,Ohio,39,Male,M,Unknown,Unknown,2013,2013,4386,Not Applicable,Not Applicable
+Chlamydia,274,Ohio,39,Unknown,U,American Indian or Alaska Native,1002-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Ohio,39,Unknown,U,Asian or Pacific Islander,A-PI,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Ohio,39,Unknown,U,Black or African American,2054-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Ohio,39,Unknown,U,Hispanic,Hispanic,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Ohio,39,Unknown,U,White,2106-3,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Ohio,39,Unknown,U,Unknown,Unknown,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Oklahoma,40,Female,F,American Indian or Alaska Native,1002-5,2013,2013,1329,183121,7.26
+Chlamydia,274,Oklahoma,40,Female,F,Asian or Pacific Islander,A-PI,2013,2013,128,42541,3.01
+Chlamydia,274,Oklahoma,40,Female,F,Black or African American,2054-5,2013,2013,2648,158222,16.74
+Chlamydia,274,Oklahoma,40,Female,F,Hispanic,Hispanic,2013,2013,1306,167202,7.81
+Chlamydia,274,Oklahoma,40,Female,F,White,2106-3,2013,2013,5191,1373909,3.78
+Chlamydia,274,Oklahoma,40,Female,F,Unknown,Unknown,2013,2013,2463,Not Applicable,Not Applicable
+Chlamydia,274,Oklahoma,40,Male,M,American Indian or Alaska Native,1002-5,2013,2013,350,176989,1.98
+Chlamydia,274,Oklahoma,40,Male,M,Asian or Pacific Islander,A-PI,2013,2013,46,38677,1.19
+Chlamydia,274,Oklahoma,40,Male,M,Black or African American,2054-5,2013,2013,1566,157064,9.97
+Chlamydia,274,Oklahoma,40,Male,M,Hispanic,Hispanic,2013,2013,513,189098,2.71
+Chlamydia,274,Oklahoma,40,Male,M,White,2106-3,2013,2013,1885,1327997,1.42
+Chlamydia,274,Oklahoma,40,Male,M,Unknown,Unknown,2013,2013,853,Not Applicable,Not Applicable
+Chlamydia,274,Oklahoma,40,Unknown,U,American Indian or Alaska Native,1002-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Oklahoma,40,Unknown,U,Asian or Pacific Islander,A-PI,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Oklahoma,40,Unknown,U,Black or African American,2054-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Oklahoma,40,Unknown,U,Hispanic,Hispanic,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Oklahoma,40,Unknown,U,White,2106-3,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Oklahoma,40,Unknown,U,Unknown,Unknown,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Oregon,41,Female,F,American Indian or Alaska Native,1002-5,2013,2013,193,27387,7.05
+Chlamydia,274,Oregon,41,Female,F,Asian or Pacific Islander,A-PI,2013,2013,196,97922,2
+Chlamydia,274,Oregon,41,Female,F,Black or African American,2054-5,2013,2013,378,40515,9.33
+Chlamydia,274,Oregon,41,Female,F,Hispanic,Hispanic,2013,2013,1345,225674,5.96
+Chlamydia,274,Oregon,41,Female,F,White,2106-3,2013,2013,5502,1577143,3.49
+Chlamydia,274,Oregon,41,Female,F,Unknown,Unknown,2013,2013,2318,Not Applicable,Not Applicable
+Chlamydia,274,Oregon,41,Male,M,American Indian or Alaska Native,1002-5,2013,2013,57,26591,2.14
+Chlamydia,274,Oregon,41,Male,M,Asian or Pacific Islander,A-PI,2013,2013,86,85504,1.01
+Chlamydia,274,Oregon,41,Male,M,Black or African American,2054-5,2013,2013,281,46554,6.04
+Chlamydia,274,Oregon,41,Male,M,Hispanic,Hispanic,2013,2013,526,248483,2.12
+Chlamydia,274,Oregon,41,Male,M,White,2106-3,2013,2013,2192,1523580,1.44
+Chlamydia,274,Oregon,41,Male,M,Unknown,Unknown,2013,2013,1101,Not Applicable,Not Applicable
+Chlamydia,274,Oregon,41,Unknown,U,American Indian or Alaska Native,1002-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Oregon,41,Unknown,U,Asian or Pacific Islander,A-PI,2013,2013,Suppressed,Not Applicable,Not Applicable
+Chlamydia,274,Oregon,41,Unknown,U,Black or African American,2054-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Oregon,41,Unknown,U,Hispanic,Hispanic,2013,2013,Suppressed,Not Applicable,Not Applicable
+Chlamydia,274,Oregon,41,Unknown,U,White,2106-3,2013,2013,Suppressed,Not Applicable,Not Applicable
+Chlamydia,274,Oregon,41,Unknown,U,Unknown,Unknown,2013,2013,Suppressed,Not Applicable,Not Applicable
+Chlamydia,274,Pennsylvania,42,Female,F,American Indian or Alaska Native,1002-5,2013,2013,33,11284,2.92
+Chlamydia,274,Pennsylvania,42,Female,F,Asian or Pacific Islander,A-PI,2013,2013,252,205263,1.23
+Chlamydia,274,Pennsylvania,42,Female,F,Black or African American,2054-5,2013,2013,11423,739633,15.44
+Chlamydia,274,Pennsylvania,42,Female,F,Hispanic,Hispanic,2013,2013,2257,381538,5.92
+Chlamydia,274,Pennsylvania,42,Female,F,White,2106-3,2013,2013,7713,5195641,1.48
+Chlamydia,274,Pennsylvania,42,Female,F,Unknown,Unknown,2013,2013,13979,Not Applicable,Not Applicable
+Chlamydia,274,Pennsylvania,42,Male,M,American Indian or Alaska Native,1002-5,2013,2013,17,10617,1.6
+Chlamydia,274,Pennsylvania,42,Male,M,Asian or Pacific Islander,A-PI,2013,2013,104,190568,0.55
+Chlamydia,274,Pennsylvania,42,Male,M,Black or African American,2054-5,2013,2013,7045,678567,10.38
+Chlamydia,274,Pennsylvania,42,Male,M,Hispanic,Hispanic,2013,2013,1225,399664,3.07
+Chlamydia,274,Pennsylvania,42,Male,M,White,2106-3,2013,2013,2700,4950761,0.55
+Chlamydia,274,Pennsylvania,42,Male,M,Unknown,Unknown,2013,2013,5269,Not Applicable,Not Applicable
+Chlamydia,274,Pennsylvania,42,Unknown,U,American Indian or Alaska Native,1002-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Pennsylvania,42,Unknown,U,Asian or Pacific Islander,A-PI,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Pennsylvania,42,Unknown,U,Black or African American,2054-5,2013,2013,3,Not Applicable,Not Applicable
+Chlamydia,274,Pennsylvania,42,Unknown,U,Hispanic,Hispanic,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Pennsylvania,42,Unknown,U,White,2106-3,2013,2013,3,Not Applicable,Not Applicable
+Chlamydia,274,Pennsylvania,42,Unknown,U,Unknown,Unknown,2013,2013,33,Not Applicable,Not Applicable
+Chlamydia,274,Rhode Island,44,Female,F,American Indian or Alaska Native,1002-5,2013,2013,13,2668,4.87
+Chlamydia,274,Rhode Island,44,Female,F,Asian or Pacific Islander,A-PI,2013,2013,67,18477,3.63
+Chlamydia,274,Rhode Island,44,Female,F,Black or African American,2054-5,2013,2013,436,32492,13.42
+Chlamydia,274,Rhode Island,44,Female,F,Hispanic,Hispanic,2013,2013,809,69557,11.63
+Chlamydia,274,Rhode Island,44,Female,F,White,2106-3,2013,2013,1163,418822,2.78
+Chlamydia,274,Rhode Island,44,Female,F,Unknown,Unknown,2013,2013,556,Not Applicable,Not Applicable
+Chlamydia,274,Rhode Island,44,Male,M,American Indian or Alaska Native,1002-5,2013,2013,4,2491,1.61
+Chlamydia,274,Rhode Island,44,Male,M,Asian or Pacific Islander,A-PI,2013,2013,20,16473,1.21
+Chlamydia,274,Rhode Island,44,Male,M,Black or African American,2054-5,2013,2013,245,32425,7.56
+Chlamydia,274,Rhode Island,44,Male,M,Hispanic,Hispanic,2013,2013,296,68992,4.29
+Chlamydia,274,Rhode Island,44,Male,M,White,2106-3,2013,2013,450,387895,1.16
+Chlamydia,274,Rhode Island,44,Male,M,Unknown,Unknown,2013,2013,253,Not Applicable,Not Applicable
+Chlamydia,274,Rhode Island,44,Unknown,U,American Indian or Alaska Native,1002-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Rhode Island,44,Unknown,U,Asian or Pacific Islander,A-PI,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Rhode Island,44,Unknown,U,Black or African American,2054-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Rhode Island,44,Unknown,U,Hispanic,Hispanic,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Rhode Island,44,Unknown,U,White,2106-3,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Rhode Island,44,Unknown,U,Unknown,Unknown,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,South Carolina,45,Female,F,American Indian or Alaska Native,1002-5,2013,2013,18,9566,1.88
+Chlamydia,274,South Carolina,45,Female,F,Asian or Pacific Islander,A-PI,2013,2013,45,38879,1.16
+Chlamydia,274,South Carolina,45,Female,F,Black or African American,2054-5,2013,2013,9055,704914,12.85
+Chlamydia,274,South Carolina,45,Female,F,Hispanic,Hispanic,2013,2013,273,112363,2.43
+Chlamydia,274,South Carolina,45,Female,F,White,2106-3,2013,2013,3404,1560788,2.18
+Chlamydia,274,South Carolina,45,Female,F,Unknown,Unknown,2013,2013,6308,Not Applicable,Not Applicable
+Chlamydia,274,South Carolina,45,Male,M,American Indian or Alaska Native,1002-5,2013,2013,4,9333,0.43
+Chlamydia,274,South Carolina,45,Male,M,Asian or Pacific Islander,A-PI,2013,2013,12,34097,0.35
+Chlamydia,274,South Carolina,45,Male,M,Black or African American,2054-5,2013,2013,3450,622847,5.54
+Chlamydia,274,South Carolina,45,Male,M,Hispanic,Hispanic,2013,2013,95,137349,0.69
+Chlamydia,274,South Carolina,45,Male,M,White,2106-3,2013,2013,927,1493587,0.62
+Chlamydia,274,South Carolina,45,Male,M,Unknown,Unknown,2013,2013,1944,Not Applicable,Not Applicable
+Chlamydia,274,South Carolina,45,Unknown,U,American Indian or Alaska Native,1002-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,South Carolina,45,Unknown,U,Asian or Pacific Islander,A-PI,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,South Carolina,45,Unknown,U,Black or African American,2054-5,2013,2013,8,Not Applicable,Not Applicable
+Chlamydia,274,South Carolina,45,Unknown,U,Hispanic,Hispanic,2013,2013,Suppressed,Not Applicable,Not Applicable
+Chlamydia,274,South Carolina,45,Unknown,U,White,2106-3,2013,2013,3,Not Applicable,Not Applicable
+Chlamydia,274,South Carolina,45,Unknown,U,Unknown,Unknown,2013,2013,47,Not Applicable,Not Applicable
+Chlamydia,274,South Dakota,46,Female,F,American Indian or Alaska Native,1002-5,2013,2013,1194,37935,31.47
+Chlamydia,274,South Dakota,46,Female,F,Asian or Pacific Islander,A-PI,2013,2013,20,5085,3.93
+Chlamydia,274,South Dakota,46,Female,F,Black or African American,2054-5,2013,2013,48,6968,6.89
+Chlamydia,274,South Dakota,46,Female,F,Hispanic,Hispanic,2013,2013,86,11783,7.3
+Chlamydia,274,South Dakota,46,Female,F,White,2106-3,2013,2013,1035,353267,2.93
+Chlamydia,274,South Dakota,46,Female,F,Unknown,Unknown,2013,2013,410,Not Applicable,Not Applicable
+Chlamydia,274,South Dakota,46,Male,M,American Indian or Alaska Native,1002-5,2013,2013,375,36665,10.23
+Chlamydia,274,South Dakota,46,Male,M,Asian or Pacific Islander,A-PI,2013,2013,4,4775,0.84
+Chlamydia,274,South Dakota,46,Male,M,Black or African American,2054-5,2013,2013,97,9495,10.22
+Chlamydia,274,South Dakota,46,Male,M,Hispanic,Hispanic,2013,2013,40,13932,2.87
+Chlamydia,274,South Dakota,46,Male,M,White,2106-3,2013,2013,437,353449,1.24
+Chlamydia,274,South Dakota,46,Male,M,Unknown,Unknown,2013,2013,181,Not Applicable,Not Applicable
+Chlamydia,274,South Dakota,46,Unknown,U,American Indian or Alaska Native,1002-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,South Dakota,46,Unknown,U,Asian or Pacific Islander,A-PI,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,South Dakota,46,Unknown,U,Black or African American,2054-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,South Dakota,46,Unknown,U,Hispanic,Hispanic,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,South Dakota,46,Unknown,U,White,2106-3,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,South Dakota,46,Unknown,U,Unknown,Unknown,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Tennessee,47,Female,F,American Indian or Alaska Native,1002-5,2013,2013,9,9052,0.99
+Chlamydia,274,Tennessee,47,Female,F,Asian or Pacific Islander,A-PI,2013,2013,128,58292,2.2
+Chlamydia,274,Tennessee,47,Female,F,Black or African American,2054-5,2013,2013,10930,586578,18.63
+Chlamydia,274,Tennessee,47,Female,F,Hispanic,Hispanic,2013,2013,689,143428,4.8
+Chlamydia,274,Tennessee,47,Female,F,White,2106-3,2013,2013,8697,2510130,3.46
+Chlamydia,274,Tennessee,47,Female,F,Unknown,Unknown,2013,2013,604,Not Applicable,Not Applicable
+Chlamydia,274,Tennessee,47,Male,M,American Indian or Alaska Native,1002-5,2013,2013,Suppressed,9329,Suppressed
+Chlamydia,274,Tennessee,47,Male,M,Asian or Pacific Islander,A-PI,2013,2013,60,52301,1.15
+Chlamydia,274,Tennessee,47,Male,M,Black or African American,2054-5,2013,2013,5457,524839,10.4
+Chlamydia,274,Tennessee,47,Male,M,Hispanic,Hispanic,2013,2013,321,169304,1.9
+Chlamydia,274,Tennessee,47,Male,M,White,2106-3,2013,2013,3208,2392990,1.34
+Chlamydia,274,Tennessee,47,Male,M,Unknown,Unknown,2013,2013,263,Not Applicable,Not Applicable
+Chlamydia,274,Tennessee,47,Unknown,U,American Indian or Alaska Native,1002-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Tennessee,47,Unknown,U,Asian or Pacific Islander,A-PI,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Tennessee,47,Unknown,U,Black or African American,2054-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Tennessee,47,Unknown,U,Hispanic,Hispanic,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Tennessee,47,Unknown,U,White,2106-3,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Tennessee,47,Unknown,U,Unknown,Unknown,2013,2013,Suppressed,Not Applicable,Not Applicable
+Chlamydia,274,Texas,48,Female,F,American Indian or Alaska Native,1002-5,2013,2013,95,48768,1.95
+Chlamydia,274,Texas,48,Female,F,Asian or Pacific Islander,A-PI,2013,2013,836,574962,1.45
+Chlamydia,274,Texas,48,Female,F,Black or African American,2054-5,2013,2013,23287,1604937,14.51
+Chlamydia,274,Texas,48,Female,F,Hispanic,Hispanic,2013,2013,39219,4937099,7.94
+Chlamydia,274,Texas,48,Female,F,White,2106-3,2013,2013,23245,5945703,3.91
+Chlamydia,274,Texas,48,Female,F,Unknown,Unknown,2013,2013,10241,Not Applicable,Not Applicable
+Chlamydia,274,Texas,48,Male,M,American Indian or Alaska Native,1002-5,2013,2013,39,48087,0.81
+Chlamydia,274,Texas,48,Male,M,Asian or Pacific Islander,A-PI,2013,2013,272,546558,0.5
+Chlamydia,274,Texas,48,Male,M,Black or African American,2054-5,2013,2013,9546,1503190,6.35
+Chlamydia,274,Texas,48,Male,M,Hispanic,Hispanic,2013,2013,10395,5023801,2.07
+Chlamydia,274,Texas,48,Male,M,White,2106-3,2013,2013,8146,5826098,1.4
+Chlamydia,274,Texas,48,Male,M,Unknown,Unknown,2013,2013,3582,Not Applicable,Not Applicable
+Chlamydia,274,Texas,48,Unknown,U,American Indian or Alaska Native,1002-5,2013,2013,Suppressed,Not Applicable,Not Applicable
+Chlamydia,274,Texas,48,Unknown,U,Asian or Pacific Islander,A-PI,2013,2013,8,Not Applicable,Not Applicable
+Chlamydia,274,Texas,48,Unknown,U,Black or African American,2054-5,2013,2013,67,Not Applicable,Not Applicable
+Chlamydia,274,Texas,48,Unknown,U,Hispanic,Hispanic,2013,2013,150,Not Applicable,Not Applicable
+Chlamydia,274,Texas,48,Unknown,U,White,2106-3,2013,2013,124,Not Applicable,Not Applicable
+Chlamydia,274,Texas,48,Unknown,U,Unknown,Unknown,2013,2013,607,Not Applicable,Not Applicable
+Chlamydia,274,Utah,49,Female,F,American Indian or Alaska Native,1002-5,2013,2013,159,15642,10.16
+Chlamydia,274,Utah,49,Female,F,Asian or Pacific Islander,A-PI,2013,2013,188,49554,3.79
+Chlamydia,274,Utah,49,Female,F,Black or African American,2054-5,2013,2013,158,15913,9.93
+Chlamydia,274,Utah,49,Female,F,Hispanic,Hispanic,2013,2013,1388,183090,7.58
+Chlamydia,274,Utah,49,Female,F,White,2106-3,2013,2013,3136,1155228,2.71
+Chlamydia,274,Utah,49,Female,F,Unknown,Unknown,2013,2013,21,Not Applicable,Not Applicable
+Chlamydia,274,Utah,49,Male,M,American Indian or Alaska Native,1002-5,2013,2013,41,15098,2.72
+Chlamydia,274,Utah,49,Male,M,Asian or Pacific Islander,A-PI,2013,2013,84,46579,1.8
+Chlamydia,274,Utah,49,Male,M,Black or African American,2054-5,2013,2013,168,20653,8.13
+Chlamydia,274,Utah,49,Male,M,Hispanic,Hispanic,2013,2013,596,196346,3.04
+Chlamydia,274,Utah,49,Male,M,White,2106-3,2013,2013,1586,1157184,1.37
+Chlamydia,274,Utah,49,Male,M,Unknown,Unknown,2013,2013,10,Not Applicable,Not Applicable
+Chlamydia,274,Utah,49,Unknown,U,American Indian or Alaska Native,1002-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Utah,49,Unknown,U,Asian or Pacific Islander,A-PI,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Utah,49,Unknown,U,Black or African American,2054-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Utah,49,Unknown,U,Hispanic,Hispanic,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Utah,49,Unknown,U,White,2106-3,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Utah,49,Unknown,U,Unknown,Unknown,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Vermont,50,Female,F,American Indian or Alaska Native,1002-5,2013,2013,3,1355,2.21
+Chlamydia,274,Vermont,50,Female,F,Asian or Pacific Islander,A-PI,2013,2013,8,5215,1.53
+Chlamydia,274,Vermont,50,Female,F,Black or African American,2054-5,2013,2013,10,3747,2.67
+Chlamydia,274,Vermont,50,Female,F,Hispanic,Hispanic,2013,2013,10,5005,2
+Chlamydia,274,Vermont,50,Female,F,White,2106-3,2013,2013,1260,301911,4.17
+Chlamydia,274,Vermont,50,Female,F,Unknown,Unknown,2013,2013,28,Not Applicable,Not Applicable
+Chlamydia,274,Vermont,50,Male,M,American Indian or Alaska Native,1002-5,2013,2013,0,1315,0
+Chlamydia,274,Vermont,50,Male,M,Asian or Pacific Islander,A-PI,2013,2013,7,4244,1.65
+Chlamydia,274,Vermont,50,Male,M,Black or African American,2054-5,2013,2013,19,4551,4.17
+Chlamydia,274,Vermont,50,Male,M,Hispanic,Hispanic,2013,2013,9,5052,1.78
+Chlamydia,274,Vermont,50,Male,M,White,2106-3,2013,2013,477,293616,1.62
+Chlamydia,274,Vermont,50,Male,M,Unknown,Unknown,2013,2013,11,Not Applicable,Not Applicable
+Chlamydia,274,Vermont,50,Unknown,U,American Indian or Alaska Native,1002-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Vermont,50,Unknown,U,Asian or Pacific Islander,A-PI,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Vermont,50,Unknown,U,Black or African American,2054-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Vermont,50,Unknown,U,Hispanic,Hispanic,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Vermont,50,Unknown,U,White,2106-3,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Vermont,50,Unknown,U,Unknown,Unknown,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Virginia,51,Female,F,American Indian or Alaska Native,1002-5,2013,2013,21,12439,1.69
+Chlamydia,274,Virginia,51,Female,F,Asian or Pacific Islander,A-PI,2013,2013,278,273064,1.02
+Chlamydia,274,Virginia,51,Female,F,Black or African American,2054-5,2013,2013,9679,845156,11.45
+Chlamydia,274,Virginia,51,Female,F,Hispanic,Hispanic,2013,2013,915,330483,2.77
+Chlamydia,274,Virginia,51,Female,F,White,2106-3,2013,2013,4913,2703200,1.82
+Chlamydia,274,Virginia,51,Female,F,Unknown,Unknown,2013,2013,7361,Not Applicable,Not Applicable
+Chlamydia,274,Virginia,51,Male,M,American Indian or Alaska Native,1002-5,2013,2013,21,12170,1.73
+Chlamydia,274,Virginia,51,Male,M,Asian or Pacific Islander,A-PI,2013,2013,95,245723,0.39
+Chlamydia,274,Virginia,51,Male,M,Black or African American,2054-5,2013,2013,4864,774111,6.28
+Chlamydia,274,Virginia,51,Male,M,Hispanic,Hispanic,2013,2013,427,357013,1.2
+Chlamydia,274,Virginia,51,Male,M,White,2106-3,2013,2013,1857,2632508,0.71
+Chlamydia,274,Virginia,51,Male,M,Unknown,Unknown,2013,2013,2848,Not Applicable,Not Applicable
+Chlamydia,274,Virginia,51,Unknown,U,American Indian or Alaska Native,1002-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Virginia,51,Unknown,U,Asian or Pacific Islander,A-PI,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Virginia,51,Unknown,U,Black or African American,2054-5,2013,2013,6,Not Applicable,Not Applicable
+Chlamydia,274,Virginia,51,Unknown,U,Hispanic,Hispanic,2013,2013,Suppressed,Not Applicable,Not Applicable
+Chlamydia,274,Virginia,51,Unknown,U,White,2106-3,2013,2013,7,Not Applicable,Not Applicable
+Chlamydia,274,Virginia,51,Unknown,U,Unknown,Unknown,2013,2013,23,Not Applicable,Not Applicable
+Chlamydia,274,Washington,53,Female,F,American Indian or Alaska Native,1002-5,2013,2013,486,54595,8.9
+Chlamydia,274,Washington,53,Female,F,Asian or Pacific Islander,A-PI,2013,2013,846,324417,2.61
+Chlamydia,274,Washington,53,Female,F,Black or African American,2054-5,2013,2013,1226,140577,8.72
+Chlamydia,274,Washington,53,Female,F,Hispanic,Hispanic,2013,2013,2614,386408,6.76
+Chlamydia,274,Washington,53,Female,F,White,2106-3,2013,2013,7563,2549465,2.97
+Chlamydia,274,Washington,53,Female,F,Unknown,Unknown,2013,2013,4717,Not Applicable,Not Applicable
+Chlamydia,274,Washington,53,Male,M,American Indian or Alaska Native,1002-5,2013,2013,120,53295,2.25
+Chlamydia,274,Washington,53,Male,M,Asian or Pacific Islander,A-PI,2013,2013,314,285026,1.1
+Chlamydia,274,Washington,53,Male,M,Black or African American,2054-5,2013,2013,990,161868,6.12
+Chlamydia,274,Washington,53,Male,M,Hispanic,Hispanic,2013,2013,1049,421191,2.49
+Chlamydia,274,Washington,53,Male,M,White,2106-3,2013,2013,3100,2520170,1.23
+Chlamydia,274,Washington,53,Male,M,Unknown,Unknown,2013,2013,1925,Not Applicable,Not Applicable
+Chlamydia,274,Washington,53,Unknown,U,American Indian or Alaska Native,1002-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Washington,53,Unknown,U,Asian or Pacific Islander,A-PI,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Washington,53,Unknown,U,Black or African American,2054-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Washington,53,Unknown,U,Hispanic,Hispanic,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Washington,53,Unknown,U,White,2106-3,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Washington,53,Unknown,U,Unknown,Unknown,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,West Virginia,54,Female,F,American Indian or Alaska Native,1002-5,2013,2013,4,1743,2.29
+Chlamydia,274,West Virginia,54,Female,F,Asian or Pacific Islander,A-PI,2013,2013,11,8118,1.36
+Chlamydia,274,West Virginia,54,Female,F,Black or African American,2054-5,2013,2013,439,33549,13.09
+Chlamydia,274,West Virginia,54,Female,F,Hispanic,Hispanic,2013,2013,23,11433,2.01
+Chlamydia,274,West Virginia,54,Female,F,White,2106-3,2013,2013,2608,885165,2.95
+Chlamydia,274,West Virginia,54,Female,F,Unknown,Unknown,2013,2013,539,Not Applicable,Not Applicable
+Chlamydia,274,West Virginia,54,Male,M,American Indian or Alaska Native,1002-5,2013,2013,Suppressed,2006,Suppressed
+Chlamydia,274,West Virginia,54,Male,M,Asian or Pacific Islander,A-PI,2013,2013,4,7126,0.56
+Chlamydia,274,West Virginia,54,Male,M,Black or African American,2054-5,2013,2013,403,38627,10.43
+Chlamydia,274,West Virginia,54,Male,M,Hispanic,Hispanic,2013,2013,13,13097,0.99
+Chlamydia,274,West Virginia,54,Male,M,White,2106-3,2013,2013,849,854549,0.99
+Chlamydia,274,West Virginia,54,Male,M,Unknown,Unknown,2013,2013,243,Not Applicable,Not Applicable
+Chlamydia,274,West Virginia,54,Unknown,U,American Indian or Alaska Native,1002-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,West Virginia,54,Unknown,U,Asian or Pacific Islander,A-PI,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,West Virginia,54,Unknown,U,Black or African American,2054-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,West Virginia,54,Unknown,U,Hispanic,Hispanic,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,West Virginia,54,Unknown,U,White,2106-3,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,West Virginia,54,Unknown,U,Unknown,Unknown,2013,2013,Suppressed,Not Applicable,Not Applicable
+Chlamydia,274,Wisconsin,55,Female,F,American Indian or Alaska Native,1002-5,2013,2013,298,27805,10.72
+Chlamydia,274,Wisconsin,55,Female,F,Asian or Pacific Islander,A-PI,2013,2013,249,75360,3.3
+Chlamydia,274,Wisconsin,55,Female,F,Black or African American,2054-5,2013,2013,4206,195943,21.47
+Chlamydia,274,Wisconsin,55,Female,F,Hispanic,Hispanic,2013,2013,909,169495,5.36
+Chlamydia,274,Wisconsin,55,Female,F,White,2106-3,2013,2013,6956,2414723,2.88
+Chlamydia,274,Wisconsin,55,Female,F,Unknown,Unknown,2013,2013,3830,Not Applicable,Not Applicable
+Chlamydia,274,Wisconsin,55,Male,M,American Indian or Alaska Native,1002-5,2013,2013,100,27286,3.66
+Chlamydia,274,Wisconsin,55,Male,M,Asian or Pacific Islander,A-PI,2013,2013,77,71712,1.07
+Chlamydia,274,Wisconsin,55,Male,M,Black or African American,2054-5,2013,2013,2418,188512,12.83
+Chlamydia,274,Wisconsin,55,Male,M,Hispanic,Hispanic,2013,2013,475,185973,2.55
+Chlamydia,274,Wisconsin,55,Male,M,White,2106-3,2013,2013,2664,2369589,1.12
+Chlamydia,274,Wisconsin,55,Male,M,Unknown,Unknown,2013,2013,1380,Not Applicable,Not Applicable
+Chlamydia,274,Wisconsin,55,Unknown,U,American Indian or Alaska Native,1002-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Wisconsin,55,Unknown,U,Asian or Pacific Islander,A-PI,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Wisconsin,55,Unknown,U,Black or African American,2054-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Wisconsin,55,Unknown,U,Hispanic,Hispanic,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Wisconsin,55,Unknown,U,White,2106-3,2013,2013,Suppressed,Not Applicable,Not Applicable
+Chlamydia,274,Wisconsin,55,Unknown,U,Unknown,Unknown,2013,2013,8,Not Applicable,Not Applicable
+Chlamydia,274,Wyoming,56,Female,F,American Indian or Alaska Native,1002-5,2013,2013,141,6554,21.51
+Chlamydia,274,Wyoming,56,Female,F,Asian or Pacific Islander,A-PI,2013,2013,9,3161,2.85
+Chlamydia,274,Wyoming,56,Female,F,Black or African American,2054-5,2013,2013,27,3942,6.85
+Chlamydia,274,Wyoming,56,Female,F,Hispanic,Hispanic,2013,2013,123,26008,4.73
+Chlamydia,274,Wyoming,56,Female,F,White,2106-3,2013,2013,891,242466,3.67
+Chlamydia,274,Wyoming,56,Female,F,Unknown,Unknown,2013,2013,196,Not Applicable,Not Applicable
+Chlamydia,274,Wyoming,56,Male,M,American Indian or Alaska Native,1002-5,2013,2013,30,6568,4.57
+Chlamydia,274,Wyoming,56,Male,M,Asian or Pacific Islander,A-PI,2013,2013,5,2599,1.92
+Chlamydia,274,Wyoming,56,Male,M,Black or African American,2054-5,2013,2013,50,5467,9.15
+Chlamydia,274,Wyoming,56,Male,M,Hispanic,Hispanic,2013,2013,59,28762,2.05
+Chlamydia,274,Wyoming,56,Male,M,White,2106-3,2013,2013,360,250885,1.43
+Chlamydia,274,Wyoming,56,Male,M,Unknown,Unknown,2013,2013,113,Not Applicable,Not Applicable
+Chlamydia,274,Wyoming,56,Unknown,U,American Indian or Alaska Native,1002-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Wyoming,56,Unknown,U,Asian or Pacific Islander,A-PI,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Wyoming,56,Unknown,U,Black or African American,2054-5,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Wyoming,56,Unknown,U,Hispanic,Hispanic,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Wyoming,56,Unknown,U,White,2106-3,2013,2013,0,Not Applicable,Not Applicable
+Chlamydia,274,Wyoming,56,Unknown,U,Unknown,Unknown,2013,2013,Suppressed,Not Applicable,Not Applicable

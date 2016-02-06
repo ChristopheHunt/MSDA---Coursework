@@ -1,0 +1,7 @@
+name: Publish Document
+account: rpubs
+server: rpubs.com
+bundleId:
+        https://api.rpubs.com/api/v1/document/92143/fbeaa2578a6f43b4ad091679cff17c56
+url: http://rpubs.com/Christophe1/92143
+when: 1437177654.76146

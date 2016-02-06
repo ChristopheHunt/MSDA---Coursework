@@ -1,0 +1,50 @@
+﻿--Question 1. What weather conditions are associated with New York City departure delays?
+
+       SELECT DISTINCT
+		       W.MONTH,
+		       W.DAY,
+		       W.YEAR,
+		       W.TEMP,  
+		       W.DEWP, 
+		       W.HUMID, 
+		       W.WIND_DIR, 
+		       W.WIND_SPEED, 
+		       W.WIND_GUST, 
+		       W.PRECIP, 
+		       W.PRESSURE, 
+		       W.VISIB
+	FROM FLIGHTS AS F INNER JOIN WEATHER AS W ON W.YEAR = F.YEAR AND W.DAY = F.DAY AND F.MONTH = W.MONTH
+	WHERE F.ORIGIN IN ( 'JFK', 'LGA','JRB','6N5','6N7','JRA','6N6') AND (F.DEP_DELAY > 0)
+	ORDER BY W.YEAR, W.MONTH, W.DAY DESC;
+
+--Question 2. Are older planes more likely to be delayed? 
+
+
+	DROP VIEW IF EXISTS DELAYEDFLIGHTS; 
+	CREATE VIEW DELAYEDFLIGHTS AS SELECT TAILNUM, CASE WHEN DEP_DELAY > 0 THEN 1 ELSE 0 END DELAYED FROM FLIGHTS;
+	SELECT * FROM DELAYEDFLIGHTS;
+
+	SELECT P.YEAR, SUM(D.DELAYED)/COUNT(D.DELAYED)::FLOAT "PERCENT DELAYED"
+	FROM  DELAYEDFLIGHTS AS D INNER JOIN PLANES P ON D.TAILNUM = P.TAILNUM 
+	GROUP BY P.YEAR 
+	ORDER BY SUM(D.DELAYED)/COUNT(D.DELAYED)::FLOAT DESC; 
+
+
+/*Question 3. Ask (and if possible answer) a third question that also requires joining information 
+from two or more tables in the flights database, and/or assumes that additional information can be collected in advance of answering
+your question.*/
+
+--WHAT IS THE COUNT OF DELAYS FOR THE TOP 10 HIGHEST AIRPORT DESTINATION
+
+        DROP VIEW IF EXISTS DELAYEDFLIGHTSLOCATION; 
+	CREATE VIEW DELAYEDFLIGHTSLOCATION AS SELECT DEST, 'YES' DELAYED FROM FLIGHTS WHERE DEP_DELAY > 0 ;
+	SELECT * FROM DELAYEDFLIGHTSLOCATION;
+
+	SELECT A.NAME, A.ALT, COUNT(DFL.DELAYED) "DELAYED FLIGHTS" 
+	FROM AIRPORTS A INNER JOIN DELAYEDFLIGHTSLOCATION DFL ON DFL.DEST = A.FAA 
+	GROUP BY A.NAME, A.ALT
+	ORDER BY A.ALT DESC LIMIT 10;
+
+
+
+
