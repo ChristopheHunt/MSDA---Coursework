@@ -19,7 +19,7 @@ In the following R markdown I am converting a subset of the Flag Dataset from va
 
 The actual data set is found here: http://archive.ics.uci.edu/ml/machine-learning-databases/flags/flag.data
 
-I chose the first 3 columns and the 6th and column from the data set and transform the information based on the data dictionary here: http://archive.ics.uci.edu/ml/machine-learning-databases/flags/flag.names. 
+I chose the first 3 columns and the 6th, 8th, 9th, and 10th column from the data set and transform the information based on the data dictionary here: http://archive.ics.uci.edu/ml/machine-learning-databases/flags/flag.names. 
 
  1. name: Name of the country concerned
  2. landmass:	1=N.America, 2=S.America, 3=Europe, 4=Africa, 5=Asia, 6=Oceania
