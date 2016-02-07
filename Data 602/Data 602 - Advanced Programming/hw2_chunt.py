@@ -3,27 +3,30 @@
 #	main, so you will at least need a constructor that takes the values as (Brand, Price, Safety Rating),
 # 	a function called showEvaluation, and an attribute carCount
 class CarEvaluation:
-	'A simple class that represents a car evaluation'
-    def count(self, count):
-       self.count = 1
-   def carCount(self.count)
-       return carCount
-          #all your logic here
-	
+    'A simple class that represents a car evaluation'
+    def __init__ (self,brand,price,safety_rating):
+       self.brand = brand
+       self.price = price
+       self.sr = safety_rating
+
+    def carCount(self):
+          return 1
+             #all your logic here
+
 #2. fill in this function
 #   it takes a list of CarEvaluation objects for input and either "asc" or "des"
 #   if it gets "asc" return a list of car names order by ascending price
 # 	otherwise by descending price
 #def sortbyprice #you fill in the rest
-	#return #return a value
+    #return #return a value
 
 #3. fill in this function
 #   it takes a list for input of CarEvaluation objects and a value to search for
 #	it returns true if the value is in the safety  attribute of an entry on the list,
 #   otherwise false
-def searchforsafety #you fill in the rest
-	return #return a value
-	
+#def searchforsafety #you fill in the rest
+    #return #return a value
+
 # This is the main of the program.  Expected outputs are in comments after the function calls.
 if __name__ == "__main__":	
    eval1 = CarEvaluation("Ford", "High", 2)
