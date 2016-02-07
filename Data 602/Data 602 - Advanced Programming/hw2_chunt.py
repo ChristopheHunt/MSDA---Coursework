@@ -4,14 +4,18 @@
 # 	a function called showEvaluation, and an attribute carCount
 class CarEvaluation:
 	'A simple class that represents a car evaluation'
-	#all your logic here
+    def count(self, count):
+       self.count = 1
+   def carCount(self.count)
+       return carCount
+          #all your logic here
 	
 #2. fill in this function
 #   it takes a list of CarEvaluation objects for input and either "asc" or "des"
 #   if it gets "asc" return a list of car names order by ascending price
 # 	otherwise by descending price
-def sortbyprice #you fill in the rest
-	return #return a value
+#def sortbyprice #you fill in the rest
+	#return #return a value
 
 #3. fill in this function
 #   it takes a list for input of CarEvaluation objects and a value to search for
