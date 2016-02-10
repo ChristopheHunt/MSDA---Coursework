@@ -1,8 +1,3 @@
-
-# coding: utf-8
-
-# In[12]:
-
 #1. fill in this class
 #   it will need to provide for what happens below in the
 #	main, so you will at least need a constructor that takes the values as (Brand, Price, Safety Rating),
