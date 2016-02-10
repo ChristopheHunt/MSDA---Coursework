@@ -1,3 +1,8 @@
+
+# coding: utf-8
+
+# In[12]:
+
 #1. fill in this class
 #   it will need to provide for what happens below in the
 #	main, so you will at least need a constructor that takes the values as (Brand, Price, Safety Rating),
@@ -42,7 +47,7 @@ def sortbyprice(input, value): #you fill in the rest
 #	it returns true if the value is in the safety  attribute of an entry on the list,
 #   otherwise false
 def searchforsafety(input, value):
-    in_list = [CarEvaluation.sr for CarEvaluation in input]#you fill in the rest
+    in_list = [input.sr for input in input]#you fill in the rest
     return value in in_list  #return a value
 
 # This is the main of the program.  Expected outputs are in comments after the function calls.
@@ -63,3 +68,4 @@ if __name__ == "__main__":
    print sortbyprice(L, "des"); #[Ford, GMC, Toyota]
    print searchforsafety(L, 2); #true
    print searchforsafety(L, 1); #false
+
