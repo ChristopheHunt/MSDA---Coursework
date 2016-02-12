@@ -24,6 +24,7 @@ library(dplyr)
 library(scales)
 library(ggplot2)
 library(tcltk)
+library(plotly)
 
 pop.url <- file(paste(url,"population.csv", sep = ""), open="r" )
 tb.url <- file(paste(url,"tb.csv", sep = ""),  open="r" ) 
@@ -44,7 +45,7 @@ n <- 5
 top_highrt <- head(subset$country, n = n)
 data <- subset(data, data$country %in% top_highrt)
 per_person <- 1000
-title = sprintf("TB Rate per %s people for top %s countries", per_person, n)
+title = sprintf("TB Rate per %s people for top %s countries", comma(per_person), n)
 p <- plot_ly(data, x = year, y = (rate * per_person), color = country, type = "line",
 showlegend = TRUE) %>% layout (title = title, yaxis = list(title = sprintf("Rate per %s people",per_person)), xaxis = list(title = "year"))
 p
