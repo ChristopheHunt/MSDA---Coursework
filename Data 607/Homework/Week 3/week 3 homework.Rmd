@@ -1,0 +1,52 @@
+---
+title: "Homework week 3"
+author: "Christophe"
+date: "February 12, 2016"
+output: html_document
+---
+
+```{r preload, include = FALSE}
+library(plyr)
+library(sqldf)
+library(dplyr)
+library(scales)
+library(ggplot2)
+library(plotly)
+library(tcltk)
+url <- "https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20607/Homework/data/"
+```
+
+
+```{r}
+library(plyr)
+library(sqldf)
+library(dplyr)
+library(scales)
+library(ggplot2)
+library(tcltk)
+
+pop.url <- file(paste(url,"population.csv", sep = ""), open="r" )
+tb.url <- file(paste(url,"tb.csv", sep = ""),  open="r" ) 
+population <- read.csv(pop.url, sep=",", header=TRUE, stringsAsFactors = FALSE)
+tb_infections <- read.csv(tb.url, sep=",", header=FALSE, stringsAsFactors = FALSE)
+close(pop.url, tb.url)
+colnames(tb_infections) <- c("country","year","sex","child","adult","elderly")
+tb_infections[tb_infections == "-1"] <- NA
+tb_infections <- ddply(tb_infections,~country + year, summarise, adult = sum(adult), child = sum(child), elderly = sum(elderly))
+tb_infections$count <- tb_infections$child + tb_infections$adult + tb_infections$elderly
+data <- sqldf("SELECT DISTINCT p.country, p.year, t.count, p.population 
+              FROM population p LEFT JOIN tb_infections t on t.country = p.country and t.year = p.year")
+data$rate <- (data$count/data$population)
+data <- data[,c(1,2,5)]
+subset <- ddply(data, ~country, summarize, avgrt = mean(rate, na.rm = TRUE))
+subset <- subset[order(-subset$avgrt),]
+n <- 5
+top_highrt <- head(subset$country, n = n)
+data <- subset(data, data$country %in% top_highrt)
+per_person <- 1000
+title = sprintf("TB Rate per %s people for top %s countries", per_person, n)
+p <- plot_ly(data, x = year, y = (rate * per_person), color = country, type = "line",
+showlegend = TRUE) %>% layout (title = title, yaxis = list(title = sprintf("Rate per %s people",per_person)), xaxis = list(title = "year"))
+p
+
+```
