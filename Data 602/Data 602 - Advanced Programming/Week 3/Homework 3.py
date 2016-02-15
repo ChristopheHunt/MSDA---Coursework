@@ -19,12 +19,12 @@ import sys
 #class        unacc, acc, good, vgood
     
 s = raw_input('Use online csv file? y/n : ')
+
 if s.lower() == 'y': 
-    df = pandas.read_csv("%s%s%s%s%s" % ("https://raw.githubusercontent.com/",
-                                         "ChristopheHunt/MSDA",
-                                         "---Coursework/master/",
-                                         "Data%20602/Data%20602%20-%20Advanced%20Programming/", 
-                                         "data/cars.data.csv"), 
+    df = pandas.read_csv("https://raw.githubusercontent.com/ChristopheHunt/MSDA" + 
+                         "---Coursework/master/Data%20602/" + 
+                         "Data%20602%20-%20Advanced%20Programming/" + 
+                         "data/cars.data.csv", 
                          header=None, index_col=False)
 elif s.lower() == 'n':
     root = Tkinter.Tk()
@@ -41,6 +41,9 @@ df = df.apply(lambda df: df.astype('category'))
 safety_cat = ['low','med','high']
 maint_cat = ['low','med','high','vhigh']
 doors_cat = ['2','3','4','5more']
+
+
+# In[ ]:
 
 def columncheck(column, listvalues):
     check = list(set(pandas.unique(df[column].ravel())) - set(listvalues))
@@ -70,6 +73,10 @@ setcat('doors', doors_cat)
 #Print to the console the top 10 rows of the data sorted by 'safety' in descending order
 results = df.sort_values(by = 'safety', ascending=[1])
 print results.head(10)
+
+
+# In[ ]:
+
 raw_input("Press Enter to continue...  ")
 
 
@@ -78,6 +85,10 @@ raw_input("Press Enter to continue...  ")
 #Print to the console the bottom 15 rows of the data sorted by 'maint' in ascending order
 results = df.sort_values(by = 'maint', ascending = [0])
 print results.tail(15)
+
+
+# In[ ]:
+
 raw_input("Press Enter to continue...  ")
 
 
@@ -88,6 +99,10 @@ raw_input("Press Enter to continue...  ")
 mask = df[['buying', 'maint','safety']].apply(lambda column: column.str.contains('vhigh|high', regex=True)).any(axis=1)
 results = df[mask].sort_values(by = 'doors', ascending = [1])
 print results
+
+
+# In[ ]:
+
 raw_input("Press Enter to continue...  ")
 
 
@@ -99,9 +114,4 @@ results = df.query("buying == 'vhigh' and maint == 'med' and doors == '4' and (p
 savefile = tkFileDialog.asksaveasfile(mode='w', defaultextension=".csv")
 results.to_csv(savefile, index = False)
 savefile.close()
-
-
-# In[ ]:
-
-test
 
