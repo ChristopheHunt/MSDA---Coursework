@@ -10,13 +10,13 @@ import Tkinter
 import tkFileDialog
 import sys
 
-   #buying       v-high, high, med, low
-   #maint        v-high, high, med, low
-   #doors        2, 3, 4, 5-more
-   #persons      2, 4, more
-   #lug_boot     small, med, big
-   #safety       low, med, high
-   #class        unacc, acc, good, vgood
+#buying       v-high, high, med, low
+#maint        v-high, high, med, low
+#doors        2, 3, 4, 5-more
+#persons      2, 4, more
+#lug_boot     small, med, big
+#safety       low, med, high
+#class        unacc, acc, good, vgood
     
 s = raw_input('Use online csv file? y/n : ')
 if s.lower() == 'y': 
@@ -95,9 +95,13 @@ raw_input("Press Enter to continue...  ")
 
 #Save to a file all rows (in any order) that are: 'buying': vhigh, 'maint': med, 'doors': 4, and 
 #'persons': 4 or more.  The file path can be a hard-coded location (name it output.txt) or use a dialog box.  
-results = df.query("buying == 'vhigh' and maint == 'med' and doors == '4'")
-results = results.query("persons == '4' or persons == 'more'")
+results = df.query("buying == 'vhigh' and maint == 'med' and doors == '4' and (persons == '4' or persons == 'more')")
 savefile = tkFileDialog.asksaveasfile(mode='w', defaultextension=".csv")
 results.to_csv(savefile, index = False)
 savefile.close()
+
+
+# In[ ]:
+
+test
 
