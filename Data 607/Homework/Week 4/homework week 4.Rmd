@@ -1,0 +1,20 @@
+---
+title: "Homework week 4"
+author: "Christophe"
+date: "February 15, 2016"
+output: html_document
+---
+```{r preload library, include = FALSE}
+library(stringr)
+```
+
+```{r}
+library(stringr)
+raw.data <- "555-1239Moe Szyslak(636) 555-0113Burns, C. Montgomery555-6542Rev. Timothy Lovejoy555 8904Ned Flanders636-555-3226Simpson, Homer5543642Dr. Julius Hibbert"
+name <- unlist(str_extract_all(raw.data, "[[:alpha:]., ]{2,}"))
+name
+phone <- unlist(str_extract_all(raw.data, "\\(?(\\d{3})?\\)?(-| )?\\d{3}(-| )?\\d{4}"))
+phone
+df <- data.frame(name = name, phone = phone)
+```
+
