@@ -61,7 +61,9 @@ setcat('maint', maint_cat)
 setcat('doors', doors_cat)
 
 #Print to the console the top 10 rows of the data sorted by 'safety' in descending order
-results = df.sort_values(by = 'safety', ascending=[1])
+s = raw_input("sort by which column? safety, maint, or doors?")
+if s if "blah" not in somestring:
+results = df.sort_values(by = s, ascending=[1])
 print results.head(10)
 raw_input("Press Enter to continue...  ")
 
