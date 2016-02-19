@@ -1,7 +1,5 @@
 
-import requests
-import csv
-import pandas 
+import pandas
 import Tkinter
 import tkFileDialog
 import sys
@@ -61,9 +59,7 @@ setcat('maint', maint_cat)
 setcat('doors', doors_cat)
 
 #Print to the console the top 10 rows of the data sorted by 'safety' in descending order
-s = raw_input("sort by which column? safety, maint, or doors?")
-if s if "blah" not in somestring:
-results = df.sort_values(by = s, ascending=[1])
+results = df.sort_values(by = 'safety', ascending=[1])
 print results.head(10)
 raw_input("Press Enter to continue...  ")
 
