@@ -14,6 +14,14 @@ library(stringr)
 library(Hmisc)
 raw.data <- "555-1239Moe Szyslak(636) 555-0113Burns, C. Montgomery555-6542Rev. Timothy Lovejoy555 8904Ned Flanders636-555-3226Simpson, Homer5543642Dr. Julius Hibbert"
 name <- unlist(str_extract_all(raw.data, "[[:alpha:]., ]{2,}"))
+name
+```
+
+### 3 Name Regex
+
+#### (a) rearrange vector  so all names are `first_name last_name`
+
+```{r}
 last_first <- name[!is.na((str_extract(name, ".+, .+")))] #finds all names in "ln, fn"" format 
 first_name <- (str_extract(last_first,", .+")) #gets just the first name from "ln, fn" format 
 last_name <- (str_extract(last_first,".+, ")) #gets just the last name from "ln, fn" format 
@@ -24,20 +32,21 @@ name <- append(last_first, first_last) #combines the two lists
 list.tree(name)
 ```
 
-## b 
+### (b)  check for titles 
+
 ```{r}
 title <- name[!is.na((str_extract(name, "[:alpha:]{2,}\\..")))] #gets all names that have more than 2 letters before period 
 list.tree(title)
 ```
 
-## c 
+### (c) check for three names
 
 ```{r}
 three_names <- name[!is.na(str_extract(name, ("[:upper:]\\.+")))] # gets names with one capital letter before next name part
 list.tree(three_names)
 ```
 
-## 7 HTML tag problem
+### 7 HTML tag problem
 
 ```{r}
 string <- "<title>+++BREAKING NEWS+++</title>"
@@ -50,18 +59,14 @@ attempt_2
 The reason that `attempt_1` fails is that it is not attempting to grab a whole word within the first HTML tag. It is using a lazy grab and because there is another tag at the end of the HTML line it pulls the entire line (*I think*). 
 
 
-## 8
+### 8 binomial formula from string
+
 ```{r}
-string <- "(5-3)^2=5^2-2*5*3+3^2"
+string <- "(5-3)^2=5^2-2*5*3+3^2 conforms to the binomial theorem"
 attempt_1 <- str_extract(string, "[^0-9=+*()]+")
 attempt_1
-attempt_2 <- str_extract(string, "[0-9=+*()].+")
+attempt_2 <- str_extract(string, "[0-9=+*()].+[0-9]")
 attempt_2
 ```
 
-The reason that `attempt_1` fails is because the carat `^` symbol inverses the matching. So it is looking for anything no 0-9. Also the period `.` is any characters after the matching of one time using the `+` symbol. 
-
-```{r}
-
-
-```
+The reason that `attempt_1` fails is because the carat `^` symbol inverses the matching. So it is looking for anything but 0-9. Also the period `.` is any characters after the matching of one time using the `+` symbol. 
