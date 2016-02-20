@@ -69,16 +69,61 @@ img {
 
 
 <pre class="r"><code>library(stringr)
+library(Hmisc)
 raw.data &lt;- &quot;555-1239Moe Szyslak(636) 555-0113Burns, C. Montgomery555-6542Rev. Timothy Lovejoy555 8904Ned Flanders636-555-3226Simpson, Homer5543642Dr. Julius Hibbert&quot;
 name &lt;- unlist(str_extract_all(raw.data, &quot;[[:alpha:]., ]{2,}&quot;))
-name</code></pre>
-<pre><code>## [1] &quot;Moe Szyslak&quot;          &quot;Burns, C. Montgomery&quot; &quot;Rev. Timothy Lovejoy&quot;
-## [4] &quot;Ned Flanders&quot;         &quot;Simpson, Homer&quot;       &quot;Dr. Julius Hibbert&quot;</code></pre>
-<pre class="r"><code>phone &lt;- unlist(str_extract_all(raw.data, &quot;\\(?(\\d{3})?\\)?(-| )?\\d{3}(-| )?\\d{4}&quot;))
-phone</code></pre>
-<pre><code>## [1] &quot;555-1239&quot;       &quot;(636) 555-0113&quot; &quot;555-6542&quot;       &quot;555 8904&quot;      
-## [5] &quot;636-555-3226&quot;   &quot;5543642&quot;</code></pre>
-<pre class="r"><code>df &lt;- data.frame(name = name, phone = phone)</code></pre>
+last_first &lt;- name[!is.na((str_extract(name, &quot;.+, .+&quot;)))] #finds all names in &quot;ln, fn&quot;&quot; format 
+first_name &lt;- (str_extract(last_first,&quot;, .+&quot;)) #gets just the first name from &quot;ln, fn&quot; format 
+last_name &lt;- (str_extract(last_first,&quot;.+, &quot;)) #gets just the last name from &quot;ln, fn&quot; format 
+names &lt;- as.list(paste(first_name,last_name)) #puts the first name and last name together
+last_first &lt;- as.list(gsub(&quot;, &quot;, &quot;&quot;, names)) # removes left over &quot;,&quot; in the names
+first_last &lt;- as.list(name[is.na((str_extract(name, &quot;.+, .+&quot;)))]) # gets all names in &quot;fn ln&quot; format
+name &lt;- append(last_first, first_last) #combines the two lists
+list.tree(name)</code></pre>
+<pre><code>##  name = list 6 (760 bytes)
+## .  [[1]] = character 1= C. Montgomery Burns 
+## .  [[2]] = character 1= Homer Simpson 
+## .  [[3]] = character 1= Moe Szyslak 
+## .  [[4]] = character 1= Rev. Timothy Lovejoy 
+## .  [[5]] = character 1= Ned Flanders 
+## .  [[6]] = character 1= Dr. Julius Hibbert</code></pre>
+<div id="b" class="section level2">
+<h2>b</h2>
+<pre class="r"><code>title &lt;- name[!is.na((str_extract(name, &quot;[:alpha:]{2,}\\..&quot;)))] #gets all names that have more than 2 letters before period 
+list.tree(title)</code></pre>
+<pre><code>##  title = list 2 (296 bytes)
+## .  [[1]] = character 1= Rev. Timothy Lovejoy 
+## .  [[2]] = character 1= Dr. Julius Hibbert</code></pre>
+</div>
+<div id="c" class="section level2">
+<h2>c</h2>
+<pre class="r"><code>three_names &lt;- name[!is.na(str_extract(name, (&quot;[:upper:]\\.+&quot;)))] # gets names with one capital letter before next name part
+list.tree(three_names)</code></pre>
+<pre><code>##  three_names = list 1 (168 bytes)
+## .  [[1]] = character 1= C. Montgomery Burns</code></pre>
+</div>
+<div id="html-tag-problem" class="section level2">
+<h2>7 HTML tag problem</h2>
+<pre class="r"><code>string &lt;- &quot;&lt;title&gt;+++BREAKING NEWS+++&lt;/title&gt;&quot;
+attempt_1 &lt;- str_extract(string, &quot;&lt;.+&gt;&quot;) 
+attempt_1</code></pre>
+<pre><code>## [1] &quot;&lt;title&gt;+++BREAKING NEWS+++&lt;/title&gt;&quot;</code></pre>
+<pre class="r"><code>attempt_2 &lt;- str_extract(string, &quot;&lt;\\w+&gt;&quot;)
+attempt_2</code></pre>
+<pre><code>## [1] &quot;&lt;title&gt;&quot;</code></pre>
+<p>The reason that <code>attempt_1</code> fails is that it is not attempting to grab a whole word within the first HTML tag. It is using a lazy grab and because there is another tag at the end of the HTML line it pulls the entire line (<em>I think</em>).</p>
+</div>
+<div id="section" class="section level2">
+<h2>8</h2>
+<pre class="r"><code>string &lt;- &quot;(5-3)^2=5^2-2*5*3+3^2&quot;
+attempt_1 &lt;- str_extract(string, &quot;[^0-9=+*()]+&quot;)
+attempt_1</code></pre>
+<pre><code>## [1] &quot;-&quot;</code></pre>
+<pre class="r"><code>attempt_2 &lt;- str_extract(string, &quot;[0-9=+*()].+&quot;)
+attempt_2</code></pre>
+<pre><code>## [1] &quot;(5-3)^2=5^2-2*5*3+3^2&quot;</code></pre>
+<p>The reason that <code>attempt_1</code> fails is because the carat <code>^</code> symbol inverses the matching. So it is looking for anything no 0-9. Also the period <code>.</code> is any characters after the matching of one time using the <code>+</code> symbol.</p>
+</div>
 
 
 </div>
