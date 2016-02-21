@@ -35,15 +35,17 @@ list.tree(name)
 ### (b)  check for titles 
 
 ```{r}
+str_detect(name, "[:alpha:]{2,}\\..")
 title <- name[!is.na((str_extract(name, "[:alpha:]{2,}\\..")))] #gets all names that have more than 2 letters before period 
 list.tree(title)
 ```
 
-### (c) check for three names
+### (c) check for second name
 
 ```{r}
-three_names <- name[!is.na(str_extract(name, ("[:upper:]\\.+")))] # gets names with one capital letter before next name part
-list.tree(three_names)
+str_detect(name, ("[:upper:]\\.+"))
+has_middle_name <- name[!is.na(str_extract(name, ("[:upper:]\\.+")))] # gets names with one capital letter before next name part
+list.tree(has_middle_name)
 ```
 
 ### 7 HTML tag problem
@@ -56,7 +58,7 @@ attempt_2 <- str_extract(string, "<\\w+>")
 attempt_2
 ```
 
-The reason that `attempt_1` fails is that it is not attempting to grab a whole word within the first HTML tag. It is using a lazy grab and because there is another tag at the end of the HTML line it pulls the entire line (*I think*). 
+The reason that `attempt_1` fails is that it is grabbing everything between `<` and `>`  and since there is a second tag and the end with `>` we get the whole string. By getting only a whole word we get the first tag since the second tag has `\`. 
 
 
 ### 8 binomial formula from string
@@ -69,4 +71,4 @@ attempt_2 <- str_extract(string, "[0-9=+*()].+[0-9]")
 attempt_2
 ```
 
-The reason that `attempt_1` fails is because the carat `^` symbol inverses the matching. So it is looking for anything but 0-9. Also the period `.` is any characters after the matching of one time using the `+` symbol. 
+The reason that `attempt_1` fails is because the carat `^` symbol inverses the matching. So it is looking for anything but 0-9. Also the period `.` is any characters after the matching of one time using the `+` symbol. By adding the `[0-9]` we make sure to end at the last numeric value in the string.  

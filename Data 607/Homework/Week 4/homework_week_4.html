@@ -98,17 +98,21 @@ list.tree(name)</code></pre>
 </div>
 <div id="b-check-for-titles" class="section level3">
 <h3>(b) check for titles</h3>
+<pre class="r"><code>str_detect(name, &quot;[:alpha:]{2,}\\..&quot;)</code></pre>
+<pre><code>## [1] FALSE FALSE FALSE  TRUE FALSE  TRUE</code></pre>
 <pre class="r"><code>title &lt;- name[!is.na((str_extract(name, &quot;[:alpha:]{2,}\\..&quot;)))] #gets all names that have more than 2 letters before period 
 list.tree(title)</code></pre>
 <pre><code>##  title = list 2 (296 bytes)
 ## .  [[1]] = character 1= Rev. Timothy Lovejoy 
 ## .  [[2]] = character 1= Dr. Julius Hibbert</code></pre>
 </div>
-<div id="c-check-for-three-names" class="section level3">
-<h3>(c) check for three names</h3>
-<pre class="r"><code>three_names &lt;- name[!is.na(str_extract(name, (&quot;[:upper:]\\.+&quot;)))] # gets names with one capital letter before next name part
-list.tree(three_names)</code></pre>
-<pre><code>##  three_names = list 1 (168 bytes)
+<div id="c-check-for-second-name" class="section level3">
+<h3>(c) check for second name</h3>
+<pre class="r"><code>str_detect(name, (&quot;[:upper:]\\.+&quot;))</code></pre>
+<pre><code>## [1]  TRUE FALSE FALSE FALSE FALSE FALSE</code></pre>
+<pre class="r"><code>has_middle_name &lt;- name[!is.na(str_extract(name, (&quot;[:upper:]\\.+&quot;)))] # gets names with one capital letter before next name part
+list.tree(has_middle_name)</code></pre>
+<pre><code>##  has_middle_name = list 1 (168 bytes)
 ## .  [[1]] = character 1= C. Montgomery Burns</code></pre>
 </div>
 <div id="html-tag-problem" class="section level3">
@@ -120,7 +124,7 @@ attempt_1</code></pre>
 <pre class="r"><code>attempt_2 &lt;- str_extract(string, &quot;&lt;\\w+&gt;&quot;)
 attempt_2</code></pre>
 <pre><code>## [1] &quot;&lt;title&gt;&quot;</code></pre>
-<p>The reason that <code>attempt_1</code> fails is that it is not attempting to grab a whole word within the first HTML tag. It is using a lazy grab and because there is another tag at the end of the HTML line it pulls the entire line (<em>I think</em>).</p>
+<p>The reason that <code>attempt_1</code> fails is that it is grabbing everything between <code>&lt;</code> and <code>&gt;</code> and since there is a second tag and the end with <code>&gt;</code> we get the whole string. By getting only a whole word we get the first tag since the second tag has <code>\</code>.</p>
 </div>
 <div id="binomial-formula-from-string" class="section level3">
 <h3>8 binomial formula from string</h3>
@@ -131,7 +135,7 @@ attempt_1</code></pre>
 <pre class="r"><code>attempt_2 &lt;- str_extract(string, &quot;[0-9=+*()].+[0-9]&quot;)
 attempt_2</code></pre>
 <pre><code>## [1] &quot;(5-3)^2=5^2-2*5*3+3^2&quot;</code></pre>
-<p>The reason that <code>attempt_1</code> fails is because the carat <code>^</code> symbol inverses the matching. So it is looking for anything but 0-9. Also the period <code>.</code> is any characters after the matching of one time using the <code>+</code> symbol.</p>
+<p>The reason that <code>attempt_1</code> fails is because the carat <code>^</code> symbol inverses the matching. So it is looking for anything but 0-9. Also the period <code>.</code> is any characters after the matching of one time using the <code>+</code> symbol. By adding the <code>[0-9]</code> we make sure to end at the last numeric value in the string.</p>
 </div>
 
 

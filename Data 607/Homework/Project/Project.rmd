@@ -1,0 +1,21 @@
+---
+title: "Project 1"
+author: "Christophe"
+date: "February 20, 2016"
+output: html_document
+---
+
+
+
+```{r}
+library(data.table)
+library(Hmisc)
+tinfo <- file("https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20607/Homework/data/tournamentinfo.txt", open="r" )
+data <- as.list(readLines(tinfo))
+data <- data[is.na((str_extract(data, ".+--.+")))]
+test <- data[!is.na((str_extract(data, "[:alnum:]{1,}\\|")))]
+test <- data[is.na((str_extract(data, "[:alnum:]{1,}\\|")))]
+
+```
+
+
