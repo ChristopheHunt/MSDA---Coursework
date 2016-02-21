@@ -11,10 +11,32 @@ output: html_document
 library(data.table)
 library(Hmisc)
 tinfo <- file("https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20607/Homework/data/tournamentinfo.txt", open="r" )
-data <- as.list(readLines(tinfo))
-data <- data[is.na((str_extract(data, ".+--.+")))]
-test <- data[!is.na((str_extract(data, "[:alnum:]{1,}\\|")))]
-test <- data[is.na((str_extract(data, "[:alnum:]{1,}\\|")))]
+chess.data <- readLines(tinfo) # read lines 
+chess.data <- data.frame(chess.data, do.call(rbind, strsplit(chess.data, split = "|", fixed = TRUE)))
+chess.data <- data.frame(lapply(chess.data, as.character), stringsAsFactors=FALSE)
+chess.data <- chess.data[!grepl(".+--.+", chess.data$X1),] # removes "------" lines
+chess.data <- chess.data[,-c(1,12)]
+## getting column names dynamically, ON HOLD
+#column.names <- chess.data[2:3,]
+#column_collapse <- function(x){for (i in names(x)) {x[i] <- paste(x[i], collapse = "") x}}
+
+combine_rows <- function(dataframe){
+                    df <- dataframe[0,]  ##create empty dataframe copy
+                    for (i in colnames(dataframe)){  ## for all columns in data frame 
+                        for (j in seq(1:length(dataframe[[i]]))){ ## for all rows in dataframe
+                         df[j,i] <- (paste(dataframe[[i]][j:(j+1)], collapse = "")) ## collapse two rows and replace previous data 
+                        }
+                    } 
+                    return(df) # return the dataframe
+                  }
+
+chess.data <- (combine_rows(chess.data)) # run function on data frame
+colnames(chess.data) <- chess.data[1,] # create column names from first row
+chess.data <- chess.data[-(1:2),] # remove header information
+index <- !is.na(as.numeric(gsub( " .*$", "",  str_trim(chess.data[,1])))) #gets the part of string, if a numeric value it converts to True
+chess.data <- chess.data[index,]
+
+
 
 ```
 
