@@ -35,7 +35,10 @@ colnames(chess.data) <- chess.data[1,] # create column names from first row
 chess.data <- chess.data[-(1:2),] # remove header information
 index <- !is.na(as.numeric(gsub( " .*$", "",  str_trim(chess.data[,1])))) #gets the part of string, if a numeric value it converts to True
 chess.data <- chess.data[index,]
-
+chess.data <- as.data.frame(str_trim(chess.data))
+x <- data.frame(do.call('rbind', strsplit(as.character(chess.data$` Pair  Num  `),"\\s.+",fixed=TRUE)))
+chess.data$ID <- gsub( " .*$", "",  str_trim(chess.data[,1]))
+chess.data$State <- gsub( "$*. ", "",  str_trim(chess.data[,1]))
 
 
 ```
