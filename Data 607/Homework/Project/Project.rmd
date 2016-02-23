@@ -24,7 +24,7 @@ combine_rows <- function(dataframe){
                     df <- dataframe[0,]  ##create empty dataframe copy
                     for (i in colnames(dataframe)){  ## for all columns in data frame 
                         for (j in seq(1:length(dataframe[[i]]))){ ## for all rows in dataframe
-                         df[j,i] <- (paste(dataframe[[i]][j:(j+1)], collapse = "")) ## collapse two rows and replace previous data 
+                         df[j,i] <- gsub("\\s+"," ",(paste(dataframe[[i]][j:(j+1)], collapse = ""))) ## gsub removes extra space and then paste collapses two rows and replace previous data 
                         }
                     } 
                     return(df) # return the dataframe
@@ -35,11 +35,20 @@ colnames(chess.data) <- chess.data[1,] # create column names from first row
 chess.data <- chess.data[-(1:2),] # remove header information
 index <- !is.na(as.numeric(gsub( " .*$", "",  str_trim(chess.data[,1])))) #gets the part of string, if a numeric value it converts to True
 chess.data <- chess.data[index,]
-chess.data <- as.data.frame(str_trim(chess.data))
-x <- data.frame(do.call('rbind', strsplit(as.character(chess.data$` Pair  Num  `),"\\s.+",fixed=TRUE)))
+chess.data$ID <- str_trim(str_extract(chess.data[,1], "\\s[[0-9]]{1,}"))
+chess.data$State <- str_trim(str_extract(chess.data[,1], "\\s[^[0-9]].+"))
+chess.data$Name <- str_extract(chess.data[,2], ".[^[0-9]]{1,}")
+chess.data$Pre.score <- str_extract(str_extract(chess.data[,2], ":.[[0-9]]{1,}.[^[-]]"), "[[0-9]]{1,}")
+chess.data$Post.score <- str_extract(str_extract(chess.data[,2], ">.[[0-9]]{1,}"), "[[0-9]]{1,}")
+
+grepl(chess.data[,2], ":.[[0-9]]{1,}", perl = TRUE)
+
+
 chess.data$ID <- gsub( " .*$", "",  str_trim(chess.data[,1]))
 chess.data$State <- gsub( "$*. ", "",  str_trim(chess.data[,1]))
-
+gsub("[:digit:]", "", chess.data$State)
+test <- as.data.frame(gsub("\\s+"," ",chess.data))
+sapply(strsplit(chess.data[,12], split = " "), "[", 2)
 
 ```
 
