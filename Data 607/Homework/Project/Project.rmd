@@ -16,10 +16,6 @@ chess.data <- data.frame(chess.data, do.call(rbind, strsplit(chess.data, split =
 chess.data <- data.frame(lapply(chess.data, as.character), stringsAsFactors=FALSE)
 chess.data <- chess.data[!grepl(".+--.+", chess.data$X1),] # removes "------" lines
 chess.data <- chess.data[,-c(1,12)]
-## getting column names dynamically, ON HOLD
-#column.names <- chess.data[2:3,]
-#column_collapse <- function(x){for (i in names(x)) {x[i] <- paste(x[i], collapse = "") x}}
-
 combine_rows <- function(dataframe){
                     df <- dataframe[0,]  ##create empty dataframe copy
                     for (i in colnames(dataframe)){  ## for all columns in data frame 
@@ -40,6 +36,27 @@ chess.data$State <- str_trim(str_extract(chess.data[,1], "\\s[^[0-9]].+"))
 chess.data$Name <- str_extract(chess.data[,2], ".[^[0-9]]{1,}")
 chess.data$Pre.score <- str_extract(str_extract(chess.data[,2], ":.[[0-9]]{1,}.[^[-]]"), "[[0-9]]{1,}")
 chess.data$Post.score <- str_extract(str_extract(chess.data[,2], ">.[[0-9]]{1,}"), "[[0-9]]{1,}")
+
+test <- function(dataframe){
+        colname <- (str_extract(colnames(dataframe), "Round.+"))
+        for (i in colname){ 
+          for (j in seq(1:length(dataframe[[colname]])))
+          p <- str_extract(dataframe[[colname]][j], "[[:alpha:]]")
+          print(p)
+        }
+}
+(str_extract(colnames(chess.data), "Round.+"))
+test(chess.data)
+
+colnames(a)[n] 
+<- paste(i, "result", sep = "")
+<- paste(i, "opponent.ID", sep = "")
+
+
+
+
+chess.data$round.1.result <- 
+chess.data$round.1.id <- str_extract(chess.data[,4], "[0-9]{1,}")
 
 grepl(chess.data[,2], ":.[[0-9]]{1,}", perl = TRUE)
 
