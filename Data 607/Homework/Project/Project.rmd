@@ -35,7 +35,8 @@ chess.data$ID <- str_trim(str_extract(chess.data[,1], "\\s[[0-9]]{1,}"))
 chess.data$State <- str_trim(str_extract(chess.data[,1], "\\s[^[0-9]].+"))
 chess.data$Name <- str_extract(chess.data[,2], ".[^[0-9]]{1,}")
 chess.data$Pre.score <- str_extract(str_extract(chess.data[,2], ":.[[0-9]]{1,}.[^[-]]"), "[[0-9]]{1,}")
-chess.data$Post.score <- str_extract(str_extract(chess.data[,2], ">.[[0-9]]{1,}"), "[[0-9]]{1,}")
+chess.data$Total.points <- str_extract(chess.data[,3], "[[0-9]].[[0-9]]\\s")
+#chess.data$Post.score <- str_extract(str_extract(chess.data[,2], ">.[[0-9]]{1,}"), "[[0-9]]{1,}")
 
 split.round.columns <- function(dataframe){
                         df.colname <- colnames(dataframe[!is.na(str_extract(colnames(dataframe), "Round.+"))])
