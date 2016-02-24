@@ -37,16 +37,36 @@ chess.data$Name <- str_extract(chess.data[,2], ".[^[0-9]]{1,}")
 chess.data$Pre.score <- str_extract(str_extract(chess.data[,2], ":.[[0-9]]{1,}.[^[-]]"), "[[0-9]]{1,}")
 chess.data$Post.score <- str_extract(str_extract(chess.data[,2], ">.[[0-9]]{1,}"), "[[0-9]]{1,}")
 
-test <- function(dataframe){
-        colname <- (str_extract(colnames(dataframe), "Round.+"))
-        for (i in colname){ 
-          for (j in seq(1:length(dataframe[[colname]])))
-          p <- str_extract(dataframe[[colname]][j], "[[:alpha:]]")
-          print(p)
-        }
+split.round.columns <- function(dataframe){
+                df.colname <- colnames(dataframe[!is.na(str_extract(colnames(dataframe), "Round.+"))])
+                df <- dataframe[!is.na(str_extract(colnames(dataframe), "Round.+"))]
+                df.copy <- df[0,]  #empty dataframe copy
+                df.copy2 <- df[0,] 
+                for (i in df.colname){ 
+                    for (j in seq(1:length(dataframe[[i]]))){
+                        df.copy[j,i]  <- str_extract(dataframe[[i]][j], "[[:alpha:]]")
+                        df.copy2[j,i] <- str_extract(dataframe[[i]][j], "[[0-9]]{1,}")
+                   }
+                 } 
+colnames(df.copy) <- paste(str_trim(df.colname), "Results")
+colnames(df.copy2) <- paste(str_trim(df.colname), "Opponent")
+for (t in (seq(1:ncol(df.copy)))){print(df.copy[,t])
+print(df.copy2[,t]) }
 }
-(str_extract(colnames(chess.data), "Round.+"))
-test(chess.data)
+
+                  #for (k in seq(1:length(i))){
+                    #colnames(df.copy)[k] <- paste( str_trim(df.colname[k]),"Result")}
+
+split.round.columns(chess.data)
+
+
+
+
+```
+
+
+### Extra code, delete after 
+dataframe <- chess.data
 
 colnames(a)[n] 
 <- paste(i, "result", sep = "")
