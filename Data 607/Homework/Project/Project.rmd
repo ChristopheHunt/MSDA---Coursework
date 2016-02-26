@@ -37,29 +37,46 @@ chess.data$Name <- str_extract(chess.data[,2], ".[^[0-9]]{1,}")
 chess.data$Pre.score <- str_extract(str_extract(chess.data[,2], ":.[[0-9]]{1,}.[^[-]]"), "[[0-9]]{1,}")
 chess.data$Total.points <- str_extract(chess.data[,3], "[[0-9]].[[0-9]]\\s")
 #chess.data$Post.score <- str_extract(str_extract(chess.data[,2], ">.[[0-9]]{1,}"), "[[0-9]]{1,}")
+dataframe < chess.data
 
 split.round.columns <- function(dataframe){
                         df.colname <- colnames(dataframe[!is.na(str_extract(colnames(dataframe), "Round.+"))])
                         df <- dataframe[!is.na(str_extract(colnames(dataframe), "Round.+"))]
                         df.copy <- df[0,]  #empty dataframe copy
                         df.copy2 <- df[0,] 
+                        df.copy3 <- df[0,]
                         for (i in df.colname){ 
                             for (j in seq(1:length(dataframe[[i]]))){
                                 df.copy[j,i]  <- str_extract(dataframe[[i]][j], "[[:alpha:]]")
                                 df.copy2[j,i] <- str_extract(dataframe[[i]][j], "[[0-9]]{1,}")
+                                #df.copy3[j,i] <- dataframe$Pre.score[dataframe$ID == str_extract(dataframe[[i]][j], "[[0-9]]{1,}")]
                            }
                          } 
-                      colnames(df.copy) <- paste(str_trim(df.colname), "Results")
-                      colnames(df.copy2) <- paste(str_trim(df.colname), "Opponent")
+                      colnames(df.copy) <- str_c(str_trim(df.colname), " Results")
+                      colnames(df.copy2) <- str_c(str_trim(df.colname), " Opponent")
+                      #colnames(df.copy3) <- str_c(str_trim(df.colname), " Opponent Prescore")
                       for (t in (seq(1:ncol(df)))){
                           dataframe <- cbind(dataframe, df.copy[,t, drop = FALSE])
                           dataframe <- cbind(dataframe, df.copy2[,t, drop = FALSE])
+                          #dataframe <- cbind(dataframe, df.copy3[, t, drop = FALSE])
                       }
     return(dataframe) 
   }
 
 chess.data <- split.round.columns(chess.data)
 chess.data <- chess.data[,-c(1:10)]
+
+
+
+
+
+str_extract(chess.data[[3]][4], "[[:alpha:]]")
+
+chess.data
+
+
+chess.data.players <- chess.data[,c(1:4)]
+
 ```
 
 
