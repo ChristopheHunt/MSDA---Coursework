@@ -1,5 +1,5 @@
 ---
-title: "Project 1"
+title: "Project 1 Chess Data"
 author: "Christophe"
 date: "February 20, 2016"
 output: html_document
@@ -12,6 +12,11 @@ library(knitr)
 library(tcltk)
 github.url <- c("https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20607/Homework/data/tournamentinfo.txt")
 ```
+
+### Our first task is to convert the a `txt` file to an easier to manipulate data frame. The below image is the current structure of the `txt` file and the below code will convert it to a useable dataframe. 
+
+![image](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20607/Homework/Project/filetype.JPG) 
+
 
 ```{r, warning=FALSE}
 library(stringr)
@@ -74,10 +79,14 @@ return(dataframe)
 
 chess.data <- split.round.columns(chess.data)
 chess.data <- chess.data[,-c(1:10)] # remove original columns
-kable(t(head(chess.data))) #check formats
+
+x <- t(head(chess.data))
+colnames(x) <-  x[1, ]
+x = x[-1,]
+kable(x) #check dataframe
 ```
 
-Now we have the dataframe in an appropriate format to use find the mean of the opponents played in the chess tournament. 
+### Now we have the dataframe in a more appropriate format, we can find the mean of the opponents prescores that each player played in the chess tournament. 
 
 ```{r}
 get.average.opp.prescore <- function(dataframe){
@@ -89,10 +98,11 @@ get.average.opp.prescore <- function(dataframe){
 }
 
 ID.AverOPscore <- get.average.opp.prescore(chess.data)
+row.names(ID.AverOPscore) <- NULL
 kable(head(ID.AverOPscore))
 ```
 
-We have a reference table now with the IDs and the average prescore of the opponents played. We just need to look at our original dataframe and use the reference table to produce the results in the desired format `Player's Name`, `Player's State`, `Total Number of Points`, `Player's Pre-Rating`, and `Average Pre Chess Rating of Opponents`. 
+### We now have a reference table  with the IDs and the average prescore of the opponents played. We just need to look at our original dataframe and use the reference table to produce the results in the desired format `Player's Name`, `Player's State`, `Total Number of Points`, `Player's Pre-Rating`, and `Average Pre Chess Rating of Opponents`. 
 
 ```{r}
 
