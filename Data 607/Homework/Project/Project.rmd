@@ -102,18 +102,13 @@ row.names(ID.AverOPscore) <- NULL
 kable(head(ID.AverOPscore))
 ```
 
-### We now have a reference table  with the IDs and the average prescore of the opponents played. We just need to look at our original dataframe and use the reference table to produce the results in the desired format `Player's Name`, `Player's State`, `Total Number of Points`, `Player's Pre-Rating`, and `Average Pre Chess Rating of Opponents`. 
+### We now have a reference table  with the IDs and the average prescore of the opponents played. We just need to look at our converted dataframe and use the reference table to produce the results in the desired format `Player's Name`, `Player's State`, `Total Number of Points`, `Player's Pre-Rating`, and `Average Pre Chess Rating of Opponents`. 
 
 ```{r}
-
-kable(sqldf("SELECT 
-                  Name `Player's Name`, 
-                  State `Player's State`, 
-                  Total_points `Total Number of Points`, 
-                  Pre_score `Player's Pre-Rating`, 
+kable(sqldf("SELECT Name `Player's Name`, State `Player's State`, 
+                  Total_points `Total Number of Points`, Pre_score `Player's Pre-Rating`, 
                   avg_prescore `Average Pre Chess Rating of Opponents`
-              FROM 'chess.data' C LEFT OUTER JOIN 
-                   'ID.AverOPscore' I on C.ID = I.ID"))
+              FROM 'chess.data' C LEFT OUTER JOIN 'ID.AverOPscore' I on C.ID = I.ID"))
 ```
 
 

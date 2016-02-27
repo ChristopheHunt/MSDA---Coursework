@@ -425,16 +425,12 @@ kable(head(ID.AverOPscore))</code></pre>
 </tbody>
 </table>
 </div>
-<div id="we-now-have-a-reference-table-with-the-ids-and-the-average-prescore-of-the-opponents-played.-we-just-need-to-look-at-our-original-dataframe-and-use-the-reference-table-to-produce-the-results-in-the-desired-format-players-name-players-state-total-number-of-points-players-pre-rating-and-average-pre-chess-rating-of-opponents." class="section level3">
-<h3>We now have a reference table with the IDs and the average prescore of the opponents played. We just need to look at our original dataframe and use the reference table to produce the results in the desired format <code>Player's Name</code>, <code>Player's State</code>, <code>Total Number of Points</code>, <code>Player's Pre-Rating</code>, and <code>Average Pre Chess Rating of Opponents</code>.</h3>
-<pre class="r"><code>kable(sqldf(&quot;SELECT 
-                  Name `Player's Name`, 
-                  State `Player's State`, 
-                  Total_points `Total Number of Points`, 
-                  Pre_score `Player's Pre-Rating`, 
+<div id="we-now-have-a-reference-table-with-the-ids-and-the-average-prescore-of-the-opponents-played.-we-just-need-to-look-at-our-converted-dataframe-and-use-the-reference-table-to-produce-the-results-in-the-desired-format-players-name-players-state-total-number-of-points-players-pre-rating-and-average-pre-chess-rating-of-opponents." class="section level3">
+<h3>We now have a reference table with the IDs and the average prescore of the opponents played. We just need to look at our converted dataframe and use the reference table to produce the results in the desired format <code>Player's Name</code>, <code>Player's State</code>, <code>Total Number of Points</code>, <code>Player's Pre-Rating</code>, and <code>Average Pre Chess Rating of Opponents</code>.</h3>
+<pre class="r"><code>kable(sqldf(&quot;SELECT Name `Player's Name`, State `Player's State`, 
+                  Total_points `Total Number of Points`, Pre_score `Player's Pre-Rating`, 
                   avg_prescore `Average Pre Chess Rating of Opponents`
-              FROM 'chess.data' C LEFT OUTER JOIN 
-                   'ID.AverOPscore' I on C.ID = I.ID&quot;))</code></pre>
+              FROM 'chess.data' C LEFT OUTER JOIN 'ID.AverOPscore' I on C.ID = I.ID&quot;))</code></pre>
 <table>
 <thead>
 <tr class="header">
