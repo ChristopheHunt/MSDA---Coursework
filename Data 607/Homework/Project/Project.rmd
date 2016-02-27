@@ -5,78 +5,105 @@ date: "February 20, 2016"
 output: html_document
 ---
 
+```{r, include = FALSE}
+library(stringr)
+library(sqldf)
+library(knitr)
+library(tcltk)
+github.url <- c("https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20607/Homework/data/tournamentinfo.txt")
+```
 
+```{r, warning=FALSE}
+library(stringr)
+library(sqldf)
+library(knitr)
+library(tcltk)
 
-```{r}
-library(data.table)
-library(Hmisc)
-tinfo <- file("https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20607/Homework/data/tournamentinfo.txt", open="r" )
+tinfo <- file(github.url, open="r" )
 chess.data <- readLines(tinfo) # read lines 
 chess.data <- data.frame(chess.data, do.call(rbind, strsplit(chess.data, split = "|", fixed = TRUE)))
 chess.data <- data.frame(lapply(chess.data, as.character), stringsAsFactors=FALSE)
 chess.data <- chess.data[!grepl(".+--.+", chess.data$X1),] # removes "------" lines
 chess.data <- chess.data[,-c(1,12)]
 combine_rows <- function(dataframe){
-                    df <- dataframe[0,]  ##create empty dataframe copy
-                    for (i in colnames(dataframe)){  ## for all columns in data frame 
-                        for (j in seq(1:length(dataframe[[i]]))){ ## for all rows in dataframe
-                         df[j,i] <- gsub("\\s+"," ",(paste(dataframe[[i]][j:(j+1)], collapse = ""))) ## gsub removes extra spaces, then collapses two rows 
-                        }
-                    } 
-          return(df) # return the dataframe
+  df <- dataframe[0,]  ##create empty dataframe copy
+  for (i in colnames(dataframe)){  ## for all columns in data frame 
+      for (j in seq(1:length(dataframe[[i]]))){ ## for all rows in dataframe
+         df[j,i] <- gsub("\\s+"," ",(paste(dataframe[[i]][j:(j+1)], collapse = ""))) 
+         ## gsub removes extra spaces, then collapses two rows 
+         }
+        } 
+return(df) # return the dataframe
         }
 
 chess.data <- (combine_rows(chess.data)) # run function on data frame
 colnames(chess.data) <- chess.data[1,] # create column names from first row
 chess.data <- chess.data[-(1:2),] # remove header information
-index <- !is.na(as.numeric(gsub( " .*$", "",  str_trim(chess.data[,1])))) #gets the part of string, if a numeric value it converts to True
+index <- !is.na(as.numeric(gsub( " .*$", "",  str_trim(chess.data[,1])))) #gets the part of string, if a numeric value first it converts to True
 chess.data <- chess.data[index,] 
 chess.data$ID <- str_trim(str_extract(chess.data[,1], "\\s[[0-9]]{1,}"))
 chess.data$State <- str_trim(str_extract(chess.data[,1], "\\s[^[0-9]].+"))
 chess.data$Name <- str_extract(chess.data[,2], ".[^[0-9]]{1,}")
-chess.data$Pre.score <- str_extract(str_extract(chess.data[,2], ":.[[0-9]]{1,}.[^[-]]"), "[[0-9]]{1,}")
-chess.data$Total.points <- str_extract(chess.data[,3], "[[0-9]].[[0-9]]\\s")
-#chess.data$Post.score <- str_extract(str_extract(chess.data[,2], ">.[[0-9]]{1,}"), "[[0-9]]{1,}")
-dataframe < chess.data
+chess.data$Pre_score <- str_extract(str_extract(chess.data[,2], ":.[[0-9]]{1,}.[^[-]]"), "[[0-9]]{1,}")
+chess.data$Total_points <- str_extract(chess.data[,3], "[[0-9]].[[0-9]]\\s")
 
 split.round.columns <- function(dataframe){
-                        df.colname <- colnames(dataframe[!is.na(str_extract(colnames(dataframe), "Round.+"))])
-                        df <- dataframe[!is.na(str_extract(colnames(dataframe), "Round.+"))]
-                        df.copy <- df[0,]  #empty dataframe copy
-                        df.copy2 <- df[0,] 
-                        df.copy3 <- df[0,]
-                        for (i in df.colname){ 
-                            for (j in seq(1:length(dataframe[[i]]))){
-                                df.copy[j,i]  <- str_extract(dataframe[[i]][j], "[[:alpha:]]")
-                                df.copy2[j,i] <- str_extract(dataframe[[i]][j], "[[0-9]]{1,}")
-                                #df.copy3[j,i] <- dataframe$Pre.score[dataframe$ID == str_extract(dataframe[[i]][j], "[[0-9]]{1,}")]
-                           }
-                         } 
-                      colnames(df.copy) <- str_c(str_trim(df.colname), " Results")
-                      colnames(df.copy2) <- str_c(str_trim(df.colname), " Opponent")
-                      #colnames(df.copy3) <- str_c(str_trim(df.colname), " Opponent Prescore")
-                      for (t in (seq(1:ncol(df)))){
-                          dataframe <- cbind(dataframe, df.copy[,t, drop = FALSE])
-                          dataframe <- cbind(dataframe, df.copy2[,t, drop = FALSE])
-                          #dataframe <- cbind(dataframe, df.copy3[, t, drop = FALSE])
+                  df.colname <- colnames(dataframe[!is.na(str_extract(colnames(dataframe), "Round.+"))])
+                  df <- dataframe[!is.na(str_extract(colnames(dataframe), "Round.+"))]
+                  df_prescore <- dataframe[!is.na(str_extract(colnames(dataframe), "^[[ID]]|Pre_score"))]
+                  df.1 <- df.2 <- df.3 <- df[0,]  #empty dataframe copies
+                  for (i in df.colname){ 
+                      for (j in seq(1:length(dataframe[[i]]))){
+                        df.1[j,i]  <- str_extract(dataframe[[i]][j], "[[:alpha:]]")
+                        df.2[j,i] <- str_extract(dataframe[[i]][j], "[[0-9]]{1,}")
+                        df.3[j,i] <- as.numeric(ifelse(!is.na(df.2[j,i]), 
+                                                       dataframe$Pre_score[dataframe$ID ==  df.2[j,i]], 
+                                                       NA))
+                         }
+                       } 
+                  colnames(df.1) <- str_c(str_trim(df.colname), " Results")
+                  colnames(df.2) <- str_c(str_trim(df.colname), " Opponent")
+                  colnames(df.3) <- str_c(str_trim(df.colname), " Opponent Prescore")
+                 for (t in (seq(1:ncol(df)))){
+                      dataframe <- cbind(dataframe, df.1[, t, drop = FALSE])
+                      dataframe <- cbind(dataframe, df.2[, t, drop = FALSE])
+                      dataframe <- cbind(dataframe, df.3[, t, drop = FALSE])
                       }
-    return(dataframe) 
-  }
+return(dataframe) 
+}
 
 chess.data <- split.round.columns(chess.data)
-chess.data <- chess.data[,-c(1:10)]
+chess.data <- chess.data[,-c(1:10)] # remove original columns
+kable(t(head(chess.data))) #check formats
+```
 
+Now we have the dataframe in an appropriate format to use find the mean of the opponents played in the chess tournament. 
 
+```{r}
+get.average.opp.prescore <- function(dataframe){
+  df_prescore <- dataframe[!is.na(str_extract(colnames(dataframe), "[[ID]]|Prescore"))]
+  df_prescore[] <- lapply(df_prescore, function(columns) as.numeric(columns))
+  df_prescore$avg_prescore <- rowMeans(df_prescore[c(2:(ncol(df_prescore)))], na.rm = TRUE)
+  dataframe <- df_prescore[c(1, (ncol(df_prescore)))]
+  return(dataframe)
+}
 
+ID.AverOPscore <- get.average.opp.prescore(chess.data)
+kable(head(ID.AverOPscore))
+```
 
+We have a reference table now with the IDs and the average prescore of the opponents played. We just need to look at our original dataframe and use the reference table to produce the results in the desired format `Player's Name`, `Player's State`, `Total Number of Points`, `Player's Pre-Rating`, and `Average Pre Chess Rating of Opponents`. 
 
-str_extract(chess.data[[3]][4], "[[:alpha:]]")
+```{r}
 
-chess.data
-
-
-chess.data.players <- chess.data[,c(1:4)]
-
+kable(sqldf("SELECT 
+                  Name `Player's Name`, 
+                  State `Player's State`, 
+                  Total_points `Total Number of Points`, 
+                  Pre_score `Player's Pre-Rating`, 
+                  avg_prescore `Average Pre Chess Rating of Opponents`
+              FROM 'chess.data' C LEFT OUTER JOIN 
+                   'ID.AverOPscore' I on C.ID = I.ID"))
 ```
 
 
