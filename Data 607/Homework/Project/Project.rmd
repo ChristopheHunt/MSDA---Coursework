@@ -4,21 +4,47 @@ author: "Christophe"
 date: "February 20, 2016"
 output: html_document
 ---
+<STYLE TYPE="text/css">
+<!-- style provided by http://stackoverflow.com/questions/33371061/r-knitr-kable-table-html-formatting --> 
+<!--
+  td{
+    font-family: Roboto; 
+    font-size: 10pt;
+    padding:0px;
+    cellpadding="0";
+    cellspacing="0"
+  }
+  th {
+    font-family: Roboto; 
+    font-size: 10pt;
+    height: 20px;
+    font-weight: bold;
+    text-align: right;
+    background-color: #ccccff;
+  }
+  table { 
+    border-spacing: 10px;
+    
+  }
+--->
+</STYLE>
+
 
 ```{r, include = FALSE}
 library(stringr)
 library(sqldf)
 library(knitr)
 library(tcltk)
+library(htmlTable)
 github.url <- c("https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20607/Homework/data/tournamentinfo.txt")
 ```
 
-### Our first task is to convert the a `txt` file to an easier to manipulate data frame. The below image is the current structure of the `txt` file and the below code will convert it to a useable dataframe. 
+#### In this first section I will convert our `txt` file to an easier to manipulate data frame. The below image is the current structure of the `txt` file and the below code will convert it to the desired data frame. 
 
 ![image](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20607/Homework/Project/filetype.JPG) 
 
 
-```{r, warning=FALSE}
+```{r, warning=FALSE,  results = 'asis'}
 library(stringr)
 library(sqldf)
 library(knitr)
@@ -80,13 +106,13 @@ return(dataframe)
 chess.data <- split.round.columns(chess.data)
 chess.data <- chess.data[,-c(1:10)] # remove original columns
 
-x <- t(head(chess.data))
+x <- t(head(chess.data, n = 4))
 colnames(x) <-  x[1, ]
 x = x[-1,]
-kable(x) #check dataframe
+kable(x, align = "c", padding = 4) #check dataframe
 ```
 
-### Now we have the dataframe in a more appropriate format, we can find the mean of the opponents prescores that each player played in the chess tournament. 
+#### Now we have the data frame in a more appropriate format, we can find the mean of the opponents prescores that each player played in the chess tournament. 
 
 ```{r}
 get.average.opp.prescore <- function(dataframe){
@@ -98,17 +124,18 @@ get.average.opp.prescore <- function(dataframe){
 }
 
 ID.AverOPscore <- get.average.opp.prescore(chess.data)
-row.names(ID.AverOPscore) <- NULL
-kable(head(ID.AverOPscore))
+kable(head(ID.AverOPscore),  row.names = FALSE, align = "c")
 ```
 
-### We now have a reference table  with the IDs and the average prescore of the opponents played. We just need to look at our converted dataframe and use the reference table to produce the results in the desired format `Player's Name`, `Player's State`, `Total Number of Points`, `Player's Pre-Rating`, and `Average Pre Chess Rating of Opponents`. 
+#### We now have a reference table  with the IDs and the average prescore of the opponents played. We just need to look at our converted dataframe and use the reference table to produce the results in the desired format `Player's Name`, `Player's State`, `Total Number of Points`, `Player's Pre-Rating`, and `Average Pre Chess Rating of Opponents`. 
 
 ```{r}
-kable(sqldf("SELECT Name `Player's Name`, State `Player's State`, 
+results <- sqldf("SELECT Name `Player's Name`, State `Player's State`, 
                   Total_points `Total Number of Points`, Pre_score `Player's Pre-Rating`, 
                   avg_prescore `Average Pre Chess Rating of Opponents`
-              FROM 'chess.data' C LEFT OUTER JOIN 'ID.AverOPscore' I on C.ID = I.ID"))
+              FROM 'chess.data' C LEFT OUTER JOIN 'ID.AverOPscore' I on C.ID = I.ID")
+kable(results, align = "c")
+write.csv(results, paste(as.character(Sys.Date()), "CHUNT Chess Data results.csv", collapse = ""))
 ```
 
 
