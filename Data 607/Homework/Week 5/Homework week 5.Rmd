@@ -1,0 +1,99 @@
+---
+title: "Homework Week 5"
+author: "Christophe"
+date: "March 5, 2016"
+output: html_document
+---
+<STYLE TYPE="text/css">
+<!-- style provided by http://stackoverflow.com/questions/33371061/r-knitr-kable-table-html-formatting --> 
+<!--
+  td{
+    font-family: Roboto; 
+    font-size: 10pt;
+    padding:0px;
+    cellpadding="0";
+    cellspacing="0"
+  }
+  th {
+    font-family: Roboto; 
+    font-size: 10pt;
+    height: 20px;
+    font-weight: bold;
+    text-align: right;
+    background-color: #ccccff;
+  }
+  table { 
+    border-spacing: 10px;
+    
+  }
+--->
+</STYLE>
+
+```{r, include=FALSE}
+library(plyr)
+library(tidyr)
+library(stringr)
+library(dplyr)
+library(scales)
+library(RColorBrewer)
+library(zoo)
+library(ggplot2)
+library(knitr)
+
+url <- "https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20607/Homework/"
+```
+
+### We being the tidying processing by transforming the `messy` data into a more useful format. 
+```{r}
+data.url <- file(paste(url,"Week%205/tidy%20data%20set.csv", sep = ""), open="r" )
+
+flights <- read.csv(data.url, sep=",", header=TRUE, stringsAsFactors = FALSE)
+flights <- flights[(rowSums(flights[3:7], na.rm = TRUE) > 0),] # removes blank row
+flights$X[flights$X == ""] <- NA 
+flights$X <- na.locf(flights$X) #copy forwards the column name for next blank cell
+colnames(flights)[c(1,2)] <- c("Airline", "Flight_Status") 
+flights$Flight_Status <- str_trim(flights$Flight_Status)
+
+flights <- flights %>% 
+           gather(Airline, Flight_Status, Los.Angeles:Seattle) 
+colnames(flights)[c(3,4)] <- c("Location", "Counts")
+kable(flights, align = "c")
+```
+
+### Now that the data is transformed into observations by row we can be graph the data to view the difference in flight data by `delayed` and the `on time` flights status. I set the colors for the graph using `RColorBrewer` using the `Paired` palette `r colors <- brewer.pal(11, "Paired")` and using the blue and orange colors `r colors <- colors[c(2,8)]`. 
+
+```{r}
+ggplot(flights, aes(x = Airline, y = Counts, fill = Flight_Status, group = Airline)) + 
+  geom_bar(stat="identity", position=position_dodge(), colour="black") + 
+  scale_fill_manual(values = rev(colors)) + 
+  facet_grid(~Location) + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1))
+```
+
+### As we can see in the above graph there is a large disparity between airlines and the number of flights completed by location. To get a sense of which airlines has more delayed flights we can take the number of delayed flights as a percentage of all flights by each airline. Then we can graph this information as a boxplot to see how the airlines stack against each other for the percentage of flights delayed. 
+
+### The below code with transform the data into a usable format for the boxplot. 
+
+```{r}
+flights_percent <- ddply(flights, ~Airline + Location, summarize, 'All Flights' = sum(Counts))
+flights_delayed <- flights[(flights$Flight_Status == "delayed"),]
+flights_delayed <- flights_delayed[c(1,3,4)]
+colnames(flights_delayed)[c(3)] <- c("Delayed Counts")
+flights_delayed <- merge(flights_percent, flights_delayed, by = c("Airline", "Location"), all = TRUE)
+flights_delayed$Percent_delayed <- flights_delayed$`Delayed Counts` / flights_delayed$`All Flights`
+```
+
+### The below graph uses violin bar charts to visualize the typical percent of delayed flights by each airline. We can see that Alaska Airlines appears to perform better for the percentage of delayed flights than AM West does for our given locations (``r unique(flights_delayed$Location)``) 
+
+```{r}
+ggplot(flights_delayed, aes(x = Airline, y = Percent_delayed, fill = Airline)) + 
+  scale_y_continuous(labels = percent, limits = c(0,.5)) + 
+  geom_violin(trim = TRUE) + 
+  scale_fill_manual(values = rev(colors)) + 
+  geom_boxplot(width=0.1, fill = "white") +
+  geom_jitter(width=0.1) + 
+  theme_minimal() +
+  theme(legend.position = "top") + 
+  ylab("Percent of Flights Delayed\n")
+
+```
