@@ -44,6 +44,12 @@ url <- "https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/maste
 ```
 
 ### We being the tidying processing by transforming the `messy` data into a more useful format. 
+
+![image](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20607/Homework/Week%205/datascreenshot.JPG)
+
+##### Screen shot of data
+***
+
 ```{r}
 data.url <- file(paste(url,"Week%205/tidy%20data%20set.csv", sep = ""), open="r" )
 
