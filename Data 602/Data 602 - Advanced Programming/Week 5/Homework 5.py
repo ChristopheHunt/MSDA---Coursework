@@ -1,10 +1,10 @@
+import sys
+import Tkinter
+import tkFileDialog
 import pandas
 import matplotlib.pyplot as plt
 import matplotlib
 matplotlib.style.use('ggplot')
-import sys
-import Tkinter
-import tkFileDialog
 
 s = raw_input('Use online csv file? y/n : ')
 
@@ -57,5 +57,6 @@ def LinearRegression(dataframe):
     ax = df.plot(y = 'Linear Regression', x = x_value, label = equation)
     df.plot(kind = 'scatter',  y = y_value, x = x_value, ax = ax)
     plt.show()
+
 
 LinearRegression(df)
