@@ -31,25 +31,28 @@ def LinearRegression(dataframe):
     column_name = ', '.join(column_names)
 
     x_input = raw_input('Select X value from columns [%s]: ' % column_name)
-    if not x_input in column_names:
-        sys.exit("Not a column value...end")
+    if not x_input.lower() in column_names:
+        sys.exit("not a column value......end")
     y_input = raw_input('Select Y value from columns [%s]: ' % column_name)
-    if not y_input in column_names:
-        sys.exit("Not a column value...end")
+    if not y_input.lower() in column_names:
+        sys.exit("not a column value......end")
 
-    x_value = x_input
-    y_value = y_input
+    x_value = x_input.lower()
+    y_value = y_input.lower()
 
-    df['X*Y'] = df[x_value] * df[y_value]
-    df['X*X'] = df[x_value] * df[x_value]
     mean_x = float(sum(df[x_value])/ len(df[x_value]))
     mean_y = float(sum(df[y_value])/ len(df[y_value]))
-    mean_xy = float(sum(df['X*Y'])/ len(df['X*Y']))
-    mean_xx = float(sum(df['X*X'])/ len(df['X*X']))
-    slope = float(((len(df.index)*mean_xy)-(mean_x*mean_y))/((len(df.index)*mean_xx) - (mean_x * mean_x)))
-    intercept = float((mean_y - (slope*mean_x))/len(df.index))
-    equation = ("Y = %sx + %s" % (round(slope, 2), round(intercept,2)))
-    print "The equation for the line is : " + equation
+
+    df['X-mean_x'] = df[x_value] - mean_x
+    df['Y-mean_y'] = df[y_value] - mean_y
+    df['X-mean_x * Y-mean_y'] = df['X-mean_x'] * df['Y-mean_y']
+    df['X-mean_x^2'] = df['X-mean_x']  * df['X-mean_x']
+    slope = float(sum(df['X-mean_x * Y-mean_y'])/sum(df['X-mean_x^2']))
+    intercept = float((mean_y - slope*mean_x))
+    equation = ("Y = %sx + %s" % (round(slope, 3), round(intercept,2)))
+    print "The least squares regression is : " + equation
+
+    ## Plotting the line
     df['Linear Regression'] = ((slope*df[x_value])+ intercept)
     ax = df.plot(y = 'Linear Regression', x = x_value, label = equation)
     df.plot(kind = 'scatter',  y = y_value, x = x_value, ax = ax)
