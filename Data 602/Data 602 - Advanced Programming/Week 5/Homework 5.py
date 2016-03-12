@@ -33,6 +33,7 @@ def LinearRegression(dataframe):
     x_input = raw_input('Select X value from columns [%s]: ' % column_name)
     if not x_input.lower() in column_names:
         sys.exit("not a column value......end")
+
     y_input = raw_input('Select Y value from columns [%s]: ' % column_name)
     if not y_input.lower() in column_names:
         sys.exit("not a column value......end")
@@ -49,7 +50,8 @@ def LinearRegression(dataframe):
     df['X-mean_x^2'] = df['X-mean_x']  * df['X-mean_x']
     slope = float(sum(df['X-mean_x * Y-mean_y'])/sum(df['X-mean_x^2']))
     intercept = float((mean_y - slope*mean_x))
-    equation = ("Y = %sx + %s" % (round(slope, 3), round(intercept,2)))
+
+    equation = ("y = %sx + %s" % (round(slope, 3), round(intercept,2)))
     print "The least squares regression is : " + equation
 
     ## Plotting the line

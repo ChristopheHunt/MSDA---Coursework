@@ -1,0 +1,13 @@
+Gender,Age,Sample Size,Percent Reporting,Total Intake kcal for all individuals,intake kcal from restaurants for all individuals,Percentage from Restaurants,Total intake kcal for restaurant consumers,Intake kcal from restaurants for restaurant consumers,Percentage from restaurant for restaurant consumers,Total intake kcal for non-consumers
+Male,2 to 5,411,43,1648,212,13,1646,498,30,1650
+,6 to 11,590,38,2087,273,13,2128,726,34,2062
+,12 to 19,585,56,2531,736,29,2766,1315,48,2232
+,20 to 39,882,67,2767,922,33,2816,1386,49,2671
+,40 to 59,576,56,2613,598,23,2672,1076,40,2539
+,60 +,756,51,2181,414,19,2236,805,36,2121
+Female,2 to 5,423,38,1520,177,12,1573,465,30,1487
+,6 to 11,556,46,1878,353,19,1972,765,39,1797
+,12 to 19,567,57,1809,516,29,1837,906,49,1771
+,20 to 39,832,61,2015,583,29,2086,958,46,1905
+,40 to 59,830,53,1829,426,23,1946,811,42,1700
+,60 +,745,43,1611,295,18,1725,679,39,1523
