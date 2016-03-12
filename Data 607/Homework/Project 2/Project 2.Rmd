@@ -1,0 +1,26 @@
+---
+title: "Project 2"
+author: "Christophe"
+date: "March 12, 2016"
+output: html_document
+---
+```{r pre-load, include = FALSE}
+library(plyr)
+library(sqldf)
+library(dplyr)
+library(scales)
+library(tcltk)
+library(tidyr)
+url <- "https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20607/Homework/data/"
+```
+
+Jeffrey Nieman proposed some interesting questions related to calorie intake of those that eat out compared to those that do not. I find the subject very interesting as well so I chose his data set to inspect. 
+
+Jeffrey extracted the data from this [page](http://www.ars.usda.gov/SP2UserFiles/Place/80400530/pdf/1112/Table_53_RST_GEN_11.pdf) and provided a nice csv file. Many thanks to Jeffrey. 
+
+```{r}
+cal.url <- file(paste(url,"calories and restaurants - Jeffrey Nieman.csv", sep = ""), open="r" )
+cal.intake <- read.csv(cal.url, sep=",", header=TRUE, stringsAsFactors = FALSE)
+
+```
+
