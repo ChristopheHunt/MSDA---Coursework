@@ -18,7 +18,7 @@ url <- "https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/maste
 
 ##Calories from Restuarants
 
-Jeffrey Nieman proposed some interesting questions related to calorie intake of those that eat out compared to those that do not. I find the subject very interesting as well so I chose his data set to inspect. 
+Jeffrey Nieman proposed some interesting questions related to calorie intake of those that eat out compared to those that do not. I find the subject fascinating as well so I chose his data set to inspect. 
 
 Jeffrey extracted the data from this [page](http://www.ars.usda.gov/SP2UserFiles/Place/80400530/pdf/1112/Table_53_RST_GEN_11.pdf) and provided a nice csv file. Many thanks to Jeffrey. 
 
@@ -50,6 +50,19 @@ kable(cal.intake, align = "c")
 
 The results of the data is very interesting, I am surprised at the calories obtained from restuarants for the `2 to 5` age group. I wouldn't have thought that this group would be obtaining `r percent(cal.intake$percent.of.cals.from.rest[cal.intake$Gender == "Female" & cal.intake$Age == "2 to 5"])` for males and `r percent(cal.intake$percent.of.cals.from.rest[cal.intake$Gender == "Male" & cal.intake$Age == "2 to 5"])` for females. I would be interested to find out more about this rate. 
 
+
+## Life Expentancy 
+
+Musa Ganiyu proposed an interesting data set that looks at the Global Life Expectancy from the WHO. I am interested in this data set because I find the probablity of death at certain ages an important topic. 
+
 ```{r}
+life.exp.url <- file(paste(url,"life expectancy - Musa Ganiyu.csv", sep = ""), open="r" )
+life.exp <- read.
+csv(life.exp.url, sep=",", header=TRUE, stringsAsFactors = FALSE)
+colnames(life.exp) <- rbind(paste(colnames(life.exp),life.exp[1,], sep = " " ))
+
+
+life.exp <- life.exp %>%
+            
 
 ```
