@@ -11,8 +11,12 @@ library(dplyr)
 library(scales)
 library(tcltk)
 library(tidyr)
+library(knitr)
+library(ggplot2)
 url <- "https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20607/Homework/data/"
 ```
+
+##Calories from Restuarants
 
 Jeffrey Nieman proposed some interesting questions related to calorie intake of those that eat out compared to those that do not. I find the subject very interesting as well so I chose his data set to inspect. 
 
@@ -21,6 +25,31 @@ Jeffrey extracted the data from this [page](http://www.ars.usda.gov/SP2UserFiles
 ```{r}
 cal.url <- file(paste(url,"calories and restaurants - Jeffrey Nieman.csv", sep = ""), open="r" )
 cal.intake <- read.csv(cal.url, sep=",", header=TRUE, stringsAsFactors = FALSE)
+cal.intake$Gender[cal.intake$Gender == ""]  <- NA
+cal.intake <-  cal.intake %>% 
+               fill(Gender) %>% 
+               mutate(percent.of.cals.from.rest = 
+                      (intake.kcal.from.restaurants.for.all.individuals/ 
+                         Total.Intake.kcal.for.all.individuals)) %>% 
+               select(Gender, Age, percent.of.cals.from.rest)
 
+cal.intake$Age <- as.factor(cal.intake$Age)
+levels(cal.intake$Age) <- unique(cal.intake$Age)
+
+ggplot(cal.intake, aes(x = Age, y = percent.of.cals.from.rest, fill = Gender)) +
+       ylab("Percent of Overall Calories from Restuarants\n") +
+      xlab("\nAge Group") + 
+      scale_y_continuous(label = percent) + 
+      ggtitle("Percentage of Calories obtained from Restuarants by Age Group and Gender\n")+
+      geom_bar(stat="identity", position = "dodge", width = .7)
+
+colnames(cal.intake)[3] <- "Percent of Calories obtained from Restuarants"
+cal.intake[,3] <- percent(cal.intake[,3])
+kable(cal.intake, align = "c")
 ```
 
+The results of the data is very interesting, I am surprised at the calories obtained from restuarants for the `2 to 5` age group. I wouldn't have thought that this group would be obtaining `r percent(cal.intake$percent.of.cals.from.rest[cal.intake$Gender == "Female" & cal.intake$Age == "2 to 5"])` for males and `r percent(cal.intake$percent.of.cals.from.rest[cal.intake$Gender == "Male" & cal.intake$Age == "2 to 5"])` for females. I would be interested to find out more about this rate. 
+
+```{r}
+
+```
