@@ -4,25 +4,25 @@ author: "Christophe"
 date: "March 12, 2016"
 output: html_document
 ---
+
 ```{r pre-load, include = FALSE}
 library(plyr)
-library(sqldf)
 library(dplyr)
 library(scales)
-library(tcltk)
 library(tidyr)
 library(knitr)
 library(ggplot2)
+library(stringr)
+library(data.table)
 url <- "https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20607/Homework/data/"
 ```
-
 ##Calories from Restuarants
 
 Jeffrey Nieman proposed some interesting questions related to calorie intake of those that eat out compared to those that do not. I find the subject fascinating as well so I chose his data set to inspect. 
 
 Jeffrey extracted the data from this [page](http://www.ars.usda.gov/SP2UserFiles/Place/80400530/pdf/1112/Table_53_RST_GEN_11.pdf) and provided a nice csv file. Many thanks to Jeffrey. 
 
-```{r}
+```{r, fig.width=8, fig.height=7}
 cal.url <- file(paste(url,"calories and restaurants - Jeffrey Nieman.csv", sep = ""), open="r" )
 cal.intake <- read.csv(cal.url, sep=",", header=TRUE, stringsAsFactors = FALSE)
 cal.intake$Gender[cal.intake$Gender == ""]  <- NA
@@ -40,6 +40,7 @@ ggplot(cal.intake, aes(x = Age, y = percent.of.cals.from.rest, fill = Gender)) +
        ylab("Percent of Overall Calories from Restuarants\n") +
       xlab("\nAge Group") + 
       scale_y_continuous(label = percent) + 
+      theme_classic() +
       ggtitle("Percentage of Calories obtained from Restuarants by Age Group and Gender\n")+
       geom_bar(stat="identity", position = "dodge", width = .7)
 
@@ -55,14 +56,80 @@ The results of the data is very interesting, I am surprised at the calories obta
 
 Musa Ganiyu proposed an interesting data set that looks at the Global Life Expectancy from the WHO. I am interested in this data set because I find the probablity of death at certain ages an important topic. 
 
-```{r}
+```{r, fig.width=8, fig.height=7}
 life.exp.url <- file(paste(url,"life expectancy - Musa Ganiyu.csv", sep = ""), open="r" )
-life.exp <- read.
-csv(life.exp.url, sep=",", header=TRUE, stringsAsFactors = FALSE)
+life.exp <- read.csv(life.exp.url, sep=",", header=TRUE, stringsAsFactors = FALSE)
 colnames(life.exp) <- rbind(paste(colnames(life.exp),life.exp[1,], sep = " " ))
+colnames(life.exp) <- str_trim(gsub("\\.[0-9]\\s", " ", gsub("[X]", "", colnames(life.exp))))
+life.exp <- life.exp[-1,]
+
+life.exp <- life.exp %>% 
+            select(Indicator, `Age Group`,  contains("male")) %>%
+            filter(Indicator == "nqx - probability of dying between ages x and x+n") %>%
+            gather("Observation", "Probability", `2013 Female`:`1990 Male`) %>%
+            extract(Observation, c("Year", "Gender"), "([[:alnum:]]+)\\s([[:alnum:]]+)")
+
+life.exp$`Age Group` <- factor(life.exp$`Age Group`, levels = unique(life.exp$`Age Group`))
+
+ggplot(life.exp, aes(x = `Age Group`, y = as.numeric(Probability), group = Year)) + 
+        facet_wrap(~Gender, nrow = 2) + 
+        ylab("Probability of Dying at Age Group\n") +
+        ggtitle("Probability of Dying by Age Group and Gender from 1990 to 2013") + 
+        theme_light() + 
+        geom_line(aes(colour = Year, group = Year)) + 
+        scale_y_continuous(label = percent) +
+        theme(axis.text.x = element_text(angle = 45, hjust = 1), legend.position="top")  
+      
+```
+
+Unfortunately, after performing the analysis there does not appear to be any significant findings. The probability of death increases to `100%` once we reach 100 years old which is expected as does the decreasing probability of death over the years with medical advances. My thoughts are that finding another element to further divide the groups such as distinct income brackets may be more informative. 
+
+#Sleep Patterns and Work Schedules
 
 
-life.exp <- life.exp %>%
-            
+
+```{r}
+background.url <- file(paste(url,"Dispatchers_Background_Data - Christophe Hunt.csv", sep = ""), open="r" )
+backgroud.data <- read.csv(background.url, sep=",", header=TRUE, stringsAsFactors = FALSE)
+background.dict.url <- file(paste(url,"Dispatchers_Background_Data - variable key -  Christophe Hunt.csv", sep = ""), open="r" )
+background.data.dict <- read.csv(background.dict.url, sep=",", header=TRUE, stringsAsFactors = FALSE)
+
+dis.sleep.work.sched.url <- file(paste(url,"Dispatchers_Daily_Log - Christophe Hunt.csv", sep = ""), open="r" )
+dis.data <- read.csv(dis.sleep.work.sched.url, sep = ",", header = TRUE, stringsAsFactors = FALSE)
+dis.sleep.work.sched.dict.url <- file(paste(url, "Dispatchers_Daily_Log - variable key - Christophe Hunt.csv", sep = ""), open = "r")
+dis.data.dict <- read.csv(dis.sleep.work.sched.dict.url, sep = ",", header = TRUE, stringsAsFactors = FALSE)
+```
+
+```{r}
+data.time.format <- "%e-%b-%Y %H:%M:%S"
+backgroud.data$ID <- as.integer(backgroud.data$ID)
+
+dis.data <-  dis.data %>% 
+             select(ID, Date, contains("nap")) %>%
+             mutate(Time.of.Nap1 = difftime(strptime(Nap1_time_awoke, format = data.time.format ),
+                                            strptime(Nap1_time_fell_asleep, format = data.time.format)),
+                    Time.of.Nap2 = difftime(strptime(Nap2_time_awoke, format = data.time.format),
+                                            strptime(Nap2_time_fell_asleep, format = data.time.format)),
+                    Time.of.Nap3 = difftime(strptime(Nap3_time_awoke, format = data.time.format),
+                                            strptime(Nap3_time_fell_asleep, format = data.time.format))) %>%
+             select(ID, contains("Time.of.Nap")) %>%
+             gather(Nap.Type, Nap.Length, Time.of.Nap1:Time.of.Nap3) %>%
+             group_by(ID) %>%
+             summarise(Nap.avg = mean(Nap.Length, na.rm = TRUE), Nap.count = sum(!is.na(Nap.Length))) %>%
+             left_join(backgroud.data, by = "ID") %>%
+             select(ID, contains("Nap."), contains("Alert_at_Work"))
+
+Alert.at.Work <- background.data.dict[(background.data.dict$Name == "Alert_at_Work"),]
+x <- as.data.frame(gsub("=", "", unlist(str_extract_all(Alert.at.Work$Definition, "=\\w+"))))
+Alert.at.Work <- setDT(x, keep.rownames = TRUE)
+colnames(Alert.at.Work) <- c("ID", "Description") 
+Alert.at.Work$Description <- as.character(Alert.at.Work$Description)
+dis.data$Alert_at_Work <- mapvalues(dis.data$Alert_at_Work, from = Alert.at.Work$ID, to = Alert.at.Work$Description)
+dis.data[dis.data == "NaN"] <- NA
+```
+
+```{r}
+ggplot(dis.data, aes(y = Nap.avg, x = Alert_at_Work)) + geom_bar(stat = "dodge")
+
 
 ```
