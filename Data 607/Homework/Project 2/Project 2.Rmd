@@ -105,7 +105,7 @@ ggplot(dis.data, aes((Nap.avg/60),  fill = Alert_at_Work)) +
 
 From the above density plots we see that those that report `always` feeling alert at work seem to take few naps but for a longer time than others. However, it is interesting that those reporting `never` feeling alert seem to have similar distributions as those reporting `always` feeling alert. It would interesting to review other aspects of the background survey against the nap summary data to see more possible differences.  
 
-##Calories from Restuarants
+##Calories from Restaurants
 
 Jeffrey Nieman proposed some interesting questions related to calorie intake of those that eat out compared to those that do not. I find the subject fascinating as well so I chose his data set to inspect. 
 
