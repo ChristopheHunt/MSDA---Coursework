@@ -123,8 +123,8 @@ cal.intake <-  cal.intake %>%
                          Total.Intake.kcal.for.all.individuals)) %>% 
                select(Gender, Age, percent.of.cals.from.rest)
 
-cal.intake$Age <- as.factor(cal.intake$Age)
-levels(cal.intake$Age) <- unique(cal.intake$Age)
+cal.intake$Age <- factor(cal.intake$Age, levels = unique(cal.intake$Age))
+
 ```
 
 In the above transformation I take the calorie intake data then fill in missing gender fields, followed by dividing intake of calories to get the percent of calories from restuarants. Then I clean up the data set so its appropriately formated for graphing.
@@ -140,12 +140,12 @@ ggplot(cal.intake, aes(x = Age, y = percent.of.cals.from.rest, fill = Gender)) +
 ```
 
 ```{r}
-colnames(cal.intake)[3] <- "Percent of Calories obtained from Restuarants"
+colnames(cal.intake)[3] <- "Percent of Calories obtained from Restaurants"
 cal.intake[,3] <- percent(cal.intake[,3])
 kable(cal.intake, align = "c")
 ```
 
-The results of the data is very interesting, I am surprised at the calories obtained from restuarants for the `2 to 5` age group. I wouldn't have thought that this group would be obtaining `r percent(cal.intake$percent.of.cals.from.rest[cal.intake$Gender == "Female" & cal.intake$Age == "2 to 5"])` for males and `r percent(cal.intake$percent.of.cals.from.rest[cal.intake$Gender == "Male" & cal.intake$Age == "2 to 5"])` for females. I would be interested to find out more about this rate. 
+The results of the data is very interesting, I am surprised at the calories obtained from restuarants for the `2 to 5` age group. I wouldn't have thought that this group would be obtaining `r cal.intake[,3][(cal.intake$Gender == "Female" & cal.intake$Age == "2 to 5")]` for females and `r cal.intake[,3][(cal.intake$Gender == "Male" & cal.intake$Age == "2 to 5")]` for males. I would be interested to find out more about this rate. 
 
 ## Life Expentancy 
 
