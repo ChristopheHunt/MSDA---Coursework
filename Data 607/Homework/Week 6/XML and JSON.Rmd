@@ -48,3 +48,9 @@ xmlToDataFrame("books.xml")
 library(rjson)
 data_json <- toJSON( books.data, method="C" )
 ```
+
+```{r}
+library(kulife)
+library(stringi)
+write.xml(books.data, file = "books package.xml")
+```
