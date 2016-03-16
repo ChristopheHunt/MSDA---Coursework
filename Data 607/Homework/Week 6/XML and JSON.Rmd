@@ -1,0 +1,50 @@
+---
+title: "XML and JSON"
+author: "Christophe"
+date: "March 15, 2016"
+output: html_document
+---
+
+
+```{r, pre load data, include = FALSE}
+library(XML)
+url <- "https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20607/Homework/data/"
+```
+
+
+
+```{r}
+books.url <- file(paste(url,"books.csv", sep = ""), open="r" )
+books.data <- read.csv(books.url, sep=",", header=TRUE, fileEncoding="UTF-8", stringsAsFactors = FALSE)
+
+### block from XML pacakge example
+ b = newXMLNode("books")
+ saveXML(b)
+ f = tempfile()
+ saveXML(b, f)
+ doc = xmlInternalTreeParse(f)
+ saveXML(doc)
+ 
+ con <- xmlOutputDOM()
+### end of XML package block
+ 
+create_xml_books <- function(dataframe){
+                      for (j in seq(1:length(dataframe[,1]))){
+                           for (i in colnames(dataframe)){
+                              con$addTag(i, dataframe[j,i])
+                             }
+                            }
+                           }
+
+create_xml_books(books.data)
+
+saveXML(con$value(), file="books.xml", encoding = "UTF-8")
+
+xmlToDataFrame("books.xml")
+```
+
+
+```{r}
+library(rjson)
+data_json <- toJSON( books.data, method="C" )
+```
