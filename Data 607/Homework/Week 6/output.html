@@ -1,0 +1,59 @@
+<html lang="en">
+  <head>
+    <title>Untitled Page</title>
+    <link rel="stylesheet" href="style.css" type="text/css" />
+    <script type="text/javascript" src="jquery-1.4.2.js"></script>
+    <script type="text/javascript" src="jquery.tablesorter.js"></script>
+    <script type="text/javascript">
+$(document).ready(function()
+  {
+    $("#myTable").tablesorter();
+  }
+);
+    </script>
+  </head>
+  <body>
+    <table id="myTable" class="tablesorter" border="0" cellspacing="1" cellpadding="0">
+      <thead>
+        <tr>
+                      <th>Title</th>
+                      <th>Author_1</th>
+                      <th>Author_2</th>
+                      <th>Author_3</th>
+                      <th>Published.Date</th>
+                      <th>Weight</th>
+                      <th>Type</th>
+                  </tr>
+      </thead>
+      <tbody>
+                <tr>
+                      <td>Discovering Statistics Using R</td>
+                      <td>Andy Field</td>
+                      <td>Jeremy Miles</td>
+                      <td>Zoe Field </td>
+                      <td>2012</td>
+                      <td>5 pounds</td>
+                      <td>paperback</td>
+                  </tr>
+                <tr>
+                      <td>R Cookbook (O'Reilly Cookbooks) </td>
+                      <td>Paul Teetor </td>
+                      <td></td>
+                      <td></td>
+                      <td>2011</td>
+                      <td>1.6 pounds</td>
+                      <td>paperback</td>
+                  </tr>
+                <tr>
+                      <td>R for Everyone: Advanced Analytics and Graphics (Addison-Wesley Data and Analytics)</td>
+                      <td>Jared Lander</td>
+                      <td></td>
+                      <td></td>
+                      <td>2013</td>
+                      <td>1 pound</td>
+                      <td>paperback</td>
+                  </tr>
+              </tbody>
+    </table>
+  </body>
+</html>

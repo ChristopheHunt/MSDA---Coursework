@@ -8,49 +8,61 @@ output: html_document
 
 ```{r, pre load data, include = FALSE}
 library(XML)
+library(jsonlite)
+library(df2json)
 url <- "https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20607/Homework/data/"
 ```
 
-
-
+### We load the data below
 ```{r}
 books.url <- file(paste(url,"books.csv", sep = ""), open="r" )
 books.data <- read.csv(books.url, sep=",", header=TRUE, fileEncoding="UTF-8", stringsAsFactors = FALSE)
+```
 
-### block from XML pacakge example
- b = newXMLNode("books")
- saveXML(b)
- f = tempfile()
- saveXML(b, f)
- doc = xmlInternalTreeParse(f)
- saveXML(doc)
- 
- con <- xmlOutputDOM()
-### end of XML package block
- 
+### The following code will take our `books.csv` file and then convert it to `xml` format. 
+
+```{r, warning=FALSE}
+books.url <- file(paste(url,"books.csv", sep = ""), open="r" )
+books.data <- read.csv(books.url, sep=",", header=TRUE, fileEncoding="UTF-8", stringsAsFactors = FALSE)
+
 create_xml_books <- function(dataframe){
-                      for (j in seq(1:length(dataframe[,1]))){
-                           for (i in colnames(dataframe)){
-                              con$addTag(i, dataframe[j,i])
-                             }
-                            }
-                           }
-
+                      for (i in seq(1:length(dataframe[,1]))) {
+                            xml$addTag("book", close=FALSE)
+                           for (j in colnames(dataframe)) {
+                              xml$addTag(j, dataframe[i,j])
+                           } 
+                              xml$closeTag()
+                       }
+                    }
+xml <- xmlTree()
+xml$addTag("books", close=FALSE)
 create_xml_books(books.data)
+xml$closeTag()
+books.xml <- saveXML(xml)
+```
 
-saveXML(con$value(), file="books.xml", encoding = "UTF-8")
+### Now lets look at the structure of the `xml` file. 
 
-xmlToDataFrame("books.xml")
+```{r}
+cat(books.xml)
+```
+
+### Lets load the dataframe to json package `df2json`
+
+```{r, results = 'asis'}
+library(df2json)
+books.json <- df2json(books.data)
+```
+
+### Now we have a `json` format for the books data frame
+
+```{r, results = 'asis'}
+cat(books.json)
 ```
 
 
 ```{r}
-library(rjson)
-data_json <- toJSON( books.data, method="C" )
+books.html <- toHTML(books.data)
+print(books.html)
 ```
 
-```{r}
-library(kulife)
-library(stringi)
-write.xml(books.data, file = "books package.xml")
-```
