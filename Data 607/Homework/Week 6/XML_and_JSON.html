@@ -119,62 +119,123 @@ $(document).ready(function () {
 <div id="we-load-the-data-below" class="section level3">
 <h3>We load the data below</h3>
 <pre class="r"><code>books.url &lt;- file(paste(url,&quot;books.csv&quot;, sep = &quot;&quot;), open=&quot;r&quot; )
-books.data &lt;- read.csv(books.url, sep=&quot;,&quot;, header=TRUE, fileEncoding=&quot;UTF-8&quot;, stringsAsFactors = FALSE)</code></pre>
+books.data &lt;- read.csv2(books.url, sep = &quot;,&quot;, header=TRUE, stringsAsFactors = FALSE ,  encoding=&quot;UTF-8&quot;)</code></pre>
 </div>
 <div id="the-following-code-will-take-our-books.csv-file-and-then-convert-it-to-xml-format." class="section level3">
 <h3>The following code will take our <code>books.csv</code> file and then convert it to <code>xml</code> format.</h3>
-<pre class="r"><code>books.url &lt;- file(paste(url,&quot;books.csv&quot;, sep = &quot;&quot;), open=&quot;r&quot; )
-books.data &lt;- read.csv(books.url, sep=&quot;,&quot;, header=TRUE, fileEncoding=&quot;UTF-8&quot;, stringsAsFactors = FALSE)
-
-create_xml_books &lt;- function(dataframe){
+<pre class="r"><code>create_xml_books &lt;- function(dataframe){
                       for (i in seq(1:length(dataframe[,1]))) {
-                            xml$addTag(&quot;book&quot;, close=FALSE)
+                            xml$addTag(enc2utf8(&quot;book&quot;), close=FALSE)
                            for (j in colnames(dataframe)) {
                               xml$addTag(j, dataframe[i,j])
                            } 
                               xml$closeTag()
                        }
-                    }
-xml &lt;- xmlTree()
+                     }
+
+xml &lt;- xmlOutputDOM()
 xml$addTag(&quot;books&quot;, close=FALSE)
 create_xml_books(books.data)
 xml$closeTag()
-books.xml &lt;- saveXML(xml)</code></pre>
+books.xml&lt;- saveXML(xml$value()) </code></pre>
 </div>
 <div id="now-lets-look-at-the-structure-of-the-xml-file." class="section level3">
 <h3>Now lets look at the structure of the <code>xml</code> file.</h3>
 <pre class="r"><code>cat(books.xml)</code></pre>
 <pre><code>## &lt;?xml version=&quot;1.0&quot;?&gt;
-## 
-## &lt;books&gt;
+## &lt;doc&gt;
+##  &lt;books&gt;
 ##   &lt;book&gt;
-##     &lt;Title&gt;Discovering Statistics Using R&lt;/Title&gt;
-##     &lt;Author_1&gt;Andy Field&lt;/Author_1&gt;
-##     &lt;Author_2&gt;Jeremy Miles&lt;/Author_2&gt;
-##     &lt;Author_3&gt;&lt;/Author_3&gt;
-##     &lt;Published.Date&gt;2012&lt;/Published.Date&gt;
-##     &lt;Weight&gt;5 pounds&lt;/Weight&gt;
-##     &lt;Type&gt;paperback&lt;/Type&gt;
+##    &lt;Title&gt;Discovering Statistics Using R&lt;/Title&gt;
+##    &lt;Author_1&gt;Andy Field&lt;/Author_1&gt;
+##    &lt;Author_2&gt;Jeremy Miles&lt;/Author_2&gt;
+##    &lt;Author_3&gt;Zoe Field&lt;/Author_3&gt;
+##    &lt;Published_Date&gt;2012&lt;/Published_Date&gt;
+##    &lt;Weight&gt;5 pounds&lt;/Weight&gt;
+##    &lt;Type&gt;paperback&lt;/Type&gt;
 ##   &lt;/book&gt;
 ##   &lt;book&gt;
-##     &lt;Title&gt;&lt;/Title&gt;
-##     &lt;Author_1&gt;&lt;/Author_1&gt;
-##     &lt;Author_2&gt;&lt;/Author_2&gt;
-##     &lt;Author_3&gt;&lt;/Author_3&gt;
-##     &lt;Published.Date&gt;2011&lt;/Published.Date&gt;
-##     &lt;Weight&gt;1.6 pounds&lt;/Weight&gt;
-##     &lt;Type&gt;paperback&lt;/Type&gt;
+##    &lt;Title&gt;R Cookbook &lt;/Title&gt;
+##    &lt;Author_1&gt;Paul Teetor&lt;/Author_1&gt;
+##    &lt;Author_2&gt; &lt;/Author_2&gt;
+##    &lt;Author_3&gt; &lt;/Author_3&gt;
+##    &lt;Published_Date&gt;2011&lt;/Published_Date&gt;
+##    &lt;Weight&gt;1.6 pounds&lt;/Weight&gt;
+##    &lt;Type&gt;paperback&lt;/Type&gt;
 ##   &lt;/book&gt;
 ##   &lt;book&gt;
-##     &lt;Title&gt;R for Everyone: Advanced Analytics and Graphics (Addison-Wesley Data and Analytics)&lt;/Title&gt;
-##     &lt;Author_1&gt;Jared Lander&lt;/Author_1&gt;
-##     &lt;Author_2&gt;&lt;/Author_2&gt;
-##     &lt;Author_3&gt;&lt;/Author_3&gt;
-##     &lt;Published.Date&gt;2013&lt;/Published.Date&gt;
-##     &lt;Weight&gt;1 pound&lt;/Weight&gt;
-##     &lt;Type&gt;paperback&lt;/Type&gt;
+##    &lt;Title&gt;R for Everyone: Advanced Analytics and Graphics (Addison-Wesley Data and Analytics)&lt;/Title&gt;
+##    &lt;Author_1&gt;Jared Lander&lt;/Author_1&gt;
+##    &lt;Author_2&gt; &lt;/Author_2&gt;
+##    &lt;Author_3&gt; &lt;/Author_3&gt;
+##    &lt;Published_Date&gt;2013&lt;/Published_Date&gt;
+##    &lt;Weight&gt;1 pound&lt;/Weight&gt;
+##    &lt;Type&gt;paperback&lt;/Type&gt;
 ##   &lt;/book&gt;
-## &lt;/books&gt;</code></pre>
+##  &lt;/books&gt;
+## &lt;/doc&gt;</code></pre>
+</div>
+<div id="now-that-we-have-the-data-in-each-of-the-file-types-we-can-covert-back-to-a-dataframe." class="section level3">
+<h3>Now that we have the data in each of the file types we can covert back to a dataframe.</h3>
+<pre class="r"><code>books.list &lt;- xmlToList(books.xml)
+x &lt;- rbindlist(books.list, fill = TRUE)
+x &lt;- as.data.frame(x)
+row.names(x) &lt;- names(books.list$books$book)
+kable(x)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="left">book</th>
+<th align="left">book</th>
+<th align="left">book</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Title</td>
+<td align="left">Discovering Statistics Using R</td>
+<td align="left">R Cookbook</td>
+<td align="left">R for Everyone: Advanced Analytics and Graphics (Addison-Wesley Data and Analytics)</td>
+</tr>
+<tr class="even">
+<td align="left">Author_1</td>
+<td align="left">Andy Field</td>
+<td align="left">Paul Teetor</td>
+<td align="left">Jared Lander</td>
+</tr>
+<tr class="odd">
+<td align="left">Author_2</td>
+<td align="left">Jeremy Miles</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">Author_3</td>
+<td align="left">Zoe Field</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Published_Date</td>
+<td align="left">2012</td>
+<td align="left">2011</td>
+<td align="left">2013</td>
+</tr>
+<tr class="even">
+<td align="left">Weight</td>
+<td align="left">5 pounds</td>
+<td align="left">1.6 pounds</td>
+<td align="left">1 pound</td>
+</tr>
+<tr class="odd">
+<td align="left">Type</td>
+<td align="left">paperback</td>
+<td align="left">paperback</td>
+<td align="left">paperback</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="lets-load-the-dataframe-to-json-package-df2json" class="section level3">
 <h3>Lets load the dataframe to json package <code>df2json</code></h3>
@@ -184,7 +245,7 @@ books.json &lt;- df2json(books.data)</code></pre>
 <div id="now-we-have-a-json-format-for-the-books-data-frame" class="section level3">
 <h3>Now we have a <code>json</code> format for the books data frame</h3>
 <pre class="r"><code>cat(books.json)</code></pre>
-<p>[{“Title”:“Discovering Statistics Using R”,“Author_1”:“Andy Field”,“Author_2”:“Jeremy Miles”,“Author_3”:“Zoe Field ”,“Published.Date”:2012,“Weight”:“5 pounds”,“Type”:“paperback”}, {“Title”:“R Cookbook (O’Reilly Cookbooks) ”,“Author_1”:“Paul Teetor ”,“Author_2”:“”,“Author_3”:“”,“Published.Date”:2011,“Weight”:“1.6 pounds”,“Type”:“paperback”}, {“Title”:“R for Everyone: Advanced Analytics and Graphics (Addison-Wesley Data and Analytics)”,“Author_1”:“Jared Lander”,“Author_2”:“”,“Author_3”:“”,“Published.Date”:2013,“Weight”:“1 pound”,“Type”:“paperback”}]</p>
+<p>[{“Title”:“Discovering Statistics Using R”,“Author_1”:“Andy Field”,“Author_2”:“Jeremy Miles”,“Author_3”:“Zoe Field”,“Published_Date”:2012,“Weight”:“5 pounds”,“Type”:“paperback”}, {“Title”:“R Cookbook”,“Author_1”:“Paul Teetor”,“Author_2”:&quot; “,”Author_3“:” “,”Published_Date“:2011,”Weight“:”1.6 pounds“,”Type“:”paperback“}, {”Title“:”R for Everyone: Advanced Analytics and Graphics (Addison-Wesley Data and Analytics)“,”Author_1“:”Jared Lander“,”Author_2“:” “,”Author_3“:” “,”Published_Date“:2013,”Weight“:”1 pound“,”Type“:”paperback“}]</p>
 </div>
 <div id="create-the-html-file" class="section level3">
 <h3>Create the HTML file</h3>
@@ -198,7 +259,7 @@ books.json &lt;- df2json(books.data)</code></pre>
 ## &lt;th style='border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;'&gt;Author_1&lt;/th&gt;
 ## &lt;th style='border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;'&gt;Author_2&lt;/th&gt;
 ## &lt;th style='border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;'&gt;Author_3&lt;/th&gt;
-## &lt;th style='border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;'&gt;Published.Date&lt;/th&gt;
+## &lt;th style='border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;'&gt;Published_Date&lt;/th&gt;
 ## &lt;th style='border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;'&gt;Weight&lt;/th&gt;
 ## &lt;th style='border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;'&gt;Type&lt;/th&gt;
 ## &lt;/tr&gt;
@@ -209,17 +270,17 @@ books.json &lt;- df2json(books.data)</code></pre>
 ## &lt;td style='text-align: center;'&gt;Discovering Statistics Using R&lt;/td&gt;
 ## &lt;td style='text-align: center;'&gt;Andy Field&lt;/td&gt;
 ## &lt;td style='text-align: center;'&gt;Jeremy Miles&lt;/td&gt;
-## &lt;td style='text-align: center;'&gt;Zoe Field &lt;/td&gt;
+## &lt;td style='text-align: center;'&gt;Zoe Field&lt;/td&gt;
 ## &lt;td style='text-align: center;'&gt;2012&lt;/td&gt;
 ## &lt;td style='text-align: center;'&gt;5 pounds&lt;/td&gt;
 ## &lt;td style='text-align: center;'&gt;paperback&lt;/td&gt;
 ## &lt;/tr&gt;
 ## &lt;tr&gt;
 ## &lt;td style='text-align: left;'&gt;2&lt;/td&gt;
-## &lt;td style='text-align: center;'&gt;R Cookbook (O'Reilly Cookbooks) &lt;/td&gt;
-## &lt;td style='text-align: center;'&gt;Paul Teetor &lt;/td&gt;
-## &lt;td style='text-align: center;'&gt;&lt;/td&gt;
-## &lt;td style='text-align: center;'&gt;&lt;/td&gt;
+## &lt;td style='text-align: center;'&gt;R Cookbook &lt;/td&gt;
+## &lt;td style='text-align: center;'&gt;Paul Teetor&lt;/td&gt;
+## &lt;td style='text-align: center;'&gt; &lt;/td&gt;
+## &lt;td style='text-align: center;'&gt; &lt;/td&gt;
 ## &lt;td style='text-align: center;'&gt;2011&lt;/td&gt;
 ## &lt;td style='text-align: center;'&gt;1.6 pounds&lt;/td&gt;
 ## &lt;td style='text-align: center;'&gt;paperback&lt;/td&gt;
@@ -228,8 +289,8 @@ books.json &lt;- df2json(books.data)</code></pre>
 ## &lt;td style='border-bottom: 2px solid grey; text-align: left;'&gt;3&lt;/td&gt;
 ## &lt;td style='border-bottom: 2px solid grey; text-align: center;'&gt;R for Everyone: Advanced Analytics and Graphics (Addison-Wesley Data and Analytics)&lt;/td&gt;
 ## &lt;td style='border-bottom: 2px solid grey; text-align: center;'&gt;Jared Lander&lt;/td&gt;
-## &lt;td style='border-bottom: 2px solid grey; text-align: center;'&gt;&lt;/td&gt;
-## &lt;td style='border-bottom: 2px solid grey; text-align: center;'&gt;&lt;/td&gt;
+## &lt;td style='border-bottom: 2px solid grey; text-align: center;'&gt; &lt;/td&gt;
+## &lt;td style='border-bottom: 2px solid grey; text-align: center;'&gt; &lt;/td&gt;
 ## &lt;td style='border-bottom: 2px solid grey; text-align: center;'&gt;2013&lt;/td&gt;
 ## &lt;td style='border-bottom: 2px solid grey; text-align: center;'&gt;1 pound&lt;/td&gt;
 ## &lt;td style='border-bottom: 2px solid grey; text-align: center;'&gt;paperback&lt;/td&gt;

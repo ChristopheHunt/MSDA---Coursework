@@ -11,35 +11,37 @@ library(XML)
 library(jsonlite)
 library(df2json)
 library(htmlTable)
+library(knitr)
+library(data.table)
 url <- "https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20607/Homework/data/"
 ```
 
 ### We load the data below
 ```{r}
 books.url <- file(paste(url,"books.csv", sep = ""), open="r" )
-books.data <- read.csv(books.url, sep=",", header=TRUE, fileEncoding="UTF-8", stringsAsFactors = FALSE)
+books.data <- read.csv2(books.url, sep = ",", header=TRUE, stringsAsFactors = FALSE ,  encoding="UTF-8")
 ```
 
 ### The following code will take our `books.csv` file and then convert it to `xml` format. 
 
 ```{r, warning=FALSE}
-books.url <- file(paste(url,"books.csv", sep = ""), open="r" )
-books.data <- read.csv(books.url, sep=",", header=TRUE, fileEncoding="UTF-8", stringsAsFactors = FALSE)
 
 create_xml_books <- function(dataframe){
                       for (i in seq(1:length(dataframe[,1]))) {
-                            xml$addTag("book", close=FALSE)
+                            xml$addTag(enc2utf8("book"), close=FALSE)
                            for (j in colnames(dataframe)) {
                               xml$addTag(j, dataframe[i,j])
                            } 
                               xml$closeTag()
                        }
-                    }
-xml <- xmlTree()
+                     }
+
+xml <- xmlOutputDOM()
 xml$addTag("books", close=FALSE)
 create_xml_books(books.data)
 xml$closeTag()
-books.xml <- saveXML(xml)
+books.xml<- saveXML(xml$value()) 
+
 ```
 
 ### Now lets look at the structure of the `xml` file. 
@@ -47,6 +49,17 @@ books.xml <- saveXML(xml)
 ```{r}
 cat(books.xml)
 ```
+
+### Now that we have the data in each of the file types we can covert back to a dataframe.
+
+```{r}
+books.list <- xmlToList(books.xml)
+x <- rbindlist(books.list, fill = TRUE)
+x <- as.data.frame(x)
+row.names(x) <- names(books.list$books$book)
+kable(x)
+```
+
 
 ### Lets load the dataframe to json package `df2json`
 
@@ -71,7 +84,3 @@ books.html <- htmlTable(books.data)
 print(books.html)
 ```
 
-
-```{r}
-
-```
