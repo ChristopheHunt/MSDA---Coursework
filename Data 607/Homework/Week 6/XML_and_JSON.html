@@ -151,7 +151,8 @@ xml$addTag(&quot;books&quot;, close=FALSE)
 create_xml_books(books.data)
 xml$closeTag()
 
-books.xml &lt;- saveXML(xml$value()) </code></pre>
+books.xml &lt;- saveXML(xml$value()) 
+xml.output &lt;- saveXML(xml$value(), file = &quot;chunt_books.xml&quot;)</code></pre>
 </div>
 <div id="now-lets-look-at-the-structure-of-the-xml-file." class="section level4">
 <h4>Now lets look at the structure of the <code>xml</code> file.</h4>
@@ -258,6 +259,7 @@ kable(books.xml.df)</code></pre>
 <h4>Now we have a <code>json</code> format for the books data frame</h4>
 <pre class="r"><code>cat(books.json)</code></pre>
 <p>[{“Title”:“Discovering Statistics Using R”,“Author_1”:“Andy Field”,“Author_2”:“Jeremy Miles”,“Author_3”:“Zoe Field”,“Published_Date”:2012,“Weight”:“5 pounds”,“Type”:“paperback”}, {“Title”:“R Cookbook”,“Author_1”:“Paul Teetor”,“Author_2”:&quot; “,”Author_3“:” “,”Published_Date“:2011,”Weight“:”1.6 pounds“,”Type“:”paperback“}, {”Title“:”R for Everyone: Advanced Analytics and Graphics (Addison-Wesley Data and Analytics)“,”Author_1“:”Jared Lander“,”Author_2“:” “,”Author_3“:” “,”Published_Date“:2013,”Weight“:”1 pound“,”Type“:”paperback“}]</p>
+<pre class="r"><code>write(books.json, &quot;chunt_books.json&quot;)</code></pre>
 </div>
 <div id="lets-now-convert-the-json-format-back-to-a-data-frame-using-the-json-package-rjsonio" class="section level4">
 <h4>Lets now convert the json format back to a data frame using the json package <code>RJSONIO</code></h4>
@@ -307,123 +309,14 @@ kable(books.json.df)</code></pre>
 </tr>
 </tbody>
 </table>
-</div>
-<div id="create-the-html-file" class="section level4">
-<h4>Create the HTML file</h4>
-<pre class="r"><code>books.html &lt;- htmlTable(books.data)</code></pre>
-<pre class="r"><code>books.html</code></pre>
-<table class="gmisc_table" style="border-collapse: collapse; margin-top: 1em; margin-bottom: 1em;">
-<thead>
-<tr>
-<th style="border-bottom: 1px solid grey; border-top: 2px solid grey;">
-</th>
-<th style="border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;">
-Title
-</th>
-<th style="border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;">
-Author_1
-</th>
-<th style="border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;">
-Author_2
-</th>
-<th style="border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;">
-Author_3
-</th>
-<th style="border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;">
-Published_Date
-</th>
-<th style="border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;">
-Weight
-</th>
-<th style="border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;">
-Type
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;">
-1
-</td>
-<td style="text-align: center;">
-Discovering Statistics Using R
-</td>
-<td style="text-align: center;">
-Andy Field
-</td>
-<td style="text-align: center;">
-Jeremy Miles
-</td>
-<td style="text-align: center;">
-Zoe Field
-</td>
-<td style="text-align: center;">
-2012
-</td>
-<td style="text-align: center;">
-5 pounds
-</td>
-<td style="text-align: center;">
-paperback
-</td>
-</tr>
-<tr>
-<td style="text-align: left;">
-2
-</td>
-<td style="text-align: center;">
-R Cookbook
-</td>
-<td style="text-align: center;">
-Paul Teetor
-</td>
-<td style="text-align: center;">
-</td>
-<td style="text-align: center;">
-</td>
-<td style="text-align: center;">
-2011
-</td>
-<td style="text-align: center;">
-1.6 pounds
-</td>
-<td style="text-align: center;">
-paperback
-</td>
-</tr>
-<tr>
-<td style="border-bottom: 2px solid grey; text-align: left;">
-3
-</td>
-<td style="border-bottom: 2px solid grey; text-align: center;">
-R for Everyone: Advanced Analytics and Graphics (Addison-Wesley Data and Analytics)
-</td>
-<td style="border-bottom: 2px solid grey; text-align: center;">
-Jared Lander
-</td>
-<td style="border-bottom: 2px solid grey; text-align: center;">
-</td>
-<td style="border-bottom: 2px solid grey; text-align: center;">
-</td>
-<td style="border-bottom: 2px solid grey; text-align: center;">
-2013
-</td>
-<td style="border-bottom: 2px solid grey; text-align: center;">
-1 pound
-</td>
-<td style="border-bottom: 2px solid grey; text-align: center;">
-paperback
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div id="now-lets-convert-back-our-html-file-to-a-data-frame-using-xml-package" class="section level4">
-<h4>Now lets convert back our html file to a data frame using <code>XML</code> package</h4>
-<pre class="r"><code>books.html.df &lt;- as.data.frame(XML::readHTMLTable(books.html))
-column.names &lt;- gsub(&quot;NULL.&quot;, replacement = &quot;&quot;, colnames(books.html.df))
-colnames(books.html.df) &lt;- column.names
+<pre class="r"><code>if (file.exists(&quot;chunt_books.html&quot;)) file.remove(&quot;chunt_books.html&quot;)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code>R2HTML::HTML(books.data, file = &quot;chunt_books.html&quot;) #saves html file</code></pre>
+<pre class="r"><code>books.html.df &lt;-   XML::readHTMLTable(&quot;chunt_books.html&quot;)
+books.html.df &lt;- as.data.frame(books.html.df[1])
 books.html.df &lt;- books.html.df[,-c(1)]
+books.html.df&lt;- sapply(books.html.df, as.character)
+colnames(books.html.df) &lt;-  books.html.df[1,]
 kable(books.html.df)</code></pre>
 <table>
 <thead>
@@ -439,6 +332,15 @@ kable(books.html.df)</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
+<td align="left">Title</td>
+<td align="left">Author_1</td>
+<td align="left">Author_2</td>
+<td align="left">Author_3</td>
+<td align="left">Published_Date</td>
+<td align="left">Weight</td>
+<td align="left">Type</td>
+</tr>
+<tr class="even">
 <td align="left">Discovering Statistics Using R</td>
 <td align="left">Andy Field</td>
 <td align="left">Jeremy Miles</td>
@@ -447,7 +349,7 @@ kable(books.html.df)</code></pre>
 <td align="left">5 pounds</td>
 <td align="left">paperback</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">R Cookbook</td>
 <td align="left">Paul Teetor</td>
 <td align="left"></td>
@@ -456,7 +358,7 @@ kable(books.html.df)</code></pre>
 <td align="left">1.6 pounds</td>
 <td align="left">paperback</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">R for Everyone: Advanced Analytics and Graphics (Addison-Wesley Data and Analytics)</td>
 <td align="left">Jared Lander</td>
 <td align="left"></td>

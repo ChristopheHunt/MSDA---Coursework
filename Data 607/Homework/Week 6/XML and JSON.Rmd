@@ -10,6 +10,7 @@ library(XML)
 library(jsonlite)
 library(df2json)
 library(htmlTable)
+library(R2HTML)
 library(knitr)
 library(data.table)
 library(RJSONIO)
@@ -47,6 +48,7 @@ create_xml_books(books.data)
 xml$closeTag()
 
 books.xml <- saveXML(xml$value()) 
+xml.output <- saveXML(xml$value(), file = "chunt_books.xml")
 ```
 
 #### Now lets look at the structure of the `xml` file. 
@@ -74,6 +76,7 @@ books.json <- df2json::df2json(books.data)
 
 ```{r, results = 'asis'}
 cat(books.json)
+write(books.json, "chunt_books.json")
 ```
 
 #### Lets now convert the json format back to a data frame using the json package `RJSONIO`
@@ -85,23 +88,21 @@ rownames(books.json.df) <- NULL
 kable(books.json.df)
 ```
 
-#### Create the HTML file 
+
 
 ```{r}
-books.html <- htmlTable(books.data)
+if (file.exists("chunt_books.html")) file.remove("chunt_books.html")
+
+R2HTML::HTML(books.data, file = "chunt_books.html") #saves html file
 ```
 
-```{r}
-books.html
-```
-
-#### Now lets convert back our html file to a data frame using `XML` package
 
 ```{r}
-books.html.df <- as.data.frame(XML::readHTMLTable(books.html))
-column.names <- gsub("NULL.", replacement = "", colnames(books.html.df))
-colnames(books.html.df) <- column.names
+books.html.df <-   XML::readHTMLTable("chunt_books.html")
+books.html.df <- as.data.frame(books.html.df[1])
 books.html.df <- books.html.df[,-c(1)]
+books.html.df<- sapply(books.html.df, as.character)
+colnames(books.html.df) <-  books.html.df[1,]
 kable(books.html.df)
 ```
 

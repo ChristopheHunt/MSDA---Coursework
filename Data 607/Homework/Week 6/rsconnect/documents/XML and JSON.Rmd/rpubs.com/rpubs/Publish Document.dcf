@@ -3,6 +3,5 @@ account: rpubs
 server: rpubs.com
 bundleId:
         https://api.rpubs.com/api/v1/document/162519/f1f5df99532140aca65d61abb5482124
-url:
-        http://rpubs.com/publish/claim/162519/93c43689224b419db168a187ed75a545
-when: 1458411546.08925
+url: http://rpubs.com/Christophe1/162519
+when: 1458426597.30709

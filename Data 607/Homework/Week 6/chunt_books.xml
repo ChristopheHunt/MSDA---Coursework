@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<doc>
+ <books>
+  <book>
+   <Title>Discovering Statistics Using R</Title>
+   <Author_1>Andy Field</Author_1>
+   <Author_2>Jeremy Miles</Author_2>
+   <Author_3>Zoe Field</Author_3>
+   <Published_Date>2012</Published_Date>
+   <Weight>5 pounds</Weight>
+   <Type>paperback</Type>
+  </book>
+  <book>
+   <Title>R Cookbook </Title>
+   <Author_1>Paul Teetor</Author_1>
+   <Author_2> </Author_2>
+   <Author_3> </Author_3>
+   <Published_Date>2011</Published_Date>
+   <Weight>1.6 pounds</Weight>
+   <Type>paperback</Type>
+  </book>
+  <book>
+   <Title>R for Everyone: Advanced Analytics and Graphics (Addison-Wesley Data and Analytics)</Title>
+   <Author_1>Jared Lander</Author_1>
+   <Author_2> </Author_2>
+   <Author_3> </Author_3>
+   <Published_Date>2013</Published_Date>
+   <Weight>1 pound</Weight>
+   <Type>paperback</Type>
+  </book>
+ </books>
+</doc>
