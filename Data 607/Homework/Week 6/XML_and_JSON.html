@@ -185,27 +185,56 @@ books.json &lt;- df2json(books.data)</code></pre>
 <h3>Now we have a <code>json</code> format for the books data frame</h3>
 <pre class="r"><code>cat(books.json)</code></pre>
 <p>[{“Title”:“Discovering Statistics Using R”,“Author_1”:“Andy Field”,“Author_2”:“Jeremy Miles”,“Author_3”:“Zoe Field ”,“Published.Date”:2012,“Weight”:“5 pounds”,“Type”:“paperback”}, {“Title”:“R Cookbook (O’Reilly Cookbooks) ”,“Author_1”:“Paul Teetor ”,“Author_2”:“”,“Author_3”:“”,“Published.Date”:2011,“Weight”:“1.6 pounds”,“Type”:“paperback”}, {“Title”:“R for Everyone: Advanced Analytics and Graphics (Addison-Wesley Data and Analytics)”,“Author_1”:“Jared Lander”,“Author_2”:“”,“Author_3”:“”,“Published.Date”:2013,“Weight”:“1 pound”,“Type”:“paperback”}]</p>
-<pre class="r"><code>books.html &lt;- toHTML(books.data)
-print(books.html)</code></pre>
-<pre><code>## &lt;table&gt;
-##   &lt;tr&gt;
-##     &lt;th&gt;Title&lt;/th&gt;
-##     &lt;th&gt;Author_1&lt;/th&gt;
-##     &lt;th&gt;Author_2&lt;/th&gt;
-##     &lt;th&gt;Author_3&lt;/th&gt;
-##     &lt;th&gt;Published.Date&lt;/th&gt;
-##     &lt;th&gt;Weight&lt;/th&gt;
-##     &lt;th&gt;Type&lt;/th&gt;
-##   &lt;/tr&gt;
-##   &lt;tr&gt;
-##     &lt;th&gt;Discovering Statistics Using R                                                     R Cookbook (O'Reilly Cookbooks)                                                    R for Everyone: Advanced Analytics and Graphics (Addison-Wesley Data and Analytics)&lt;/th&gt;
-##     &lt;th&gt;Andy Field  Paul Teetor Jared Lander&lt;/th&gt;
-##     &lt;th&gt;Jeremy Miles                        &lt;/th&gt;
-##     &lt;th&gt;Zoe Field                     &lt;/th&gt;
-##     &lt;th&gt;201220112013&lt;/th&gt;
-##     &lt;th&gt;5 pounds  1.6 pounds1 pound   &lt;/th&gt;
-##     &lt;th&gt;paperbackpaperbackpaperback&lt;/th&gt;
-##   &lt;/tr&gt;
+</div>
+<div id="create-the-html-file" class="section level3">
+<h3>Create the HTML file</h3>
+<pre class="r"><code>books.html &lt;- htmlTable(books.data)</code></pre>
+<pre class="r"><code>print(books.html)</code></pre>
+<pre><code>## &lt;table class='gmisc_table' style='border-collapse: collapse; margin-top: 1em; margin-bottom: 1em;' &gt;
+## &lt;thead&gt;
+## &lt;tr&gt;
+## &lt;th style='border-bottom: 1px solid grey; border-top: 2px solid grey;'&gt; &lt;/th&gt;
+## &lt;th style='border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;'&gt;Title&lt;/th&gt;
+## &lt;th style='border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;'&gt;Author_1&lt;/th&gt;
+## &lt;th style='border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;'&gt;Author_2&lt;/th&gt;
+## &lt;th style='border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;'&gt;Author_3&lt;/th&gt;
+## &lt;th style='border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;'&gt;Published.Date&lt;/th&gt;
+## &lt;th style='border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;'&gt;Weight&lt;/th&gt;
+## &lt;th style='border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;'&gt;Type&lt;/th&gt;
+## &lt;/tr&gt;
+## &lt;/thead&gt;
+## &lt;tbody&gt;
+## &lt;tr&gt;
+## &lt;td style='text-align: left;'&gt;1&lt;/td&gt;
+## &lt;td style='text-align: center;'&gt;Discovering Statistics Using R&lt;/td&gt;
+## &lt;td style='text-align: center;'&gt;Andy Field&lt;/td&gt;
+## &lt;td style='text-align: center;'&gt;Jeremy Miles&lt;/td&gt;
+## &lt;td style='text-align: center;'&gt;Zoe Field &lt;/td&gt;
+## &lt;td style='text-align: center;'&gt;2012&lt;/td&gt;
+## &lt;td style='text-align: center;'&gt;5 pounds&lt;/td&gt;
+## &lt;td style='text-align: center;'&gt;paperback&lt;/td&gt;
+## &lt;/tr&gt;
+## &lt;tr&gt;
+## &lt;td style='text-align: left;'&gt;2&lt;/td&gt;
+## &lt;td style='text-align: center;'&gt;R Cookbook (O'Reilly Cookbooks) &lt;/td&gt;
+## &lt;td style='text-align: center;'&gt;Paul Teetor &lt;/td&gt;
+## &lt;td style='text-align: center;'&gt;&lt;/td&gt;
+## &lt;td style='text-align: center;'&gt;&lt;/td&gt;
+## &lt;td style='text-align: center;'&gt;2011&lt;/td&gt;
+## &lt;td style='text-align: center;'&gt;1.6 pounds&lt;/td&gt;
+## &lt;td style='text-align: center;'&gt;paperback&lt;/td&gt;
+## &lt;/tr&gt;
+## &lt;tr&gt;
+## &lt;td style='border-bottom: 2px solid grey; text-align: left;'&gt;3&lt;/td&gt;
+## &lt;td style='border-bottom: 2px solid grey; text-align: center;'&gt;R for Everyone: Advanced Analytics and Graphics (Addison-Wesley Data and Analytics)&lt;/td&gt;
+## &lt;td style='border-bottom: 2px solid grey; text-align: center;'&gt;Jared Lander&lt;/td&gt;
+## &lt;td style='border-bottom: 2px solid grey; text-align: center;'&gt;&lt;/td&gt;
+## &lt;td style='border-bottom: 2px solid grey; text-align: center;'&gt;&lt;/td&gt;
+## &lt;td style='border-bottom: 2px solid grey; text-align: center;'&gt;2013&lt;/td&gt;
+## &lt;td style='border-bottom: 2px solid grey; text-align: center;'&gt;1 pound&lt;/td&gt;
+## &lt;td style='border-bottom: 2px solid grey; text-align: center;'&gt;paperback&lt;/td&gt;
+## &lt;/tr&gt;
+## &lt;/tbody&gt;
 ## &lt;/table&gt;</code></pre>
 </div>
 

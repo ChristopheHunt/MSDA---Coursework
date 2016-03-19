@@ -10,6 +10,7 @@ output: html_document
 library(XML)
 library(jsonlite)
 library(df2json)
+library(htmlTable)
 url <- "https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20607/Homework/data/"
 ```
 
@@ -60,9 +61,17 @@ books.json <- df2json(books.data)
 cat(books.json)
 ```
 
+### Create the HTML file 
 
 ```{r}
-books.html <- toHTML(books.data)
+books.html <- htmlTable(books.data)
+```
+
+```{r}
 print(books.html)
 ```
 
+
+```{r}
+
+```
