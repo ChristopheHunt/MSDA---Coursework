@@ -101,8 +101,9 @@ R2HTML::HTML(books.data, file = "chunt_books.html") #saves html file
 books.html.df <-   XML::readHTMLTable("chunt_books.html")
 books.html.df <- as.data.frame(books.html.df[1])
 books.html.df <- books.html.df[,-c(1)]
-books.html.df<- sapply(books.html.df, as.character)
+books.html.df <- sapply(books.html.df, as.character)
 colnames(books.html.df) <-  books.html.df[1,]
+books.html.df <- books.html.df[-1,]
 kable(books.html.df)
 ```
 

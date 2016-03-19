@@ -313,8 +313,9 @@ kable(books.json.df)</code></pre>
 <pre class="r"><code>books.html.df &lt;-   XML::readHTMLTable(&quot;chunt_books.html&quot;)
 books.html.df &lt;- as.data.frame(books.html.df[1])
 books.html.df &lt;- books.html.df[,-c(1)]
-books.html.df&lt;- sapply(books.html.df, as.character)
+books.html.df &lt;- sapply(books.html.df, as.character)
 colnames(books.html.df) &lt;-  books.html.df[1,]
+books.html.df &lt;- books.html.df[-1,]
 kable(books.html.df)</code></pre>
 <table>
 <thead>
@@ -330,15 +331,6 @@ kable(books.html.df)</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">Title</td>
-<td align="left">Author_1</td>
-<td align="left">Author_2</td>
-<td align="left">Author_3</td>
-<td align="left">Published_Date</td>
-<td align="left">Weight</td>
-<td align="left">Type</td>
-</tr>
-<tr class="even">
 <td align="left">Discovering Statistics Using R</td>
 <td align="left">Andy Field</td>
 <td align="left">Jeremy Miles</td>
@@ -347,7 +339,7 @@ kable(books.html.df)</code></pre>
 <td align="left">5 pounds</td>
 <td align="left">paperback</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">R Cookbook</td>
 <td align="left">Paul Teetor</td>
 <td align="left"></td>
@@ -356,7 +348,7 @@ kable(books.html.df)</code></pre>
 <td align="left">1.6 pounds</td>
 <td align="left">paperback</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">R for Everyone: Advanced Analytics and Graphics (Addison-Wesley Data and Analytics)</td>
 <td align="left">Jared Lander</td>
 <td align="left"></td>
