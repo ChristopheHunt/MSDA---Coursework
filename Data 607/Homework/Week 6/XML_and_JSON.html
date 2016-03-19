@@ -138,7 +138,7 @@ books.data &lt;- read.csv2(books.url, sep = &quot;,&quot;, header=TRUE, stringsA
 <pre class="r"><code>library(XML)
 create_xml_books &lt;- function(dataframe){
                       for (i in seq(1:length(dataframe[,1]))) {
-                            xml$addTag(enc2utf8(&quot;book&quot;), close=FALSE)
+                            xml$addTag(&quot;book&quot;, close=FALSE)
                            for (j in colnames(dataframe)) {
                               xml$addTag(j, dataframe[i,j])
                            } 

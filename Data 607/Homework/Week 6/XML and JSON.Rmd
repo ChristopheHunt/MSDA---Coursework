@@ -33,7 +33,7 @@ books.data
 library(XML)
 create_xml_books <- function(dataframe){
                       for (i in seq(1:length(dataframe[,1]))) {
-                            xml$addTag(enc2utf8("book"), close=FALSE)
+                            xml$addTag("book", close=FALSE)
                            for (j in colnames(dataframe)) {
                               xml$addTag(j, dataframe[i,j])
                            } 
