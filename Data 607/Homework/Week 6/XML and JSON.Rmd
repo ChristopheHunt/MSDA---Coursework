@@ -1,10 +1,9 @@
 ---
-title: "XML and JSON"
+title: "XML, JSON, and HTML"
 author: "Christophe"
 date: "March 15, 2016"
 output: html_document
 ---
-
 
 ```{r, pre load data, include = FALSE}
 library(XML)
@@ -13,19 +12,25 @@ library(df2json)
 library(htmlTable)
 library(knitr)
 library(data.table)
+library(RJSONIO)
 url <- "https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20607/Homework/data/"
 ```
 
-### We load the data below
+#### We load the data below
 ```{r}
 books.url <- file(paste(url,"books.csv", sep = ""), open="r" )
 books.data <- read.csv2(books.url, sep = ",", header=TRUE, stringsAsFactors = FALSE ,  encoding="UTF-8")
 ```
 
-### The following code will take our `books.csv` file and then convert it to `xml` format. 
+#### This is how the `books.data` from csv looks like
+```{r}
+books.data
+```
+
+#### The following code will take our `books.data` file and then convert it to `xml` format. 
 
 ```{r, warning=FALSE}
-
+library(XML)
 create_xml_books <- function(dataframe){
                       for (i in seq(1:length(dataframe[,1]))) {
                             xml$addTag(enc2utf8("book"), close=FALSE)
@@ -40,47 +45,64 @@ xml <- xmlOutputDOM()
 xml$addTag("books", close=FALSE)
 create_xml_books(books.data)
 xml$closeTag()
-books.xml<- saveXML(xml$value()) 
 
+books.xml <- saveXML(xml$value()) 
 ```
 
-### Now lets look at the structure of the `xml` file. 
+#### Now lets look at the structure of the `xml` file. 
 
 ```{r}
 cat(books.xml)
 ```
 
-### Now that we have the data in each of the file types we can covert back to a dataframe.
+#### Now that we have the data in `xml` we can covert to a dataframe.
 
 ```{r}
-books.list <- xmlToList(books.xml)
-x <- rbindlist(books.list, fill = TRUE)
-x <- as.data.frame(x)
-row.names(x) <- names(books.list$books$book)
-kable(x)
+books.xml.list <- xmlToList(books.xml)
+books.xml.df <- as.data.frame(rbindlist(books.xml.list, fill = TRUE))
+row.names(books.xml.df) <- names(books.xml.list$books$book)
+kable(books.xml.df)
 ```
 
-
-### Lets load the dataframe to json package `df2json`
+#### Lets load the dataframe to the `json` format using the package `df2json`
 
 ```{r, results = 'asis'}
-library(df2json)
-books.json <- df2json(books.data)
+books.json <- df2json::df2json(books.data)
 ```
 
-### Now we have a `json` format for the books data frame
+#### Now we have a `json` format for the books data frame
 
 ```{r, results = 'asis'}
 cat(books.json)
 ```
 
-### Create the HTML file 
+#### Lets now convert the json format back to a data frame using the json package `RJSONIO`
+
+```{r}
+books.json.list <- RJSONIO::fromJSON(books.json)
+books.json.df <- as.data.frame(rbindlist(books.json.list, fill = TRUE))
+rownames(books.json.df) <- NULL
+kable(books.json.df)
+```
+
+#### Create the HTML file 
 
 ```{r}
 books.html <- htmlTable(books.data)
 ```
 
 ```{r}
-print(books.html)
+books.html
 ```
 
+#### Now lets convert back our html file to a data frame using `XML` package
+
+```{r}
+books.html.df <- as.data.frame(XML::readHTMLTable(books.html))
+column.names <- gsub("NULL.", replacement = "", colnames(books.html.df))
+colnames(books.html.df) <- column.names
+books.html.df <- books.html.df[,-c(1)]
+kable(books.html.df)
+```
+
+#### Overall, I noticed that many of the results were returned in a list format. It seems that when parsing various data format types they results will be in a list format that needs to be modified into the data frame. The packages are extremely useful in producing these results. I would say that the `xml` required the most amount of effort in coding and understanding, whereas `json` felt to be the easiest to understand. I had not previously worked with data were the encoding to `UTF-8` was so critical to being able to parse the data, I now have a new understanding of this encoding. 
