@@ -263,7 +263,7 @@ kable(books.xml.df)</code></pre>
 </div>
 <div id="lets-now-convert-the-json-format-back-to-a-data-frame-using-the-json-package-rjsonio" class="section level4">
 <h4>Lets now convert the json format back to a data frame using the json package <code>RJSONIO</code></h4>
-<pre class="r"><code>books.json.list &lt;- RJSONIO::fromJSON(books.json)
+<pre class="r"><code>books.json.list &lt;- RJSONIO::fromJSON(&quot;chunt_books.json&quot;)
 books.json.df &lt;- as.data.frame(rbindlist(books.json.list, fill = TRUE))
 rownames(books.json.df) &lt;- NULL
 kable(books.json.df)</code></pre>
@@ -309,8 +309,6 @@ kable(books.json.df)</code></pre>
 </tr>
 </tbody>
 </table>
-<pre class="r"><code>if (file.exists(&quot;chunt_books.html&quot;)) file.remove(&quot;chunt_books.html&quot;)</code></pre>
-<pre><code>## [1] TRUE</code></pre>
 <pre class="r"><code>R2HTML::HTML(books.data, file = &quot;chunt_books.html&quot;) #saves html file</code></pre>
 <pre class="r"><code>books.html.df &lt;-   XML::readHTMLTable(&quot;chunt_books.html&quot;)
 books.html.df &lt;- as.data.frame(books.html.df[1])

@@ -82,17 +82,17 @@ write(books.json, "chunt_books.json")
 #### Lets now convert the json format back to a data frame using the json package `RJSONIO`
 
 ```{r}
-books.json.list <- RJSONIO::fromJSON(books.json)
+books.json.list <- RJSONIO::fromJSON("chunt_books.json")
 books.json.df <- as.data.frame(rbindlist(books.json.list, fill = TRUE))
 rownames(books.json.df) <- NULL
 kable(books.json.df)
 ```
 
-
+```{r, include=FALSE}
+if (file.exists("chunt_books.html")) file.remove("chunt_books.html")
+```
 
 ```{r}
-if (file.exists("chunt_books.html")) file.remove("chunt_books.html")
-
 R2HTML::HTML(books.data, file = "chunt_books.html") #saves html file
 ```
 
