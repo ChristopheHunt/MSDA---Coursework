@@ -1,0 +1,36 @@
+---
+title: "Data Science Skills"
+author: "Group 1"
+date: "March 20, 2016"
+output: slidy_presentation
+---
+
+```{r, include = FALSE}
+library(rmarkdown)
+```
+
+## Team 
+
+Project Kickoff 03/14/2016
+
+Team Lead: Jeff (PM)
+
+1. Data gathering and tidying - *"Sourcers"*
+   - Dan F., Scott, Arindam, Valerie, Yadu
+2. Data assembly - *"Transformers"*
+   + Armenoush, Keith, Dan B., Rob
+3. Data presentation - *"Presenters"*
+   + Antonio, Christophe
+
+## Slide with R Code and Output
+
+```{r}
+summary(cars)
+```
+
+## Slide with Plot
+
+```{r, echo=FALSE}
+plot(cars)
+```
+
