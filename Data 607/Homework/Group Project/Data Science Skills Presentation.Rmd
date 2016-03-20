@@ -22,15 +22,9 @@ Team Lead: Jeff (PM)
 3. Data presentation - *"Presenters"*
       - Antonio, Christophe
 
-## Slide with R Code and Output
+## Data Analytics Skills
 
-```{r}
-summary(cars)
-```
 
-## Slide with Plot
 
-```{r, echo=FALSE}
-plot(cars)
-```
+#### -The Data Science Venn Diagram is Creative Commons licensed as [Attribution-NonCommercial](http://creativecommons.org/licenses/by-nc/3.0/legalcode).
 
