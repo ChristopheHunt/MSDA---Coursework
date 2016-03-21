@@ -135,7 +135,7 @@ x[is.na(x)] <- c(" ")
 
 ## Data Sources
 
-```{r, results = 'asis', fig.height=4, fig.width=8}
+```{r, results = 'asis'}
 library(pander)
 pandoc.table(t(head(x[-1,],2)), use.hyphening = TRUE, split.table = Inf)
 ```
