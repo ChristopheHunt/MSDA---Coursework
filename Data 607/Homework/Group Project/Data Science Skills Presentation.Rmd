@@ -2,18 +2,52 @@
 title: "Data Science Skills"
 author: "Group 1"
 date: "March 20, 2016"
-output: ioslides_presentation
+output:
+  ioslides_presentation:
+    smaller: yes
+    widescreen: yes
+  slidy_presentation: default
 ---
 
 ```{r, include = FALSE}
 library(rmarkdown)
 ```
 
-## Team 
+## Data Science Skills
 
-Project Kickoff 03/14/2016
+We set out to answer "Which skills are the most valued data science skills?". 
 
-Team Lead: Jeff (PM)
+Let's begin by looking at what *Data Science* is: 
+
+```{r, results ='asis'}
+library(xml2)
+library(XML)
+library(stringr)
+data.science <- read_html("https://en.wikipedia.org/wiki/Data_science")
+data.science.html <- htmlTreeParse(data.science, useInternal = TRUE) 
+data.science.text <- unlist(xpathApply(data.science.html, '//body', xmlValue))
+gsub("\\[[0-9].+\\]", "", str_trim(str_extract(data.science.text, "Data Science is.+")))
+```
+
+## Data Science
+
+Essentially, Data Science is a mix of fields and skills. It is the intersection of math, computer science, and domain expertise. 
+
+<center><img src="https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20607/Homework/Group%20Project/Data_Science_VD.png" height="370px" /></center>
+
+<div class="footer" style="margin-top;font-size:80%;"> The Data Science Venn Diagram is Creative Commons licensed as [Attribution-NonCommercial](http://creativecommons.org/licenses/by-nc/3.0/legalcode).
+
+## Data Science
+
+While the previous formal definitions are fine, they are too vague. 
+
+We need to get at the actual skills most valued in data science. 
+
+Since data science in itself is taking data in any format and gaining insight, it is the perfect tool to answer this question.  
+
+## Team Introduction 
+
+Team Lead - Jeff 
 
 1. Data gathering and tidying - *"Sourcers"*
       - Dan F., Scott, Arindam, Valerie, Yadu
@@ -22,9 +56,86 @@ Team Lead: Jeff (PM)
 3. Data presentation - *"Presenters"*
       - Antonio, Christophe
 
-## Data Analytics Skills
+## Data Sources 
 
+There are a number of data sources to consider, in fact we began with a spread sheet of many possible sources. 
 
+```{r, include = FALSE}
 
-#### -The Data Science Venn Diagram is Creative Commons licensed as [Attribution-NonCommercial](http://creativecommons.org/licenses/by-nc/3.0/legalcode).
+#http://blog.revolutionanalytics.com/2014/06/reading-data-from-the-new-version-of-google-spreadsheets.html
+#The below code for the googlsheet functions is credited to the above posted blog
 
+readGoogleSheet <- function(url, na.string="", header=TRUE){
+                            stopifnot(require(XML))
+                            # Suppress warnings because Google docs seems to have incomplete final line
+                            suppressWarnings({
+                              doc <- paste(readLines(url), collapse=" ")
+                            })
+                            if(nchar(doc) == 0) stop("No content found")
+                            htmlTable <- gsub("^.*?(<table.*</table).*$", "\\1>", doc)
+                            ret <- readHTMLTable(htmlTable, header=header, 
+                                                 stringsAsFactors=FALSE, as.data.frame=TRUE)
+                            lapply(ret, function(x){ x[ x == na.string] <- NA; x})
+}
+
+cleanGoogleTable <- function(dat, table=1, skip=0, ncols=NA, nrows=-1, header=TRUE, dropFirstCol=NA){
+                      if(!is.data.frame(dat)){
+                        dat <- dat[[table]]
+                      }
+                      if(is.na(dropFirstCol)) {
+                        firstCol <- na.omit(dat[[1]])
+                        if(all(firstCol == ".") || all(firstCol == as.character(seq_along(firstCol)))) {
+                          dat <- dat[, -1]
+                        }
+                      } else if(dropFirstCol) {
+                        dat <- dat[, -1]
+                      }
+                      if(skip > 0){
+                        dat <- dat[-seq_len(skip), ]
+                      }
+                      if(nrow(dat) == 1) return(dat)
+                      if(nrow(dat) >= 2){
+                        if(all(is.na(dat[2, ]))) dat <- dat[-2, ]
+                      }
+                      if(header && nrow(dat) > 1){
+                        header <- as.character(dat[1, ])
+                        names(dat) <- header
+                        dat <- dat[-1, ]
+                      }
+                      # Keep only desired columns
+                      if(!is.na(ncols)){
+                        ncols <- min(ncols, ncol(dat))
+                        dat <- dat[, seq_len(ncols)]
+                      }
+                      # Keep only desired rows
+                      if(nrows > 0){
+                        nrows <- min(nrows, nrow(dat))
+                        dat <- dat[seq_len(nrows), ]
+                      }
+                      # Rename rows
+                      rownames(dat) <- seq_len(nrow(dat))
+                      dat
+                    }
+```
+
+```{r}
+library(XML)
+library(knitr)
+x <- readGoogleSheet(paste("https://docs.google.com/spreadsheets/d/1KVKbOD1htOZ3",
+                           "FriMVB9r5w1HE18LWraSTej3TLArDEw/", 
+                           "edit?pref=2&pli=1#gid=0&output=csv", sep = ""))
+
+x <- cleanGoogleTable(x, table=1)
+x <- as.data.frame(x)
+x <- x[,colSums(is.na(x)) < nrow(x)]
+x <- x[rowSums(is.na(x)) < ncol(x),]
+rownames(x) <- NULL
+x[is.na(x)] <- c(" ")
+```
+
+## Data Sources
+
+```{r, results = 'asis', fig.height=4, fig.width=8}
+library(pander)
+pandoc.table(t(head(x[-1,],2)), use.hyphening = TRUE, split.table = Inf)
+```

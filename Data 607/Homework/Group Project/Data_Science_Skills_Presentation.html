@@ -81,7 +81,7 @@
 
 <body style="opacity: 0">
 
-<slides>
+<slides class="layout-widescreen">
 
   <slide class="title-slide segue nobackground">
         <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
@@ -93,11 +93,47 @@
           </hgroup>
   </slide>
 
-<slide class=''><hgroup><h2>Team</h2></hgroup><article  id="team">
+<slide class=''><hgroup><h2>Data Science Skills</h2></hgroup><article  id="data-science-skills" class="smaller ">
 
-<p>Project Kickoff 03/14/2016</p>
+<p>We set out to answer &quot;Which skills are the most valued data science skills?&quot;.</p>
 
-<p>Team Lead: Jeff (PM)</p>
+<p>Let&#39;s begin by looking at what <em>Data Science</em> is:</p>
+
+<pre class = 'prettyprint lang-r'>library(xml2)
+library(XML)
+library(stringr)
+data.science &lt;- read_html(&quot;https://en.wikipedia.org/wiki/Data_science&quot;)
+data.science.html &lt;- htmlTreeParse(data.science, useInternal = TRUE) 
+data.science.text &lt;- unlist(xpathApply(data.science.html, &#39;//body&#39;, xmlValue))
+gsub(&quot;\\[[0-9].+\\]&quot;, &quot;&quot;, str_trim(str_extract(data.science.text, &quot;Data Science is.+&quot;)))</pre>
+
+<p>[1] &quot;Data Science is an interdisciplinary field about processes and systems to extract knowledge or insights from data in various forms, either structured or unstructured, which is a continuation of some of the data analysis fields such as statistics, data mining, and predictive analytics, similar to Knowledge Discovery in Databases (KDD).&quot;</p>
+
+</article></slide><slide class=''><hgroup><h2>Data Science</h2></hgroup><article  id="data-science" class="smaller ">
+
+<p>Essentially, Data Science is a mix of fields and skills. It is the intersection of math, computer science, and domain expertise.</p>
+
+<center>
+
+<img src="https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20607/Homework/Group%20Project/Data_Science_VD.png" height="370px" />
+
+</center>
+
+<div class="footer" style="margin-top;font-size:80%;">
+
+<p>The Data Science Venn Diagram is Creative Commons licensed as <a href='http://creativecommons.org/licenses/by-nc/3.0/legalcode' title=''>Attribution-NonCommercial</a>.</p>
+
+</article></slide><slide class=''><hgroup><h2>Data Science</h2></hgroup><article  id="data-science-1" class="smaller ">
+
+<p>While the previous formal definitions are fine, they are too vague.</p>
+
+<p>We need to get at the actual skills most valued in data science.</p>
+
+<p>Since data science in itself is taking data in any format and gaining insight, it is the perfect tool to answer this question.</p>
+
+</article></slide><slide class=''><hgroup><h2>Team Introduction</h2></hgroup><article  id="team-introduction" class="smaller ">
+
+<p>Team Lead - Jeff</p>
 
 <ol>
 <li>Data gathering and tidying - <em>&quot;Sourcers&quot;</em>
@@ -117,9 +153,63 @@
 </ul></li>
 </ol>
 
-</article></slide><slide class=''><hgroup><h2>Data Analytics Skills</h2></hgroup><article  id="data-analytics-skills">
+</article></slide><slide class=''><hgroup><h2>Data Sources</h2></hgroup><article  id="data-sources" class="smaller ">
 
-<h4>-The Data Science Venn Diagram is Creative Commons licensed as <a href='http://creativecommons.org/licenses/by-nc/3.0/legalcode' title=''>Attribution-NonCommercial</a>.</h4></article></slide>
+<p>There are a number of data sources to consider, in fact we began with a spread sheet of many possible sources.</p>
+
+<pre class = 'prettyprint lang-r'>library(XML)
+library(knitr)
+x &lt;- readGoogleSheet(paste(&quot;https://docs.google.com/spreadsheets/d/1KVKbOD1htOZ3&quot;,
+                           &quot;FriMVB9r5w1HE18LWraSTej3TLArDEw/&quot;, 
+                           &quot;edit?pref=2&amp;pli=1#gid=0&amp;output=csv&quot;, sep = &quot;&quot;))
+
+x &lt;- cleanGoogleTable(x, table=1)
+x &lt;- as.data.frame(x)
+x &lt;- x[,colSums(is.na(x)) &lt; nrow(x)]
+x &lt;- x[rowSums(is.na(x)) &lt; ncol(x),]
+rownames(x) &lt;- NULL
+x[is.na(x)] &lt;- c(&quot; &quot;)</pre>
+
+</article></slide><slide class=''><hgroup><h2>Data Sources</h2></hgroup><article  id="data-sources-1" class="smaller ">
+
+<pre class = 'prettyprint lang-r'>library(pander)
+pandoc.table(t(head(x[-1,],2)), use.hyphening = TRUE, split.table = Inf)</pre>
+
+<table class = 'rmdtable'>
+<col width="17%" />
+<col width="39%" />
+<col width="43%" />
+<tr class="header">
+<th align="center"> </th>
+<th align="center">2</th>
+<th align="center">3</th>
+</tr>
+<tr class="odd">
+<td align="center"><strong>Description of Data (Please list yours by Sunday night)</strong></td>
+<td align="center">Here is a list of some of the soft skills that are used by data scientists</td>
+<td align="center">Another list of some soft skills that are used by data scientists</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>Source of Data (URL)</strong></td>
+<td align="center"><a href='https://icrunchdatanews.com/the-hard-and-soft-skills-of-a-data-scientist/' title=''>https://icrunchdatanews.com/the-hard-and-soft-skills-of-a-data-scientist/</a></td>
+<td align="center"><a href='http://www.burtchworks.com/2014/11/17/must-have-skills-to-become-a-data-scientist/' title=''>http://www.burtchworks.com/2014/11/17/must-have-skills-to-become-a-data-scientist/</a></td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>Format of Data (CSV, etc.)</strong></td>
+<td align="center">Web Page</td>
+<td align="center">Web Page</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>Proposed By (Your Name)</strong></td>
+<td align="center">Dan Brooks</td>
+<td align="center">Dan Brooks</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>Notes</strong></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</table></article></slide>
 
 
   <slide class="backdrop"></slide>
