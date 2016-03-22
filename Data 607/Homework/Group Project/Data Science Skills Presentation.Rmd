@@ -4,7 +4,6 @@ author: "Group 1"
 date: "March 20, 2016"
 output:
   ioslides_presentation:
-    smaller: yes
     widescreen: yes
   slidy_presentation: default
 ---
@@ -13,9 +12,9 @@ output:
 library(rmarkdown)
 ```
 
-## Data Science Skills
+## Data Science Skills {.smaller}
 
-We set out to answer "Which skills are the most valued data science skills?". 
+We set out to answer "Which skills are the most valued data science skills?". As aspiring **Data Scientists** this question is important because we can use the answer to build our skill set with skills that have the most value. 
 
 Let's begin by looking at what *Data Science* is: 
 
@@ -31,7 +30,7 @@ gsub("\\[[0-9].+\\]", "", str_trim(str_extract(data.science.text, "Data Science 
 
 ## Data Science
 
-Essentially, Data Science is a mix of fields and skills. It is the intersection of math, computer science, and domain expertise. 
+Essentially, Data Science is a mix of many fields and diverse skills. It lies at the intersection of math, computer science, and domain expertise. 
 
 <center><img src="https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20607/Homework/Group%20Project/Data_Science_VD.png" height="370px" /></center>
 
@@ -39,20 +38,23 @@ Essentially, Data Science is a mix of fields and skills. It is the intersection 
 
 ## Data Science
 
-While the previous formal definitions are fine, they are too vague. 
+While the previous formal definition and visual representation is fine, it is too vague. Data science has many applications in many fields.
 
-We need to get at the actual skills most valued in data science. 
+If we are ever going to be able to answer our question of **"Which skills are the most valued data science skills?"** and become better **Data Scientists**, we need to find out what these specific skills might be.
 
-Since data science in itself is taking data in any format and gaining insight, it is the perfect tool to answer this question.  
+Since **Data Science** is fundamentally the process of taking data in any format and gaining insight, it is the perfect method to answer a question about itself.
+
 
 ## Team Introduction 
 
-Team Lead - Jeff 
+To begin we met as team for our project kickoff on 03/14/2016 and divided ourselves into subgroups to tackle this issue. 
 
-1. Data gathering and tidying - *"Sourcers"*
+We quickly nominated our Team Lead - Jeff Nieman and decided on the subgroups: 
+
+1. Data gathering and sourcing- *"Sourcers"*
       - Dan F., Scott, Arindam, Valerie, Yadu
-2. Data assembly - *"Transformers"*
-      - Armenoush, Keith, Dan B., Rob
+2. Data assembly and tidying - *"Transformers"*
+      - Armenoush, Keith, Dan B., Rob,  Adia
 3. Data presentation - *"Presenters"*
-      - Antonio, Christophe
+      - Antonio, Christophe, Musa, Daniel, Valerie, Yadu, Dan B.
 
