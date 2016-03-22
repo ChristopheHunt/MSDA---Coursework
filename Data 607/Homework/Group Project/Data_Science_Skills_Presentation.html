@@ -151,65 +151,7 @@ gsub(&quot;\\[[0-9].+\\]&quot;, &quot;&quot;, str_trim(str_extract(data.science.
 <ul>
 <li>Antonio, Christophe</li>
 </ul></li>
-</ol>
-
-</article></slide><slide class=''><hgroup><h2>Data Sources</h2></hgroup><article  id="data-sources" class="smaller ">
-
-<p>There are a number of data sources to consider, in fact we began with a spread sheet of many possible sources.</p>
-
-<pre class = 'prettyprint lang-r'>library(XML)
-library(knitr)
-x &lt;- readGoogleSheet(paste(&quot;https://docs.google.com/spreadsheets/d/1KVKbOD1htOZ3&quot;,
-                           &quot;FriMVB9r5w1HE18LWraSTej3TLArDEw/&quot;, 
-                           &quot;edit?pref=2&amp;pli=1#gid=0&amp;output=csv&quot;, sep = &quot;&quot;))
-
-x &lt;- cleanGoogleTable(x, table=1)
-x &lt;- as.data.frame(x)
-x &lt;- x[,colSums(is.na(x)) &lt; nrow(x)]
-x &lt;- x[rowSums(is.na(x)) &lt; ncol(x),]
-rownames(x) &lt;- NULL
-x[is.na(x)] &lt;- c(&quot; &quot;)</pre>
-
-</article></slide><slide class=''><hgroup><h2>Data Sources</h2></hgroup><article  id="data-sources-1" class="smaller ">
-
-<pre class = 'prettyprint lang-r'>library(pander)
-pandoc.table(t(head(x[-1,],2)), use.hyphening = TRUE, split.table = Inf)</pre>
-
-<table class = 'rmdtable'>
-<col width="17%" />
-<col width="39%" />
-<col width="43%" />
-<tr class="header">
-<th align="center"> </th>
-<th align="center">2</th>
-<th align="center">3</th>
-</tr>
-<tr class="odd">
-<td align="center"><strong>Description of Data (Please list yours by Sunday night)</strong></td>
-<td align="center">Here is a list of some of the soft skills that are used by data scientists</td>
-<td align="center">Another list of some soft skills that are used by data scientists</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>Source of Data (URL)</strong></td>
-<td align="center"><a href='https://icrunchdatanews.com/the-hard-and-soft-skills-of-a-data-scientist/' title=''>https://icrunchdatanews.com/the-hard-and-soft-skills-of-a-data-scientist/</a></td>
-<td align="center"><a href='http://www.burtchworks.com/2014/11/17/must-have-skills-to-become-a-data-scientist/' title=''>http://www.burtchworks.com/2014/11/17/must-have-skills-to-become-a-data-scientist/</a></td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>Format of Data (CSV, etc.)</strong></td>
-<td align="center">Web Page</td>
-<td align="center">Web Page</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>Proposed By (Your Name)</strong></td>
-<td align="center">Dan Brooks</td>
-<td align="center">Dan Brooks</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>Notes</strong></td>
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-</table></article></slide>
+</ol></article></slide>
 
 
   <slide class="backdrop"></slide>
