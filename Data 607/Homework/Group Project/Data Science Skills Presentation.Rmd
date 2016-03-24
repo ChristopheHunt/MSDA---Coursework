@@ -36,22 +36,45 @@ Essentially, Data Science is a mix of many fields and diverse skills. It lies at
 
 <div class="footer" style="margin-top;font-size:80%;"> The Data Science Venn Diagram is Creative Commons licensed as [Attribution-NonCommercial](http://creativecommons.org/licenses/by-nc/3.0/legalcode).
 
-## Data Science
+## Data Science {.smaller}
 
 While the previous formal definition and visual representation is fine, it is too vague. Data science has many applications in many fields.
 
 If we are ever going to be able to answer our question of **"Which skills are the most valued data science skills?"** and become better **Data Scientists**, we need to find out what these specific skills might be.
 
-Since **Data Science** is fundamentally the process of taking data in any format and gaining insight, it is the perfect method to answer a question about itself.
+Since **Data Science** is fundamentally the process of taking data in any format and gaining insight, it is the perfect process to answer a question about itself. 
 
+<center><img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Data_visualization_process_v1.png" height="300px" /></center>
+\tiny
+Data Science Process Diagram source : Wikipedia
+
+## Approach {.smaller}
+
+1. Literature Review - [Shared Sources File](https://docs.google.com/spreadsheets/d/1KVKbOD1htOZ3FriMVB9r5w1HE18LWraSTej3TLArDEw/edit?usp=sharing)
+      + We reviewed many resources to establish a general idea of valued Data Science skills
+
+2. Sourcing 
+      + The best sources were singled out to be scraped for detailed information
+      + Three sources proved to yielded the greatest results - Indeed.com, Google Trends, and Kaggle Job Board 
+3. Transforming
+      + The collective information from the sources was messy and noisy 
+      + The pool of words and phrases was processed down to specific skill based words/phrases
+
+4. Visualization
+      + Detailed results were converted to an aethestically understandable format
+     
+## Detailed Approach 
+
+
+
+      
 
 ## Team Introduction 
 
-To begin we met as team for our project kickoff on 03/14/2016 and divided ourselves into subgroups to tackle this issue. 
 
 We quickly nominated our Team Lead - Jeff Nieman and decided on the subgroups: 
 
-1. Data gathering and sourcing- *"Sourcers"*
+1. Sourcing and webpage scraping - *"Sourcers"*
       - Dan F., Scott, Arindam, Valerie, Yadu
 2. Data assembly and tidying - *"Transformers"*
       - Armenoush, Keith, Dan B., Rob,  Adia
