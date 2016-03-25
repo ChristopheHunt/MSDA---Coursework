@@ -46,7 +46,7 @@ Since **Data Science** is fundamentally the process of taking data in any format
 
 ## Approach 
 
-<center><img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Data_visualization_process_v1.png" height="2505px" /></center>
+<center><img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Data_visualization_process_v1.png" height="275px" /></center>
 
 <div class="footer" style="margin-top;font-size:80%;">  Data Science Process Diagram Source : Wikipedia
 
@@ -57,13 +57,9 @@ Since **Data Science** is fundamentally the process of taking data in any format
 2. Sourcing 
       + The best sources were singled out to be scraped for detailed information
       + Three sources proved to yielded the greatest results - Indeed.com, Google Trends, and Kaggle Job Board 
-      
 3. Transforming
       + The collective information from the sources was messy and noisy 
       + The pool of words and phrases was processed down to specific skill based words/phrases
-      + csv files were converted to normalized database
-      + data was scaled and ranked 
-      + presentation-ready views were created 
 
 4. Visualization
       + Detailed results were converted to an aethestically pleasing and understandable format
@@ -73,6 +69,7 @@ Since **Data Science** is fundamentally the process of taking data in any format
 The below diagram provides a detailed outline of the team's approach
 
 <center><img src="https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20607/Homework/Group%20Project/Valerie%20Briot%20-%20Group%201%20detailed%20approach.JPG" height="400px" /></center>
+
 
 ## Team Introduction 
 
@@ -95,60 +92,4 @@ We further communicated through emails, texts, phone calls, and the occasional s
 
 <center><img src="https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20607/Homework/Group%20Project/Valerie%20Briot%20-%20Group%201%20detailed%20approach%20-%20communications.JPG" height="300px" /></center>
 
-Code was shared using a combination of github and rpubs. 
-
-Data was shared through 
-
-```{r, results = 'asis'}
-library(webshot)
-URL <- "http://rstudio.github.io/leaflet/"
-# Might need a longer delay for all assets to display
-webshot(URL, delay = 0.5)
-```
-
-```{r, include = FALSE}
-library(RMySQL)
-
-# MySQL DB info
-proj_user <- "project3"
-proj_pwd  <- "CUNYRBridge4"
-proj_db   <- "skill"
-proj_host <- "db4free.net"
-
-```
-
-```{r}
-## ------------------------------------------
-## Using RMYSQL
-## ------------------------------------------
-
-# establish the connection to the skill DB on db4free.net
-skilldb = dbConnect(MySQL(), user=proj_user, password=proj_pwd, dbname=proj_db, host=proj_host)
-
-# load the processed source data into a dataframe from the tbl_data
-rs <- dbGetQuery(skilldb, "select * from tbl_data")
-
-# load a view into a dataframe
-my_view <- dbGetQuery(skilldb, "select * from vw_top5_skill_sets_by_skill_type")
-my_view  #get a look at it
-
-#close the connection
-dbDisconnect(skilldb)
-
-## ------------------------------------------
-## Alternative option using dplyr
-## ------------------------------------------
-
-library(dplyr)
-
-conDplyr = src_mysql(dbname = proj_db, user = proj_user, password = proj_pwd, host = proj_host)
-
-skillData <- conDplyr %>%
-    tbl("tbl_data") %>%
-    collect() 
-
-# load some data from the tbl_import table
-importData <- conDplyr %>%
-    tbl("tbl_import") %>%
-    collect()  %>% filter(row_number() < 100)
-
+Data and code was shared using a combination of github and rpubs. 
