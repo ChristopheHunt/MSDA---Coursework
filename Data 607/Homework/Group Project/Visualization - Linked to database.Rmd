@@ -17,20 +17,20 @@ proj_user <- "project3"
 proj_pwd  <- "CUNYRBridge4"
 proj_db   <- "skill"
 proj_host <- "db4free.net"
-
 ```
 
 ```{r, fig.height=8, width = 11}
-
 skilldb <- dbConnect(MySQL(), user=proj_user, password=proj_pwd, dbname=proj_db, host=proj_host)
-data <- dbGetQuery(skilldb, "select * from tbl_data")
+data <- dbGetQuery(skilldb, "select * from tbl_data" )
+
+#dbGetQuery(skilldb, "select * from vw_" )
 
 data$skill_name <- factor(data$skill_name)
 data$skill_name <- factor(data$skill_name, levels = rev(levels(data$skill_name)))
 
 ggplot(data[(data$source_id != 2),], 
        aes(source_name, skill_name, label = skill_name, 
-           size = weighted_rating_overall, fill = skill_type_name)) + 
+           size = rating_scalar, fill = skill_type_name)) + 
         geom_point(pch = 21) +
         scale_fill_manual(values =  brewer.pal(9, "Set1")) + 
         scale_size_continuous(range =c(1,10)) + 
