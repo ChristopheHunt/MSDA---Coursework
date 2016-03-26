@@ -1,0 +1,45 @@
+---
+title: "visualization"
+author: "Group 1"
+date: "March 26, 2016"
+output:
+ html_document:
+    css: ./project.css
+    highlight: pygments
+    theme: cerulean
+---
+```{r, include = FALSE}
+library(RColorBrewer)
+library(ggplot2)
+library(RMySQL)
+
+proj_user <- "project3"
+proj_pwd  <- "CUNYRBridge4"
+proj_db   <- "skill"
+proj_host <- "db4free.net"
+
+```
+
+```{r, fig.height=8, width = 11}
+
+skilldb <- dbConnect(MySQL(), user=proj_user, password=proj_pwd, dbname=proj_db, host=proj_host)
+data <- dbGetQuery(skilldb, "select * from tbl_data")
+
+data$skill_name <- factor(data$skill_name)
+data$skill_name <- factor(data$skill_name, levels = rev(levels(data$skill_name)))
+
+ggplot(data[(data$source_id != 2),], 
+       aes(source_name, skill_name, label = skill_name, 
+           size = weighted_rating_overall, fill = skill_type_name)) + 
+        geom_point(pch = 21) +
+        scale_fill_manual(values =  brewer.pal(9, "Set1")) + 
+        scale_size_continuous(range =c(1,10)) + 
+        facet_grid(~skill_type_name) + 
+        theme_light() +
+        xlab("Source") + 
+        ylab("Skill") + 
+        theme(legend.position = "none" , 
+              axis.text.y = element_text(size=5), 
+              axis.text.x = element_text(angle = 45, hjust = 1)) +
+        ggtitle("Weighted Rank of Skill by Skill Type and Source")
+```
