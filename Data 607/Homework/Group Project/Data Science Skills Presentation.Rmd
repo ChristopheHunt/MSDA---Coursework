@@ -11,15 +11,18 @@ output:
 
 ```{r, include = FALSE}
 library(rmarkdown)
+library(xml2)
+library(XML)
+library(stringr)
 ```
 
 ## Data Science Skills 
 
 As aspiring **Data Scientists** a very common question is *what skills are important in today's market place?*, Data Science has reputation for rapidly changing and so do the tools. Since we all want to be as well trained as possible at the completion of the CUNY MSDA program, we set out to answer "Which skills are the most valued data science skills?". 
 
-Let's begin by looking at what *Data Science* is: 
+Let's begin by looking at what **Data Science** is: 
 
-```{r, results ='asis'}
+```{r, results ='markdown'}
 library(xml2)
 library(XML)
 library(stringr)
@@ -29,15 +32,12 @@ data.science.text <- unlist(xpathApply(data.science.html, '//body', xmlValue))
 gsub("\\[[0-9].+\\]", "", str_trim(str_extract(data.science.text, "Data Science is.+")))
 ```
 
-## Data Science
 
 Essentially, Data Science is a mix of many fields and diverse skills. It lies at the intersection of math, computer science, and domain expertise. 
 
-<center><img src="https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20607/Homework/Group%20Project/Data_Science_VD.png" height="370px" /></center>
+<center><img src="https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20607/Homework/Group%20Project/Data_Science_VD.png" height="270px" /></center>
+The Data Science Venn Diagram is Creative Commons licensed as [Attribution-NonCommercial](http://creativecommons.org/licenses/by-nc/3.0/legalcode).  
 
-<div class="footer" style="margin-top;font-size:80%;"> The Data Science Venn Diagram is Creative Commons licensed as [Attribution-NonCommercial](http://creativecommons.org/licenses/by-nc/3.0/legalcode).
-
-## Data Science 
 While the previous formal definition and visual representation is fine, it is too vague. Data science has many applications in many fields.
 
 If we are ever going to be able to answer our question of **"Which skills are the most valued data science skills?"** and in the process become better **Data Scientists**, we need to find out what these specific skills might be.
@@ -45,11 +45,6 @@ If we are ever going to be able to answer our question of **"Which skills are th
 Since **Data Science** is fundamentally the process of taking data in any format and gaining insight, it is the perfect process to answer a question about itself. 
 
 ## Approach 
-
-<center><img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Data_visualization_process_v1.png" height="2505px" /></center>
-
-<div class="footer" style="margin-top;font-size:80%;">  Data Science Process Diagram Source : Wikipedia
-
 
 1. Literature Review - [Shared Sources File](https://docs.google.com/spreadsheets/d/1KVKbOD1htOZ3FriMVB9r5w1HE18LWraSTej3TLArDEw/edit?usp=sharing)
       + We reviewed many resources to establish a general idea of valued Data Science skills
@@ -68,6 +63,13 @@ Since **Data Science** is fundamentally the process of taking data in any format
 4. Visualization
       + Detailed results were converted to an aethestically pleasing and understandable format
      
+<center><img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Data_visualization_process_v1.png" height="250px" width = "600px" /></center>
+
+<center> <div class="footer" style="margin-top;font-size:80%;"> Data Science Process Diagram Source : Wikipedia </center>
+
+asdfksadkf 
+dfsa dfa
+
 ## Detailed Approach 
 
 The below diagram provides a detailed outline of the team's approach
@@ -89,7 +91,7 @@ Team Lead - Jeff Nieman
       
 ## Team Communication 
 
-The communications strategy consisted of *all-hands on deck* team meetings on the first Monday of each week using Webex. 
+The communications strategy consisted of an *all-hands on deck* team meeting on the first Monday of each week using Webex. 
 
 We further communicated through emails, texts, phone calls, and the occasional small sub group meetings throughout the weeks. 
 
@@ -97,13 +99,15 @@ We further communicated through emails, texts, phone calls, and the occasional s
 
 Code was shared using a combination of github and rpubs. 
 
-Data was shared using db4free.net connection researched by the Transformer team
+The data was stored and shared using a solution from db4free.net, this was researched and deployed by the Transformer team. 
 
-<center><img src="
+<center><img src="https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20607/Homework/Group%20Project/db4free.JPG" height="350px" width = "650px"  /></center>
 
 
-```{r, include = FALSE}
+```{r, include = FALSE, message= FALSE}
 library(RMySQL)
+library(dplyr)
+library(knitr)
 
 # MySQL DB info
 proj_user <- "project3"
@@ -113,11 +117,13 @@ proj_host <- "db4free.net"
 
 ```
 
+There are two options to connect to the shared data base. The first option using `RMySQL` and the second uses `dplyr`
+
 ```{r}
 ## ------------------------------------------
 ## Using RMYSQL
 ## ------------------------------------------
-
+library(RMySQL)
 # establish the connection to the skill DB on db4free.net
 skilldb = dbConnect(MySQL(), user=proj_user, password=proj_pwd, dbname=proj_db, host=proj_host)
 
@@ -126,11 +132,16 @@ rs <- dbGetQuery(skilldb, "select * from tbl_data")
 
 # load a view into a dataframe
 my_view <- dbGetQuery(skilldb, "select * from vw_top5_skill_sets_by_skill_type")
-my_view  #get a look at it
 
+kable(head(my_view, n = 4))#get a look at it
+```
+
+```{r, include = FALSE}
 #close the connection
 dbDisconnect(skilldb)
+```
 
+```{r, message=FALSE}
 ## ------------------------------------------
 ## Alternative option using dplyr
 ## ------------------------------------------
@@ -147,4 +158,6 @@ skillData <- conDplyr %>%
 importData <- conDplyr %>%
     tbl("tbl_import") %>%
     collect()  %>% filter(row_number() < 100)
+
+kable(head(importData, 4))
 
