@@ -20,6 +20,7 @@ library(dplyr)
 library(ggplot2)
 library(RColorBrewer)
 library(knitr)
+library(wordcloud)
 
 proj_user <- "project3"
 proj_pwd  <- "CUNYRBridge4"
@@ -28,7 +29,7 @@ proj_host <- "db4free.net"
 
 ```
 
-The Presenters used the Data Science Skills Database to create bar charts, word clouds and other visualization tools that show and summarize the group's findings. The Transformer group provided database `views` to provide our results without the need to do extra transformations in R. 
+We used the Data Science Skills Database to create bar charts, word clouds and other visualization tools that show and summarize the group's findings. The Transformer group provided database `views` to provide  results to reduce the need for transformations in R. 
 
 ```{r}
 skilldb <- dbConnect(MySQL(), user=proj_user, password=proj_pwd, dbname=proj_db, host=proj_host)
@@ -37,6 +38,8 @@ Views <- dbGetQuery( skilldb,"SELECT TABLE_NAME 'Views'
                               WHERE table_schema = 'skill' and table_type = 'view';")
 kable(Views)
 ```
+
+*** 
 
 The Transformer team provided the skill names using two different methods. One involved a `scalar rating` that normalizes skill names across the entire database and the other used a `weighted rating` that weighted the ratings within their respective groups. 
 
@@ -54,13 +57,7 @@ Top3_by_source <- Top3_by_source %>%
 kable(Top3_by_source)
 ```
 
-```{r}
-library(tidyr)
-library(dplyr)
-library(ggplot2)
-library(RColorBrewer)
-library(knitr)
-```
+Unsuprisingly, we see that technicial skills appear at the top of the lists for each of our data sources but not the exact same type.  
 
 Let's look at the top 5 skills sets by skill type by pulling down the view from the database at `r  Views[9,]` and checking the results.
 
@@ -78,21 +75,21 @@ ggplot(scalar_skills, aes(y = rating_scalar,
       xlab("Skill Set") + 
       ylab("Rating") + 
       theme(legend.position = "bottom",  
-            axis.text.x = element_text(angle = 45, hjust = 1)) +
+            axis.text.x = element_text(angle = 65, hjust = 1)) +
       ggtitle("Top 5 Skills by Skill Type")  
       
 ```
 
+We continue to see techinical skills being the most often found skills in each source. `Big and Distributed Data` is the top skill amoung skill types which seems appropriate for data science.
+
+
 ####2. Horizontal Bar Graph Showing the Top 20 Data Science Skills from the 3 Sources (Google, Indeed and Kaggle)
 
-
-read data
-```{r}
-jobdata <- dbGetQuery(skilldb, "Select * from tbl_data")
-```
+Comparing the top lists of each data source will be useful in understanding some similarities or dissimalities between the sources
 
 order by source_name (asc) and weighted_rating_overall
 ```{r}
+jobdata <- dbGetQuery(skilldb, "select * from tbl_data")
 newjobdata <- jobdata[with(jobdata, order(source_name,-weighted_rating_overall)),]
 ```
 
@@ -131,22 +128,30 @@ barplot(Combined$KaggleRatings,main="KaggleRatings", horiz=TRUE, names.arg=names
 
 ####3. Bubble Graph Showing Weighted Rank of Skills by Skill Type and Source (Google, Indeed and Kaggle)
 
-```{r}
 
-ggplot(jobdata, aes(source_name, skill_name, label = skill_name, 
-                    size = rating_scalar, fill = skill_type_name)) + 
-        geom_point(pch = 21) + 
+```{r, fig.height=8, width = 11}
+data_science <- jobdata
+
+data_science$skill_name <- factor(data_science$skill_name)
+data_science$skill_name <- factor(data_science$skill_name, levels = rev(levels(data_science$skill_name)))
+
+ggplot(data_science, 
+       aes( source_name, skill_name, label = skill_name, 
+           size = rating_scalar, fill = skill_type_name)) + 
+        geom_point(pch = 21) +
         scale_fill_manual(values =  brewer.pal(9, "Set1")) + 
-        scale_size_continuous(range =c(1,20)) + 
+        scale_size_continuous(range =c(1,10)) + 
         facet_grid(~skill_type_name) + 
         theme_light() +
         xlab("Source") + 
         ylab("Skill") + 
-        theme(legend.position = "none" , axis.text.y = element_text(size=3)) +
+        theme(legend.position = "none" , 
+              axis.text.y = element_text(size=5), 
+              axis.text.x = element_text(angle = 45, hjust = 1)) +
         ggtitle("Weighted Rank of Skill by Skill Type and Source")
 ```
 
-####4. Bubble Graph Showing Average Weighted Overall Rating by Source and Skill Type
+####4. Graph Showing Average Weighted Overall Rating by Source and Skill Type
 
 ```{r, eval=FALSE}
 stab <- data %>% 
@@ -158,5 +163,18 @@ ggplot(stab, aes(x =source_name, y=round(ave_wgt,2), fill = skill_type_name)) +
        xlab("Source") + 
        ylab("Average Weighted Rating Overall") + 
        ggtitle("Average Weighted Overall Rating by Source and Skill Type") 
+
+```
+
+```{r, message=FALSE, warning=FALSE}
+require(wordcloud)
+
+google <- subset(jobdata, source_name=="Google")
+indeed <- subset(jobdata, source_name=="Indeed")
+kaggle <- subset(jobdata, source_name=="Kaggle")
+
+wordcloud(google$skill_name, google$weighted_rating_overall, random.order = FALSE, colors=brewer.pal(8, "Dark2"))
+wordcloud(indeed$skill_name, indeed$weighted_rating_overall, random.order = FALSE, colors=brewer.pal(8, "Dark2"))
+wordcloud(kaggle$skill_name, kaggle$weighted_rating_overall, random.order = FALSE, colors=brewer.pal(8, "Dark2"))
 
 ```
