@@ -1,0 +1,198 @@
+---
+title: "Project 3 - Section 1"
+author: "Team 1"
+date: "March 23, 2016"
+output:
+  html_document:
+    css: ./project.css
+    highlight: pygments
+    theme: cerulean
+---
+
+##4. Visualization and Analysis
+
+###a. Visualization and Graphs
+
+The Presenters used the  Data Science Skills Database to create bar charts, word clouds and other visualization tools that show and summarize the group's findings.
+
+When we examined the data, we found the the skill names are weighted on different scales and that the top Data Science Skills are different for the 3 sources. 
+
+```{r, include = FALSE}
+library(RMySQL)
+library(tidyr)
+library(dplyr)
+library(ggplot2)
+library(RColorBrewer)
+library(knitr)
+
+proj_user <- "project3"
+proj_pwd  <- "CUNYRBridge4"
+proj_db   <- "skill"
+proj_host <- "db4free.net"
+```
+
+```{r}
+skilldb <- dbConnect(MySQL(), user=proj_user, password=proj_pwd, dbname=proj_db, host=proj_host)
+weightedskills <- dbGetQuery(skilldb, "select * from tbl_data")
+```
+
+include all R packages needed for visualization of results
+```{r}
+library(tidyr)
+library(dplyr)
+library(ggplot2)
+library(RColorBrewer)
+library(knitr)
+```
+
+
+convert columns to proper data type, pick relevant columns and arrange by source
+```{r}
+weightedskills$skill_name <- as.character(weightedskills$skill_name)
+weightedskills$weighted_rating_overall <- as.numeric(weightedskills$weighted_rating_overall)
+weightedskills$source_name <- as.character(weightedskills$source_name)
+
+weightedskills1 <- weightedskills %>%
+                   select(skill_name, weighted_rating_overall, source_name) %>%
+                   arrange(source_name)
+```
+
+convert vector to a data frame
+```{r}
+weightedskills1 <- data.frame(weightedskills1)
+```
+
+pick all rows that have a Google source
+```{r}
+weightedskills11 <- filter(weightedskills1, source_name == "Google")
+weightedskills11 <- weightedskills11[order(-weightedskills11$weighted_rating_overall),]
+```
+
+pick the top six Google data science skills and generate bar graph
+```{r}
+h1 = head(weightedskills11)
+p1 = ggplot(h1, aes(y = weighted_rating_overall, fill = skill_name))
+h1$skill_name = reorder(h1$skill_name, -h1$weighted_rating_overall)
+p1 + geom_bar(aes(x = skill_name), data = h1, stat = "identity") + xlab("skill name") + ylab("weighted rating overall") + theme(legend.position = "none") +
+ggtitle("Top 6 Data Science Skills - Google")
+```
+
+pick all rows that have a Indeed source
+```{r}
+weightedskills12 = filter(weightedskills1, source_name == "Indeed")
+weightedskills12 = weightedskills12[order(-weightedskills12$weighted_rating_overall),]
+```
+
+pick the top six Indeed data science skills and generate bar graph
+```{r}
+h2 = head(weightedskills12)
+p2 = ggplot(h2, aes(y = weighted_rating_overall, fill = skill_name))
+h2$skill_name = reorder(h2$skill_name, -h2$weighted_rating_overall)
+p2 + geom_bar(aes(x = skill_name), data = h2, stat = "identity") + xlab("skill name") + ylab("weighted rating overall") + theme(legend.position = "none") +
+ggtitle("Top 6 Data Science Skills - Indeed")
+```
+
+pick all rows that have a Kaggle source
+```{r}
+weightedskills13 = filter(weightedskills1, source_name == "Kaggle")
+weightedskills13 = weightedskills13[order(-weightedskills13$weighted_rating_overall),]
+```
+
+pick the top six Kaggle data science skills and generate bar graph
+```{r}
+h3 = head(weightedskills13)
+p3 = ggplot(h3, aes(y = weighted_rating_overall, fill = skill_name))
+h3$skill_name = reorder(h3$skill_name, -h3$weighted_rating_overall)
+p3 + geom_bar(aes(x = skill_name), data = h3, stat = "identity") + xlab("skill name") + ylab("weighted rating overall") + theme(legend.position = "none") +
+ggtitle("Top 6 Data Science Skills - Kaggle")
+```
+
+
+
+####2. Horizontal Bar Graph Showing the Top 20 Data Science Skills from the 3 Sources (Google, Indeed and Kaggle)
+
+
+read data
+```{r}
+jobdata <- read.csv("https://raw.githubusercontent.com/danielhong98/MSDA-Spring-2016/347a383eae3b9f02bc5d128efb5de14e1f688f8e/tbl_data_v2.csv")
+```
+
+order by source_name (asc) and weighted_rating_overall
+```{r}
+newjobdata <- jobdata[with(jobdata, order(source_name,-weighted_rating_overall)),]
+```
+
+list skill_name for each source_name
+```{r}
+Google <- subset(newjobdata, source_name == "Google", select=c(source_name, skill_name,weighted_rating_overall))
+Google <- Google[c(1:20),]
+Indeed <- subset(newjobdata, source_name == "Indeed", select=c(source_name, skill_name, weighted_rating_overall))
+Indeed <- Indeed[c(1:20),]
+Kaggle <- subset(newjobdata, source_name == "Kaggle", select=c(source_name, skill_name, weighted_rating_overall))
+Kaggle <- Kaggle[c(1:20),]
+Combined <- cbind(Google,Indeed,Kaggle)
+Combined$source_name <- NULL
+Combined$source_name <- NULL
+Combined$source_name <- NULL
+colnames(Combined)[1] <- "GoogleSkills"
+colnames(Combined)[2] <- "GoogleRatings"
+colnames(Combined)[3] <- "IndeedSkills"
+colnames(Combined)[4] <- "IndeedRatings"
+colnames(Combined)[5] <- "KaggleSkills"
+colnames(Combined)[6] <- "KaggleRatings"
+kable(Combined)
+```
+
+plot results
+```{r}
+darkcols <- brewer.pal(8,"Dark2")
+names <- Combined$GoogleSkills
+barplot(Combined$GoogleRatings,main="GoogleRatings", horiz=TRUE, names.arg=names, las=1, col=darkcols, cex.axis=0.5, cex.names = 0.5)
+names <- Combined$IndeedSkills
+barplot(Combined$IndeedRatings,main="IndeedRatings", horiz=TRUE, names.arg=names, las=1, col=darkcols, cex.axis=0.5, cex.names = 0.5)
+names <- Combined$KaggleSkills
+barplot(Combined$KaggleRatings,main="KaggleRatings", horiz=TRUE, names.arg=names, las=1, col=darkcols, cex.axis=0.5, cex.names = 0.5)
+```
+
+
+####3. Bubble Graph Showing Weighted Rank of Skills by Skill Type and Source (Google, Indeed and Kaggle)
+
+```{r}
+data<- read.csv("https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20607/Homework/Group%20Project/tbl_data_version1%20.csv")
+```
+
+```{r}
+ggplot(data, aes(source_name, skill_name, label = skill_name, 
+                    size = weighted_rating_overall, fill = skill_type_name)) + 
+        geom_point(pch = 21) + 
+        scale_fill_manual(values =  brewer.pal(9, "Set1")) + 
+        scale_size_continuous(range =c(1,20)) + 
+        facet_grid(~skill_type_name) + 
+        theme_light() +
+        xlab("Source") + 
+        ylab("Skill") + 
+        theme(legend.position = "none" , axis.text.y = element_text(size=3)) +
+        ggtitle("Weighted Rank of Skill by Skill Type and Source")
+```
+
+####4. Bubble Graph Showing Average Weighted Overall Rating by Source and Skill Type
+
+```{r}
+stab <- data %>% group_by(source_name,skill_type_name) %>% summarise(ave_wgt =mean(weighted_rating_overall))
+
+ggplot(stab, aes(x =source_name, y=round(ave_wgt,2), fill = skill_type_name)) +  geom_bar(stat="identity",position="dodge") + xlab("Source") + ylab("Average Weighted Rating Overall") + ggtitle("Average Weighted Overall Rating by Source and Skill Type") 
+
+```
+
+
+Jeff?
+Musa - ?
+###a. Visualization and Graphs
+
+###b. Conclusion
+
+
+
+
+
+
