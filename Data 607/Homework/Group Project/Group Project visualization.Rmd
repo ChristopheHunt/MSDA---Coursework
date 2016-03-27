@@ -135,7 +135,7 @@ data_science <- jobdata
 data_science$skill_name <- factor(data_science$skill_name)
 data_science$skill_name <- factor(data_science$skill_name, levels = rev(levels(data_science$skill_name)))
 
-ggplot(data_science, 
+ggplot(data_science[(data_science$source_id != 2),], 
        aes( source_name, skill_name, label = skill_name, 
            size = rating_scalar, fill = skill_type_name)) + 
         geom_point(pch = 21) +
