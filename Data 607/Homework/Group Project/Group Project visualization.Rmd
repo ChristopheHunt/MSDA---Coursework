@@ -128,6 +128,7 @@ barplot(Combined$KaggleRatings,main="KaggleRatings", horiz=TRUE, names.arg=names
 
 ####3. Bubble Graph Showing Weighted Rank of Skills by Skill Type and Source (Google, Indeed and Kaggle)
 
+We have a wealth of information within our Data Science Skills database, we need to be able to quickly understand where the majority of highly ranked skills are located. The below graph provides a high level overview of the skills and how they relate to each other across the skill types by each source. 
 
 ```{r, fig.height=8, width = 11}
 data_science <- jobdata
@@ -151,6 +152,9 @@ ggplot(data_science[(data_science$source_id != 2),],
         ggtitle("Weighted Rank of Skill by Skill Type and Source")
 ```
 
+It is clear that programming skills represent the majority of valuable skills that are highly sought after, followed by math and business. One limitation of this representation is while we can see where a majority of the highly ranked skills exist, we are not able to discern the highly ranked skills that are rare within the field. 
+
+
 ####4. Graph Showing Average Weighted Overall Rating by Source and Skill Type
 
 ```{r, eval=FALSE}
@@ -166,6 +170,8 @@ ggplot(stab, aes(x =source_name, y=round(ave_wgt,2), fill = skill_type_name)) +
 
 ```
 
+
+
 ```{r, message=FALSE, warning=FALSE}
 require(wordcloud)
 
@@ -173,8 +179,8 @@ google <- subset(jobdata, source_name=="Google")
 indeed <- subset(jobdata, source_name=="Indeed")
 kaggle <- subset(jobdata, source_name=="Kaggle")
 
-wordcloud(google$skill_name, google$weighted_rating_overall, random.order = FALSE, colors=brewer.pal(8, "Dark2"))
-wordcloud(indeed$skill_name, indeed$weighted_rating_overall, random.order = FALSE, colors=brewer.pal(8, "Dark2"))
+wordcloud(google$skill_name, google$weighted_rating_overall, random.order = FALSE, colors=brewer.pal(9, "YlGnBu"))
+wordcloud(indeed$skill_name, log10(indeed$weighted_rating_overall), random.order = FALSE, colors=brewer.pal(8, "Dark2"))
 wordcloud(kaggle$skill_name, kaggle$weighted_rating_overall, random.order = FALSE, colors=brewer.pal(8, "Dark2"))
 
 ```
