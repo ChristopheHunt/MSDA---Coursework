@@ -4,6 +4,12 @@ author: "Christophe"
 date: "February 7, 2016"
 output: html_document
 ---
+<style>
+div.hidecode + pre {display: none}
+</style>
+
+<div class="hidecode"></div>
+
 ```{r pre-load library, include=FALSE}
 library(plyr)
 library(htmlTable)
