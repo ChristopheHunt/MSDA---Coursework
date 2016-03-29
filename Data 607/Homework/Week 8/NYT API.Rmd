@@ -1,0 +1,23 @@
+---
+title: "Web API"
+author: "Group 1"
+date: "March 28, 2016"
+output: 
+  html_document:
+    theme: readable
+    highlight: haddock
+---
+
+```{r, include = FALSE}
+library(jsonlite)
+library(knitr)
+source("C:/Users/Christophe/Documents/GitHub/MSDA - Coursework/Data 607/Homework/Week 8/NYT Article Search API Key.R")
+```
+
+```{r, results = 'asis'}
+df <- as.data.frame(fromJSON(sprintf("http://api.nytimes.com/svc/search/v2/articlesearch.json?fq=romney&facet_field=day_of_week&begin_date=20120101&end_date=20120101&api-key=%s", API_KEY)))
+
+kable(unique(df$response.docs.headline$main))
+```
+
+
