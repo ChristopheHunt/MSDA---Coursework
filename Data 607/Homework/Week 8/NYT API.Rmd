@@ -6,18 +6,51 @@ output:
   html_document:
     theme: readable
     highlight: haddock
+runtime: shiny
 ---
 
 ```{r, include = FALSE}
-library(jsonlite)
+library(RJSONIO)
 library(knitr)
+library(data.table)
+library(shiny)
+library(rlist)
+
 source("C:/Users/Christophe/Documents/GitHub/MSDA - Coursework/Data 607/Homework/Week 8/NYT Article Search API Key.R")
 ```
 
 ```{r, results = 'asis'}
-df <- as.data.frame(fromJSON(sprintf("http://api.nytimes.com/svc/search/v2/articlesearch.json?fq=romney&facet_field=day_of_week&begin_date=20120101&end_date=20120101&api-key=%s", API_KEY)))
+topic <- "data science skills"
+topic <- gsub(" ", "%20", topic)
 
-kable(unique(df$response.docs.headline$main))
+results.list <- readLines(sprintf("http://api.nytimes.com/svc/search/v2/articlesearch.json?fq=%s&api-key=%s",topic, API_KEY))
+
+x <- fromJSON(results.list)
+for (i in seq(1:length(x$response$docs)))
+  print(x$response$docs[[i]]$headline)
+
+df <- as.data.frame(t(x$response$docs[[1]]$headline))
+df <- df[0,]
+df <- rbind(x$response$docs[[1]]$headline,df )
+
+x <- list.flatten(results.list)
+
+results.df <- as.data.frame(rbindlist(results.list$response$docs, fill = TRUE))
+
+results.df <- as.data.frame(do.call(rbind,results.list))
+
+
+#rownames(results.df) <- NULL
+#kable(results.df)
+#kable(df$response.docs.headline$main)
 ```
 
+```{r, echo = FALSE}
+textInput(key_words, "Keywords to Search NYT API:", "Data Science")
 
+renderTable({
+   key_words <- gsub(" ", "%20", key_words)
+
+results.list <- RJSONIO::fromJSON(sprintf("http://api.nytimes.com/svc/search/v2/articlesearch.json?fq=%s&api-key=%s",key_words, API_KEY))
+})
+```

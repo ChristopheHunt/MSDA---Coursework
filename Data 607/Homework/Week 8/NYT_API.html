@@ -139,28 +139,19 @@ $(document).ready(function () {
 </div>
 
 
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">fromJSON</span>(<span class="kw">sprintf</span>(<span class="st">&quot;http://api.nytimes.com/svc/search/v2/articlesearch.json?fq=romney&amp;facet_field=day_of_week&amp;begin_date=20120101&amp;end_date=20120101&amp;api-key=%s&quot;</span>, API_KEY)))
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">topic &lt;-<span class="st"> &quot;data science skills&quot;</span>
+topic &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot;%20&quot;</span>, topic)
 
-<span class="kw">kable</span>(<span class="kw">unique</span>(df$response.docs.headline$main))</code></pre></div>
-<table>
-<tbody>
-<tr class="odd">
-<td align="left">On the Ground in Iowa, in Quotes</td>
-</tr>
-<tr class="even">
-<td align="left">Democrats Descend on Iowa to Hit Romney</td>
-</tr>
-<tr class="odd">
-<td align="left">Mitt Romney Compares Obama to the Kardashians</td>
-</tr>
-<tr class="even">
-<td align="left">Virginia Attorney General Backs Off Ballot Proposal</td>
-</tr>
-<tr class="odd">
-<td align="left">Gingrich Says He’s Been ‘Romney-Boated’</td>
-</tr>
-</tbody>
-</table>
+results.list &lt;-<span class="st"> </span>RJSONIO::<span class="kw">fromJSON</span>(<span class="kw">sprintf</span>(<span class="st">&quot;http://api.nytimes.com/svc/search/v2/articlesearch.json?fq=%s&amp;api-key=%s&quot;</span>,topic, API_KEY))
+
+<span class="co">#results.df &lt;- as.data.frame(rbindlist(results.list$response, fill = TRUE))</span>
+<span class="co">#rownames(results.df) &lt;- NULL</span>
+<span class="co">#kable(results.df)</span>
+<span class="co">#kable(df$response.docs.headline$main)</span></code></pre></div>
+<p><div class="form-group shiny-input-container">
+<label for="rows">How many cars?</label>
+<input id="rows" type="number" class="form-control" value="5"/>
+</div><div id="oute5144d6eb9c4bb29" class="shiny-html-output"></div></p>
 
 
 
