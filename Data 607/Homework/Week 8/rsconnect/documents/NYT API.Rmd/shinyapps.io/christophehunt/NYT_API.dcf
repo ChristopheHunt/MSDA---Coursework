@@ -1,0 +1,9 @@
+name: NYT_API
+account: christophehunt
+server: shinyapps.io
+appId: 91946
+bundleId: 409460
+url: https://christophehunt.shinyapps.io/NYT_API/
+when: 1459710639.81776
+asMultiple: FALSE
+asStatic: FALSE

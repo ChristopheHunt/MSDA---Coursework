@@ -1,7 +1,7 @@
 ---
 title: "Web API"
-author: "Group 1"
-date: "March 28, 2016"
+author: ""
+date: ""
 output: 
   html_document:
     theme: readable
@@ -14,43 +14,34 @@ library(RJSONIO)
 library(knitr)
 library(data.table)
 library(shiny)
-library(rlist)
+library(pander)
+library(gridExtra)
 
-source("C:/Users/Christophe/Documents/GitHub/MSDA - Coursework/Data 607/Homework/Week 8/NYT Article Search API Key.R")
+API_KEY <- "0c02c73bb17f1ce9799ba93ee8b58b45:5:72746030"
 ```
 
-```{r, results = 'asis'}
-topic <- "data science skills"
-topic <- gsub(" ", "%20", topic)
+```{r, echo = FALSE, results='asis'}
+library(shiny)
 
-results.list <- readLines(sprintf("http://api.nytimes.com/svc/search/v2/articlesearch.json?fq=%s&api-key=%s",topic, API_KEY))
+inputPanel(textInput(inputId = "key_words", "Keywords to Search NYT API:", "CUNY"),
+           dateInput("beginning_date",label = 'Beginning Date input: yyyy-mm-dd', value = Sys.Date()-100),
+           dateInput("end_date",label = 'End Date input: yyyy-mm-dd', value = Sys.Date()))
+          
+beginning_dateInput <- reactive({gsub("-","", as.character(input$beginning_date))})
 
-x <- fromJSON(results.list)
-for (i in seq(1:length(x$response$docs)))
-  print(x$response$docs[[i]]$headline)
+end_dateInput <- reactive({gsub("-","",as.character(input$end_date))})
 
-df <- as.data.frame(t(x$response$docs[[1]]$headline))
-df <- df[0,]
-df <- rbind(x$response$docs[[1]]$headline,df )
-
-x <- list.flatten(results.list)
-
-results.df <- as.data.frame(rbindlist(results.list$response$docs, fill = TRUE))
-
-results.df <- as.data.frame(do.call(rbind,results.list))
-
-
-#rownames(results.df) <- NULL
-#kable(results.df)
-#kable(df$response.docs.headline$main)
-```
-
-```{r, echo = FALSE}
-textInput(key_words, "Keywords to Search NYT API:", "Data Science")
-
-renderTable({
-   key_words <- gsub(" ", "%20", key_words)
-
-results.list <- RJSONIO::fromJSON(sprintf("http://api.nytimes.com/svc/search/v2/articlesearch.json?fq=%s&api-key=%s",key_words, API_KEY))
-})
+key_wordInput <- reactive({gsub(" ", "+", input$key_words)})  
+  
+renderPlot({ 
+                              results.list <- suppressWarnings(readLines(sprintf("http://api.nytimes.com/svc/search/v2/articlesearch.json?fq=%s&facet_field=source&begin_date=%s&end_date=%s&api-key=%s",                                                           key_wordInput(), beginning_dateInput(), end_dateInput(), API_KEY)))
+                              results <- fromJSON(results.list)
+                              df <- data.frame(Headline=character(), Snippet = character(), stringsAsFactors = FALSE)
+                              for (i in seq(1:length(results$response$docs))){
+                                 df[i,1] <- paste(strwrap(results$response$docs[[i]]$headline[1], width = 60), collapse = "\n")
+                                 df[i,2] <- paste(strwrap(results$response$docs[[i]]$snippet[1], width = 60), collapse = "\n")
+                                }
+                              tt <- ttheme_default(colhead=list(fg_params = list(parse=TRUE)))
+                              grid.table(df, theme=tt)
+                          }, width = "auto", height = 720)
 ```
