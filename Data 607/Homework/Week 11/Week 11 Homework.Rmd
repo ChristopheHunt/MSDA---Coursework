@@ -5,7 +5,38 @@ date: "April 6, 2016"
 output: html_document
 ---
 
+##Spam Classification
+
+Lets begin by using the corpus of spam and ham classified emails at [!link](https://spamassassin.apache.org/publiccorpus/)
+
 ```{r}
-
-
+library(tm)
+library(dplyr)
+ham <- "C:/Users/Christophe/Documents/GitHub/MSDA - Coursework/Data 607/Homework/Week 11/easy_ham"
 ```
+
+```{r}
+ham_docs <- Corpus(DirSource(ham))                    %>%
+            tm_map(removePunctuation)                 %>%
+            tm_map(content_transformer(tolower))      %>%
+            tm_map(removeNumbers)                     %>%
+            tm_map(removeWords, stopwords("english")) %>%
+            tm_map(stemDocument)
+
+DTM_ham_docs <- DocumentTermMatrix(ham_docs, control=list(weighting=weightTfIdf, minWordLength=3, minDocFreq=20))
+df_ham <- as.data.frame(inspect(DTM_ham_docs))
+df_ham$`spam/ham` <- 'ham'
+```
+
+```{r, eval = FALSE}
+library(cluster)
+dtms <- removeSparseTerms(DTM_ham_docs, .6)
+inspect(dtms)
+d <- dist(t(dtms))   
+fit <- hclust(d=d, method="ward.D")   
+par(mar = rep(2, 4))
+plot(fit)
+op <- par(oma=c(5,7,1,1))
+par(op)
+```
+
