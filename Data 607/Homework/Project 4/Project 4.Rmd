@@ -9,7 +9,7 @@ output: html_document
 
 My NoSQL database of chose for this assignment is MongoDB. I find it to be a quick and simple solution plus it seems to be an industry leader for NoSQL. 
 
-[!image](https://media.mongodb.org/mongodb-logo-web-tagline.png)
+![](https://media.mongodb.org/mongodb-logo-web-tagline.png)
 
 The data set we will be pulling is the Details of Motor Vehicle Collisions in New York City provided by the Police Department (NYPD). This dataset is important as part of NYC Mayor De Blasio's Vision Zero Program to reduce traffic related injuries and death. 
 
@@ -22,8 +22,11 @@ You can learn more about Vision Zero [here](http://www.nyc.gov/html/visionzero/p
 The below snippet will not knit so you would need to run this code separately on your machine to load the dataset. The download is ~140Mb and will take several minutes using NYC's open data portal, so keep that in mind before running. 
 
 ```{r, include=FALSE, cache=TRUE}
+library(leaflet)
+library(mongolite)
 destfile <- file.path("C:","Users", "Christophe","Documents","traffic_accidents.csv")
 traffic_accidents <- read.csv(destfile)
+destfile <- "traffic_accidents.csv"
 ```
 
 ```{r, eval=FALSE}
@@ -55,8 +58,38 @@ After installation.
 
 Let's create a `Traffic Accidents` collection and pull some data to make sure we have the appropriate setup.
 
-```{r, eval=TRUE}
+```{r, eval=TRUE, results='hide'}
 library(mongolite)
 m <- mongo(collection = "traffic_accidents")
+names(traffic_accidents) <- gsub("[.]","", names(traffic_accidents)) 
 m$insert(traffic_accidents)
+```
+
+Checking the results of our inserts
+
+```{r, results = 'asis'}
+sprintf("%s rows were inserted out of %s from %s", m$count(), nrow(traffic_accidents), destfile) 
+```
+
+Looks like we were able to add all of our information, now lets work with data to investigate some of the traffic accidents. 
+
+### Results 
+
+Let's see if there is any clustering with traffic deaths in Manhattan. We will get all traffic accidents with more than 4 people being injured and map it to see if any pattern emerges. The number of people injured is arbitrary, if we use fewere than 4 people there are too many points on the graph to make any sense of it. 
+
+```{r, results = 'hide'}
+out <- m$find('{"BOROUGH" : "MANHATTAN", "NUMBEROFPERSONSINJURED" : { "$gt" : 4} }')
+```
+
+```{r}
+library(leaflet)
+leaflet(out) %>% 
+  addProviderTiles("Stamen.Toner") %>% 
+  addMarkers(lng = ~LONGITUDE, lat = ~LATITUDE, popup = paste("Reason:", as.character(out$CONTRIBUTINGFACTORVEHICLE1), "<br>", "# of People Injured:", as.character(out$NUMBEROFPERSONSINJURED)))
+```
+
+### Clean up
+
+```{r}
+m$drop()
 ```
