@@ -1,0 +1,62 @@
+---
+title: "Project 4"
+author: "Christophe Hunt"
+date: "April 9, 2016"
+output: html_document
+---
+
+## NoSQL Database 
+
+My NoSQL database of chose for this assignment is MongoDB. I find it to be a quick and simple solution plus it seems to be an industry leader for NoSQL. 
+
+[!image](https://media.mongodb.org/mongodb-logo-web-tagline.png)
+
+The data set we will be pulling is the Details of Motor Vehicle Collisions in New York City provided by the Police Department (NYPD). This dataset is important as part of NYC Mayor De Blasio's Vision Zero Program to reduce traffic related injuries and death. 
+
+> The primary mission of government is to protect the public. New York's families deserve and expect safe streets. But today in New York, approximately 4,000 New Yorkers are seriously injured and more than 250 are killed each year in traffic crashes. Being struck by a vehicle is the leading cause of injury-related death for children under 14, and the second leading cause for seniors. On average, vehicles seriously injure or kill a New Yorker every two hours.
+
+You can learn more about Vision Zero [here](http://www.nyc.gov/html/visionzero/pages/home/home.shtml)
+
+### Getting the Data. 
+
+The below snippet will not knit so you would need to run this code separately on your machine to load the dataset. The download is ~140Mb and will take several minutes using NYC's open data portal, so keep that in mind before running. 
+
+```{r, include=FALSE, cache=TRUE}
+destfile <- file.path("C:","Users", "Christophe","Documents","traffic_accidents.csv")
+traffic_accidents <- read.csv(destfile)
+```
+
+```{r, eval=FALSE}
+destfile <- "traffic_accidents.csv"
+if(file.exists(destfile)){
+  stop(sprintf("%s already exists in %s", destfile, getwd()))
+  }
+file_to_download <- "https://data.cityofnewyork.us/api/views/h9gi-nx95/rows.csv?accessType=DOWNLOAD"
+download.file(file_to_download, destfile=destfile)
+traffic_accidents <- read.csv(destfile)
+file.remove(destfile)
+```
+
+### MongoDB
+
+I am assuming you have already installed MongoDB but if you haven't you will need to navigate to [MongoDB and download the latest version](https://www.mongodb.org/). After installation of MongoDB you will need to follow the next steps and open a connection.
+
+After installation.   
+
+1. Open a command prompt window in the `bin` folder containing `MongoDB` and type `mongod` to start a connection. 
+
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20607/Homework/Project%204/mongod.JPG)
+
+2. In a new command prompt window in the same `bin` folder type `mongo` and continue to the next section to create our new collection.   
+
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20607/Homework/Project%204/mongo.JPG)
+
+### Creating MongoDB collection
+
+Let's create a `Traffic Accidents` collection and pull some data to make sure we have the appropriate setup.
+
+```{r, eval=TRUE}
+library(mongolite)
+m <- mongo(collection = "traffic_accidents")
+m$insert(traffic_accidents)
+```
