@@ -1,15 +1,24 @@
 ---
 title: "Project 4"
 author: "Christophe Hunt"
-date: "April 9, 2016"
-output: html_document
+date: ""
+output:
+ html_document:
+    toc: true
+    toc_depth: 3
+    toc_float:
+      collapsed: true
+      smooth_scroll: false
+    highlight: haddock
+    theme: sandstone
 ---
 
 ## NoSQL Database 
 
 My NoSQL database of chose for this assignment is MongoDB. I find it to be a quick and simple solution plus it seems to be an industry leader for NoSQL. 
 
-![](https://media.mongodb.org/mongodb-logo-web-tagline.png)
+<center><img src="https://media.mongodb.org/mongodb-logo-web-tagline.png" height="100px" /></center>
+
 
 The data set we will be pulling is the Details of Motor Vehicle Collisions in New York City provided by the Police Department (NYPD). This dataset is important as part of NYC Mayor De Blasio's Vision Zero Program to reduce traffic related injuries and death. 
 
@@ -46,11 +55,11 @@ I am assuming you have already installed MongoDB but if you haven't you will nee
 
 After installation.   
 
-1. Open a command prompt window in the `bin` folder containing `MongoDB` and type `mongod` to start a connection. 
+Open a command prompt window in the `bin` folder containing `MongoDB` and type `mongod` to start a connection. 
 
 ![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20607/Homework/Project%204/mongod.JPG)
 
-2. In a new command prompt window in the same `bin` folder type `mongo` and continue to the next section to create our new collection.   
+In a new command prompt window in the same `bin` folder type `mongo` and continue to the next section to create our new collection.   
 
 ![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20607/Homework/Project%204/mongo.JPG)
 
@@ -61,6 +70,7 @@ Let's create a `Traffic Accidents` collection and pull some data to make sure we
 ```{r, eval=TRUE, results='hide'}
 library(mongolite)
 m <- mongo(collection = "traffic_accidents")
+if (m$count()>0)(m$drop())
 names(traffic_accidents) <- gsub("[.]","", names(traffic_accidents)) 
 m$insert(traffic_accidents)
 ```
@@ -75,7 +85,7 @@ Looks like we were able to add all of our information, now lets work with data t
 
 ### Results 
 
-Let's see if there is any clustering with traffic deaths in Manhattan. We will get all traffic accidents with more than 4 people being injured and map it to see if any pattern emerges. The number of people injured is arbitrary, if we use fewere than 4 people there are too many points on the graph to make any sense of it. 
+Let's see if there is any clustering with multiple person traffic injuries in Manhattan. We will get all traffic accidents with more than 4 people being injured and map it to see if any pattern emerges. The number of people injured is arbitrary, if we use fewer than 4 people there are too many points on the graph to make much sense of it. 
 
 ```{r, results = 'hide'}
 out <- m$find('{"BOROUGH" : "MANHATTAN", "NUMBEROFPERSONSINJURED" : { "$gt" : 4} }')
@@ -85,8 +95,27 @@ out <- m$find('{"BOROUGH" : "MANHATTAN", "NUMBEROFPERSONSINJURED" : { "$gt" : 4}
 library(leaflet)
 leaflet(out) %>% 
   addProviderTiles("Stamen.Toner") %>% 
-  addMarkers(lng = ~LONGITUDE, lat = ~LATITUDE, popup = paste("Reason:", as.character(out$CONTRIBUTINGFACTORVEHICLE1), "<br>", "# of People Injured:", as.character(out$NUMBEROFPERSONSINJURED)))
+  addMarkers(clusterOptions = markerClusterOptions(), 
+             lng = ~LONGITUDE, lat = ~LATITUDE, 
+             popup = paste("Reason:", as.character(out$CONTRIBUTINGFACTORVEHICLE1), "<br>", 
+                           "# of People Injured:", as.character(out$NUMBEROFPERSONSINJURED), "<br>",
+                           "Date of Accident:", as.character(out$DATE))) 
+  
 ```
+
+Interestingly, we see a large cluster of many injury accidents in East Harlem. I can't necessarily tell if there is any particular reason but more research would be necessary to determine the cause or if the number is significant compared to other locations. 
+
+
+### Lesson Learned with NoSQL
+
+The data set we used is very large at ~145mb and with a relational database, I think we could definitely reduce the size of the file. For instance, if we look at the unique counts of some of the fields we can see that we are storing a lot of unnecessary information in our MongoDB collection. 
+
+```{r, eval=FALSE}
+length(m$distinct("CONTRIBUTINGFACTORVEHICLE1"))
+m$count(query = '{"CONTRIBUTINGFACTORVEHICLE1"}')
+m$aggregate('[{"CONTRIBUTINGFACTORVEHICLE1":')
+```
+
 
 ### Clean up
 
