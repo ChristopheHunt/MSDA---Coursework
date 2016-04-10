@@ -1,0 +1,11 @@
+base
+NLP
+tm
+dplyr
+knitr
+SparseM
+RTextTools
+ggplot2
+scales
+DT
+stringr

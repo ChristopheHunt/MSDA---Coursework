@@ -1,42 +1,166 @@
 ---
 title: "Week 11"
 author: "Christophe Hunt"
-date: "April 6, 2016"
-output: html_document
+date: ""
+output:
+ html_document:
+    toc: true
+    toc_depth: 3
+    toc_float:
+      collapsed: true
+      smooth_scroll: false
+    highlight: haddock
+    theme: sandstone
 ---
 
-##Spam Classification
+## Spam Classification
 
-Lets begin by using the corpus of spam and ham classified emails at [!link](https://spamassassin.apache.org/publiccorpus/)
-
-```{r}
+```{r, include=FALSE}
 library(tm)
 library(dplyr)
-ham <- "C:/Users/Christophe/Documents/GitHub/MSDA - Coursework/Data 607/Homework/Week 11/easy_ham"
+library(knitr)
+library(RTextTools)
+library(ggplot2)
+library(scales)
+library(DT)
+
+set.seed(10040)
+
+ham_docs <- Corpus(DirSource(file.path("C:", "Users", "Christophe", "Documents", "GitHub", "MSDA - Coursework", "Data 607", "Homework", "Week 11", "easy_ham")))
+spam_docs <- Corpus(DirSource(file.path("C:", "Users", "Christophe", "Documents", "GitHub", "MSDA - Coursework", "Data 607", "Homework", "Week 11", "spam_2")))
+
 ```
+
+The below code snippet will not run in rmarkdown but if you run it outside of trying to knit the document, you can load `ham_docs` and `spam_docs` onto your own machine. Note this will download to your working directory and delete, if you already have a folder marked `spam_2` or `easy_ham` in the working directory you may want to reset your working directory. 
+
+```{r, eval=FALSE, cache=TRUE}
+ham_messages <- "https://spamassassin.apache.org/publiccorpus/20030228_easy_ham.tar.bz2"
+download.file(ham_messages, destfile="CHunt_tmp.tar.bz2")
+untar("CHunt_tmp.tar.bz2")
+ham_docs <- Corpus(DirSource(file.path(getwd(), "easy_ham"))) 
+
+spam_messages <- "https://spamassassin.apache.org/publiccorpus/20050311_spam_2.tar.bz2"
+download.file(spam_messages, destfile="CHunt_tmp.tar.bz2")
+untar("CHunt_tmp.tar.bz2")
+spam_docs <- Corpus(DirSource(file.path(getwd(), "spam_2"))) 
+
+## Removes downloaded and temp files 
+unlink(file.path(getwd(), "spam_2"), recursive=TRUE)
+unlink(file.path(getwd(), "easy_ham"), recursive=TRUE)
+file.remove("CHunt_tmp.tar.bz2")
+```
+
+### Creating Corpus
+
+Lets begin by combining and cleaning a corpus of spam and ham classified emails provided by [smapassassin](https://spamassassin.apache.org/publiccorpus/). 
+
+```{r, cache=TRUE}
+library(tm)
+library(dplyr)
+library(stringr)
+
+ham_spam_collection <- c(ham_docs, spam_docs)                     %>%
+                        tm_map(content_transformer(tolower))      %>%
+                        tm_map(removeNumbers)                     %>%
+                        tm_map(removeWords, stopwords("english")) %>%
+                        tm_map(removePunctuation)                 %>%
+                        tm_map(stemDocument) 
+
+
+for (i in (1:(length(ham_docs)))){
+            meta(ham_spam_collection[[i]], tag = "Class") <- "Ham"
+            }
+
+for (i in ((length(ham_docs)+1):length(ham_spam_collection))){
+            meta(ham_spam_collection[[i]], tag = "Class") <- "Spam"
+           }
+
+```
+
+### Creating Term Document Matrix  
+
+Now we have a cleaned and tagged corpus of both Ham and Spam documents, the next step is to create our document term matrix and container so we can train our classifier. We are going to set aside a random 1/5th of the data set as our test set. 
 
 ```{r}
-ham_docs <- Corpus(DirSource(ham))                    %>%
-            tm_map(removePunctuation)                 %>%
-            tm_map(content_transformer(tolower))      %>%
-            tm_map(removeNumbers)                     %>%
-            tm_map(removeWords, stopwords("english")) %>%
-            tm_map(stemDocument)
+library(RTextTools)
 
-DTM_ham_docs <- DocumentTermMatrix(ham_docs, control=list(weighting=weightTfIdf, minWordLength=3, minDocFreq=20))
-df_ham <- as.data.frame(inspect(DTM_ham_docs))
-df_ham$`spam/ham` <- 'ham'
+dtm_ham_spam_collection <- DocumentTermMatrix(ham_spam_collection) %>%
+                           removeSparseTerms(sparse = .8)  
+
+class_data <- unlist(meta(ham_spam_collection, tag = "Class"))
+
+n <- length(ham_spam_collection)
+all_docs <- (1:n)
+testSet <- sample(all_docs, size = round(n/5, 0), replace = FALSE)
+trainSet <- all_docs[! all_docs %in% testSet]        
+
+container <- create_container(dtm_ham_spam_collection, 
+                              trainSize = trainSet,
+                              testSize = testSet,
+                              labels = class_data,
+                              virgin = FALSE)
 ```
 
-```{r, eval = FALSE}
-library(cluster)
-dtms <- removeSparseTerms(DTM_ham_docs, .6)
-inspect(dtms)
-d <- dist(t(dtms))   
-fit <- hclust(d=d, method="ward.D")   
-par(mar = rep(2, 4))
-plot(fit)
-op <- par(oma=c(5,7,1,1))
-par(op)
+
+### Train Classifiers
+Using our container we will train the classifiers and use our test set to determine accuracy of the model. 
+
+```{r}
+SVM <- train_model(container,"SVM")
+MAXENT <- train_model(container,"MAXENT")
+BOOSTING <- train_model(container,"BOOSTING")
+BAGGING <- train_model(container,"BAGGING")
+RF <- train_model(container,"RF")
+TREE <- train_model(container,"TREE")
+
+SVM_CLASSIFY <- classify_model(container, SVM)
+MAXENT_CLASSIFY <- classify_model(container, MAXENT)
+BOOSTING_CLASSIFY <- classify_model(container, BOOSTING)
+BAGGING_CLASSIFY <- classify_model(container, BAGGING)
+RF_CLASSIFY <- classify_model(container, RF)
+TREE_CLASSIFY <- classify_model(container, TREE)
 ```
 
+### Accuracy Results 
+
+After training several different models lets look at the accuracy results. Hopefully we will see some models that perform well best on our analysis
+
+```{r}
+results <- data.frame(correct = as.character(class_data[testSet]), 
+                      SVM = as.character(SVM_CLASSIFY[,1]), 
+                      MAXENT = as.character(MAXENT_CLASSIFY[,1]),
+                      BOOST = as.character(BOOSTING_CLASSIFY[,1]),
+                      BAGGING = as.character(BAGGING_CLASSIFY[,1]),
+                      RF = as.character(RF_CLASSIFY[,1]),
+                      TREE = as.character(TREE_CLASSIFY[,1]))
+kable(head(results))
+
+SVM <- prop.table(table(results$correct == results$SVM))
+MAXENT <- prop.table(table(results$correct == results$MAXENT))
+BOOST <- prop.table(table(results$correct == results$BOOST))
+BAGGING <- prop.table(table(results$correct == results$BAGGING))
+RF <- prop.table(table(results$correct == results$RF))
+TREE <- prop.table(table(results$correct == results$TREE))
+
+all_models <- data.frame(rbind(SVM, MAXENT, BOOST, BAGGING, RF, TREE))
+all_models <- cbind(rownames(all_models), all_models)
+
+colnames(all_models) <- c("Model","Wrong", "Right")
+```
+
+```{r, echo=FALSE}
+all_models$Right <- percent(round(all_models$Right,3))
+all_models$Wrong <- percent(round(all_models$Wrong,3))
+
+DT::datatable(all_models, rownames = FALSE, options = list(
+  columnDefs = list(list(className = 'dt-center', targets = (0)),
+                    list(className = 'dt-center', targets = (1)),
+                    list(className = 'dt-center', targets = (2))),
+  initComplete = JS(
+    "function(settings, json) {",
+    "$(this.api().table().header()).css({'background-color': '#1E90FF', 'color': '#fff'});",
+    "}")
+))
+```
+
+While our process did not yield wonderful results, we do see better results than if we simply chose spam and ham at random. There may be improvements in the models if more documents could be added to the corpus for training or tuning some of the current settings. 
