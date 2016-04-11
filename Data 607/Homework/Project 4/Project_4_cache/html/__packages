@@ -1,3 +1,11 @@
 base
 leaflet
 mongolite
+microbenchmark
+timeit
+DBI
+RSQLite
+ggplot2
+plotly
+knitr
+reshape2

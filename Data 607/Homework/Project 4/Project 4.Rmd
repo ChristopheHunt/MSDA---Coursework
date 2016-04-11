@@ -8,17 +8,20 @@ output:
     toc_depth: 3
     toc_float:
       collapsed: true
-      smooth_scroll: false
+      smooth_scroll: true
     highlight: haddock
     theme: sandstone
 ---
 
-## NoSQL Database 
+## NoSQL  
 
-My NoSQL database of chose for this assignment is MongoDB. I find it to be a quick and simple solution plus it seems to be an industry leader for NoSQL. 
+My NoSQL database of chose for this assignment is MongoDB. I find it to be a quick and simple solution plus it seems to be an industry leader for NoSQL. Let's see how it compares to SQL overall. 
 
-<center><img src="https://media.mongodb.org/mongodb-logo-web-tagline.png" height="100px" /></center>
+<center><img src="https://media.mongodb.org/mongodb-logo-web-tagline.png" height="50px" /></center>
 
+***
+
+### Data Set 
 
 The data set we will be pulling is the Details of Motor Vehicle Collisions in New York City provided by the Police Department (NYPD). This dataset is important as part of NYC Mayor De Blasio's Vision Zero Program to reduce traffic related injuries and death. 
 
@@ -26,17 +29,25 @@ The data set we will be pulling is the Details of Motor Vehicle Collisions in Ne
 
 You can learn more about Vision Zero [here](http://www.nyc.gov/html/visionzero/pages/home/home.shtml)
 
-### Getting the Data. 
+### Getting the Data 
 
-The below snippet will not knit so you would need to run this code separately on your machine to load the dataset. The download is ~140Mb and will take several minutes using NYC's open data portal, so keep that in mind before running. 
-
-```{r, include=FALSE, cache=TRUE}
+```{r, include=FALSE}
 library(leaflet)
 library(mongolite)
+library(timeit)
+library(RSQLite)
+library(plotly)
+library(knitr)
+library(reshape2)
+library(timeit)
+
+##I have the file on my local machine and because the download takes some time I use the below when working with the code. 
 destfile <- file.path("C:","Users", "Christophe","Documents","traffic_accidents.csv")
 traffic_accidents <- read.csv(destfile)
 destfile <- "traffic_accidents.csv"
 ```
+
+The below snippet will not `knit` in `R` so you would need to run this code separately on your machine to load the dataset. The download is ~140Mb and will take several minutes using NYC's open data portal, so keep that in mind before running. 
 
 ```{r, eval=FALSE}
 destfile <- "traffic_accidents.csv"
@@ -55,11 +66,11 @@ I am assuming you have already installed MongoDB but if you haven't you will nee
 
 After installation.   
 
-Open a command prompt window in the `bin` folder containing `MongoDB` and type `mongod` to start a connection. 
+Open a command prompt window in the `bin` folder from your `MongoDB` installation and type `mongod`. 
 
 ![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20607/Homework/Project%204/mongod.JPG)
 
-In a new command prompt window in the same `bin` folder type `mongo` and continue to the next section to create our new collection.   
+Then in a new command prompt window in the same `bin` folder type `mongo` and continue to the next section to create our new collection.   
 
 ![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20607/Homework/Project%204/mongo.JPG)
 
@@ -85,40 +96,129 @@ Looks like we were able to add all of our information, now lets work with data t
 
 ### Results 
 
-Let's see if there is any clustering with multiple person traffic injuries in Manhattan. We will get all traffic accidents with more than 4 people being injured and map it to see if any pattern emerges. The number of people injured is arbitrary, if we use fewer than 4 people there are too many points on the graph to make much sense of it. 
+Let's see if there is any clustering with multiple person traffic injuries in Manhattan. We will get all traffic accidents with more than 3 people being injured and map it to see if any pattern emerges. The number of people injured is arbitrary, we can use fewer than 3 people but then we may need to set a time frame to keep the number of records manageable.  
 
 ```{r, results = 'hide'}
-out <- m$find('{"BOROUGH" : "MANHATTAN", "NUMBEROFPERSONSINJURED" : { "$gt" : 4} }')
+results <- m$find('{"BOROUGH" : "MANHATTAN", "NUMBEROFPERSONSINJURED" : { "$gt" : 3} }')
 ```
 
 ```{r}
 library(leaflet)
-leaflet(out) %>% 
+leaflet(results) %>% 
   addProviderTiles("Stamen.Toner") %>% 
   addMarkers(clusterOptions = markerClusterOptions(), 
              lng = ~LONGITUDE, lat = ~LATITUDE, 
-             popup = paste("Reason:", as.character(out$CONTRIBUTINGFACTORVEHICLE1), "<br>", 
-                           "# of People Injured:", as.character(out$NUMBEROFPERSONSINJURED), "<br>",
-                           "Date of Accident:", as.character(out$DATE))) 
+             popup = paste("Reason:",
+                           as.character(results$CONTRIBUTINGFACTORVEHICLE1), "<br>", 
+                           "# of People Injured:", 
+                           as.character(results$NUMBEROFPERSONSINJURED), "<br>",
+                           "Date of Accident:", 
+                           as.character(results$DATE))) 
   
 ```
 
-Interestingly, we see a large cluster of many injury accidents in East Harlem. I can't necessarily tell if there is any particular reason but more research would be necessary to determine the cause or if the number is significant compared to other locations. 
+Interestingly, we see a large cluster of many injury accidents in East Harlem. I can't tell if there is any particular reason for the clustering but more research could determine the root cause or if the number is actually not significant for the region. 
 
+### NoSQL vs SQL results
 
-### Lesson Learned with NoSQL
+#### Size 
 
-The data set we used is very large at ~145mb and with a relational database, I think we could definitely reduce the size of the file. For instance, if we look at the unique counts of some of the fields we can see that we are storing a lot of unnecessary information in our MongoDB collection. 
+The data set we used is moderately large at ~145MB and with a relational database, I think we could definitely reduce the size of the file, especially as the data set grows. For instance, if we look at the unique counts of some of the fields we can see that we are storing a lot of duplicate information in our MongoDB collection. 
 
-```{r, eval=FALSE}
-length(m$distinct("CONTRIBUTINGFACTORVEHICLE1"))
-m$count(query = '{"CONTRIBUTINGFACTORVEHICLE1"}')
-m$aggregate('[{"CONTRIBUTINGFACTORVEHICLE1":')
+There are only a few listed factors the contribute to an accident which could easily be stored in a separate table. 
+
+```{r, results = 'hide'}
+library(knitr)
+CFV <- as.data.frame(m$distinct("CONTRIBUTINGFACTORVEHICLE1"))
+colnames(CFV) <- "Contributing Factor to Accident"
 ```
 
+```{r, echo= FALSE}
+DT::datatable(CFV, rownames = FALSE, options = list(
+   columnDefs = list(list(className = 'dt-center', targets = (0))),
+      initComplete = JS(
+    "function(settings, json) {",
+    "$(this.api().table().header()).css({'background-color': '#1E90FF', 'color': '#fff'});",
+    "}")
+))
+```
+
+As we can see there are only `r length(CFV[,1])` contributing factors. But lets look at how many times they are repeated in the MongoDB collection in their full text format. 
+
+```{r,results = 'hide', message=FALSE, warning=FALSE}
+CFV <- m$aggregate('[{"$group":{"_id":"$CONTRIBUTINGFACTORVEHICLE1", "Instance": {"$sum":1}}}]')
+colnames(CFV) <- c("Contributing Factor to Accident", "# of Instances")
+```
+
+```{r, echo= FALSE}
+DT::datatable(CFV, rownames = FALSE, filter = 'top', options = list(
+  columnDefs = list(list(className = 'dt-center', targets = (0)),
+                    list(className = 'dt-center', targets = (1))),
+  order = list(list(1, 'desc')), 
+  dom = 'ltp', 
+      initComplete = JS(
+    "function(settings, json) {",
+    "$(this.api().table().header()).css({'background-color': '#1E90FF', 'color': '#fff'});",
+    "}")
+))
+```
+
+If we simply created IDs for the contributing factors we could reduce the amount of duplicate information in the collection. 
+
+#### Speed
+
+```{r, results = 'hide', warning=FALSE, message=FALSE}
+##set up a temporary sql database
+library(RSQLite)
+
+tmp <- dbConnect(SQLite(), ":memory:")
+dbWriteTable(tmp, "traffic_accidents", traffic_accidents)
+
+library(timeit)
+
+n <- 50
+
+sql_query_time <- timeit(
+                    dbGetQuery(tmp, 
+                              "SELECT * 
+                               FROM traffic_accidents  
+                               WHERE BOROUGH = 'MANHATTAN' AND NUMBEROFPERSONSINJURED > 3"), 
+                         times = n)
+
+mongo_query_time <- timeit(m$find('{"BOROUGH" : "MANHATTAN", 
+                                  "NUMBEROFPERSONSINJURED" : { "$gt" : 3} }'), 
+                           times = n)
+```
+
+Plotting the timing of each method. 
+
+```{r, warning=FALSE, message=FALSE}
+library(reshape2)
+SQL <- sql_query_time$self.time[(as.character(sql_query_time$func) == "\".Call\"")]
+MongoDB <- mongo_query_time$self.time[(as.character(mongo_query_time$func)== "\".Call\"")]
+
+df <- as.data.frame(melt(as.data.frame(SQL) %>%
+      cbind(MongoDB)))
+
+xlabel <- list(title = "Method")
+ylabel <- list(title = "Time (in milliseconds)")
+
+library(plotly)
+plot_ly(df, y = value, color= variable, type = "box",  boxpoints = "all", jitter = 0.3) %>%
+  layout(title = "Duration of Query between MongoDB and RSQLite",
+         xaxis = xlabel, 
+         yaxis = ylabel) 
+```
+
+So the SQL database performs much better than the NoSQL when performing a query. My assumption is that to see improvements in NoSQL we would need to add complexity to the SQL database with reference tables and set up some joins to query for information. However, I found the NoSQL solution very easy to use and if any new information was collected for traffic accidents it would be simply to pull that information into our NoSQL database. Whereas, if we continued on with a relational database each update would take some thought on how to update the database and would not be a trivial situation. 
+
+Both database implementations are very good at the problems each method addresses. So ultimately, each method has to be considered for the problem and there is not one easy answer. 
 
 ### Clean up
 
-```{r}
+We can now drop our MongoDB collection and disconnect from our SQLite temporary database. 
+
+```{r, results = 'hide'}
 m$drop()
+dbDisconnect(tmp)
 ```
