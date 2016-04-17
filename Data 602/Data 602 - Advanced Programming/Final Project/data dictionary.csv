@@ -1,3 +1,4 @@
+Field ,Short description,Detailed Description
 invoice_line_no text,invoice (ID),Concatenated invoice and line number associated with the liquor order. This provides a unique identifier for the individual liquor products included in the store order
 date,date time,Date of order
 store text,Store(ID),Unique number assigned to the store who ordered the liquor.
@@ -26,4 +27,3 @@ sale_bottles number,Bottles Sold,The number of bottles of liquor ordered by the 
 sale_dollars money,Sale (Dollars),Total cost of liquor order (number of bottles multiplied by the state bottle retail)
 sale_liters number,Volume Sold (Liters),"Total volume of liquor ordered in liters. (i.e. (Bottle Volume (ml) x Bottles Sold)/1,000)"
 sale_gallons number,Volume Sold (Gallons),Total volume of liquor ordered in gallons. (i.e. (Bottle Volume (ml) x Bottles Sold)/3785.411784)
-,,
