@@ -10,9 +10,10 @@ Need to run only this chunk (`Twitter Setup`) first because you need to but in a
 ```{r, Twitter Setup}
 library(twitteR)
 library(httr)
+library(ROAuth)
 
-consumer_key <- "wztCejPmRPdpQWAjDQY1sJwjz"
-consumer_secret <- "8qQatDL55aie8mS6hpCy4Rth9pC6PguK2wWAiy4POwJ84OEQqe"
+consumer_key <- "vPOqiiCwFT9N1iXNP24y2stmc"
+consumer_secret <- "IPE1ct2pu4E633Y9OoQ35V9AeLZ1oU4UKlfNb2A0lvbwZZ2jil"
 access_token <- "4228029732-Ax9gP4SArwAIxnJK0pIFVsBmHhIBFTcHbn0dsvJ"
 access_secret <- "1lp8uHBeK0VTuog9wOfbtIBxXWrnKoqin6sTCUg9ogJNu"
 
@@ -51,19 +52,82 @@ search_term <- function(term){
 }
   
 SearchTerm <- search_term("BarberShop: The Next Cut")
-list <- searchTwitter(SearchTerm, n = 100)
+list <- searchTwitter(SearchTerm, n = 100, lang = "en")
 df <- twListToDF(list)
+
 ```
 
 
 
 ```{r}
-rm_special <-function(x) gsub("½í|í|¥í|±|O|[[:punct:]]", "", x)
+library(magrittr)
+library(tm)
 
-corpus<- Corpus(VectorSource(df$text))            %>%
-         tm_map(rm_special)                       %>%
-         tm_map(tolower)        %>%
-         tm_map(removeNumbers)                       %>%
-         tm_map(removeWords, stopwords("english"))  
+rm_special <-function(x) iconv(x, "UTF-8", "UTF-8",sub='')
+
+
+corpus  <- Corpus(VectorSource(df$text))                %>%
+           tm_map(rm_special)                           %>%
+           tm_map(removePunctuation)                    %>%
+           tm_map(tolower)                              %>%
+           tm_map(removeNumbers)                        %>%
+           tm_map(removeWords, stopwords("english"))  
+
+library(h2o)
+library(qdap)
                        
+polarity(
+  sentSplit(df$text, stem.col = TRUE)
+         , grouping.var = NULL,
+polarity.frame = qdapDictionaries::key.pol, constrain = FALSE,
+negators = qdapDictionaries::negation.words,
+amplifiers = qdapDictionaries::amplification.words,
+deamplifiers = qdapDictionaries::deamplification.words,
+question.weight = 0, amplifier.weight = 0.8, n.before = 4,
+n.after = 2, rm.incomplete = FALSE, digits = 3)
+
+```
+
+```{r}
+
+#http://www.inside-r.org/howto/mining-twitter-airline-consumer-sentiment
+pos.words = scan('http://www.idiap.ch/~apbelis/hlt-course/positive-words.txt',what='character', comment.char=';')
+neg.words = scan('http://www.idiap.ch/~apbelis/hlt-course/negative-words.txt',what='character', comment.char=';')
+
+score.sentiment = function(tweets, pos.words, neg.words)
+{
+scores = laply(tweets, function(tweets, pos.words, neg.words) {
+word.list = str_split(tweets, '\\s+')
+words = unlist(word.list)
+pos.matches = match(words, pos.words)
+neg.matches = match(words, neg.words)
+pos.matches = !is.na(pos.matches)
+neg.matches = !is.na(neg.matches)
+score = sum(pos.matches) - sum(neg.matches)
+
+return(score)
+}, pos.words, neg.words)
+
+scores.df = data.frame(score=scores, text=tweets)
+return(scores.df)
+}
+
+x <- as.data.frame(score.sentiment(as.character(rm_special(df$text)), pos.words, neg.words))
+
+library(knitr)
+kable(x)
+
+
+```
+```{r}
+library(httr)
+library(RCurl)
+alchemy_url <- "http://access.alchemyapi.com/calls/url/"
+api_feature <- "URLGetTextSentiment"
+the_url <- "https://dreamtolearn.com/node/8OVIWY2C5RLZZSYD9OHCKM8AI/80"
+api_key <- "dbd2420ad27fb76303d57fbb2c7d9de7e7b0950c"  # alchemy API secret key 
+
+temp <- paste(alchemy_url,api_feature,"?url=",gsub(" ", "+", rm_special(df$text[1])),"&apikey=",api_key,"&outputMode=json", sep="")
+temp
+POST(temp)
 ```
