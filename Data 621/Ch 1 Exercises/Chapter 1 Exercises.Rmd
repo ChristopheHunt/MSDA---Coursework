@@ -1,0 +1,15 @@
+---
+title: "Chapter 1 Exercises"
+author: "Christophe Hunt"
+date: "August 28, 2016"
+output: html_document
+---
+
+```{r}
+
+library(faraway)
+
+summary(teengamb)
+plot(teengamb)
+
+```
