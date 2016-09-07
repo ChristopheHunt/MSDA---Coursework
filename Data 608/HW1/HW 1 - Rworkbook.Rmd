@@ -1,0 +1,73 @@
+---
+title: "Principles of Data Visualization & Intro to ggplot2"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message = FALSE)
+library(plyr)
+library(dplyr)
+library(ggplot2)
+library(dplyr)
+library(rgdal)
+library(maptools)
+library(RColorBrewer)
+```
+
+```{r}
+#raw_data <- read.csv("https://raw.githubusercontent.com/jlaurito/CUNY_IS608/master/lecture1/data/inc5000_data.csv")
+
+setwd(file.path("C:", "Users", "Christophe", "Documents", "GitHub", "CUNY_IS608", "lecture1", "data"))
+
+raw_data <- read.csv("inc5000_data.csv")
+  
+business_data <- as.data.frame(raw_data %>%
+                               select(Name, State) %>%
+                               group_by(State) %>%
+                               summarise(Total = length(Name))
+                              )
+
+```
+
+## Let's dig in on the State with the 3rd most companies in the data set. Imagine you work for the state and are interested in how many people are employed by companies in different industries employ. Create a plot of average employment by industry for companies in this state (only use cases with full data (user R's complete.cases() function). Your graph should show how variable the ranges are, and exclude outliers.
+
+
+
+
+```{r}
+library(ggplot2)
+
+third <- 3 
+third_most_companies <- as.data.frame(raw_data %>%
+                                         select(Name, State) %>%
+                                         group_by(State) %>%
+                                         summarise(Total = length(Name)) %>%
+                                         arrange(-Total)
+                                        )[third,]
+
+business_data <- raw_data[(raw_data$State == third_most_companies$State),] 
+buisness_data <- complete.cases(business_data)
+
+#business_data[(business_data$Employees < (sd(business_data$Employees)*3)),]
+
+
+qplot(Employees, data = business_data[(business_data$Employees < (sd(business_data$Employees)*2)),], geom = "histogram")
+
+ggplot(business_data[(business_data$Employees < 500),], aes(x = Industry, y = Employees)) + 
+  geom_boxplot() + 
+ theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  geom_abline(data = business_data , intercept = mean(as.numeric(business_data$Employees)), slope = 0) +
+  xlab(label = "Number of Employees \n") +
+  ylab(label = "\n Industry Type")
+  
+
+
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
