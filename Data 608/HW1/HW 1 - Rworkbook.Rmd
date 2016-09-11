@@ -36,13 +36,10 @@ business_data <- as.data.frame(raw_data %>%
 ## Let's dig in on the State with the 3rd most companies in the data set. Imagine you work for the state and are interested in how many people are employed by companies in different industries employ. Create a plot of average employment by industry for companies in this state (only use cases with full data (user R's complete.cases() function). Your graph should show how variable the ranges are, and exclude outliers.
 
 
-
-
 ```{r}
 library(ggplot2)
-
-third <- 3 
-third_most_companies <- as.data.frame(raw_data %>%
+third <- 3
+third_most_companies <- as.data.frame(raw_data[(complete.cases(raw_data)),] %>%
                                          select(Name, State) %>%
                                          group_by(State) %>%
                                          summarise(Total = length(Name)) %>%
@@ -50,22 +47,38 @@ third_most_companies <- as.data.frame(raw_data %>%
                                         )[third,]
 
 business_data <- raw_data[(raw_data$State == third_most_companies$State),] 
-buisness_data <- complete.cases(business_data)
 
-#business_data[(business_data$Employees < (sd(business_data$Employees)*3)),]
+## Zooming in on the box plot came from this post http://stackoverflow.com/a/5678146
+ylim <- boxplot.stats(business_data$Employees)$stats[c(1, 5)]
 
+ggplot(business_data, aes(x = Industry, y = Employees)) + 
+       geom_boxplot(outlier.shape = NA) + 
+       theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+       ylab(label = "Number of Employees \n") +
+       xlab(label = "\n Industry Type") +
+       coord_cartesian(ylim = ylim * 3.5)
+```
 
-qplot(Employees, data = business_data[(business_data$Employees < (sd(business_data$Employees)*2)),], geom = "histogram")
+3.	Now imagine you work for an investor and want to see which industries generate the most revenue per employee. Create a chart makes this information clear.
 
-ggplot(business_data[(business_data$Employees < 500),], aes(x = Industry, y = Employees)) + 
-  geom_boxplot() + 
- theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  geom_abline(data = business_data , intercept = mean(as.numeric(business_data$Employees)), slope = 0) +
-  xlab(label = "Number of Employees \n") +
-  ylab(label = "\n Industry Type")
-  
+```{r}
+library(scales)
+revenue_data <- as.data.frame(raw_data[(complete.cases(raw_data)),] %>%
+                              select(Revenue, Employees, Industry) %>%
+                              mutate(Revenue_Per_Employee = (Revenue/Employees))
+                              )
 
+ylim <- boxplot.stats(revenue_data$Revenue_Per_Employee)$stats[c(1, 5)]
 
+ggplot(revenue_data, aes(x = Industry, y = (Revenue_Per_Employee))) + 
+       geom_boxplot(outlier.shape = NA) + 
+      theme_minimal() + 
+       theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+       ylab(label = "Revenue Per Employee \n") +
+       xlab(label = "\n Industry Type") +
+       scale_y_continuous(labels = dollar) + 
+       coord_cartesian(ylim = ylim*2) +
+        ggtitle("Revenue Per Employee by Industry Type\n Boxplot \n")
 ```
 
 Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.

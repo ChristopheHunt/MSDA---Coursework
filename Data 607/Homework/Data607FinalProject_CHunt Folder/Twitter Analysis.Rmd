@@ -21,6 +21,7 @@ download.file(url='http://curl.haxx.se/ca/cacert.pem', destfile='cacert.pem')
 reqURL <- 'https://api.twitter.com/oauth/request_token'
 accessURL <- 'https://api.twitter.com/oauth/access_token'
 authURL <- 'https://api.twitter.com/oauth/authorize'
+
 Cred <- OAuthFactory$new(consumerKey=consumer_key,
                          consumerSecret=consumer_secret,
                          requestURL=reqURL,
@@ -47,12 +48,14 @@ This chunk gets the twitter search results for a term, `searchTwitter` has some 
 
 ```{r, Searching Twitter}
 search_term <- function(term){
-  search_term <- gsub(" ", "+", term)
+  require(magrittr)
+  search_term <- gsub(" ", "+", term) %>%
+                 paste("+movie", sep = "")
   return(search_term)
 }
-  
-SearchTerm <- search_term("BarberShop: The Next Cut")
-list <- searchTwitter(SearchTerm, n = 100, lang = "en")
+ 
+SearchTerm <- search_term("barbershop")
+list <- searchTwitter(SearchTerm, geocode='40.730610,-73.935242,1000mi', since = '2016-05-02', until = '2016-05-03') #TODO find major cities, 10 major
 df <- twListToDF(list)
 
 ```
@@ -89,36 +92,28 @@ n.after = 2, rm.incomplete = FALSE, digits = 3)
 ```
 
 ```{r}
+x <- as.data.frame(unlist(sentiment(rm_special(unique(df$text)),  api_key = '114ffc17022fd58af3da5cfd5f3e4388')))
+x <- cbind(x,unique(df$text))
 
-#http://www.inside-r.org/howto/mining-twitter-airline-consumer-sentiment
-pos.words = scan('http://www.idiap.ch/~apbelis/hlt-course/positive-words.txt',what='character', comment.char=';')
-neg.words = scan('http://www.idiap.ch/~apbelis/hlt-course/negative-words.txt',what='character', comment.char=';')
+x <- c("An exhilarating hybrid of Social Realism and feel-good aspirational entertainment, Paddy Breathnach's "Viva" is an oddity by its very pedigree: an Irish movie set in Havana, where it was filmed with a keen eye to that city's dinginess in tropical light. It infuses a too-familiar story with so much heart that you surrender to its charm and forgive it for being unabashedly formulaic. Even its one big plot twist is hardly a surprise. At the same time, its portrait of Havana, an impoverished city of crumbling architecture, has a gritty neorealist pungency.
 
-score.sentiment = function(tweets, pos.words, neg.words)
-{
-scores = laply(tweets, function(tweets, pos.words, neg.words) {
-word.list = str_split(tweets, '\\s+')
-words = unlist(word.list)
-pos.matches = match(words, pos.words)
-neg.matches = match(words, neg.words)
-pos.matches = !is.na(pos.matches)
-neg.matches = !is.na(neg.matches)
-score = sum(pos.matches) - sum(neg.matches)
+Its hero, Jesus (Héctor Medina), is a gay hairdresser who dreams of becoming a drag entertainer at the nightclub where he coifs the noisy, squabbling divas. To make ends meet, this slim, handsome young man with plucked eyebrows moonlights as a hustler along with his friends. The one brief clip that shows him having sex with a client makes clear that it is grueling, humiliating work.
 
-return(score)
-}, pos.words, neg.words)
+Jesus, whose mother is dead and whose father abandoned him, lives in a slum, and is watched over by the club's tough but caring star, an aging drag queen known as Mama (Luis Alberto García). Complicating Jesus's precarious existence is the sudden reappearance of his father, Angel (Jorge Perugorría), a former boxer released from prison who likes his rum and is rumored to have killed a man. Angel's initial reaction to his son's homosexuality and fondness for drag is all too predictable: He punches him in the face.
 
-scores.df = data.frame(score=scores, text=tweets)
-return(scores.df)
-}
+Unlike other macho father-gay son dramas, "Viva" doesn't amplify Angel's hostility to tell a prolonged tale of persecution and liberation. That spasm of violence is more a reflex than an expression of deep hatred.
 
-x <- as.data.frame(score.sentiment(as.character(rm_special(df$text)), pos.words, neg.words))
+Angel, who is falling apart physically, is filled with regret about how he has led his life. Without asking, he moves in with Jesus and adopts an attitude of paternal authority. But his machismo is more pathetic than threatening. Instead of cowering before his father, Jesus stands up for himself. Sweet-natured, he is helpful and nurturing and they form a edgy bond.
 
-library(knitr)
-kable(x)
+Mark O'Halloran's screenplay humanizes the characters to the degree that their relationships assume a dimension well beyond the shallow stereotypes often found in fraught dramas about sexuality and family conflict. Mr. Perugorría's Angel, for instance, is a sad wreck of a man who has lived by a code that has begun to fail him. He doesn't know any other way to be than to put on a brave front.
 
+Luis Alberto García's portrayal of Mama, who offers to shelter Angel, if necessary, infuses new life into the stereotype of the tough drag-queen survivor.
 
+Best of all is Mr. Medina's lovable Jesus, who is androgynous without the usual clichéd drag-queen mannerisms. Viva is his stage name. He is also a terrific dancer who, given the chance to perform, displays the charisma of a natural star.")
+
+sentiment(rm_special(x),  api_key = '114ffc17022fd58af3da5cfd5f3e4388')
 ```
+
 ```{r}
 library(httr)
 library(RCurl)
@@ -127,7 +122,7 @@ api_feature <- "URLGetTextSentiment"
 the_url <- "https://dreamtolearn.com/node/8OVIWY2C5RLZZSYD9OHCKM8AI/80"
 api_key <- "dbd2420ad27fb76303d57fbb2c7d9de7e7b0950c"  # alchemy API secret key 
 
-temp <- paste(alchemy_url,api_feature,"?url=",gsub(" ", "+", rm_special(df$text[1])),"&apikey=",api_key,"&outputMode=json", sep="")
+temp <- paste(alchemy_url,api_feature,"?url=",the_url,"&apikey=",api_key,"&outputMode=json", sep="")
 temp
 POST(temp)
 ```
