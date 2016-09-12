@@ -1,0 +1,86 @@
+---
+title: "Principles of Data Visualization & Intro to ggplot2"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message = FALSE)
+library(plyr)
+library(dplyr)
+library(ggplot2)
+library(dplyr)
+library(rgdal)
+library(maptools)
+library(RColorBrewer)
+```
+
+```{r}
+#raw_data <- read.csv("https://raw.githubusercontent.com/jlaurito/CUNY_IS608/master/lecture1/data/inc5000_data.csv")
+
+setwd(file.path("C:", "Users", "Christophe", "Documents", "GitHub", "CUNY_IS608", "lecture1", "data"))
+
+raw_data <- read.csv("inc5000_data.csv")
+  
+business_data <- as.data.frame(raw_data %>%
+                               select(Name, State) %>%
+                               group_by(State) %>%
+                               summarise(Total = length(Name))
+                              )
+
+```
+
+## Let's dig in on the State with the 3rd most companies in the data set. Imagine you work for the state and are interested in how many people are employed by companies in different industries employ. Create a plot of average employment by industry for companies in this state (only use cases with full data (user R's complete.cases() function). Your graph should show how variable the ranges are, and exclude outliers.
+
+
+```{r}
+library(ggplot2)
+third <- 3
+third_most_companies <- as.data.frame(raw_data[(complete.cases(raw_data)),] %>%
+                                         select(Name, State) %>%
+                                         group_by(State) %>%
+                                         summarise(Total = length(Name)) %>%
+                                         arrange(-Total)
+                                        )[third,]
+
+business_data <- raw_data[(raw_data$State == third_most_companies$State),] 
+
+## Zooming in on the box plot came from this post http://stackoverflow.com/a/5678146
+ylim <- boxplot.stats(business_data$Employees)$stats[c(1, 5)]
+
+ggplot(business_data, aes(x = Industry, y = Employees)) + 
+       geom_boxplot(outlier.shape = NA) + 
+       theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+       ylab(label = "Number of Employees \n") +
+       xlab(label = "\n Industry Type") +
+       coord_cartesian(ylim = ylim * 3.5)
+```
+
+3.	Now imagine you work for an investor and want to see which industries generate the most revenue per employee. Create a chart makes this information clear.
+
+```{r}
+library(scales)
+revenue_data <- as.data.frame(raw_data[(complete.cases(raw_data)),] %>%
+                              select(Revenue, Employees, Industry) %>%
+                              mutate(Revenue_Per_Employee = (Revenue/Employees))
+                              )
+
+ylim <- boxplot.stats(revenue_data$Revenue_Per_Employee)$stats[c(1, 5)]
+
+ggplot(revenue_data, aes(x = Industry, y = (Revenue_Per_Employee))) + 
+       geom_boxplot(outlier.shape = NA) + 
+      theme_minimal() + 
+       theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+       ylab(label = "Revenue Per Employee \n") +
+       xlab(label = "\n Industry Type") +
+       scale_y_continuous(labels = dollar) + 
+       coord_cartesian(ylim = ylim*2) +
+        ggtitle("Revenue Per Employee by Industry Type\n Boxplot \n")
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
