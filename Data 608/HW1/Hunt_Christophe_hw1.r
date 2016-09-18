@@ -1,38 +1,21 @@
----
-title: "Principles of Data Visualization & Intro to ggplot2"
-output: html_notebook
----
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(message = FALSE)
 library(pacman)
-p_load(plyr, dplyr, tidyr, ggplot2, rgdal, maptools, RColorBrewer, scales, tools, gdata)
-```
+p_load(plyr, dplyr, tidyr, ggplot2, rgdal, maptools, RColorBrewer, scales, tools, gdata, ggplot2)
 
-```{r}
 url_for_download <- c("https://raw.githubusercontent.com/jlaurito/CUNY_IS608/master/lecture1/data/inc5000_data.csv")
 raw_data <- read.csv(url_for_download)
 raw_data_complete_cases <- raw_data[(complete.cases(raw_data)),]
 raw_data_name <- file_path_sans_ext(gsub(".+/", "", url_for_download))
-business_data <- as.data.frame(raw_data_complete_cases %>%
+business_data <- raw_data_complete_cases %>%
                                select(Name, State) %>%
                                group_by(State) %>%
                                summarise(Total = length(Name))
-                              )
-```
 
-
-```{r, results = "hide" }
 state_shape_files <- "http://www2.census.gov/geo/tiger/GENZ2015/shp/cb_2015_us_state_20m.zip"
 download.file(state_shape_files, destfile = "cb_2015_us_state_20m.zip")
 unzip("cb_2015_us_state_20m.zip")
 states <- readOGR(dsn = ".", layer = "cb_2015_us_state_20m")
-```
 
-I ran into alot of trouble with Alaska making the graph too wide so I used the below code snippet to move around Hawaii and Alaska which came from this stackoverflow post - http://stackoverflow.com/questions/13757771/relocating-alaska-and-hawaii-on-thematic-map-of-the-usa-with-ggplot2
-```{r}
-require(maptools)
-require(rgdal)
+#I ran into alot of trouble with Alaska making the graph too wide so I used the below code snippet to move around Hawaii and Alaska which came from this stackoverflow post - http://stackoverflow.com/questions/13757771/relocating-alaska-and-hawaii-on-thematic-map-of-the-usa-with-ggplot2
 
 fixup <- function(usa,alaskaFix,hawaiiFix){
 
@@ -63,36 +46,23 @@ fix1 <- function(object,params){
 states <- spTransform(states,CRS("+init=epsg:2163")) %>%
           fixup(c(-35,1.5,-2800000,-2600000),c(-35,1,6800000,-1600000))
 
-```
-end of code snippet from stack overflow 
+#end of code snippet from stack overflow 
 
-```{r, results='hide'}
 states@data$id <- rownames(states@data)
-
 states.df <- fortify(states, region = "id") %>% 
              join(states@data, by = "id") %>%
              merge(business_data, by.x = c("STUSPS"), by.y = c("State"))
-
 file.remove(dir(getwd(), pattern = "cb_2015_us_state_20m", full.names = TRUE)) #Clean Up 
-
 bcounts_wNames <- fortify(aggregate(cbind(long, lat) ~ Total + NAME, data = states.df, FUN = mean)) 
-```
 
-
-```{r, fig.height= 7.5, fig.width=10}
 ggplot(states.df) + 
   geom_polygon(colour="grey40", aes(long, lat, group = group, fill = Total) ) +
   geom_text(data = bcounts_wNames, aes(long, lat, label = Total), size=3, colour = "firebrick1", fontface = "bold") + 
   theme_void() +
   scale_fill_gradientn(colors =  brewer.pal(9,"PuBu"), space = "Lab", guide = "legend") +
-  ggtitle(paste0("Count of Companies in Data Set : ", raw_data_name," by US State (including US Territory of Puerto Rico) \n"))
-```
+  ggtitle(paste0("\n\nCount of Companies in Data Set : ", raw_data_name," by US State (including US Territory of Puerto Rico) \n"))
 
-## Let's dig in on the State with the 3rd most companies in the data set. Imagine you work for the state and are interested in how many people are employed by companies in different industries employ. Create a plot of average employment by industry for companies in this state (only use cases with full data (user R's complete.cases() function). Your graph should show how variable the ranges are, and exclude outliers.
-
-
-```{r}
-library(ggplot2)
+ggsave("answer_to_question1.jpeg", height = 7, width = 10)
 
 state_most_companies <- 3
 
@@ -114,7 +84,12 @@ business_data <- raw_data_complete_cases[(raw_data_complete_cases$State == third
                         sem = ifelse(no_of_companies == 1 , 0, 
                                      sd(Employees, na.rm = TRUE)/sqrt(length(Employees))))  %>%
                  select(-Employees) %>%
-                 distinct(avg_emp, sem)
+                 distinct(avg_emp, sem) %>% 
+                 arrange(-avg_emp)
+
+business_data$Industry <- reorder(business_data$Industry, new.order = as.vector(unique(business_data$Industry)))
+
+title <- paste0("Average Number of Employees by Industry for ", third_most_companies$State)
 
 ggplot(business_data, aes(x = Industry, y = avg_emp)) + 
        geom_bar(stat="identity") + 
@@ -123,20 +98,17 @@ ggplot(business_data, aes(x = Industry, y = avg_emp)) +
        theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
        ylab(label = "Average Number of Employees \n") +
        xlab(label = "\n Industry Type \n") +
-       ggtitle(label = paste0("Average Number of Employees by Industry for ", third_most_companies$State))
-```
+       ggtitle(bquote(atop(.(title), atop("Bar Chart with Error Bars using Standard Error of the Mean"),"")))
 
-3.	Now imagine you work for an investor and want to see which industries generate the most revenue per employee. Create a chart makes this information clear.
-
-```{r}
+ggsave("answer_to_question2.jpeg", height = 8, width = 10 )
 
 revenue_data <- raw_data_complete_cases %>%
                               select(Revenue, Employees, Industry) %>%
                               group_by(Industry) %>% 
                               mutate(Revenue_Per_Employee = (Revenue/Employees)) %>%
-                              mutate(average = mean(Revenue_Per_Employee),
-                                     median = median(Revenue_Per_Employee)) %>%
-                              gather(type, value, average:median) %>%
+                              mutate(`Average Revenue Per Employee` = mean(Revenue_Per_Employee),
+                                     `Median Revenue Per Employee` = median(Revenue_Per_Employee)) %>%
+                              gather(type, value, `Average Revenue Per Employee`:`Median Revenue Per Employee` ) %>%
                               select(Industry, type, value) %>%
                               distinct(type, value) %>%
                               arrange(-value) 
@@ -145,11 +117,12 @@ revenue_data$Industry <- reorder(revenue_data$Industry, new.order = as.vector(un
 
 ggplot(revenue_data, aes(x = Industry, y = value, color = type)) + 
        geom_point(size = 3) + 
-       theme_minimal() + 
+       theme_light() + 
        scale_color_discrete(name = "Employee Revenue Statistic") + 
        theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
        ylab(label = "Revenue\n") +
        xlab(label = "\n Industry Type") +
        scale_y_continuous(labels = dollar) + 
-       ggtitle("Revenue Statistic Per Employee by Industry Type\n ")
-```
+       ggtitle(paste0("Revenue Statistics by Employee by Industry Type for ", third_most_companies$State))
+
+ggsave("answer_to_question3.jpeg", height = 8, width = 13 )
