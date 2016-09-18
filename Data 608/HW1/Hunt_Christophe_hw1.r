@@ -2,9 +2,13 @@ library(pacman)
 p_load(plyr, dplyr, tidyr, ggplot2, rgdal, maptools, RColorBrewer, scales, tools, gdata, ggplot2)
 
 url_for_download <- c("https://raw.githubusercontent.com/jlaurito/CUNY_IS608/master/lecture1/data/inc5000_data.csv")
+
 raw_data <- read.csv(url_for_download)
+
 raw_data_complete_cases <- raw_data[(complete.cases(raw_data)),]
+
 raw_data_name <- file_path_sans_ext(gsub(".+/", "", url_for_download))
+
 business_data <- raw_data_complete_cases %>%
                                select(Name, State) %>%
                                group_by(State) %>%
