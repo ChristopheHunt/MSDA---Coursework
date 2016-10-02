@@ -2,67 +2,124 @@
 title: "Homework 2 - ggvis"
 author: "Christophe Hunt"
 date: "September 29, 2016"
-output: html_document
+output: 
+  html_document:
+    toc: true
+    toc_depth: 3
+    toc_float: true
+    theme: spacelab
 ---
 
-Data Visualization and Refinement
+```{r, echo=FALSE, include=FALSE}
+library(pacman)
+p_load(tidyverse, ggplot2, forcats)
+```
 
-We will be working with data about every tax lot in NYC, in a zip file. Please download it from http://www1.nyc.gov/site/planning/data-maps/open-data/dwn-pluto-mappluto.page. You will need to combine the data from each boro into one file called 'all_PLUTO_data.R' in order to complete this assignment. I encourage you to do this via code but it is not necessary to submit such code.
+# Data Visualization and Refinement
 
-```{r, cache=TRUE}
-library(magrittr)
+```{r, cache=TRUE, echo=FALSE, eval=TRUE, message=FALSE}
 
 nyc_data_files <- "http://www1.nyc.gov/assets/planning/download/zip/data-maps/open-data/nyc_pluto_16v1.zip"
 download.file(nyc_data_files , destfile = "nyc_pluto_16v1.zip")
+unzip("nyc_pluto_16v1.zip")
 nyc_data_files <- read.csv("MN.csv") %>%
                   rbind(read.csv("SI.csv")) %>%
                   rbind(read.csv("QN.csv")) %>%
                   rbind(read.csv("BK.csv")) %>%
                   rbind(read.csv("BX.csv"))
+
+file.remove(c("nyc_pluto_16v1.zip","MN.csv", "SI.csv", "QN.csv", "BK.csv", "BX.csv", 
+              "PLUTODD16v1.pdf",  "Plutolay16v1.pdf", "PlutoReadme16v1.pdf")) #clean up
+
 ```
 
+## Questions
 
--	This assignment must be done in a single R script with ggplot2. Use of bigvis is encouraged but not required.
--	Please zip your code and images into a file, named 'Last_First_hw2.zip' (mine would be 'Laurito_Josh_hw2.zip'.
--	I have created some codes in the sample code file for you- this assumes the data is in a file called 'all_PLUTO_data' which you will need to create (as mentioned above).
+### 1. 
 
-Questions
+After a few building collapses, the City of New York is going to begin investigating older buildings for safety. However, the city has a limited number of inspectors, and wants to find a 'cut-off' date before most city buildings were constructed. Build a graph to help the city determine when most buildings were constructed. Is there anything in the results that causes you to question the accuracy of the data? (note: only look at buildings built since 1850)
 
-1. After a few building collapses, the City of New York is going to begin investigating older buildings for safety. However, the city has a limited number of inspectors, and wants to find a 'cut-off' date before most city buildings were constructed. Build a graph to help the city determine when most buildings were constructed. Is there anything in the results that causes you to question the accuracy of the data? (note: only look at buildings built since 1850)
-
-```{r, echo = FALSE}
-library(bigvis)
-library(plyr)
-library(dplyr)
-library(tidyr)
-
-nyc_data_files$YearBuilt <- format(nyc_data_files$YearBuilt, "%Y")
+```{r, echo = FALSE, cache=TRUE}
 
 years_built <- nyc_data_files %>%
-                  filter(YearBuilt >= 1850) %>%
+                  filter(YearBuilt >= 1850 & YearBuilt <= 2016) %>%
                   select(YearBuilt) %>%
-                  mutate(year = as.numeric(YearBuilt)) %>% 
-                  mutate(year = as.Date(year)) %>%
-                  group_by(year) %>%
-                  summarise(Total = count(year))
+                  group_by(YearBuilt) %>%
+                  summarise(Total = length(YearBuilt))
 
-                         
+years_built$YearBuilt <- as.Date(as.character(years_built$YearBuilt), format = "%Y")
+  
+ggplot(years_built, aes(YearBuilt, Total))  + 
+       geom_line() +
+       theme_minimal() + 
+       xlab("Year Built") + ylab("Total Count of Buildings") + 
+       ggtitle("Count of Buildings by Year Built\n")
 
-built_by_year <- condense(bin(nyc_data_files$YearBuilt, 1)) 
-autoplot.condensed(built_by_year)
+ggsave(filename = "answer to question 1.jpeg", height = 8, width = 10)
 ```
 
-The data appears unusual 
+The data appears unusual in that many buildings were built before 1900 so clearly this database has few records before 1900. It may be that the buildings recorded before 1900 may be buildings added to the historical registery. Additionally, there are unusual dips by year which gives me concern. I would expect a smoother building cycle. 
 
-2. The city is particularly worried about buildings that were unusually tall when they were built, since best-practices for safety hadn't yet been determined. Create a graph that shows how many buildings of a certain number of floors were built in each year (note: you may want to use a log scale for the number of buildings). It should be clear when 20-story buildings, 30-story buildings, and 40-story buildings were first built in large numbers.
+### 2. 
 
+The city is particularly worried about buildings that were unusually tall when they were built, since best-practices for safety hadn't yet been determined. Create a graph that shows how many buildings of a certain number of floors were built in each year (note: you may want to use a log scale for the number of buildings). It should be clear when 20-story buildings, 30-story buildings, and 40-story buildings were first built in large numbers.
 
+```{r, echo = FALSE, cache=TRUE , fig.height=8, fig.width=8}
+flr_yr_built <- nyc_data_files %>%
+                  filter(YearBuilt >= 1850 & YearBuilt <= 2016) %>%
+                  filter(NumFloors > 0) %>% 
+                  mutate(flr_cat = cut(NumFloors,  breaks = c(0, 10, 20, 30, 40, 50, 60, 120))) %>%
+                  select(YearBuilt, flr_cat, NumFloors ) %>%
+                  filter(!is.na(flr_cat)) %>%
+                  group_by(YearBuilt, flr_cat) %>%
+                  summarise(Total = length(flr_cat)) %>%
+                  ungroup() %>%
+                  mutate(YearBuilt = as.Date(as.character(YearBuilt), format = "%Y"))
 
-3. Your boss suspects that buildings constructed during the US's involvement in World War II (1941-1945) are more poorly constructed than those before and after the way due to the high cost of materials during those years. She thinks that, if you calculate assessed value per floor, you will see lower values for buildings at that time vs before or after. Construct a chart/graph to see if she's right.
+ggplot(flr_yr_built, aes(x = YearBuilt, y = log(Total), group = flr_cat, color = flr_cat)) + 
+      geom_line(size = 1) +
+      facet_wrap(~flr_cat, ncol = 1) +
+      theme_light() + 
+      scale_colour_discrete(name = "Number of Floors \n by Category") + 
+      #theme(legend.position = "none") +
+      xlab("\nYear Built") + 
+      ylab("Total Count of Buildings \n (with log transformation) \n") + 
+      ggtitle("Count of Buildings by Year Built by Number of Floors\n")
 
+ggsave(filename = "answer to question 2.jpeg", height = 8, width = 10)
+```
 
+### 3. 
 
-```{r}
+Your boss suspects that buildings constructed during the US's involvement in World War II (1941-1945) are more poorly constructed than those before and after the way due to the high cost of materials during those years. She thinks that, if you calculate assessed value per floor, you will see lower values for buildings at that time vs before or after. Construct a chart/graph to see if she's right.
 
+```{r, echo = FALSE, cache=TRUE}
+
+v_flr_yr_built <- nyc_data_files %>%
+                  filter(YearBuilt >= 1850 & YearBuilt <= 2016) %>%
+                  filter(NumFloors > 0) %>%
+                  mutate(Era = as.factor(ifelse(YearBuilt < 1941, "Prewar",
+                                      ifelse((YearBuilt >= 1941 & YearBuilt <= 1945), "WWII", 
+                                             ifelse(YearBuilt > 1945, "Postwar", ""))))) %>%
+                  mutate(`Assessed Value per Floor` = (AssessLand/NumFloors)) %>%
+                  select(Era, `Assessed Value per Floor`) %>%
+                  group_by(Era) %>% 
+                  mutate(avg_value = mean(`Assessed Value per Floor`), 
+                    sem = sd(`Assessed Value per Floor`, na.rm = TRUE)/sqrt(length(`Assessed Value per Floor`))) %>%
+                  select(-`Assessed Value per Floor`) %>%
+                  distinct(avg_value, sem)
+
+v_flr_yr_built$Era <- lvls_reorder(v_flr_yr_built$Era, c(2,3,1))
+
+ggplot(v_flr_yr_built, aes(x = Era, y = avg_value, fill = Era)) + 
+       geom_bar(stat = "identity") + 
+       geom_errorbar( aes( ymin = avg_value - sem, ymax = avg_value + sem), width = .5) +  
+       theme_minimal() + 
+       ylab(label = "Average Assessed Valuer per Floor \n") +
+       xlab(label = "\n Era \n") +
+       ggtitle(bquote(atop(.("Average Assessed Value per Floor by Era"), 
+                           atop("Bar Chart with Error Bars using Standard Error of the Mean"),"")))
+
+ggsave(filename = "answer to question 3.jpeg", height = 8, width = 10)
 ```
 
