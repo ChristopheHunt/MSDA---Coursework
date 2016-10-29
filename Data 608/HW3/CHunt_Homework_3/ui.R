@@ -13,14 +13,14 @@ shinyUI(fluidPage(
   sidebarLayout(
     sidebarPanel(
         selectInput("conditions", "Conditions", 
-                    unique(as.character(dfMort$ICD.Chapter)), multiple = TRUE),
+                    unique(as.character(dfMort$ICD.Chapter)), selectize = TRUE),
         tableOutput("data")
     
     ),
     
     # Show a plot of the generated distribution
     mainPanel(
-       plotOutput("distPlot")
+       plotOutput("distPlot", height = 700, width = 500)
     )
   )
 ))
