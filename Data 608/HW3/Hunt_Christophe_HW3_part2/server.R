@@ -1,26 +1,35 @@
+dfMort <- read.csv("https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20608/HW3/cleaned-cdc-mortality-1999-2010.csv")
 #
-# This is the server logic of a Shiny web application. You can run the 
-# application by clicking 'Run App' above.
 #
-# Find out more about building applications with Shiny here:
-# 
-#    http://shiny.rstudio.com/
-#
+library(pacman)
+p_load(shiny, tidyverse, plotly, forcats, plotly)
 
-library(shiny)
+dfMort <- dfMort %>%
+  filter(Year.Code == 2010) %>%
+  mutate(Crude.Rate = round(((Deaths/Population)*100000),1)) %>%
+  select(State, ICD.Chapter, Crude.Rate) 
 
-# Define server logic required to draw a histogram
 shinyServer(function(input, output) {
-   
-  output$distPlot <- renderPlot({
+  
+  output$distPlot <- renderPlotly({
     
-    # generate bins based on input$bins from ui.R
-    x    <- faithful[, 2] 
-    bins <- seq(min(x), max(x), length.out = input$bins + 1)
+    dfMortSub <- dfMort %>% 
+      filter(ICD.Chapter %in% input$conditions) %>%
+      group_by(State) %>%
+      summarise(Crude.Rate = sum(Crude.Rate)) %>%
+      arrange(Crude.Rate) %>%
+      mutate(State = factor(State,State))
     
-    # draw the histogram with the specified number of bins
-    hist(x, breaks = bins, col = 'darkgray', border = 'white')
-    
+    ggplot(data = dfMortSub, aes(y = Crude.Rate, x = State, color = Crude.Rate)) +
+      scale_color_distiller(palette = "YlOrRd") +
+      geom_bar(stat = "identity", width = .5) +
+      ylab("Rate (per 100000 people)") + 
+      coord_flip() + 
+      theme_minimal()
+  })
+  
+  output$event <- renderPrint({
+    d <- event_data("plotly_hover")
   })
   
 })
