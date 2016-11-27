@@ -37,26 +37,60 @@ function reverse(){
   x.innerHTML = reverse_string(document.getElementById("stringToReverse").value);
 }
 
+
 // Functions to create table for question 2
 
-function tableMatrix(num){
+// create multiarray from array
 
-  // creates the array of values
+function arrayToMultiArray(values, numberOfSubArray) {
+   var multiArray = [], i, k;
+     for (i = 0, j = 0; i < values.length-1; i++) {
+       if (i % numberOfSubArray === 0) {
+           j++;
+           multiArray[j] = [];
+       }
+       multiArray[j].push(values[i]);
+   }
+
+   return multiArray;
+}
+
+//create html table from multiarray
+// help on this function provided by http://stackoverflow.com/questions/20407781/dynamically-generated-table-using-an-array-to-fill-in-td-values
+
+function makeTableHTML(array, rows, columns) {
+    var result = "<table>";
+    var i;
+    for(i = 0; i < rows; i++) {
+        result += "<tr>";
+        var j;
+        for(j = 0; j < columns; j++){
+            result += "<td>"+array[j][i]+"</td>";
+        }
+        result += "</tr>";
+    }
+    result += "</table>";
+    return result;
+}
+
+// create the array of values
+function tableMatrix(num){
   var values = [num];
   var i;
-  for(i = 1; i < 20; i++){
+  for(i = 0; i < 20; i++){
     j = (Number(values[values.length-1]) + Number(num));
     values = values.concat(j);
      }
-    return(values)
+    var values = arrayToMultiArray(values, 5)
+    return makeTableHTML(values, 5, 4);
   }
-
 
   // displays the 5x4 table
  function Table(){
  var x = document.getElementById("target2");
  x.innerHTML = tableMatrix(document.getElementById("num").value);
 }
+
 </script>
 
 <p>
@@ -88,7 +122,7 @@ function tableMatrix(num){
 <div id="target2"></div>
 
 <hr>
-<h4>Test Table to match</h4>
+<h4>Test Table provided to verify answer</h4>
 <table>
 <tr><td>2</td><td>4</td><td>6</td><td>8</td></tr>
 <tr><td>10</td><td>12</td><td>14</td><td>16</td></tr>
