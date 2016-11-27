@@ -1,0 +1,58 @@
+<html>
+
+<style>
+@import url(http://fonts.googleapis.com/earlyaccess/notosans.css);
+body { font-family: "Noto Sans", sans-serif; font-size: 14.0px }
+</style>
+
+<head>
+  <title>Christophe Hunt Homework 5</title>
+</head>
+
+<body>
+
+<h2>Christophe Hunt Homework 5 - JavaScript Beginner</h2>
+
+<hr>
+<h3> answer to question 1. Create a function to reverse any word that you type in.</h3>
+
+<script type="text/javascript">
+document.write('<p><b>Please pick a word or phrase you would like to reverse</b></p>');
+</script>
+
+<script type="text/javascript">
+
+  function reverse_string(str){
+    reversed_string = "";
+    for(i = str.length-1; i >= 0; i--){
+      reversed_string += str[i];
+   }
+  return(reversed_string)
+  }
+
+function reverse(){
+  var x = document.getElementById("target");
+  x.innerHTML = reverse_string(document.getElementById("stringToReverse").value);
+}
+
+</script>
+
+<p>
+<form>
+    <input id="stringToReverse" type="string" size="50">
+    <input type="button" value="Submit" onClick="reverse();">
+</form>
+</p>
+
+<div id="target"></div>
+
+<hr>
+
+<h3> answer to question 2. Create a function that takes an input number, and prints a table with the first 20 multiples of the number, in order 5x4</h3>
+
+
+<div id="target2"></div>
+
+
+</body>
+</html>

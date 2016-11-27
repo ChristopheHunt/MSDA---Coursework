@@ -3,8 +3,8 @@
 <title>JavaScript Test</title>
 
 <script>
-string_to_reverse = prompt("What word would you like to reverse?");
-string_to_reverse = String(string_to_reverse);
+var string_to_reverse = prompt("What word would you like to reverse?");
+var string_to_reverse = String(string_to_reverse);
    for (i = 0; i < string_to_reverse.length; ++i) {
         reversed_string += string_to_reverse[i];
     }
