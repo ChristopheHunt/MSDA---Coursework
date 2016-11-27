@@ -41,11 +41,12 @@ function reverse(){
 // Functions to create table for question 2
 
 // create multiarray from array
+//help on this function provided by http://stackoverflow.com/questions/4492385/how-to-convert-simple-array-into-two-dimensional-arraymatrix-in-javascript-or
 
 function arrayToMultiArray(values, numberOfSubArray) {
    var multiArray = [], i, k;
      for (i = 0, j = 0; i < values.length-1; i++) {
-       if (i % numberOfSubArray == 0) {
+       if (i % numberOfSubArray === 0) {
            j++;
            multiArray[j] = [];
        }
