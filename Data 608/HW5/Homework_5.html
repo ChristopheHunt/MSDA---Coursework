@@ -1,7 +1,7 @@
-<html>
+<!DOCTYPE html>
 
 <style>
-@import url(http://fonts.googleapis.com/earlyaccess/notosans.css);
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans');
 body { font-family: "Noto Sans", sans-serif; font-size: 14.0px }
 </style>
 
@@ -14,13 +14,15 @@ body { font-family: "Noto Sans", sans-serif; font-size: 14.0px }
 <h2>Christophe Hunt Homework 5 - JavaScript Beginner</h2>
 
 <hr>
-<h3> answer to question 1. Create a function to reverse any word that you type in.</h3>
+<h3>Question 1. Create a function to reverse any word that you type in.</h3>
 
 <script type="text/javascript">
 document.write('<p><b>Please pick a word or phrase you would like to reverse</b></p>');
 </script>
 
 <script type="text/javascript">
+
+// Functions to reverse strings for question 1
 
   function reverse_string(str){
     reversed_string = "";
@@ -35,6 +37,21 @@ function reverse(){
   x.innerHTML = reverse_string(document.getElementById("stringToReverse").value);
 }
 
+// Functions to create table for question 2
+
+  function tableMatrix(num){
+  var t = document.createElement("TABLE");
+    values = [];
+    for(i = 20; i*values[i]; i--){
+      values += values[i];
+   }
+  return(values)
+  }
+
+function Table(){
+  var x = document.getElementById("target2");
+  x.innerHTML = tableMatrix(document.getElementById("num").value);
+}
 </script>
 
 <p>
@@ -48,11 +65,19 @@ function reverse(){
 
 <hr>
 
-<h3> answer to question 2. Create a function that takes an input number, and prints a table with the first 20 multiples of the number, in order 5x4</h3>
+<h3>Question 2. Create a function that takes an input number, and prints a table with the first 20 multiples of the number, in order 5x4</h3>
 
+<script type="text/javascript">
+document.write('<p><b>Please a number you would like a 5x4 matrix of</b></p>');
+</script>
+
+<p>
+<form>
+    <input id="num" type="number" size="25">
+    <input type="button" value="Submit" onClick="Table();">
+</form>
+</p>
 
 <div id="target2"></div>
 
-
 </body>
-</html>
