@@ -19,13 +19,10 @@ dataset$pial4b <- gsub("\\()", "", gsub("(VOL.)", "", gsub("â???T", "'", dataset
 pander::pandoc.table(rev(table(dataset$pial4b)))
 ```
 
-However, 
+However, if we look at a map of a recent analysis by [NPR's Planet Money](http://www.npr.org/sections/money/2015/02/05/382664837/map-the-most-common-job-in-every-state) <a href="#footnote-1">[1]</a> we see that the most common job in most states is truck driver. This type of employement may be made obsolete as more and more individuals being comfortable with driver-less vehicles.  
 
-<iframe width="560" height="315" src="http://www.npr.org/sections/money/2015/02/05/382664837/map-the-most-common-job-in-every-state" frameborder="0" allowfullscreen></iframe>
+![Map: The Most Common* Job In Every State - NPR](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20608/Final%20Project/NPR%20Most%20Common%20Jobs.PNG)
 
-```{r, eval=TRUE, echo=FALSE}
-<iframe width="560" height="315" src="http://www.npr.org/sections/money/2015/02/05/382664837/map-the-most-common-job-in-every-state" frameborder="0" allowfullscreen></iframe>
-```
 
 
 Employment Data Source: U.S. Census Bureau, 2010-2014 American Community Survey 5-Year Estimates 
@@ -34,3 +31,7 @@ Technology Views Data Source:  Pew Research Center, April, 2014, "U.S. Views of 
 http://www.pewinternet.org/2014/04/17/us-views-of-technology-and-the-future/ 
 
 Note: *The Pew Research Center bears no responsibility for the interpretations presented or conclusions reached based on analysis of the data.*
+
+<p id="footnote-1">[1] "Map: The Most Common* Job In Every State." NPR. NPR, n.d. Web. 03 Dec. 2016.</p>
+
+
