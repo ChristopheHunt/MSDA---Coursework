@@ -7,40 +7,55 @@ output: html_notebook
 library(pacman)
 p_load(memisc, magrittr, knitr, htmlTable, Hmisc, pander, scales)
 file <- file.path("C:", "Users", "Christophe", "Downloads" , "February-2014-Smithsonian-Science (1)", "February 2014 - Smithsonian Science", "Feb_2014_Views_Future_SPSS.sav")
-dataset <- spss.system.file(file) %>% as.data.set()
+survey.data <- spss.system.file(file) %>% as.data.set()
 ``` 
 
-A national survey was conducted by Pew Research Center in conjunction with Smithsonian magazine between February 13-18, 2014 by landline and cell phones among 1,001 adults. The objective of the survey was to better understand US views towards scientific and technological changes occurring during this time period. Understanding public perception of the many scientific changes occurring in the US is important to understand how Americans view their place in a changing environment and if they are hopeful or anxious about the future.   
+A national survey was conducted by Pew Research Center in conjunction with Smithsonian magazine between February 13-18, 2014 by landline and cell phones among 1,001 adults. The objective of the survey was to better understand US views towards scientific and technological changes and how they viewed the future. Understanding public perception of these types of changes occurring in the US is important to understand how Americans view their place in the changing environment and if they are hopeful or anxious about the future.   
 
-The scientific and technological changes are varied and include some issues currently being discussed today, such as "would you ride in a driver-less car?". In the below table we see that `r percent(514/1001)` of individuals in the survey were willing to ride in a driver-less car. 
+The questions regarding scientific and technological changes were varied and include some issues currently being discussed today, such as "would you ride in a driver-less car?". In the below table we see that `r percent(514/1001)` of individuals in the survey were willing to ride in a driver-less car. 
 
 ```{r table of would you ride in a driverless car, echo = FALSE, results='asis'}
-dataset$pial4b <- gsub("\\()", "", gsub("(VOL.)", "", gsub("â???T", "'", dataset$pial4b)))
-pander::pandoc.table(rev(table(dataset$pial4b)))
+survey.data$pial4b <- gsub("\\()", "", gsub("(VOL.)", "", gsub("â???T", "'", survey.data$pial4b)))
+pander::pandoc.table(rev(table(survey.data$pial4b)), caption = "Pew Research Question : would you ride in a driver-less car?")
 ```
+<br>
 
-However, if we look at a map of a recent analysis by [NPR's Planet Money](http://www.npr.org/sections/money/2015/02/05/382664837/map-the-most-common-job-in-every-state) <a href="#footnote-1">[1]</a> on cert we see that the most common job in most states is truck driver. This type of employment may be made obsolete as more and more individuals become comfortable with driver-less vehicles. Unfortunately, changes and comfort with driver-less cars will inevitably lead to driver-less trucks.  
+However, if we look at a map of a recent analysis by [NPR's Planet Money](http://www.npr.org/sections/money/2015/02/05/382664837/map-the-most-common-job-in-every-state) <a href="#footnote-1">[1]</a> on census data of the same time period we see that the most common job in most states is truck driver. This type of employment may be made obsolete as more and more individuals become comfortable with driver-less vehicles. Unfortunately, changes and comfort with driver-less cars will inevitably lead to driver-less trucks.  
 
 <center>
 ![*Map: The Most Common\* Job In Every State - NPR*](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20608/Final%20Project/NPR%20Most%20Common%20Jobs.PNG)
 </center>
 
-It would seem that perhaps we will regional differences in views of certain technologies and the employment types. For instance, the census region 
+<br>
 
-```{r}
-state_shape_files <- "http://www2.census.gov/geo/tiger/GENZ2015/shp/cb_2015_us_state_20m.zip"
-download.file(state_shape_files, destfile = "cb_2015_us_state_20m.zip")
-unzip("cb_2015_us_state_20m.zip")
-states <- readOGR(dsn = ".", layer = "cb_2015_us_state_20m")
+## Regional Differences 
 
-states@data$id <- rownames(states@data)
-states.df <- fortify(states, region = "id") %>% 
-             join(states@data, by = "id") %>%
-             merge(business_data, by.x = c("STUSPS"), by.y = c("State"))
-file.remove(dir(getwd(), pattern = "cb_2015_us_state_20m", full.names = TRUE)) #Clean Up 
-bcounts_wNames <- fortify(aggregate(cbind(long, lat) ~ Total + NAME, data = states.df, FUN = mean)) 
+It would seem that perhaps we will regional differences in views of certain technologies and the employment types. For instance, in the census region `South` nearly every state has the greatest occupation as Truck Driver except for Florida which has Primary School Teacher has the greatest occupation. 
+
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+require(maptools)
+require(rgdal)
+state_shape_files <- "http://www2.census.gov/geo/tiger/GENZ2015/shp/cb_2015_us_region_500k.zip"
+download.file(state_shape_files, destfile = "cb_2015_us_region_500k.zip")
+unzip("cb_2015_us_region_500k.zip")
+regions <- readOGR(dsn = ".", layer = "cb_2015_us_region_500k")
+
+regions@data$id <- rownames(regions@data)
+
+region.df <- fortify(regions, region = "id") %>% 
+             join(regions@data, by = "id") 
+#%>%             merge(business_data, by.x = c("STUSPS"), by.y = c("State"))
+
+file.remove(dir(getwd(), pattern = "cb_2015_us_region_500k", full.names = TRUE)) #Clean Up 
+
+regions.names <- fortify(aggregate(cbind(long, lat) ~ id + NAME, data = region.df, FUN = mean)) 
+
 ```
 
+
+```{r}
+
+```
 
 Employment Data Source: U.S. Census Bureau, 2010-2014 American Community Survey 5-Year Estimates 
 
