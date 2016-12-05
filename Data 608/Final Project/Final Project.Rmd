@@ -5,9 +5,10 @@ output: html_notebook
 
 ```{r load data, include=FALSE}
 library(pacman)
-p_load(memisc, magrittr, knitr, htmlTable, Hmisc, pander, scales)
+p_load(memisc, magrittr, knitr, htmlTable, Hmisc, pander, scales, tidyverse,RColorBrewer)
 file <- file.path("C:", "Users", "Christophe", "Downloads" , "February-2014-Smithsonian-Science (1)", "February 2014 - Smithsonian Science", "Feb_2014_Views_Future_SPSS.sav")
 survey.data <- spss.system.file(file) %>% as.data.set()
+survey.data <- lapply(survey.data, function(x) gsub("\\()", "", gsub("(VOL.)", "", gsub("â..", "'", x)))) %>% as_tibble() ##to correct encoding artifacts
 ``` 
 
 A national survey was conducted by Pew Research Center in conjunction with Smithsonian magazine between February 13-18, 2014 by landline and cell phones among 1,001 adults. The objective of the survey was to better understand US views towards scientific and technological changes and how they viewed the future. Understanding public perception of these types of changes occurring in the US is important to understand how Americans view their place in the changing environment and if they are hopeful or anxious about the future.   
@@ -15,7 +16,6 @@ A national survey was conducted by Pew Research Center in conjunction with Smith
 The questions regarding scientific and technological changes were varied and include some issues currently being discussed today, such as "would you ride in a driver-less car?". In the below table we see that `r percent(514/1001)` of individuals in the survey were willing to ride in a driver-less car. 
 
 ```{r table of would you ride in a driverless car, echo = FALSE, results='asis'}
-survey.data$pial4b <- gsub("\\()", "", gsub("(VOL.)", "", gsub("â???T", "'", survey.data$pial4b)))
 pander::pandoc.table(rev(table(survey.data$pial4b)), caption = "Pew Research Question : would you ride in a driver-less car?")
 ```
 <br>
@@ -30,9 +30,9 @@ However, if we look at a map of a recent analysis by [NPR's Planet Money](http:/
 
 ## Regional Differences 
 
-It would seem that perhaps we will regional differences in views of certain technologies and the employment types. For instance, in the census region `South` nearly every state has the greatest occupation as Truck Driver except for Florida which has Primary School Teacher has the greatest occupation. 
+It would seem that perhaps we will see regional differences in views of certain technologies and the employment types. For instance, in the census region `South` nearly every state has the greatest occupation as Truck Driver except for Florida which has Primary School Teacher. Let's see the percentage of positive views for this question by region. 
 
-```{r, message=FALSE, warning=FALSE, echo=FALSE}
+```{r, message=FALSE, warning=FALSE, echo=FALSE, cache=TRUE, include = FALSE}
 require(maptools)
 require(rgdal)
 state_shape_files <- "http://www2.census.gov/geo/tiger/GENZ2015/shp/cb_2015_us_region_500k.zip"
@@ -43,18 +43,48 @@ regions <- readOGR(dsn = ".", layer = "cb_2015_us_region_500k")
 regions@data$id <- rownames(regions@data)
 
 region.df <- fortify(regions, region = "id") %>% 
-             join(regions@data, by = "id") 
+             plyr::join(regions@data, by = "id") 
 #%>%             merge(business_data, by.x = c("STUSPS"), by.y = c("State"))
 
 file.remove(dir(getwd(), pattern = "cb_2015_us_region_500k", full.names = TRUE)) #Clean Up 
 
-regions.names <- fortify(aggregate(cbind(long, lat) ~ id + NAME, data = region.df, FUN = mean)) 
+region.df <- region.df[!(region.df$long >0),] 
 
+regions.names <- fortify(aggregate(cbind(long, lat) ~ id + NAME, data = region.df, FUN = mean)) 
 ```
 
 
-```{r}
+```{r, message=FALSE, warning=FALSE, echo=FALSE, cache=TRUE}
+drv.less.car <- survey.data %>% 
+                 dplyr::select(cregion, pial4b, weight) %>%
+                 mutate(weight = as.numeric(weight)) %>%
+                 group_by(cregion) %>%
+                 mutate(Yes = (1 * weight)) %>%
+                 select(-weight)
 
+drv.less.car$row <- 1:nrow(drv.less.car)
+
+drv.less.car <- drv.less.car %>%
+                spread(pial4b, Yes, fill = 0) %>%
+                select(-row) %>%
+                summarise_each(funs(sum)) %>%
+                mutate(TotalSurved.weighted = rowSums(.[2:5]))
+
+drv.less.car[,-1] <- round(drv.less.car[,-1],0)
+
+drv.less.car <- drv.less.car %>%
+                mutate(Ratio.YestoNo = `Yes, would do this`/`No, would not do this`) %>%
+                select(cregion, Ratio.YestoNo)
+
+region.df.drvlesscar <-  merge(x = region.df, y = drv.less.car,  "NAME", by.y = "cregion")
+
+
+ggplot(region.df.drvlesscar) + 
+  geom_polygon(colour="grey40", aes(long, lat, group = group, fill = Ratio.YestoNo) ) +
+  geom_text(data = regions.names, aes(long, lat, label = NAME), size=3, colour = "firebrick3", fontface = "bold") + 
+  theme_void() +
+  scale_fill_gradientn(colors = rev(brewer.pal(9,"PuBu")), space = "Lab", guide = "legend") +
+  ggtitle(paste0("\n\nCount of Companies in Data Set : ", raw_data_name," by US State (including US Territory of Puerto Rico) \n"))
 ```
 
 Employment Data Source: U.S. Census Bureau, 2010-2014 American Community Survey 5-Year Estimates 
