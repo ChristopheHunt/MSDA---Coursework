@@ -30,7 +30,7 @@ However, if we look at a map of a recent analysis by [NPR's Planet Money](http:/
 
 ## Regional Differences 
 
-It would seem that perhaps we will see regional differences in views of certain technologies and the employment types. For instance, in the census region `South` nearly every state has the greatest occupation as Truck Driver except for Florida which has Primary School Teacher. Let's see the percentage of positive views for this question by region. 
+It would seem that perhaps we will see regional differences in views of certain technologies and the employment types. For instance, in the census region `South` nearly every state has the greatest occupation as Truck Driver except for Florida which has Primary School Teacher. Let's see the ratio of positive views to negative views for this question by region. 
 
 ```{r, message=FALSE, warning=FALSE, echo=FALSE, cache=TRUE, include = FALSE}
 require(maptools)
@@ -53,8 +53,9 @@ region.df <- region.df[!(region.df$long >0),]
 regions.names <- fortify(aggregate(cbind(long, lat) ~ id + NAME, data = region.df, FUN = mean)) 
 ```
 
+<center>
 
-```{r, message=FALSE, warning=FALSE, echo=FALSE, cache=TRUE}
+```{r, message=FALSE, warning=FALSE, echo=FALSE, cache=TRUE, fig.height=6, fig.width=8}
 drv.less.car <- survey.data %>% 
                  dplyr::select(cregion, pial4b, weight) %>%
                  mutate(weight = as.numeric(weight)) %>%
@@ -78,14 +79,14 @@ drv.less.car <- drv.less.car %>%
 
 region.df.drvlesscar <-  merge(x = region.df, y = drv.less.car,  "NAME", by.y = "cregion")
 
-
 ggplot(region.df.drvlesscar) + 
   geom_polygon(colour="grey40", aes(long, lat, group = group, fill = Ratio.YestoNo) ) +
   geom_text(data = regions.names, aes(long, lat, label = NAME), size=3, colour = "firebrick3", fontface = "bold") + 
   theme_void() +
-  scale_fill_gradientn(colors = rev(brewer.pal(9,"PuBu")), space = "Lab", guide = "legend") +
-  ggtitle(paste0("\n\nCount of Companies in Data Set : ", raw_data_name," by US State (including US Territory of Puerto Rico) \n"))
+  scale_fill_gradientn(colors = brewer.pal(9,"PuBu"), space = "Lab", guide = "legend") +
+  ggtitle(paste0("\n\nRatio of people would ride in a driverless car to those that would not by US Census Regions"))
 ```
+</center>
 
 Employment Data Source: U.S. Census Bureau, 2010-2014 American Community Survey 5-Year Estimates 
 
