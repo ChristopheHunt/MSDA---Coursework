@@ -1,6 +1,8 @@
 ---
 title: "US Regions Views of Technology and Employement Characteristics"
-output: html_notebook
+output:
+  html_document: default
+  html_notebook: default
 ---
 
 ```{r load data, include=FALSE}
@@ -48,45 +50,72 @@ region.df <- fortify(regions, region = "id") %>%
 
 file.remove(dir(getwd(), pattern = "cb_2015_us_region_500k", full.names = TRUE)) #Clean Up 
 
-region.df <- region.df[!(region.df$long >0),] 
+region.df <- region.df[!(region.df$long >0 | region.df$long<=-125),] 
+
 
 regions.names <- fortify(aggregate(cbind(long, lat) ~ id + NAME, data = region.df, FUN = mean)) 
 ```
 
 <center>
 
-```{r, message=FALSE, warning=FALSE, echo=FALSE, cache=TRUE, fig.height=6, fig.width=8}
+```{r, message=FALSE, warning=FALSE, echo=FALSE, cache=TRUE, fig.height=5, fig.width=8}
 drv.less.car <- survey.data %>% 
                  dplyr::select(cregion, pial4b, weight) %>%
                  mutate(weight = as.numeric(weight)) %>%
                  group_by(cregion) %>%
                  mutate(Yes = (1 * weight)) %>%
-                 select(-weight)
+                 dplyr::select(-weight)
 
 drv.less.car$row <- 1:nrow(drv.less.car)
 
 drv.less.car <- drv.less.car %>%
                 spread(pial4b, Yes, fill = 0) %>%
-                select(-row) %>%
+                dplyr::select(-row) %>%
                 summarise_each(funs(sum)) %>%
                 mutate(TotalSurved.weighted = rowSums(.[2:5]))
 
 drv.less.car[,-1] <- round(drv.less.car[,-1],0)
 
 drv.less.car <- drv.less.car %>%
-                mutate(Ratio.YestoNo = `Yes, would do this`/`No, would not do this`) %>%
-                select(cregion, Ratio.YestoNo)
+                mutate(Ratio.NoToYes = `No, would not do this`/`Yes, would do this`) %>%
+                dplyr::select(cregion, Ratio.NoToYes)
 
 region.df.drvlesscar <-  merge(x = region.df, y = drv.less.car,  "NAME", by.y = "cregion")
 
 ggplot(region.df.drvlesscar) + 
-  geom_polygon(colour="grey40", aes(long, lat, group = group, fill = Ratio.YestoNo) ) +
-  geom_text(data = regions.names, aes(long, lat, label = NAME), size=3, colour = "firebrick3", fontface = "bold") + 
+  geom_polygon(colour="grey40", aes(long, lat, group = group, fill = Ratio.NoToYes)) +
+  geom_text(data = regions.names, aes(long, lat, label = NAME), size=3, colour = "grey1", fontface = "bold") + 
   theme_void() +
-  scale_fill_gradientn(colors = brewer.pal(9,"PuBu"), space = "Lab", guide = "legend") +
-  ggtitle(paste0("\n\nRatio of people would ride in a driverless car to those that would not by US Census Regions"))
+  scale_fill_gradientn(colors = brewer.pal(4,"Reds"), space = "Lab", guide = "legend",  name = "Ratio of \nNo to Yes") +
+  labs(title = "\nRatio Of People Who Would NOT Ride In A Driverless Car 
+                \nTo Those That Would By US Census Regions") + 
+     theme(plot.title = element_text(hjust = 0.5))
+
 ```
 </center>
+<br>
+Interestingly, we do see a higher ratio of people that would not ride in a driverless car regions were most individuals are trucker drivers. It does seem that there is a correlation with a negative response to a question that threatens the predominate occupation in a region. 
+
+Below are two graphs, the one on the left is the ratio of people that said No to Yes for a region. On the right is a graph of the percentage of the population that is employed in a particular sector. Perhaps there are further correlations between certain questions regarding optimism of future technology and certain employment sectors. 
+
+```{r, results='asis'}
+library(googleVis)
+myStateSettings <-'
+{"xZoomedDataMin":1199145600000,"colorOption":"2",
+"duration":{"timeUnit":"Y","multiplier":1},"yLambda":1,
+"yAxisOption":"4","sizeOption":"_UNISIZE",
+"iconKeySettings":[],"xLambda":1,"nonSelectedAlpha":0,
+"xZoomedDataMax":1262304000000,"iconType":"LINE",
+"dimensions":{"iconDimensions":["dim0"]},
+"showTrails":false,"uniColorForNonSelected":false,
+"xAxisOption":"_TIME","orderedByX":false,"playDuration":15000,
+"xZoomedIn":false,"time":"2010","yZoomedDataMin":0,
+"yZoomedIn":false,"orderedByY":false,"yZoomedDataMax":100}
+'
+M <- gvisMotionChart(Fruits, "Fruit", "Year", options=list(state=myStateSettings))
+print(M, 'chart', file='myfilename')
+```
+
 
 Employment Data Source: U.S. Census Bureau, 2010-2014 American Community Survey 5-Year Estimates 
 
