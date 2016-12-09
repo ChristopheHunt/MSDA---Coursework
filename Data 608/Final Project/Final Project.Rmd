@@ -7,7 +7,7 @@ output:
 
 ```{r load data, include=FALSE}
 library(pacman)
-p_load(memisc, magrittr, knitr, htmlTable, Hmisc, pander, scales, tidyverse,RColorBrewer)
+p_load(memisc, magrittr, knitr, htmlTable, Hmisc, pander, scales, tidyverse, RColorBrewer, plotly)
 file <- file.path("C:", "Users", "Christophe", "Downloads" , "February-2014-Smithsonian-Science (1)", "February 2014 - Smithsonian Science", "Feb_2014_Views_Future_SPSS.sav")
 survey.data <- spss.system.file(file) %>% as.data.set()
 survey.data <- lapply(survey.data, function(x) gsub("\\()", "", gsub("(VOL.)", "", gsub("â..", "'", x)))) %>% as_tibble() ##to correct encoding artifacts
@@ -102,17 +102,60 @@ Below are two graphs, the one on the left is the ratio of people that said No to
 employData <- read.csv("https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20608/Final%20Project/ACS_2014_Employment_Data/ACS_14_5YR_DP03_with_ann.csv") %>% 
                                               t() %>% 
                                               as_tibble() 
-
 employData <- employData[-(1:2),] 
 colnames(employData) <- c("Variable", employData[1,][2:length(employData)])
 employData <- employData[-1,] 
+colnames(employData)[2:5] <- c("Northeast", "Midwest", "South", "West")
 
-columns <- read.csv("https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20608/Final%20Project/columns%20to%20use%20from%20employment%20data.csv", header = TRUE)
+employVariables <- read.csv("https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20608/Final%20Project/columns%20to%20use%20from%20employment%20data.csv", header = TRUE) %>% as.data.frame()
+
+`Census Regions` <- c("Northeast", "Midwest", "South", "West")
 
 employData <- employData %>%
-              filter(Variable %in% as.vector(columns$ï..column))
+              filter(Variable %in% employVariables$Description) %>%
+              mutate(Variable = 
+                       gsub("Percent; INDUSTRY - Civilian employed population 16 years and over - ", 
+                            "", Variable)) %>%
+              t() 
+
+colnames(employData) <- as.character(employData[1,])
+employData <- employData[-1,] 
+employData <- as_tibble(employData) %>%
+              map_if(is.character, as.numeric) %>%
+              as_tibble() %>%
+              cbind(`Census Regions`)
+
+employData[, 1:(ncol(employData)-1)]/100
 ```
 
+
+```{r, results='asis', echo=FALSE, message=FALSE, error=FALSE}
+library(plotly)
+
+p <- plot_ly(employData, x = ~`Census Regions`) %>%
+  add_bars(y = ~`Agriculture, forestry, fishing and hunting, and mining`, name = "A") %>%
+  add_bars(y = ~`Construction`, name = "B", visible = F) %>%
+  layout(
+    title = "Percentage Employed by Industry and Census Region",
+    xaxis = list(domain = c(0, 1)),
+    yaxis = list(title = "y"),
+    updatemenus = list(
+      list(
+        x = 0.7,
+        y = -0.5, 
+        buttons = list(
+          list(method = "restyle",
+               args = list("visible", list(TRUE, FALSE)),
+               label = "Agriculture, \nforestry, \nfishing and \nhunting, \nand mining"),
+
+          list(method = "restyle",
+               args = list("visible", list(FALSE, TRUE)),
+               label = "Construction")))
+    )
+  )
+
+p
+```
 
 Employment Data Source: U.S. Census Bureau, 2010-2014 American Community Survey 5-Year Estimates 
 
