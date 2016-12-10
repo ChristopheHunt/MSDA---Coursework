@@ -22,3 +22,4 @@ RColorBrewer
 sp
 maptools
 rgdal
+plotly
