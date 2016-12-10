@@ -230,10 +230,11 @@ employData <- as_tibble(employData) %>%
               map_if(is.character, as.numeric) %>%
               as_tibble() %>%
               cbind(`Census Regions`)
+write.csv(employData, "employData.csv")
 ```
 
 
-```{r, results='asis', echo=FALSE, message=FALSE, warning = FALSE, error=FALSE}
+```{r, results='asis', echo=FALSE, message=FALSE, warning = FALSE, error=FALSE, eval=FALSE}
 library(plotly)
 
 p <- plot_ly(employData, x = ~`Census Regions`) %>%
@@ -260,43 +261,43 @@ p <- plot_ly(employData, x = ~`Census Regions`) %>%
         #y = 1.5, 
         buttons = list(
           list(method = "restyle",
-               args = list("visible", list(TRUE, FALSE)),
+               args = list("visible", list(TRUE, FALSE, FALSE, FALSE, FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE)),
                label = "Agriculture, forestry, <br>fishing and hunting, and mining"),
           list(method = "restyle",
-               args = list("visible", list(FALSE, TRUE)),
+               args = list("visible", list(FALSE, FALSE, FALSE, FALSE, FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE)),
                label = "Construction"),
           list(method = "restyle",
-               args = list("visible", list(FALSE, TRUE)),
+               args = list("visible", list(FALSE, FALSE, FALSE, FALSE, FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE)),
                label = "Manufacturing"),
           list(method = "restyle",
-               args = list("visible", list(FALSE, TRUE)),
+               args = list("visible", list(FALSE, FALSE, FALSE, FALSE, FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE)),
                label = "Wholesale trade"),
          list(method = "restyle",
-               args = list("visible", list(FALSE, TRUE)),
+               args = list("visible", list(FALSE, FALSE, FALSE, FALSE, FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE)),
                label = "Retail trade"),
         list(method = "restyle",
-               args = list("visible", list(FALSE, TRUE)),
+               args = list("visible", list(FALSE, FALSE, FALSE, FALSE, FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE)),
                label = "Transportation and warehousing, and utilities"),
         list(method = "restyle",
-               args = list("visible", list(FALSE, TRUE)),
+               args = list("visible", list(FALSE, FALSE, FALSE, FALSE, FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE)),
                label = "Information"),
         list(method = "restyle",
-               args = list("visible", list(FALSE, TRUE)),
+               args = list("visible", list(FALSE, FALSE, FALSE, FALSE, FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE)),
                label = "Finance and insurance, and real estate and rental and leasing"),
         list(method = "restyle",
-               args = list("visible", list(FALSE, TRUE)),
+               args = list("visible", list(FALSE, FALSE, FALSE, FALSE, FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE)),
                label = "Professional, scientific, and management, <br>and administrative and waste management services"),
         list(method = "restyle",
-               args = list("visible", list(FALSE, TRUE)),
+               args = list("visible", list(FALSE, FALSE, FALSE, FALSE, FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE)),
                label = "Educational services, and  <br>health care and social assistance"),
         list(method = "restyle",
-               args = list("visible", list(FALSE, TRUE)),
+               args = list("visible", list(FALSE, FALSE, FALSE, FALSE, FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE)),
                label = "Arts, entertainment, and recreation,  <br>and accommodation and food services"),
         list(method = "restyle",
-               args = list("visible", list(FALSE, TRUE)),
+               args = list("visible", list(FALSE, FALSE, FALSE, FALSE, FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE)),
                label = "Other services, except public administration"),
         list(method = "restyle",
-               args = list("visible", list(FALSE, TRUE)),
+               args = list("visible", list(FALSE, FALSE, FALSE, FALSE, FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE)),
                label = "Public administration"))))) %>%
   layout(autosize = F, width = 850, height = 550, margin = list(l = 50, r = 50, b = 100, t = 100, pad = 4))
 
@@ -304,20 +305,27 @@ p
 ```
 
 
-```{r engine='python', highlight=TRUE}
-import pandas as pd 
-
+```{r engine='python', highlight=TRUE, eval = FALSE}
+import pandas as pd
 df = pd.read_csv('https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20608/Final%20Project/final.survey.data.csv')
+
 cregion = df['cregion']
 cars = df['No to Yes, Driverless Cars']
 tech = df['No to Yes, Techonlogy making lives better']
+computers = df['No to Yes, Computers making art']
+robots = df['No to Yes, Robots becoming primary caregivers']
+meat = df['No to Yes, Eating lab grown meat']
+
 import plotly.plotly as py
 import plotly.graph_objs as go
 
 trace1 = go.Bar( x=cregion, y=cars, name='No to Yes, Driverless Cars')
 trace2 = go.Bar( x=cregion, y=tech,  name='No to Yes, Techonlogy making lives better')
+trace3 = go.Bar( x=cregion, y=computers, name='No to Yes, Computers making art')
+trace4 = go.Bar(x=cregion, y=robots, name = 'No to Yes, Robots becoming primary caregivers')
+trace5 = go.Bar(x=cregion, y= meat, name = 'No to Yes, Eating lab grown meat' )
 
-data = Data([trace1, trace2])
+data = Data([trace1, trace2, trace3, trace4, trace5])
 layout = go.Layout(
     title='Ratio of No to Yes for various views on Technology',
     updatemenus=list([
@@ -327,18 +335,33 @@ layout = go.Layout(
             yanchor='top',
             buttons=list([
                 dict(
-                    args=['visible', [True, True, True, True]],
+                    args=['visible', [True, True, True, True, True]],
                     label='All',
                     method='restyle'
                 ),
                 dict(
-                    args=['visible', [True, False, False, False]],
+                    args=['visible', [True, False, False, False, False]],
                     label='No to Yes, Driverless Cars',
                     method='restyle'
                 ),
                 dict(
-                    args=['visible', [False, True, False, False]],
+                    args=['visible', [False, True, False, False, False]],
                     label='No to Yes, Techonlogy making lives better',
+                    method='restyle'
+                ),
+                dict(
+                    args=['visible', [False, False, True, False, False]],
+                    label='No to Yes, Computers making art',
+                    method='restyle'
+                ),
+                dict(
+                    args=['visible', [False, False, False, True, False]],
+                    label='No to Yes, Robots becoming primary caregivers',
+                    method='restyle'
+                ),
+                dict(
+                    args=['visible', [False, False, False, False, True]],
+                    label='No to Yes, Eating lab grown meat',
                     method='restyle'
                 )
               
@@ -347,12 +370,12 @@ layout = go.Layout(
     ]),
 )
 fig = Figure(data=data, layout=layout)
-py.iplot(fig)
+plot(fig)
 ```
 
 
-```{r showChoro1}
-htmltools::includeHTML("C:/Users/Christophe/Documents/GitHub/MSDA - Coursework/Data 608/Final Project/temp-plot.html")
+```{r fig.width=8}
+htmltools::includeHTML("https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20608/Final%20Project/tech%20views.html")
 ```
 
 Employment Data Source: U.S. Census Bureau, 2010-2014 American Community Survey 5-Year Estimates 
