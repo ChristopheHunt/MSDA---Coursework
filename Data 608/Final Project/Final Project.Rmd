@@ -240,17 +240,8 @@ employData <- as_tibble(employData) %>%
 write.csv(employData, "employData.csv")
 ```
 
-
 ```{r engine='python', highlight=TRUE,echo = FALSE, eval = FALSE, cache=TRUE}
-from plotly import __version__
-from plotly.offline import init_notebook_mode, plot, iplot
-from plotly.graph_objs import *
-import plotly.graph_objs as go
-import plotly.plotly as py
-import pandas as pd 
-
-py.sign_in('username', 'api_key')
-
+import pandas as pd
 df = pd.read_csv('https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20608/Final%20Project/final.survey.data.csv')
 
 cregion = df['cregion']
@@ -260,8 +251,11 @@ computers = df['No to Yes, Computers making art']
 robots = df['No to Yes, Robots becoming primary caregivers']
 meat = df['No to Yes, Eating lab grown meat']
 
+import plotly.plotly as py
+import plotly.graph_objs as go
+
 trace1 = go.Bar(x=cregion, y=cars, name='No to Yes, Driverless Cars')
-trace2 = go.Bar(x=cregion, y=tech,  name='No to Yes, Techonlogy making lives better')
+trace2 = go.Bar(x=cregion, y=tech,  name='No to Yes, Technology making lives better')
 trace3 = go.Bar(x=cregion, y=computers, name='No to Yes, Computers making art')
 trace4 = go.Bar(x=cregion, y=robots, name = 'No to Yes, Robots becoming primary caregivers')
 trace5 = go.Bar(x=cregion, y= meat, name = 'No to Yes, Eating lab grown meat' )
@@ -270,14 +264,15 @@ data = [trace1, trace2, trace3, trace4, trace5]
 layout = go.Layout(
     autosize=False,
     width=1150,
-    height=650,
+    height=400,
     margin=go.Margin(
         l=50,
         r=50,
-        b=100,
+        b=25,
         t=100,
-        pad=4
+        pad=2
     ),
+
     title='Ratio of No to Yes for various views on Technology',
     updatemenus=list([
         dict(
@@ -297,7 +292,7 @@ layout = go.Layout(
                 ),
                 dict(
                     args=['visible', [False, True, False, False, False]],
-                    label='No to Yes, Techonlogy making lives better',
+                    label='No to Yes, Technology making lives better',
                     method='restyle'
                 ),
                 dict(
@@ -321,7 +316,7 @@ layout = go.Layout(
     ]),
 )
 fig = Figure(data=data, layout=layout)
-plot(fig, filename='tech views.html')
+plot(fig, filename='tech views.html', show_link=False)
 ```
 
 ```{r echo=FALSE}
@@ -331,6 +326,7 @@ htmltools::includeHTML("./tech views.html")
 ```{r engine='python', highlight=TRUE,echo = FALSE, eval = FALSE, cache=TRUE}
 import pandas as pd
 df = pd.read_csv('https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20608/Final%20Project/employData.csv')
+df = df.reindex([1,0,2,3])
 
 region = df['Census Regions']
 arg = df['Agriculture, forestry, fishing and hunting, and mining']
@@ -365,7 +361,17 @@ trace12 = go.Bar(x=region, y=other, name = 'Other services, except public admini
 trace13 = go.Bar(x=region, y=public, name = 'Public administration')
 
 data = [trace1, trace2, trace3, trace4, trace5, trace6, trace7, trace8, trace9, trace10, trace11, trace12, trace13]
-layout = go.Layout(
+layout = go.Layout( autosize=False,
+    width=1150,
+    height=620,
+    margin=go.Margin(
+        l=50,
+        r=50,
+        b=25,
+        t=100,
+        pad=4
+    ),
+    showlegend=False, 
     title='Percentage of Regional Population Employed by Industry Type',
     yaxis = dict(title = "Percentage", ticksuffix = "%"),
     updatemenus=list([
@@ -381,7 +387,7 @@ layout = go.Layout(
                 ),
                 dict(
                     args=['visible', [False, True, False, False, False, False, False, False, False, False, False, False, False]],
-                    label='Agriculture, forestry, fishing and hunting, and mining',
+                    label='Agriculture',
                     method='restyle'
                 ),
                 dict(
@@ -406,7 +412,7 @@ layout = go.Layout(
                 ),
                 dict(
                     args=['visible', [False, False, False, False, False, False, True, False, False, False, False, False, False]],
-                    label='Transportation and warehousing, and utilities',
+                    label='Transportation',
                     method='restyle'
                 ),
                 dict(
@@ -416,27 +422,27 @@ layout = go.Layout(
                 ),
                 dict(
                     args=['visible', [False, False, False, False, False,False, False, False, True, False, False, False, False]],
-                    label='Finance and insurance, and real estate and rental and leasing',
+                    label='Finance and insurance',
                     method='restyle'
                 ),
                 dict(
                     args=['visible', [False, False, False, False, False,False, False, False, False, True, False, False, False]],
-                    label='Professional, scientific, and management, and administrative and waste management services',
+                    label='Professional, scientific, and management',
                     method='restyle'
                 ),
                 dict(
                     args=['visible', [False, False, False, False, False,False, False, False, False, False, True, False, False]],
-                    label= 'Educational services, and health care and social assistance',
+                    label= 'Educational services',
                     method='restyle'
                 ),
                 dict(
                     args=['visible', [False, False, False, False, False,False, False, False, False, False, False, True, False]],
-                    label='Arts, entertainment, and recreation, and accommodation and food services',
+                    label='Arts and entertainment',
                     method='restyle'
                 ),
                 dict(
                     args=['visible', [False, False, False, False, False,False, False, False, False, False, False, False, False]],
-                    label='Other services, except public administration',
+                    label='Other services, except public admin',
                     method='restyle'
                 ),
                 dict(
@@ -450,12 +456,14 @@ layout = go.Layout(
     ]),
 )
 fig = Figure(data=data, layout=layout)
-plot(fig, filename='employ.html')
+plot(fig, filename='employ.html', show_link=False)
 ```
 
 ```{r echo=FALSE}
 htmltools::includeHTML("./employ.html")
 ```
+
+Technological advancements have the power to dramatically transform certain industries. It would not be a surprise to see correlations between certain views and the general employment make up of a region. 
 
 Employment Data Source: U.S. Census Bureau, 2010-2014 American Community Survey 5-Year Estimates 
 
