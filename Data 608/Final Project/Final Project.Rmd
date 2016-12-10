@@ -1,8 +1,7 @@
 ---
 title: "US Regions Views of Technology and Employement Characteristics"
 output:
-  html_document: 
-      css: "style.css"
+  html_document: default
   html_notebook: default
 ---
 
@@ -246,11 +245,12 @@ write.csv(employData, "employData.csv")
 from plotly import __version__
 from plotly.offline import init_notebook_mode, plot, iplot
 from plotly.graph_objs import *
+import plotly.graph_objs as go
 import plotly.plotly as py
 import pandas as pd 
-py.sign_in('Blastophe', 'hkV1iJvT8aPiuNi0Va4g')
 
-import pandas as pd
+py.sign_in('username', 'api_key')
+
 df = pd.read_csv('https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20608/Final%20Project/final.survey.data.csv')
 
 cregion = df['cregion']
@@ -259,9 +259,6 @@ tech = df['No to Yes, Techonlogy making lives better']
 computers = df['No to Yes, Computers making art']
 robots = df['No to Yes, Robots becoming primary caregivers']
 meat = df['No to Yes, Eating lab grown meat']
-
-import plotly.plotly as py
-import plotly.graph_objs as go
 
 trace1 = go.Bar(x=cregion, y=cars, name='No to Yes, Driverless Cars')
 trace2 = go.Bar(x=cregion, y=tech,  name='No to Yes, Techonlogy making lives better')
@@ -272,8 +269,8 @@ trace5 = go.Bar(x=cregion, y= meat, name = 'No to Yes, Eating lab grown meat' )
 data = [trace1, trace2, trace3, trace4, trace5]
 layout = go.Layout(
     autosize=False,
-    width=800,
-    height=600,
+    width=1150,
+    height=650,
     margin=go.Margin(
         l=50,
         r=50,
@@ -327,8 +324,7 @@ fig = Figure(data=data, layout=layout)
 plot(fig, filename='tech views.html')
 ```
 
-```{r fig.width=8, echo=FALSE,  cache=TRUE, fig.width=4.5, fig.height=2.5}
-#htmltools::includeHTML("https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20608/Final%20Project/tech%20views.html")
+```{r echo=FALSE}
 htmltools::includeHTML("./tech views.html")
 ```
 
@@ -457,8 +453,8 @@ fig = Figure(data=data, layout=layout)
 plot(fig, filename='employ.html')
 ```
 
-```{r fig.width=8, echo=FALSE, cache=TRUE, fig.height=450}
-htmltools::includeHTML("https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20608/Final%20Project/employ.html")
+```{r echo=FALSE}
+htmltools::includeHTML("./employ.html")
 ```
 
 Employment Data Source: U.S. Census Bureau, 2010-2014 American Community Survey 5-Year Estimates 
