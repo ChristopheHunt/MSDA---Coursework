@@ -9,6 +9,7 @@ output:
 ```{r load data, include=FALSE}
 library(pacman)
 library(scales)
+
 p_load(memisc, magrittr, knitr, htmlTable, Hmisc, pander, scales, tidyverse, RColorBrewer, plotly, foreign, scales)
 file <- file.path("C:", "Users", "Christophe", "Downloads" , "February-2014-Smithsonian-Science (1)", "February 2014 - Smithsonian Science", "Feb_2014_Views_Future_SPSS.sav")
 survey.data <- spss.system.file(file) %>% as.data.set()
@@ -241,7 +242,14 @@ write.csv(employData, "employData.csv")
 ```
 
 
-```{r engine='python', highlight=TRUE,echo = FALSE, eval = FALSE, cache=TRUE}
+```{r engine='python', highlight=TRUE,echo = FALSE, eval = TRUE, cache=TRUE}
+from plotly import __version__
+from plotly.offline import init_notebook_mode, plot, iplot
+from plotly.graph_objs import *
+import plotly.plotly as py
+import pandas as pd 
+py.sign_in('Blastophe', 'hkV1iJvT8aPiuNi0Va4g')
+
 import pandas as pd
 df = pd.read_csv('https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20608/Final%20Project/final.survey.data.csv')
 
@@ -254,17 +262,25 @@ meat = df['No to Yes, Eating lab grown meat']
 
 import plotly.plotly as py
 import plotly.graph_objs as go
-from plotly.graph_objs import *
-from plotly.offline import init_notebook_mode, plot, iplot
 
-trace1 = go.Bar( x=cregion, y=cars, name='No to Yes, Driverless Cars')
-trace2 = go.Bar( x=cregion, y=tech,  name='No to Yes, Techonlogy making lives better')
-trace3 = go.Bar( x=cregion, y=computers, name='No to Yes, Computers making art')
+trace1 = go.Bar(x=cregion, y=cars, name='No to Yes, Driverless Cars')
+trace2 = go.Bar(x=cregion, y=tech,  name='No to Yes, Techonlogy making lives better')
+trace3 = go.Bar(x=cregion, y=computers, name='No to Yes, Computers making art')
 trace4 = go.Bar(x=cregion, y=robots, name = 'No to Yes, Robots becoming primary caregivers')
 trace5 = go.Bar(x=cregion, y= meat, name = 'No to Yes, Eating lab grown meat' )
 
 data = [trace1, trace2, trace3, trace4, trace5]
 layout = go.Layout(
+    autosize=False,
+    width=800,
+    height=600,
+    margin=go.Margin(
+        l=50,
+        r=50,
+        b=100,
+        t=100,
+        pad=4
+    ),
     title='Ratio of No to Yes for various views on Technology',
     updatemenus=list([
         dict(
@@ -307,13 +323,13 @@ layout = go.Layout(
         )
     ]),
 )
-
 fig = Figure(data=data, layout=layout)
-py.plot(fig, filename='tech views.html')
+plot(fig, filename='tech views.html')
 ```
 
-```{r fig.width=8, echo=FALSE,  cache=TRUE}
-htmltools::includeHTML("https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20608/Final%20Project/tech%20views.html")
+```{r fig.width=8, echo=FALSE,  cache=TRUE, fig.width=6, fig.height=3}
+#htmltools::includeHTML("https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20608/Final%20Project/tech%20views.html")
+htmltools::includeHTML("./tech views.html")
 ```
 
 ```{r engine='python', highlight=TRUE,echo = FALSE, eval = FALSE, cache=TRUE}
