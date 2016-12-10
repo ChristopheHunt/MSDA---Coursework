@@ -242,7 +242,7 @@ write.csv(employData, "employData.csv")
 ```
 
 
-```{r engine='python', highlight=TRUE,echo = FALSE, eval = TRUE, cache=TRUE}
+```{r engine='python', highlight=TRUE,echo = FALSE, eval = FALSE, cache=TRUE}
 from plotly import __version__
 from plotly.offline import init_notebook_mode, plot, iplot
 from plotly.graph_objs import *
@@ -327,7 +327,7 @@ fig = Figure(data=data, layout=layout)
 plot(fig, filename='tech views.html')
 ```
 
-```{r fig.width=8, echo=FALSE,  cache=TRUE, fig.width=6, fig.height=3}
+```{r fig.width=8, echo=FALSE,  cache=TRUE, fig.width=4.5, fig.height=2.5}
 #htmltools::includeHTML("https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20608/Final%20Project/tech%20views.html")
 htmltools::includeHTML("./tech views.html")
 ```
