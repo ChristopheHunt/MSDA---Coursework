@@ -124,12 +124,10 @@ employData <- as_tibble(employData) %>%
               map_if(is.character, as.numeric) %>%
               as_tibble() %>%
               cbind(`Census Regions`)
-
-employData[, 1:(ncol(employData)-1)]/100
 ```
 
 
-```{r, results='asis', echo=FALSE, message=FALSE, error=FALSE}
+```{r, results='asis', echo=FALSE, message=FALSE, warning = FALSE, error=FALSE}
 library(plotly)
 
 p <- plot_ly(employData, x = ~`Census Regions`) %>%
@@ -137,24 +135,27 @@ p <- plot_ly(employData, x = ~`Census Regions`) %>%
   add_bars(y = ~`Construction`, name = "B", visible = F) %>%
   layout(
     title = "Percentage Employed by Industry and Census Region",
-    xaxis = list(domain = c(0, 1)),
-    yaxis = list(title = "y"),
+    xaxis = list(title = "Census Regions", domain = c(0, 1)),
+    yaxis = list(title = "Percentage
+                 ", ticksuffix = "%"),
     updatemenus = list(
       list(
-        x = 0.7,
-        y = -0.5, 
+        x = .5,
+        y = 1.5, 
         buttons = list(
           list(method = "restyle",
                args = list("visible", list(TRUE, FALSE)),
-               label = "Agriculture, \nforestry, \nfishing and \nhunting, \nand mining"),
+               label = "Agriculture, forestry, <br>fishing and hunting, and mining"),
 
           list(method = "restyle",
                args = list("visible", list(FALSE, TRUE)),
                label = "Construction")))
     )
-  )
+  ) %>%
+  layout(autosize = F, width = 900, height = 500, margin = list(l = 50, r = 50, b = 100, t = 100, pad = 4))
 
 p
+
 ```
 
 Employment Data Source: U.S. Census Bureau, 2010-2014 American Community Survey 5-Year Estimates 
