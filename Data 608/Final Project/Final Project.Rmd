@@ -202,7 +202,9 @@ ggplot(region.df.drvlesscar) +
 <br>
 Interestingly, we do see a higher ratio of people that would not ride in a driverless car regions were most individuals are trucker drivers. It does seem that there is a correlation with a negative response to a question that threatens the predominate occupation in a region. 
 
-Below are two graphs, the one on the left is the ratio of people that said No to Yes for a region. On the right is a graph of the percentage of the population that is employed in a particular sector. Perhaps there are further correlations between certain questions regarding optimism of future technology and certain employment sectors. 
+## Technology Views and Employment by Region 
+
+Below are two graphs, the top graph contains the ratio of people with a negative view of the future technology to those that have a positive view of the technology by region. We would expect that the region that has a greater percentage of people employed by an industry negatively impacted by a technology would also have a higher ratio of more negative views than positive. The next graph is a graph of the percentage of the population that is employed in a particular sector. Perhaps there are further correlations between certain questions regarding optimism of future technology and certain employment sectors. Go ahead and try different combinations to see if there is any visible correlations. Remember the ratio is negative to positive. 
 
 ```{r, results='asis', echo=FALSE, message=FALSE, error=FALSE, cache = TRUE}
 employData <- read.csv("https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20608/Final%20Project/ACS_2014_Employment_Data/ACS_14_5YR_DP03_with_ann.csv") %>% 
@@ -230,82 +232,19 @@ employData <- as_tibble(employData) %>%
               map_if(is.character, as.numeric) %>%
               as_tibble() %>%
               cbind(`Census Regions`)
+```
+
+```{r include=FALSE, eval=FALSE}
 write.csv(employData, "employData.csv")
 ```
 
 
-```{r, results='asis', echo=FALSE, message=FALSE, warning = FALSE, error=FALSE, eval=FALSE}
-library(plotly)
+```{r engine='python', highlight=TRUE, eval = FALSE, echo = FALSE}
 
-p <- plot_ly(employData, x = ~`Census Regions`) %>%
-  add_bars(y = ~`Agriculture, forestry, fishing and hunting, and mining`, name = "A") %>%
-  add_bars(y = ~`Construction`, name = "B", visible = F) %>%
-  add_bars(y = ~`Manufacturing`, name = "C", visible = F) %>%
-  add_bars(y = ~`Wholesale trade`, name = "D", visible = F) %>%
-  add_bars(y = ~`Retail trade`, name = "E", visible = F) %>%
-  add_bars(y = ~`Transportation and warehousing, and utilities`, name = "F", visible = F) %>%
-  add_bars(y = ~`Information`, name = "G", visible = F) %>%
-  add_bars(y = ~`Finance and insurance, and real estate and rental and leasing`, name = "H", visible = F) %>%
-  add_bars(y = ~`Professional, scientific, and management, and administrative and waste management services`, name = "D", visible = F) %>%
-  add_bars(y = ~`Educational services, and health care and social assistance`, name = "I", visible = F) %>%
-  add_bars(y = ~`Arts, entertainment, and recreation, and accommodation and food services`, name = "J", visible = F) %>%
-  add_bars(y = ~`Other services, except public administration`, name = "K", visible = F) %>%
-  add_bars(y = ~`Public administration`, name = "L", visible = F) %>%
-  layout(
-    title = "Percentage Employed by Industry and Census Region",
-    xaxis = list(title = "Census Regions", domain = c(0, 1)),
-    yaxis = list(title = "Percentage", ticksuffix = "%"),
-    updatemenus = list(
-      list(
-        #x = .5,
-        #y = 1.5, 
-        buttons = list(
-          list(method = "restyle",
-               args = list("visible", list(TRUE, FALSE, FALSE, FALSE, FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE)),
-               label = "Agriculture, forestry, <br>fishing and hunting, and mining"),
-          list(method = "restyle",
-               args = list("visible", list(FALSE, FALSE, FALSE, FALSE, FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE)),
-               label = "Construction"),
-          list(method = "restyle",
-               args = list("visible", list(FALSE, FALSE, FALSE, FALSE, FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE)),
-               label = "Manufacturing"),
-          list(method = "restyle",
-               args = list("visible", list(FALSE, FALSE, FALSE, FALSE, FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE)),
-               label = "Wholesale trade"),
-         list(method = "restyle",
-               args = list("visible", list(FALSE, FALSE, FALSE, FALSE, FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE)),
-               label = "Retail trade"),
-        list(method = "restyle",
-               args = list("visible", list(FALSE, FALSE, FALSE, FALSE, FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE)),
-               label = "Transportation and warehousing, and utilities"),
-        list(method = "restyle",
-               args = list("visible", list(FALSE, FALSE, FALSE, FALSE, FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE)),
-               label = "Information"),
-        list(method = "restyle",
-               args = list("visible", list(FALSE, FALSE, FALSE, FALSE, FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE)),
-               label = "Finance and insurance, and real estate and rental and leasing"),
-        list(method = "restyle",
-               args = list("visible", list(FALSE, FALSE, FALSE, FALSE, FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE)),
-               label = "Professional, scientific, and management, <br>and administrative and waste management services"),
-        list(method = "restyle",
-               args = list("visible", list(FALSE, FALSE, FALSE, FALSE, FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE)),
-               label = "Educational services, and  <br>health care and social assistance"),
-        list(method = "restyle",
-               args = list("visible", list(FALSE, FALSE, FALSE, FALSE, FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE)),
-               label = "Arts, entertainment, and recreation,  <br>and accommodation and food services"),
-        list(method = "restyle",
-               args = list("visible", list(FALSE, FALSE, FALSE, FALSE, FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE)),
-               label = "Other services, except public administration"),
-        list(method = "restyle",
-               args = list("visible", list(FALSE, FALSE, FALSE, FALSE, FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE)),
-               label = "Public administration"))))) %>%
-  layout(autosize = F, width = 850, height = 550, margin = list(l = 50, r = 50, b = 100, t = 100, pad = 4))
-
-p
 ```
 
 
-```{r engine='python', highlight=TRUE, eval = FALSE}
+```{r engine='python', highlight=TRUE, eval = FALSE, echo = FALSE}
 import pandas as pd
 df = pd.read_csv('https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20608/Final%20Project/final.survey.data.csv')
 
@@ -318,6 +257,8 @@ meat = df['No to Yes, Eating lab grown meat']
 
 import plotly.plotly as py
 import plotly.graph_objs as go
+from plotly.graph_objs import *
+from plotly.offline import init_notebook_mode, plot, iplot
 
 trace1 = go.Bar( x=cregion, y=cars, name='No to Yes, Driverless Cars')
 trace2 = go.Bar( x=cregion, y=tech,  name='No to Yes, Techonlogy making lives better')
@@ -325,7 +266,7 @@ trace3 = go.Bar( x=cregion, y=computers, name='No to Yes, Computers making art')
 trace4 = go.Bar(x=cregion, y=robots, name = 'No to Yes, Robots becoming primary caregivers')
 trace5 = go.Bar(x=cregion, y= meat, name = 'No to Yes, Eating lab grown meat' )
 
-data = Data([trace1, trace2, trace3, trace4, trace5])
+data = [trace1, trace2, trace3, trace4, trace5]
 layout = go.Layout(
     title='Ratio of No to Yes for various views on Technology',
     updatemenus=list([
@@ -369,12 +310,12 @@ layout = go.Layout(
         )
     ]),
 )
+
 fig = Figure(data=data, layout=layout)
-plot(fig)
+plot(fig, filename='tech views.html')
 ```
 
-
-```{r fig.width=8}
+```{r fig.width=8, echo=FALSE}
 htmltools::includeHTML("https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20608/Final%20Project/tech%20views.html")
 ```
 
