@@ -208,6 +208,8 @@ Interestingly, we do see a higher ratio of people that would not ride in a drive
 
 Below are two graphs, the top graph contains the ratio of people with a negative view of the future technology to those that have a positive view of the technology by region. We would expect that the region that has a greater percentage of people employed by an industry negatively impacted by a technology would also have a higher ratio of more negative views than positive. The next graph is a graph of the percentage of the population that is employed in a particular sector. Perhaps there are further correlations between certain questions regarding optimism of future technology and certain employment sectors. Go ahead and try different combinations to see if there is any visible correlations. Remember the ratio is negative to positive. 
 
+The questions selected for the technology views are Would you ride in a driverless car?, Over the long term, do you think that technological changes will lead to a future where  people's lives are mostly better or to a future where people's lives are mostly worse?, Do you think Computers will be as effective as people at creating important works of art such as music, novels, movies, or paintings?, Will it be better for robots to become the primary caregivers for the elderly and people in poor health?, and Would you eat meat that was grown in a lab?.
+
 ```{r, results='asis', echo=FALSE, message=FALSE, error=FALSE, cache = TRUE}
 employData <- read.csv("https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20608/Final%20Project/ACS_2014_Employment_Data/ACS_14_5YR_DP03_with_ann.csv") %>% 
                                               t() %>% 
@@ -463,7 +465,13 @@ plot(fig, filename='employ.html', show_link=False)
 htmltools::includeHTML("./employ.html")
 ```
 
-Technological advancements have the power to dramatically transform certain industries. It would not be a surprise to see correlations between certain views and the general employment make up of a region. 
+Technological advancements have the power to dramatically transform certain industries. It would not be a surprise to see correlations between certain views and the general employment make up of a region. However, as you can see from the above graphs you may see unanticipated associations between variable. For example, out of all US region the Midwest has the most amount of people that would not eat lab grown meat despite the fact that the South employs more people in the agricultural industry compared to the Midwest. This industry would most likely be impacted by lab grown meat becoming common place. 
+
+I hope you find this information useful as it illustrates relationships between industries, technology, and the US population. 
+
+<small>
+
+## Data Sources
 
 Employment Data Source: U.S. Census Bureau, 2010-2014 American Community Survey 5-Year Estimates 
 
