@@ -237,27 +237,27 @@ employData <- as_tibble(employData) %>%
 library(plotly)
 
 p <- plot_ly(employData, x = ~`Census Regions`) %>%
-  add_bars(y = ~`Agriculture, forestry, fishing and hunting, and mining`) %>%
-  add_bars(y = ~`Construction`,  visible = F) %>%
-  add_bars(y = ~`Manufacturing`,  visible = F) %>%
-  add_bars(y = ~`Wholesale trade`,  visible = F) %>%
-  add_bars(y = ~`Retail trade`, visible = F) %>%
-  add_bars(y = ~`Transportation and warehousing, and utilities`,  visible = F) %>%
-  add_bars(y = ~`Information`, visible = F) %>%
-  add_bars(y = ~`Finance and insurance, and real estate and rental and leasing`,  visible = F) %>%
-  add_bars(y = ~`Professional, scientific, and management, and administrative and waste management services`,  visible = F) %>%
-  add_bars(y = ~`Educational services, and health care and social assistance`, visible = F) %>%
-  add_bars(y = ~`Arts, entertainment, and recreation, and accommodation and food services`, visible = F) %>%
-  add_bars(y = ~`Other services, except public administration`, visible = F) %>%
-  add_bars(y = ~`Public administration`,  visible = F) %>%
+  add_bars(y = ~`Agriculture, forestry, fishing and hunting, and mining`, name = "A") %>%
+  add_bars(y = ~`Construction`, name = "B", visible = F) %>%
+  add_bars(y = ~`Manufacturing`, name = "C", visible = F) %>%
+  add_bars(y = ~`Wholesale trade`, name = "D", visible = F) %>%
+  add_bars(y = ~`Retail trade`, name = "E", visible = F) %>%
+  add_bars(y = ~`Transportation and warehousing, and utilities`, name = "F", visible = F) %>%
+  add_bars(y = ~`Information`, name = "G", visible = F) %>%
+  add_bars(y = ~`Finance and insurance, and real estate and rental and leasing`, name = "H", visible = F) %>%
+  add_bars(y = ~`Professional, scientific, and management, and administrative and waste management services`, name = "D", visible = F) %>%
+  add_bars(y = ~`Educational services, and health care and social assistance`, name = "I", visible = F) %>%
+  add_bars(y = ~`Arts, entertainment, and recreation, and accommodation and food services`, name = "J", visible = F) %>%
+  add_bars(y = ~`Other services, except public administration`, name = "K", visible = F) %>%
+  add_bars(y = ~`Public administration`, name = "L", visible = F) %>%
   layout(
     title = "Percentage Employed by Industry and Census Region",
     xaxis = list(title = "Census Regions", domain = c(0, 1)),
     yaxis = list(title = "Percentage", ticksuffix = "%"),
     updatemenus = list(
       list(
-        x = .5,
-        y = 1.5, 
+        #x = .5,
+        #y = 1.5, 
         buttons = list(
           list(method = "restyle",
                args = list("visible", list(TRUE, FALSE)),
@@ -297,67 +297,29 @@ p <- plot_ly(employData, x = ~`Census Regions`) %>%
                label = "Other services, except public administration"),
         list(method = "restyle",
                args = list("visible", list(FALSE, TRUE)),
-               label = "Public administration")
-        ))
-    )
-  ) %>%
+               label = "Public administration"))))) %>%
   layout(autosize = F, width = 850, height = 550, margin = list(l = 50, r = 50, b = 100, t = 100, pad = 4))
 
 p
 ```
 
 
-```{python, highlight=TRUE}
-from plotly import __version__
-import plotly as py
-from plotly.offline import download_plotlyjs, plot, iplot
-from plotly.graph_objs import *
+```{r engine='python', highlight=TRUE}
+import pandas as pd 
 
-countries = ['United States', 'China', 'South Korea', 'Hungary', 'Austraila', 'Canada']
-gold = [10, 8, 4, 4, 4, 0]
-silver = [8, 3, 2, 1, 0, 1]
-bronze = [9, 6, 1, 1, 5, 4]
-total = [27, 17, 7, 6, 9, 5]
+df = pd.read_csv('https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20608/Final%20Project/final.survey.data.csv')
+cregion = df['cregion']
+cars = df['No to Yes, Driverless Cars']
+tech = df['No to Yes, Techonlogy making lives better']
+import plotly.plotly as py
+import plotly.graph_objs as go
 
-trace1 = Scatter(
-    x=countries, y=gold,
-    line=Line(
-        color='#FFD700',
-        width=3
-    ),
-    name='Gold'
-)
+trace1 = go.Bar( x=cregion, y=cars, name='No to Yes, Driverless Cars')
+trace2 = go.Bar( x=cregion, y=tech,  name='No to Yes, Techonlogy making lives better')
 
-trace2 = Scatter(
-    x=countries, y=silver,
-    line=Line(
-        color='#C0C0C0',
-        width=3
-    ),
-    name='Silver'
-)
-
-trace3 = Scatter(
-    x=countries, y=bronze,
-    line=Line(
-        color='#BA8651',
-        width=3
-    ),
-    name='Bronze'
-)
-
-trace4 = Scatter(
-    x=countries, y=total,
-    line=Line(
-        color='#000000',
-        width=4
-    ),
-    name='Total'
-)
-
-data = Data([trace1, trace2, trace3, trace4])
-layout = Layout(
-    title='2016 Summer Olympic Medal Count',
+data = Data([trace1, trace2])
+layout = go.Layout(
+    title='Ratio of No to Yes for various views on Technology',
     updatemenus=list([
         dict(
             x=-0.05,
@@ -371,31 +333,21 @@ layout = Layout(
                 ),
                 dict(
                     args=['visible', [True, False, False, False]],
-                    label='Gold',
+                    label='No to Yes, Driverless Cars',
                     method='restyle'
                 ),
                 dict(
                     args=['visible', [False, True, False, False]],
-                    label='Silver',
-                    method='restyle'
-                ),
-                dict(
-                    args=['visible', [False, False, True, False]],
-                    label='Bronze',
-                    method='restyle'
-                ),
-                dict(
-                    args=['visible', [False, False, False, True]],
-                    label='Total',
+                    label='No to Yes, Techonlogy making lives better',
                     method='restyle'
                 )
+              
             ]),
         )
     ]),
 )
 fig = Figure(data=data, layout=layout)
 py.iplot(fig)
-
 ```
 
 
