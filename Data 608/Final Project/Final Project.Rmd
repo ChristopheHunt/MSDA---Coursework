@@ -203,10 +203,93 @@ p
 
 ```{python, highlight=TRUE}
 from plotly import __version__
-from plotly.offline import download_plotlyjs, init_notebook_mode, plot, iplot
-from plotly.graph_objs import Scatter, Figure, Layout
+import plotly as py
+from plotly.offline import download_plotlyjs, plot, iplot
+from plotly.graph_objs import *
 
-plot([Scatter(x=[1, 2, 3], y=[3, 1, 6])])
+countries = ['United States', 'China', 'South Korea', 'Hungary', 'Austraila', 'Canada']
+gold = [10, 8, 4, 4, 4, 0]
+silver = [8, 3, 2, 1, 0, 1]
+bronze = [9, 6, 1, 1, 5, 4]
+total = [27, 17, 7, 6, 9, 5]
+
+trace1 = Scatter(
+    x=countries, y=gold,
+    line=Line(
+        color='#FFD700',
+        width=3
+    ),
+    name='Gold'
+)
+
+trace2 = Scatter(
+    x=countries, y=silver,
+    line=Line(
+        color='#C0C0C0',
+        width=3
+    ),
+    name='Silver'
+)
+
+trace3 = Scatter(
+    x=countries, y=bronze,
+    line=Line(
+        color='#BA8651',
+        width=3
+    ),
+    name='Bronze'
+)
+
+trace4 = Scatter(
+    x=countries, y=total,
+    line=Line(
+        color='#000000',
+        width=4
+    ),
+    name='Total'
+)
+
+data = Data([trace1, trace2, trace3, trace4])
+layout = Layout(
+    title='2016 Summer Olympic Medal Count',
+    updatemenus=list([
+        dict(
+            x=-0.05,
+            y=1,
+            yanchor='top',
+            buttons=list([
+                dict(
+                    args=['visible', [True, True, True, True]],
+                    label='All',
+                    method='restyle'
+                ),
+                dict(
+                    args=['visible', [True, False, False, False]],
+                    label='Gold',
+                    method='restyle'
+                ),
+                dict(
+                    args=['visible', [False, True, False, False]],
+                    label='Silver',
+                    method='restyle'
+                ),
+                dict(
+                    args=['visible', [False, False, True, False]],
+                    label='Bronze',
+                    method='restyle'
+                ),
+                dict(
+                    args=['visible', [False, False, False, True]],
+                    label='Total',
+                    method='restyle'
+                )
+            ]),
+        )
+    ]),
+)
+fig = Figure(data=data, layout=layout)
+py.iplot(fig)
+
 ```
 
 
