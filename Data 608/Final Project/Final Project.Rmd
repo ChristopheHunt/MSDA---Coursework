@@ -131,19 +131,19 @@ employData <- as_tibble(employData) %>%
 library(plotly)
 
 p <- plot_ly(employData, x = ~`Census Regions`) %>%
-  add_bars(y = ~`Agriculture, forestry, fishing and hunting, and mining`, name = "A") %>%
-  add_bars(y = ~`Construction`, name = "B", visible = F) %>%
-  add_bars(y = ~`Manufacturing`, name = "C", visible = F) %>%
-  add_bars(y = ~`Wholesale trade`, name = "D", visible = F) %>%
-  add_bars(y = ~`Retail trade`, name = "E", visible = F) %>%
-  add_bars(y = ~`Transportation and warehousing, and utilities`, name = "F", visible = F) %>%
-  add_bars(y = ~`Information`, name = "G", visible = F) %>%
-  add_bars(y = ~`Finance and insurance, and real estate and rental and leasing`, name = "H", visible = F) %>%
-  add_bars(y = ~`Professional, scientific, and management, and administrative and waste management services`, name = "D", visible = F) %>%
-  add_bars(y = ~`Educational services, and health care and social assistance`, name = "I", visible = F) %>%
-  add_bars(y = ~`Arts, entertainment, and recreation, and accommodation and food services`, name = "J", visible = F) %>%
-  add_bars(y = ~`Other services, except public administration`, name = "K", visible = F) %>%
-  add_bars(y = ~`Public administration`, name = "L", visible = F) %>%
+  add_bars(y = ~`Agriculture, forestry, fishing and hunting, and mining`) %>%
+  add_bars(y = ~`Construction`,  visible = F) %>%
+  add_bars(y = ~`Manufacturing`,  visible = F) %>%
+  add_bars(y = ~`Wholesale trade`,  visible = F) %>%
+  add_bars(y = ~`Retail trade`, visible = F) %>%
+  add_bars(y = ~`Transportation and warehousing, and utilities`,  visible = F) %>%
+  add_bars(y = ~`Information`, visible = F) %>%
+  add_bars(y = ~`Finance and insurance, and real estate and rental and leasing`,  visible = F) %>%
+  add_bars(y = ~`Professional, scientific, and management, and administrative and waste management services`,  visible = F) %>%
+  add_bars(y = ~`Educational services, and health care and social assistance`, visible = F) %>%
+  add_bars(y = ~`Arts, entertainment, and recreation, and accommodation and food services`, visible = F) %>%
+  add_bars(y = ~`Other services, except public administration`, visible = F) %>%
+  add_bars(y = ~`Public administration`,  visible = F) %>%
   layout(
     title = "Percentage Employed by Industry and Census Region",
     xaxis = list(title = "Census Regions", domain = c(0, 1)),
@@ -156,7 +156,6 @@ p <- plot_ly(employData, x = ~`Census Regions`) %>%
           list(method = "restyle",
                args = list("visible", list(TRUE, FALSE)),
                label = "Agriculture, forestry, <br>fishing and hunting, and mining"),
-
           list(method = "restyle",
                args = list("visible", list(FALSE, TRUE)),
                label = "Construction"),
@@ -180,26 +179,109 @@ p <- plot_ly(employData, x = ~`Census Regions`) %>%
                label = "Finance and insurance, and real estate and rental and leasing"),
         list(method = "restyle",
                args = list("visible", list(FALSE, TRUE)),
-               label = "Professional, scientific, and management, and administrative and waste management services"),
+               label = "Professional, scientific, and management, <br>and administrative and waste management services"),
         list(method = "restyle",
                args = list("visible", list(FALSE, TRUE)),
-               label = "Educational services, and health care and social assistance"),
+               label = "Educational services, and  <br>health care and social assistance"),
         list(method = "restyle",
                args = list("visible", list(FALSE, TRUE)),
-               label = "Arts, entertainment, and recreation, and accommodation and food services"),
+               label = "Arts, entertainment, and recreation,  <br>and accommodation and food services"),
         list(method = "restyle",
                args = list("visible", list(FALSE, TRUE)),
                label = "Other services, except public administration"),
         list(method = "restyle",
                args = list("visible", list(FALSE, TRUE)),
-               label = "Public administration")))
+               label = "Public administration")
+        ))
     )
   ) %>%
-  layout(autosize = F, width = 850, height = 450, margin = list(l = 50, r = 50, b = 100, t = 100, pad = 4))
+  layout(autosize = F, width = 850, height = 550, margin = list(l = 50, r = 50, b = 100, t = 100, pad = 4))
 
 p
-
 ```
+
+
+```{python, highlight=TRUE}
+Plotly.d3.csv('https://raw.githubusercontent.com/plotly/datasets/master/gapminderDataFiveYear.csv', function(err, rows){
+
+    function unpack(rows, key) {
+        return rows.map(function(row) { return row[key]; });
+    }
+
+    var allCountryNames = unpack(rows, 'country'),
+        allYear = unpack(rows, 'year'),
+        allGdp = unpack(rows, 'gdpPercap'),
+        listofCountries = [],
+        currentCountry,
+        currentGdp = [],
+        currentYear = [];
+
+    for (var i = 0; i < allCountryNames.length; i++ ){
+        if (listofCountries.indexOf(allCountryNames[i]) === -1 ){
+            listofCountries.push(allCountryNames[i]);
+        }
+    }
+
+    function getCountryData(chosenCountry) {
+        currentGdp = [];
+        currentYear = [];
+        for (var i = 0 ; i < allCountryNames.length ; i++){
+            if ( allCountryNames[i] === chosenCountry ) {
+                currentGdp.push(allGdp[i]);
+                currentYear.push(allYear[i]);
+            }
+        }
+    };
+
+    // Default Country Data
+    setBubblePlot('Afghanistan');
+
+    function setBubblePlot(chosenCountry) {
+        getCountryData(chosenCountry);
+
+        var trace1 = {
+            x: currentYear,
+            y: currentGdp,
+            mode: 'lines+markers',
+            marker: {
+                size: 12,
+                opacity: 0.5
+            }
+        };
+
+        var data = [trace1];
+
+        var layout = {
+            title:'Line and Scatter Plot',
+            height: 400,
+            width: 480
+        };
+
+        Plotly.newPlot('plotdiv', data, layout);
+    };
+
+    var innerContainer = document.querySelector('[data-num="0"'),
+        plotEl = innerContainer.querySelector('.plot'),
+        countrySelector = innerContainer.querySelector('.countrydata');
+
+    function assignOptions(textArray, selector) {
+        for (var i = 0; i < textArray.length;  i++) {
+            var currentOption = document.createElement('option');
+            currentOption.text = textArray[i];
+            selector.appendChild(currentOption);
+        }
+    }
+
+    assignOptions(listofCountries, countrySelector);
+
+    function updateCountry(){
+        setBubblePlot(countrySelector.value);
+    }
+
+    countrySelector.addEventListener('change', updateCountry, false);
+});
+```
+
 
 Employment Data Source: U.S. Census Bureau, 2010-2014 American Community Survey 5-Year Estimates 
 
