@@ -210,6 +210,9 @@ plot([Scatter(x=[1, 2, 3], y=[3, 1, 6])])
 ```
 
 
+```{r showChoro1}
+htmltools::includeHTML("C:/Users/Christophe/Documents/GitHub/MSDA - Coursework/Data 608/Final Project/temp-plot.html")
+```
 
 Employment Data Source: U.S. Census Bureau, 2010-2014 American Community Survey 5-Year Estimates 
 
