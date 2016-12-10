@@ -7,7 +7,7 @@ output:
 
 ```{r load data, include=FALSE}
 library(pacman)
-p_load(memisc, magrittr, knitr, htmlTable, Hmisc, pander, scales, tidyverse, RColorBrewer, plotly)
+p_load(memisc, magrittr, knitr, htmlTable, Hmisc, pander, scales, tidyverse, RColorBrewer, plotly, foreign)
 file <- file.path("C:", "Users", "Christophe", "Downloads" , "February-2014-Smithsonian-Science (1)", "February 2014 - Smithsonian Science", "Feb_2014_Views_Future_SPSS.sav")
 survey.data <- spss.system.file(file) %>% as.data.set()
 survey.data <- lapply(survey.data, function(x) gsub("\\()", "", gsub("(VOL.)", "", gsub("â..", "'", x)))) %>% as_tibble() ##to correct encoding artifacts
@@ -58,7 +58,10 @@ regions.names <- fortify(aggregate(cbind(long, lat) ~ id + NAME, data = region.d
 
 <center>
 
-```{r, message=FALSE, warning=FALSE, echo=FALSE, cache=TRUE, fig.height=5, fig.width=8}
+```{r, message=FALSE, warning=FALSE, echo=FALSE, cache=TRUE}
+
+#PIAL4b
+
 drv.less.car <- survey.data %>% 
                  dplyr::select(cregion, pial4b, weight) %>%
                  mutate(weight = as.numeric(weight)) %>%
@@ -77,13 +80,116 @@ drv.less.car <- drv.less.car %>%
 drv.less.car[,-1] <- round(drv.less.car[,-1],0)
 
 drv.less.car <- drv.less.car %>%
-                mutate(Ratio.NoToYes = `No, would not do this`/`Yes, would do this`) %>%
-                dplyr::select(cregion, Ratio.NoToYes)
+                mutate(`No to Yes, Driverless Cars` = `No, would not do this`/`Yes, would do this`) %>%
+                dplyr::select(cregion, `No to Yes, Driverless Cars`)
+
+#PIAL1a - Techonlogy make peoples lives mostly better
+
+tech.lives.better <- survey.data %>% 
+                     dplyr::select(cregion, pial1a, weight) %>%
+                     mutate(weight = as.numeric(weight)) %>%
+                     group_by(cregion) %>%
+                     mutate(Yes = (1 * weight)) %>%
+                     dplyr::select(-weight)
+
+tech.lives.better$row <- 1:nrow(tech.lives.better)
+
+tech.lives.better <- tech.lives.better %>%
+                spread(pial1a, Yes, fill = 0) %>%
+                dplyr::select(-row) %>%
+                summarise_each(funs(sum)) %>%
+                mutate(TotalSurved.weighted = rowSums(.[2:5]))
+
+tech.lives.better[,-1] <- round(tech.lives.better[,-1],0)
+
+tech.lives.better <- tech.lives.better %>%
+                mutate(`No to Yes, Techonlogy making lives better` = `Mostly worse`/`Mostly better`) %>%
+                dplyr::select(cregion, `No to Yes, Techonlogy making lives better`)
+
+#PIAL2 - a. Computers will be as effective as people at creating important works of art such as music, novels, movies, or painting
+
+computers.Art     <- survey.data %>% 
+                     dplyr::select(cregion, pial2a, weight) %>%
+                     mutate(weight = as.numeric(weight)) %>%
+                     group_by(cregion) %>%
+                     mutate(Yes = (1 * weight)) %>%
+                     dplyr::select(-weight)
+
+computers.Art$row <- 1:nrow(computers.Art )
+
+computers.Art  <- computers.Art  %>%
+                spread(pial2a, Yes, fill = 0) %>%
+                dplyr::select(-row) %>%
+                summarise_each(funs(sum)) %>%
+                mutate(TotalSurved.weighted = rowSums(.[2:5]))
+
+computers.Art[,-1] <- round(computers.Art[,-1],0)
+
+computers.Art  <- computers.Art  %>%
+                mutate(`No to Yes, Computers making art` = `Definitely happen`/`Definitely NOT happen`) %>%
+                dplyr::select(cregion, `No to Yes, Computers making art`)
+
+#PIAL3 - a. If lifelike robots become the primary caregivers for the elderly and people in poor health 
+
+robots.health     <- survey.data %>% 
+                     dplyr::select(cregion, pial3a, weight) %>%
+                     mutate(weight = as.numeric(weight)) %>%
+                     group_by(cregion) %>%
+                     mutate(Yes = (1 * weight)) %>%
+                     dplyr::select(-weight)
+
+robots.health$row <- 1:nrow(robots.health)
+
+robots.health   <- robots.health   %>%
+                spread(pial3a, Yes, fill = 0) %>%
+                dplyr::select(-row) %>%
+                summarise_each(funs(sum)) %>%
+                mutate(TotalSurved.weighted = rowSums(.[2:5]))
+
+robots.health[,-1] <- round(robots.health[,-1],0)
+
+robots.health <- robots.health   %>%
+                mutate(`No to Yes, Robots becoming primary caregivers` = `Change for the worse`/`Change for the better`) %>%
+                dplyr::select(cregion, `No to Yes, Robots becoming primary caregivers`)
+
+#PIAL4 - a. Eat meat that was grown in a lab
+
+lab.meat     <- survey.data %>% 
+                     dplyr::select(cregion, pial4a, weight) %>%
+                     mutate(weight = as.numeric(weight)) %>%
+                     group_by(cregion) %>%
+                     mutate(Yes = (1 * weight)) %>%
+                     dplyr::select(-weight)
+
+lab.meat$row <- 1:nrow(lab.meat)
+
+lab.meat   <- lab.meat   %>%
+                spread(pial4a, Yes, fill = 0) %>%
+                dplyr::select(-row) %>%
+                summarise_each(funs(sum)) %>%
+                mutate(TotalSurved.weighted = rowSums(.[2:5]))
+
+lab.meat[,-1] <- round(lab.meat[,-1],0)
+
+lab.meat <- lab.meat   %>%
+                mutate(`No to Yes, Eating lab grown meat` = `No, would not do this`/`Yes, would do this`) %>%
+                dplyr::select(cregion, `No to Yes, Eating lab grown meat`)
+
+final.survey.data <- drv.less.car %>% 
+                     merge(tech.lives.better, by = "cregion") %>%
+                     merge(computers.Art, by = "cregion") %>%
+                     merge(robots.health, by = "cregion") %>%
+                     merge(lab.meat, by = "cregion")
+
+write.csv(as.data.frame(final.survey.data), "final.survey.data.csv")
+```
+
+```{r, message=FALSE, warning=FALSE, echo=FALSE, cache=TRUE, fig.height=5, fig.width=8}
 
 region.df.drvlesscar <-  merge(x = region.df, y = drv.less.car,  "NAME", by.y = "cregion")
 
 ggplot(region.df.drvlesscar) + 
-  geom_polygon(colour="grey40", aes(long, lat, group = group, fill = Ratio.NoToYes)) +
+  geom_polygon(colour="grey40", aes(long, lat, group = group, fill = `No to Yes, Driverless Cars`)) +
   geom_text(data = regions.names, aes(long, lat, label = NAME), size=3, colour = "grey1", fontface = "bold") + 
   theme_void() +
   scale_fill_gradientn(colors = brewer.pal(4,"Reds"), space = "Lab", guide = "legend",  name = "Ratio of \nNo to Yes") +
