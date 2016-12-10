@@ -241,78 +241,6 @@ write.csv(employData, "employData.csv")
 
 ```{r engine='python', highlight=TRUE, eval = FALSE, echo = FALSE}
 import pandas as pd
-df = pd.read_csv('https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20608/Final%20Project/employData.csv')
-
-region = df['Census Regions']
-arg = df['Agriculture, forestry, fishing and hunting, and mining']
-constr = df['Construction']
-manf = df['Manufacturing']
-wtrade = df['Wholesale trade']
-rtrade = df['Retail trade']
-
-import plotly.plotly as py
-import plotly.graph_objs as go
-
-trace1 = go.Bar(x=region, y=arg, name='Agriculture, forestry, fishing and hunting, and mining')
-trace2 = go.Bar(x=region, y=constr,  name='Construction')
-trace3 = go.Bar(x=region, y=manf, name='Manufacturing')
-trace4 = go.Bar(x=region, y=robots, name = 'Wholesale trade')
-trace5 = go.Bar(x=region, y= meat, name = 'Retail trade' )
-
-data = [trace1, trace2, trace3, trace4, trace5]
-layout = go.Layout(
-    title='Percentage of Regional Population employed by Industry Type',
-    updatemenus=list([
-        dict(
-            x=-0.05,
-            y=1,
-            yanchor='top',
-            buttons=list([
-                dict(
-                    args=['visible', [True, True, True, True, True]],
-                    label='All',
-                    method='restyle'
-                ),
-                dict(
-                    args=['visible', [True, False, False, False, False]],
-                    label='Agriculture, forestry, fishing and hunting, and mining',
-                    method='restyle'
-                ),
-                dict(
-                    args=['visible', [False, True, False, False, False]],
-                    label='Construction',
-                    method='restyle'
-                ),
-                dict(
-                    args=['visible', [False, False, True, False, False]],
-                    label='Manufacturing',
-                    method='restyle'
-                ),
-                dict(
-                    args=['visible', [False, False, False, True, False]],
-                    label='Wholesale trade',
-                    method='restyle'
-                ),
-                dict(
-                    args=['visible', [False, False, False, False, True]],
-                    label='Retail trade',
-                    method='restyle'
-                )
-              
-            ]),
-        )
-    ]),
-)
-fig = Figure(data=data, layout=layout)
-plot(fig, filename='employ.html')
-```
-
-```{r fig.width=8, echo=FALSE}
-htmltools::includeHTML("https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20608/Final%20Project/employ.html")
-```
-
-```{r engine='python', highlight=TRUE, eval = FALSE, echo = FALSE}
-import pandas as pd
 df = pd.read_csv('https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20608/Final%20Project/final.survey.data.csv')
 
 cregion = df['cregion']
@@ -384,6 +312,78 @@ py.plot(fig, filename='tech views.html')
 
 ```{r fig.width=8, echo=FALSE}
 htmltools::includeHTML("https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20608/Final%20Project/tech%20views.html")
+```
+
+```{r engine='python', highlight=TRUE, eval = FALSE, echo = FALSE}
+import pandas as pd
+df = pd.read_csv('https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20608/Final%20Project/employData.csv')
+
+region = df['Census Regions']
+arg = df['Agriculture, forestry, fishing and hunting, and mining']
+constr = df['Construction']
+manf = df['Manufacturing']
+wtrade = df['Wholesale trade']
+rtrade = df['Retail trade']
+
+import plotly.plotly as py
+import plotly.graph_objs as go
+
+trace1 = go.Bar(x=region, y=arg, name='Agriculture, forestry, fishing and hunting, and mining')
+trace2 = go.Bar(x=region, y=constr,  name='Construction')
+trace3 = go.Bar(x=region, y=manf, name='Manufacturing')
+trace4 = go.Bar(x=region, y=robots, name = 'Wholesale trade')
+trace5 = go.Bar(x=region, y= meat, name = 'Retail trade' )
+
+data = [trace1, trace2, trace3, trace4, trace5]
+layout = go.Layout(
+    title='Percentage of Regional Population employed by Industry Type',
+    updatemenus=list([
+        dict(
+            x=-0.05,
+            y=1,
+            yanchor='top',
+            buttons=list([
+                dict(
+                    args=['visible', [True, True, True, True, True]],
+                    label='All',
+                    method='restyle'
+                ),
+                dict(
+                    args=['visible', [True, False, False, False, False]],
+                    label='Agriculture, forestry, fishing and hunting, and mining',
+                    method='restyle'
+                ),
+                dict(
+                    args=['visible', [False, True, False, False, False]],
+                    label='Construction',
+                    method='restyle'
+                ),
+                dict(
+                    args=['visible', [False, False, True, False, False]],
+                    label='Manufacturing',
+                    method='restyle'
+                ),
+                dict(
+                    args=['visible', [False, False, False, True, False]],
+                    label='Wholesale trade',
+                    method='restyle'
+                ),
+                dict(
+                    args=['visible', [False, False, False, False, True]],
+                    label='Retail trade',
+                    method='restyle'
+                )
+              
+            ]),
+        )
+    ]),
+)
+fig = Figure(data=data, layout=layout)
+plot(fig, filename='employ.html')
+```
+
+```{r fig.width=8, echo=FALSE}
+htmltools::includeHTML("https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20608/Final%20Project/employ.html")
 ```
 
 Employment Data Source: U.S. Census Bureau, 2010-2014 American Community Survey 5-Year Estimates 
