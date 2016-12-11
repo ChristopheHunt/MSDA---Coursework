@@ -1,7 +1,9 @@
 ---
 title: "US Regions Views of Technology and Employement Characteristics"
 output:
-  html_document: default
+  html_document: 
+    toc: true
+    toc_float: true
   html_notebook: default
 ---
 
@@ -10,10 +12,12 @@ library(pacman)
 library(scales)
 
 p_load(memisc, magrittr, knitr, htmlTable, Hmisc, pander, scales, tidyverse, RColorBrewer, plotly, foreign, scales)
-file <- file.path("C:", "Users", "Christophe", "Downloads" , "February-2014-Smithsonian-Science (1)", "February 2014 - Smithsonian Science", "Feb_2014_Views_Future_SPSS.sav")
+file <- file.path("C:/Users/Christophe/Downloads/February-2014-Smithsonian-Science (1)/February 2014 - Smithsonian Science/Feb_2014_Views_Future_SPSS.sav")
 survey.data <- spss.system.file(file) %>% as.data.set()
 survey.data <- lapply(survey.data, function(x) gsub("\\()", "", gsub("(VOL.)", "", gsub("â..", "'", x)))) %>% as_tibble() ##to correct encoding artifacts
 ``` 
+
+## Technology Survey of US by Region
 
 A national survey was conducted by Pew Research Center in conjunction with Smithsonian magazine between February 13-18, 2014 by landline and cell phones among 1,001 adults. The objective of the survey was to better understand US views towards scientific and technological changes and how they viewed the future. Understanding public perception of these types of changes occurring in the US is important to understand how Americans view their place in the changing environment and if they are hopeful or anxious about the future.   
 
@@ -210,6 +214,8 @@ Below are two graphs, the top graph contains the ratio of people with a negative
 
 The questions selected for the technology views are Would you ride in a driverless car?, Over the long term, do you think that technological changes will lead to a future where  people's lives are mostly better or to a future where people's lives are mostly worse?, Do you think Computers will be as effective as people at creating important works of art such as music, novels, movies, or paintings?, Will it be better for robots to become the primary caregivers for the elderly and people in poor health?, and Would you eat meat that was grown in a lab?.
 
+### Technology Views by Region
+
 ```{r, results='asis', echo=FALSE, message=FALSE, error=FALSE, cache = TRUE}
 employData <- read.csv("https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20608/Final%20Project/ACS_2014_Employment_Data/ACS_14_5YR_DP03_with_ann.csv") %>% 
                                               t() %>% 
@@ -265,7 +271,7 @@ trace5 = go.Bar(x=cregion, y= meat, name = 'No to Yes, Eating lab grown meat' )
 data = [trace1, trace2, trace3, trace4, trace5]
 layout = go.Layout(
     autosize=False,
-    width=1150,
+    width=1050,
     height=400,
     margin=go.Margin(
         l=50,
@@ -325,6 +331,8 @@ plot(fig, filename='tech views.html', show_link=False)
 htmltools::includeHTML("./tech views.html")
 ```
 
+### Employment by Region
+
 ```{r engine='python', highlight=TRUE,echo = FALSE, eval = FALSE, cache=TRUE}
 import pandas as pd
 df = pd.read_csv('https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20608/Final%20Project/employData.csv')
@@ -364,7 +372,7 @@ trace13 = go.Bar(x=region, y=public, name = 'Public administration')
 
 data = [trace1, trace2, trace3, trace4, trace5, trace6, trace7, trace8, trace9, trace10, trace11, trace12, trace13]
 layout = go.Layout( autosize=False,
-    width=1150,
+    width=1050,
     height=620,
     margin=go.Margin(
         l=50,
@@ -471,7 +479,7 @@ I hope you find this information useful as it illustrates relationships between 
 
 <small>
 
-## Data Sources
+#### Data Sources
 
 Employment Data Source: U.S. Census Bureau, 2010-2014 American Community Survey 5-Year Estimates 
 
