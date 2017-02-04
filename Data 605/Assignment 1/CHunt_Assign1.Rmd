@@ -1,0 +1,26 @@
+---
+title: "Homework 1 - IS 605 FUNDAMENTALS OF COMPUTATIONAL MATHEMATICS"
+author: "Christophe Hunt"
+date: "February 4, 2017"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+## Problem Set 1 
+
+(1) Calculate the dot product $u.v$ where $u = [0.5; 0.5]~and~v = [3; -4]$
+
+(2) What are the lengths of $u$ and $v$? Please note that the mathematical notion of the
+length of a vector is not the same as a computer science definition.
+
+(3) What is the linear combination: $3u - 2v$?
+
+(4) What is the angle between $u$ and $v$
+
+
+## Problem Set 2 
+
+Set up a system of equations with 3 variables and 3 constraints and solve for x. Please write a function in R that will take two variables (matrix A & constraint vector b) and solve using elimination. Your function should produce the right answer for the system of equations for any 3-variable, 3-equation system. You don't have to worry about degenerate cases and can safely assume that the function will only be tested with a system of equations that has a solution. Please note that you do have to worry about zero pivots, though. Please note that you should not use the built-in function solve to solve this system or use matrix inverses. The approach that you should employ is to construct an Upper Triangular Matrix and then back-substitute to get the solution. Alternatively, you can augment the matrix A with vector b and jointly apply the Gauss Jordan elimination procedure.
+
+
