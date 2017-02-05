@@ -73,7 +73,7 @@ linearCombo <- function(xMulti, x, yMulti, y, subtract = TRUE){
       linCombo <- append(linCombo, (xResults[[i]] - yResults[[i]]))
     } else {
     for (i in 1:length(xResults))
-      linCombo <- append(linCombo, (xResults[[i]] - yResults[[i]]))
+      linCombo <- append(linCombo, (xResults[[i]] + yResults[[i]]))
     }
     return(linCombo)
 }
@@ -83,6 +83,8 @@ x <- linearCombo(xMulti = 3, u, yMulti = 2, v)
 paste0("[",x[1], " , " , x[2], "]")
 ```
 
+\newpage
+
 ## (4) What is the angle between $u$ and $v$
 
 ```{r, cache=TRUE}
@@ -90,12 +92,76 @@ angle <- acos((dotProduct(u,v) / (sqrt(dotProduct(u,u)) * sqrt(dotProduct(v,v)))
 angle
 ```
 
-
-
 # Problem Set 2 
 
-Set up a system of equations with 3 variables and 3 constraints and solve for x. Please write a function in R that will take two variables (matrix A & constraint vector b) and solve using elimination. Your function should produce the right answer for the system of equations for any 3-variable, 3-equation system. You don't have to worry about degenerate cases and can safely assume that the function will only be tested with a system of equations that has a solution. Please note that you do have to worry about zero pivots, though. Please note that you should not use the built-in function solve to solve this system or use matrix inverses. The approach that you should employ is to construct an Upper Triangular Matrix and then back-substitute to get the solution. Alternatively, you can augment the matrix A with vector b and jointly apply the Gauss Jordan elimination procedure.
+Set up a system of equations with 3 variables and 3 constraints and solve for x. Please write a function in R that will take two variables (matrix A & constraint vector b) and solve using elimination. Your function should produce the right answer for the system of equations for any 3-variable, 3-equation system. You don't have to worry about degenerate cases and can safely assume that the function will only be tested with a system of equations that has a solution. Please note that you do have to worry about zero pivots, though. Please note that you should not use the built-in function solve to solve this system or use matrix inverses. The approach that you should employ is to construct an Upper Triangular Matrix and then back-substitute to get the solution. Alternatively, you can augment the matrix A with vector b and jointly apply the Gauss Jordan elimination procedure.    
+
+\
 
 ![img](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20605/Assignment%201/problemset2.PNG)
 
+```{r}
+A = matrix(c(1, 2, -1, 1, -1, -2, 3, 5 ,4), nrow=3,  ncol=3) 
+b = matrix(c( 1, 2, 6), nrow = 3, ncol = 1)
+
+sysEqSolver <- function(A, b){
+      M <- cbind(A,b)
+      
+      if(all(M[,1] == 0) | all(M[,2] == 0) | all(M[,3] == 0)){
+        return(print("one variable is = 0"))
+      }
+      
+      while (M[1,1] == 0){
+        M <- M[c(2,3,1), ]
+      }
+      
+        M[2,] <- M[2,]*(M[1,1] / M[2,1]) 
+        M[2,] <- M[1,] - M[2,]
+
+      if(all(M[,1] == 0) | all(M[,2] == 0) | all(M[,3] == 0)){
+        return(print("one variable is = 0"))
+      }
+        
+      while (M[2,1] == 0 & M[2,2] == 0){
+           M <- M[c(1,3,2),]
+      }
+      
+      if (M[3,1] != 0){
+          M[3,] <- M[3,]*(M[1,1] / M[3,1]) 
+          M[3,] <- M[1,] - M[3,]
+      }
+      
+      if (M[3,2] != 0){
+        M[3,] <- M[3,]*(M[2,2] / M[3,2]) 
+        M[3,] <- M[2,] - M[3,]
+        M[3,] <- M[3,] / M[3,3]
+      }
+      
+     #backwards substition
+     M[2,4] <- M[2,4] - (M[2,3] * M[3,4])
+     M[2,3] <- 0
+     M[2,] <- M[2,] / M[2,2]
+     
+     M[1,4] <- M[1,4] - (M[1,3] * M[3,4])
+     M[1,3] <- 0
+     M[1,4] <- M[1,4] - (M[1,2] * M[2,4])
+     M[1,2] <- 0 
+     M[1,] <- M[1,] / M[1,1]
+     
+     return(M)
+  }
+
+sysEqSolver(A,b)
+```
+
+
+My solution has possible improvements such as a more dynamic matrix pivoting operation, this solution is only for a 3 variable, 3 equation system. In the future, I would like to improve this function to allow for larger systems.
+
+
+```{r, results='asis'}
+results <- sysEqSolver(A,b)
+print(paste0("The solution is $x$ = [ ", round(results[1,4], 2), ", ",
+             round(results[2,4], 2), ", ",
+             round(results[3,4], 2), " ]"))
+```
 

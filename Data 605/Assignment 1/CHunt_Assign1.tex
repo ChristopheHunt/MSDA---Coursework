@@ -216,7 +216,7 @@ not the same as a computer science definition.
       \NormalTok{linCombo <-}\StringTok{ }\KeywordTok{append}\NormalTok{(linCombo, (xResults[[i]] -}\StringTok{ }\NormalTok{yResults[[i]]))}
     \NormalTok{\} else \{}
     \NormalTok{for (i in }\DecValTok{1}\NormalTok{:}\KeywordTok{length}\NormalTok{(xResults))}
-      \NormalTok{linCombo <-}\StringTok{ }\KeywordTok{append}\NormalTok{(linCombo, (xResults[[i]] -}\StringTok{ }\NormalTok{yResults[[i]]))}
+      \NormalTok{linCombo <-}\StringTok{ }\KeywordTok{append}\NormalTok{(linCombo, (xResults[[i]] +}\StringTok{ }\NormalTok{yResults[[i]]))}
     \NormalTok{\}}
     \KeywordTok{return}\NormalTok{(linCombo)}
 \NormalTok{\}}
@@ -230,6 +230,8 @@ not the same as a computer science definition.
 \begin{verbatim}
 ## [1] "[-4.5 , 9.5]"
 \end{verbatim}
+
+\newpage
 
 \subsection{\texorpdfstring{(4) What is the angle between \(u\) and
 \(v\)}{(4) What is the angle between u and v}}\label{what-is-the-angle-between-u-and-v}
@@ -261,11 +263,86 @@ Upper Triangular Matrix and then back-substitute to get the solution.
 Alternatively, you can augment the matrix A with vector b and jointly
 apply the Gauss Jordan elimination procedure.
 
-\begin{figure}
-\centering
 \includegraphics{https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data\%20605/Assignment\%201/problemset2.PNG}
-\caption{img}
-\end{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{A =}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, -}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, -}\DecValTok{1}\NormalTok{, -}\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{5} \NormalTok{,}\DecValTok{4}\NormalTok{), }\DataTypeTok{nrow=}\DecValTok{3}\NormalTok{,  }\DataTypeTok{ncol=}\DecValTok{3}\NormalTok{) }
+\NormalTok{b =}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{c}\NormalTok{( }\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{6}\NormalTok{), }\DataTypeTok{nrow =} \DecValTok{3}\NormalTok{, }\DataTypeTok{ncol =} \DecValTok{1}\NormalTok{)}
+
+\NormalTok{sysEqSolver <-}\StringTok{ }\NormalTok{function(A, b)\{}
+      \NormalTok{M <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(A,b)}
+      
+      \NormalTok{if(}\KeywordTok{all}\NormalTok{(M[,}\DecValTok{1}\NormalTok{] ==}\StringTok{ }\DecValTok{0}\NormalTok{) |}\StringTok{ }\KeywordTok{all}\NormalTok{(M[,}\DecValTok{2}\NormalTok{] ==}\StringTok{ }\DecValTok{0}\NormalTok{) |}\StringTok{ }\KeywordTok{all}\NormalTok{(M[,}\DecValTok{3}\NormalTok{] ==}\StringTok{ }\DecValTok{0}\NormalTok{))\{}
+        \KeywordTok{return}\NormalTok{(}\KeywordTok{print}\NormalTok{(}\StringTok{"one variable is = 0"}\NormalTok{))}
+      \NormalTok{\}}
+      
+      \NormalTok{while (M[}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{] ==}\StringTok{ }\DecValTok{0}\NormalTok{)\{}
+        \NormalTok{M <-}\StringTok{ }\NormalTok{M[}\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{1}\NormalTok{), ]}
+      \NormalTok{\}}
+      
+        \NormalTok{M[}\DecValTok{2}\NormalTok{,] <-}\StringTok{ }\NormalTok{M[}\DecValTok{2}\NormalTok{,]*(M[}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{] /}\StringTok{ }\NormalTok{M[}\DecValTok{2}\NormalTok{,}\DecValTok{1}\NormalTok{]) }
+        \NormalTok{M[}\DecValTok{2}\NormalTok{,] <-}\StringTok{ }\NormalTok{M[}\DecValTok{1}\NormalTok{,] -}\StringTok{ }\NormalTok{M[}\DecValTok{2}\NormalTok{,]}
+
+      \NormalTok{if(}\KeywordTok{all}\NormalTok{(M[,}\DecValTok{1}\NormalTok{] ==}\StringTok{ }\DecValTok{0}\NormalTok{) |}\StringTok{ }\KeywordTok{all}\NormalTok{(M[,}\DecValTok{2}\NormalTok{] ==}\StringTok{ }\DecValTok{0}\NormalTok{) |}\StringTok{ }\KeywordTok{all}\NormalTok{(M[,}\DecValTok{3}\NormalTok{] ==}\StringTok{ }\DecValTok{0}\NormalTok{))\{}
+        \KeywordTok{return}\NormalTok{(}\KeywordTok{print}\NormalTok{(}\StringTok{"one variable is = 0"}\NormalTok{))}
+      \NormalTok{\}}
+        
+      \NormalTok{while (M[}\DecValTok{2}\NormalTok{,}\DecValTok{1}\NormalTok{] ==}\StringTok{ }\DecValTok{0} \NormalTok{&}\StringTok{ }\NormalTok{M[}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{] ==}\StringTok{ }\DecValTok{0}\NormalTok{)\{}
+           \NormalTok{M <-}\StringTok{ }\NormalTok{M[}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{2}\NormalTok{),]}
+      \NormalTok{\}}
+      
+      \NormalTok{if (M[}\DecValTok{3}\NormalTok{,}\DecValTok{1}\NormalTok{] !=}\StringTok{ }\DecValTok{0}\NormalTok{)\{}
+          \NormalTok{M[}\DecValTok{3}\NormalTok{,] <-}\StringTok{ }\NormalTok{M[}\DecValTok{3}\NormalTok{,]*(M[}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{] /}\StringTok{ }\NormalTok{M[}\DecValTok{3}\NormalTok{,}\DecValTok{1}\NormalTok{]) }
+          \NormalTok{M[}\DecValTok{3}\NormalTok{,] <-}\StringTok{ }\NormalTok{M[}\DecValTok{1}\NormalTok{,] -}\StringTok{ }\NormalTok{M[}\DecValTok{3}\NormalTok{,]}
+      \NormalTok{\}}
+      
+      \NormalTok{if (M[}\DecValTok{3}\NormalTok{,}\DecValTok{2}\NormalTok{] !=}\StringTok{ }\DecValTok{0}\NormalTok{)\{}
+        \NormalTok{M[}\DecValTok{3}\NormalTok{,] <-}\StringTok{ }\NormalTok{M[}\DecValTok{3}\NormalTok{,]*(M[}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{] /}\StringTok{ }\NormalTok{M[}\DecValTok{3}\NormalTok{,}\DecValTok{2}\NormalTok{]) }
+        \NormalTok{M[}\DecValTok{3}\NormalTok{,] <-}\StringTok{ }\NormalTok{M[}\DecValTok{2}\NormalTok{,] -}\StringTok{ }\NormalTok{M[}\DecValTok{3}\NormalTok{,]}
+        \NormalTok{M[}\DecValTok{3}\NormalTok{,] <-}\StringTok{ }\NormalTok{M[}\DecValTok{3}\NormalTok{,] /}\StringTok{ }\NormalTok{M[}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{]}
+      \NormalTok{\}}
+      
+     \CommentTok{#backwards substition}
+     \NormalTok{M[}\DecValTok{2}\NormalTok{,}\DecValTok{4}\NormalTok{] <-}\StringTok{ }\NormalTok{M[}\DecValTok{2}\NormalTok{,}\DecValTok{4}\NormalTok{] -}\StringTok{ }\NormalTok{(M[}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{] *}\StringTok{ }\NormalTok{M[}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{])}
+     \NormalTok{M[}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{] <-}\StringTok{ }\DecValTok{0}
+     \NormalTok{M[}\DecValTok{2}\NormalTok{,] <-}\StringTok{ }\NormalTok{M[}\DecValTok{2}\NormalTok{,] /}\StringTok{ }\NormalTok{M[}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{]}
+     
+     \NormalTok{M[}\DecValTok{1}\NormalTok{,}\DecValTok{4}\NormalTok{] <-}\StringTok{ }\NormalTok{M[}\DecValTok{1}\NormalTok{,}\DecValTok{4}\NormalTok{] -}\StringTok{ }\NormalTok{(M[}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{] *}\StringTok{ }\NormalTok{M[}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{])}
+     \NormalTok{M[}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{] <-}\StringTok{ }\DecValTok{0}
+     \NormalTok{M[}\DecValTok{1}\NormalTok{,}\DecValTok{4}\NormalTok{] <-}\StringTok{ }\NormalTok{M[}\DecValTok{1}\NormalTok{,}\DecValTok{4}\NormalTok{] -}\StringTok{ }\NormalTok{(M[}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{] *}\StringTok{ }\NormalTok{M[}\DecValTok{2}\NormalTok{,}\DecValTok{4}\NormalTok{])}
+     \NormalTok{M[}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{] <-}\StringTok{ }\DecValTok{0} 
+     \NormalTok{M[}\DecValTok{1}\NormalTok{,] <-}\StringTok{ }\NormalTok{M[}\DecValTok{1}\NormalTok{,] /}\StringTok{ }\NormalTok{M[}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{]}
+     
+     \KeywordTok{return}\NormalTok{(M)}
+  \NormalTok{\}}
+
+\KeywordTok{sysEqSolver}\NormalTok{(A,b)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1] [,2] [,3]       [,4]
+## [1,]    1    0    0 -1.5454545
+## [2,]    0    1    0 -0.3181818
+## [3,]    0    0    1  0.9545455
+\end{verbatim}
+
+My solution has possible improvements such as a more dynamic matrix
+pivoting operation, this solution is only for a 3 variable, 3 equation
+system. In the future, I would like to improve this function to allow
+for larger systems.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{results <-}\StringTok{ }\KeywordTok{sysEqSolver}\NormalTok{(A,b)}
+\KeywordTok{print}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(}\StringTok{"The solution is $x$ = [ "}\NormalTok{, }\KeywordTok{round}\NormalTok{(results[}\DecValTok{1}\NormalTok{,}\DecValTok{4}\NormalTok{], }\DecValTok{2}\NormalTok{), }\StringTok{", "}\NormalTok{,}
+             \KeywordTok{round}\NormalTok{(results[}\DecValTok{2}\NormalTok{,}\DecValTok{4}\NormalTok{], }\DecValTok{2}\NormalTok{), }\StringTok{", "}\NormalTok{,}
+             \KeywordTok{round}\NormalTok{(results[}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{], }\DecValTok{2}\NormalTok{), }\StringTok{" ]"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+{[}1{]} ``The solution is \(x\) = {[} -1.55, -0.32, 0.95 {]}''
 
 
 \end{document}
