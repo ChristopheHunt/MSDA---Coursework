@@ -1,0 +1,51 @@
+---
+title: "Homwork 1"
+author: "Christophe Hunt"
+date: "February 5, 2017"
+output:
+  pdf_document:
+    fig_caption: yes
+    keep_tex: yes
+    includes:
+      in_header: header.tex
+    number_sections: yes
+    toc: yes
+    toc_depth: 2
+  html_document:
+    toc: yes
+    toc_depth: '2'
+---
+
+# Page 8: problem 10
+
+An annuity increases each month by an automatic depost of 1% interest on the previous month's balance. Your grandparents withdraw \$1000 at the beginning of each month for living expenses. Currently, they have \$50,000 in the annuity. Model the annuity with a dynamic system. 
+
+$$\Delta~b_n=\Delta~b_{n+1}-b_n= .01b_n - 1,000$$
+$$b_{n+1}=b_n+ .01b_n - 1,000$$
+$$b_o = 50,000$$
+Will the annuity run out of money? 
+
+
+```{r}
+a_n <- 50000
+b_n <- 1000
+count <- 0
+
+while (1.01*a_n > 0){
+a_n <- a_n + (.01 * a_n) - b_n
+count <- count + 1
+if (a_n >= 50000){
+  print("the annunity will not run out")
+  break
+ }
+}
+```
+
+Yes, the code above runs without indicating that the annuity will not run out. This is because our initial amount is decreasing with each sequence so it has a termination point. 
+
+When? The annuity will run out at `r count` months. 
+
+# Page 17: #9
+
+
+
