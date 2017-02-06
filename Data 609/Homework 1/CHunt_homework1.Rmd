@@ -26,26 +26,27 @@ $$b_o = 50,000$$
 Will the annuity run out of money? 
 
 
-```{r}
-a_n <- 50000
-b_n <- 1000
+```{r, cache=TRUE}
+a_n   <- original_amount <- 50000
+x     <- 1000
 count <- 0
 
 while (1.01*a_n > 0){
-a_n <- a_n + (.01 * a_n) - b_n
+a_n <- a_n + (.01 * a_n) - x
 count <- count + 1
-if (a_n >= 50000){
+if (a_n >= original_amount){
   print("the annunity will not run out")
   break
  }
 }
+
 ```
 
 Yes, the code above runs without indicating that the annuity will not run out. This is because our initial amount is decreasing with each sequence so it has a termination point. 
 
 When? The annuity will run out at `r count` months. 
 
-# Page 17: #9
+# Page 17: problem 9
 
 
 

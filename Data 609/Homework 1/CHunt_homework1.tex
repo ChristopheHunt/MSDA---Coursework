@@ -150,14 +150,14 @@ out of money?
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{a_n <-}\StringTok{ }\DecValTok{50000}
-\NormalTok{b_n <-}\StringTok{ }\DecValTok{1000}
+\NormalTok{a_n   <-}\StringTok{ }\NormalTok{original_amount <-}\StringTok{ }\DecValTok{50000}
+\NormalTok{x     <-}\StringTok{ }\DecValTok{1000}
 \NormalTok{count <-}\StringTok{ }\DecValTok{0}
 
 \NormalTok{while (}\FloatTok{1.01}\NormalTok{*a_n >}\StringTok{ }\DecValTok{0}\NormalTok{)\{}
-\NormalTok{a_n <-}\StringTok{ }\NormalTok{a_n +}\StringTok{ }\NormalTok{(.}\DecValTok{01} \NormalTok{*}\StringTok{ }\NormalTok{a_n) -}\StringTok{ }\NormalTok{b_n}
+\NormalTok{a_n <-}\StringTok{ }\NormalTok{a_n +}\StringTok{ }\NormalTok{(.}\DecValTok{01} \NormalTok{*}\StringTok{ }\NormalTok{a_n) -}\StringTok{ }\NormalTok{x}
 \NormalTok{count <-}\StringTok{ }\NormalTok{count +}\StringTok{ }\DecValTok{1}
-\NormalTok{if (a_n >=}\StringTok{ }\DecValTok{50000}\NormalTok{)\{}
+\NormalTok{if (a_n >=}\StringTok{ }\NormalTok{original_amount)\{}
   \KeywordTok{print}\NormalTok{(}\StringTok{"the annunity will not run out"}\NormalTok{)}
   \NormalTok{break}
  \NormalTok{\}}
@@ -171,7 +171,7 @@ sequence so it has a termination point.
 
 When? The annuity will run out at 70 months.
 
-\section{Page 17: \#9}\label{page-17-9}
+\section{Page 17: problem 9}\label{page-17-problem-9}
 
 
 \end{document}
