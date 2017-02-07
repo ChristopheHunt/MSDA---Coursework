@@ -69,6 +69,7 @@
 \newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{{#1}}}
 \newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{{#1}}}}
 \newcommand{\NormalTok}[1]{{#1}}
+\usepackage{longtable,booktabs}
 \usepackage{graphicx,grffile}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
@@ -139,7 +140,7 @@
 }
 \section{Page 8: problem 10}\label{page-8-problem-10}
 
-An annuity increases each month by an automatic depost of 1\% interest
+An annuity increases each month by an automatic deposit of 1\% interest
 on the previous month's balance. Your grandparents withdraw \$1000 at
 the beginning of each month for living expenses. Currently, they have
 \$50,000 in the annuity. Model the annuity with a dynamic system.
@@ -154,7 +155,7 @@ out of money?
 \NormalTok{x     <-}\StringTok{ }\DecValTok{1000}
 \NormalTok{count <-}\StringTok{ }\DecValTok{0}
 
-\NormalTok{while (}\FloatTok{1.01}\NormalTok{*a_n >}\StringTok{ }\DecValTok{0}\NormalTok{)\{}
+\NormalTok{while (}\FloatTok{1.01}\NormalTok{*a_n >}\StringTok{ }\DecValTok{1000}\NormalTok{)\{}
 \NormalTok{a_n <-}\StringTok{ }\NormalTok{a_n +}\StringTok{ }\NormalTok{(.}\DecValTok{01} \NormalTok{*}\StringTok{ }\NormalTok{a_n) -}\StringTok{ }\NormalTok{x}
 \NormalTok{count <-}\StringTok{ }\NormalTok{count +}\StringTok{ }\DecValTok{1}
 \NormalTok{if (a_n >=}\StringTok{ }\NormalTok{original_amount)\{}
@@ -169,9 +170,143 @@ Yes, the code above runs without indicating that the annuity will not
 run out. This is because our initial amount is decreasing with each
 sequence so it has a termination point.
 
-When? The annuity will run out at 70 months.
+When? The annuity will run out at 69 months.
+
+\newpage
 
 \section{Page 17: problem 9}\label{page-17-problem-9}
+
+The data in the accompanying table show the speed n (in increments of 5
+mph) of an automobile and the associate distance \(a_n\) in feet
+required to stop it once the breaks are applied. For instance, \(n~=~6\)
+(representing 6 x 5 = 30 mph) requires a stopping distance of \(a_6\) =
+47ft.
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\tightlist
+\item
+  Calculate and plot the change \(\Delta~a_n\) versus \(n\). Does the
+  graph reasonably approximate a linear relationship?
+\end{enumerate}
+
+The graph of \(\Delta~a_n\) does approximate a linear relationship.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(ggplot2)}
+\NormalTok{n <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{:}\DecValTok{16}\NormalTok{)}
+\NormalTok{a_n <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{, }\DecValTok{6}\NormalTok{, }\DecValTok{11}\NormalTok{, }\DecValTok{21}\NormalTok{, }\DecValTok{32}\NormalTok{, }\DecValTok{47}\NormalTok{, }\DecValTok{65}\NormalTok{, }\DecValTok{87}\NormalTok{, }\DecValTok{112}\NormalTok{, }\DecValTok{140}\NormalTok{, }\DecValTok{171}\NormalTok{, }\DecValTok{204}\NormalTok{, }\DecValTok{241}\NormalTok{, }\DecValTok{282}\NormalTok{, }\DecValTok{325}\NormalTok{, }\DecValTok{376}\NormalTok{)}
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =} \KeywordTok{as.data.frame}\NormalTok{(}\KeywordTok{cbind}\NormalTok{(n, }\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\KeywordTok{diff}\NormalTok{(a_n)))), }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \NormalTok{n, }\DataTypeTok{y =} \NormalTok{V2)) +}\StringTok{ }
+\StringTok{        }\KeywordTok{geom_point}\NormalTok{() +}\StringTok{ }
+\StringTok{        }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method =} \StringTok{"lm"}\NormalTok{, }\DataTypeTok{se =} \OtherTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{CHunt_homework1_files/figure-latex/unnamed-chunk-2-1.pdf}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Based on your conclusion in part(a), find a difference equation model
+  for the stopping distance data. Test your model by plotting the errors
+  in the predicted values against \(n\). Discuss the appropriateness of
+  the model.
+\end{enumerate}
+
+The plotting of errors shows a linear relationship which will only grow
+over time. Therefore, this model is not appropriate.
+
+\[a_{n+1} = 3n+a_n\]
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(}\KeywordTok{cbind}\NormalTok{(n, a_n, }\DataTypeTok{diff =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\KeywordTok{diff}\NormalTok{(a_n))))}
+
+\NormalTok{for (i in }\DecValTok{1}\NormalTok{:}\KeywordTok{length}\NormalTok{(a_n))\{}
+    \NormalTok{if (i ==}\StringTok{ }\DecValTok{1}\NormalTok{)\{}
+     \NormalTok{df$a_n2[[i]] <-}\StringTok{ }\NormalTok{a_n[[i]]}
+    \NormalTok{\} else \{}
+     \NormalTok{df$a_n2[[i]] <-}\StringTok{  }\NormalTok{(df$n[[i]] *(df$diff[}\DecValTok{2}\NormalTok{] -}\StringTok{ }\NormalTok{df$diff[}\DecValTok{1}\NormalTok{]) +}\StringTok{ }\NormalTok{df$a_n2[[i}\DecValTok{-1}\NormalTok{]])    }
+    \NormalTok{\}}
+\NormalTok{\}}
+
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =} \NormalTok{df, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \NormalTok{n, }\DataTypeTok{y =} \NormalTok{a_n -}\StringTok{ }\NormalTok{a_n2)) +}\StringTok{ }
+\StringTok{        }\KeywordTok{geom_point}\NormalTok{() +}\StringTok{ }
+\StringTok{        }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method =} \StringTok{"lm"}\NormalTok{, }\DataTypeTok{se =} \OtherTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{CHunt_homework1_files/figure-latex/unnamed-chunk-3-1.pdf}
+\#\# Page 34: \#13
+
+\subsection{TODO finish question}\label{todo-finish-question}
+
+Considering the spreading of a rumor through a company of 1000
+employees, all working in the same building. We assume that the
+spreading of a rumor is similar to the spreading of a contagious disease
+in that the number of people hearing the rumor each day is proportional
+to the product of the number who have heard the rumor previously and the
+number who have not heard the rumor. This is given by
+
+\[r_{n+1} = r_n + kr_n(1000- _n)\]
+
+where \(k\) is a parameter that depends on how fast the rumor spreads
+and \(n\) is the number of days. Assume \(k\) = 0.001 and further assume
+that four people initially have heard the rumor. How soon will all 1000
+employees have heard the rumor?
+
+\subsection{Page 55: \#6}\label{page-55-6}
+
+\subsection{TODO finish question}\label{todo-finish-question-1}
+
+An economist is interested in the variation of the price of a sigle
+product. It is observed that a high price for the product in the market
+attracts more suppliers. However, increasing the quantity of the product
+supplied tends to drive the price down. Over time, there is an
+interatciont between price and supply. The economist has proposed the
+following model, where \(P_n\) represents the price of the product at
+year \(n\), and \(Q_n\) represents quantity. Find the equilibirum values
+for the system.
+
+\[P_{n+1} = P_n - 0.1(Q_n -500)\] \[Q_{n+1} = Q_n + .2(P_n - 100)\]
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\item
+  Does the model make sense intuitively? What is the significane of the
+  constants 100 and 500? Explain the significane of the sings of the
+  constants -0.1 and 0.2.
+\item
+  Test the initial conditions in the following table and predict the
+  long-term behavior
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(knitr)}
+\NormalTok{price <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{100}\NormalTok{, }\DecValTok{200}\NormalTok{, }\DecValTok{100}\NormalTok{, }\DecValTok{100}\NormalTok{)}
+\NormalTok{quantity <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{500}\NormalTok{, }\DecValTok{500}\NormalTok{, }\DecValTok{600}\NormalTok{, }\DecValTok{400}\NormalTok{)}
+\NormalTok{row_names <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"Case A"}\NormalTok{, }\StringTok{"Case B"}\NormalTok{, }\StringTok{"Case C"}\NormalTok{, }\StringTok{"Case D"}\NormalTok{)}
+\NormalTok{x <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(}\KeywordTok{cbind}\NormalTok{(price, quantity))}
+\KeywordTok{row.names}\NormalTok{(x) <-}\StringTok{ }\NormalTok{row_names}
+\KeywordTok{kable}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lrr@{}}
+\toprule
+& price & quantity\tabularnewline
+\midrule
+\endhead
+Case A & 100 & 500\tabularnewline
+Case B & 200 & 500\tabularnewline
+Case C & 100 & 600\tabularnewline
+Case D & 100 & 400\tabularnewline
+\bottomrule
+\end{longtable}
 
 
 \end{document}

@@ -18,7 +18,7 @@ output:
 
 # Page 8: problem 10
 
-An annuity increases each month by an automatic depost of 1% interest on the previous month's balance. Your grandparents withdraw \$1000 at the beginning of each month for living expenses. Currently, they have \$50,000 in the annuity. Model the annuity with a dynamic system. 
+An annuity increases each month by an automatic deposit of 1% interest on the previous month's balance. Your grandparents withdraw \$1000 at the beginning of each month for living expenses. Currently, they have \$50,000 in the annuity. Model the annuity with a dynamic system. 
 
 $$\Delta~b_n=\Delta~b_{n+1}-b_n= .01b_n - 1,000$$
 $$b_{n+1}=b_n+ .01b_n - 1,000$$
@@ -31,7 +31,7 @@ a_n   <- original_amount <- 50000
 x     <- 1000
 count <- 0
 
-while (1.01*a_n > 0){
+while (1.01*a_n > 1000){
 a_n <- a_n + (.01 * a_n) - x
 count <- count + 1
 if (a_n >= original_amount){
@@ -46,7 +46,78 @@ Yes, the code above runs without indicating that the annuity will not run out. T
 
 When? The annuity will run out at `r count` months. 
 
+\newpage
+
 # Page 17: problem 9
 
+The data in the accompanying table show the speed n (in increments of 5 mph) of an automobile and the associate distance $a_n$ in feet required to stop it once the breaks are applied. For instance, $n~=~6$ (representing 6 x 5 = 30 mph) requires a stopping distance of $a_6$ = 47ft. 
 
+a. Calculate and plot the change $\Delta~a_n$ versus $n$. Does the graph reasonably approximate a linear relationship?
+
+The graph of $\Delta~a_n$ does approximate a linear relationship.
+
+```{r, cache=TRUE}
+library(ggplot2)
+n <- c(1:16)
+a_n <- c(3, 6, 11, 21, 32, 47, 65, 87, 112, 140, 171, 204, 241, 282, 325, 376)
+ggplot(data = as.data.frame(cbind(n, c(0, diff(a_n)))), aes(x = n, y = V2)) + 
+        geom_point() + 
+        geom_smooth(method = "lm", se = FALSE)
+```
+
+b. Based on your conclusion in part(a), find a difference equation model for the stopping distance data. Test your model by plotting the errors in the predicted values against $n$. Discuss the appropriateness of the model. 
+
+The plotting of errors shows a linear relationship which will only grow over time. Therefore, this model is not appropriate. 
+
+$$a_{n+1} = 3n+a_n$$
+
+```{r, cache=TRUE}
+df <- as.data.frame(cbind(n, a_n, diff = c(0, diff(a_n))))
+
+for (i in 1:length(a_n)){
+    if (i == 1){
+     df$a_n2[[i]] <- a_n[[i]]
+    } else {
+     df$a_n2[[i]] <-  (df$n[[i]] *(df$diff[2] - df$diff[1]) + df$a_n2[[i-1]])    
+    }
+}
+
+ggplot(data = df, aes(x = n, y = a_n - a_n2)) + 
+        geom_point() + 
+        geom_smooth(method = "lm", se = FALSE)
+```
+## Page 34: #13
+
+## TODO finish question
+
+Considering the spreading of a rumor through a company of 1000 employees, all working in the same building. We assume that the spreading of a rumor is similar to the spreading of a contagious disease in that the number of people hearing the rumor each day is proportional to the product of the number who have heard the rumor previously and the number who have not heard the rumor. This is given by 
+
+$$r_{n+1} = r_n + kr_n(1000- _n)$$
+
+where $k$ is a parameter that depends on how fast the rumor spreads and $n$ is the number of days. Assume $k$ = 0.001 and further assume that four people initially have heard the rumor. How soon will all 1000 employees have heard the rumor? 
+
+
+
+## Page 55: #6 
+
+## TODO finish question
+
+An economist is interested in the variation of the price of a sigle product. It is observed that a high price for the product in the market attracts more suppliers. However, increasing the quantity of the product supplied tends to drive the price down. Over time, there is an interatciont between price and supply. The economist has proposed the following model, where $P_n$ represents the price of the product at year $n$, and $Q_n$ represents quantity. Find the equilibirum values for the system.
+
+$$P_{n+1} = P_n - 0.1(Q_n -500)$$
+$$Q_{n+1} = Q_n + .2(P_n - 100)$$
+
+a. Does the model make sense intuitively? What is the significane of the constants 100 and 500? Explain the significane of the sings of the constants -0.1 and 0.2.
+
+b. Test the initial conditions in the following table and predict the long-term behavior
+
+```{r, results='asis'}
+library(knitr)
+price <- c(100, 200, 100, 100)
+quantity <- c(500, 500, 600, 400)
+row_names <- c("Case A", "Case B", "Case C", "Case D")
+x <- as.data.frame(cbind(price, quantity))
+row.names(x) <- row_names
+kable(x)
+```
 
