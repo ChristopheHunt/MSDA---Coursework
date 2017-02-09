@@ -1,0 +1,20 @@
+---
+title: "Homework 2"
+author: "Christophe Hunt"
+date: "February 8, 2017"
+output:
+  pdf_document:
+    fig_caption: yes
+    keep_tex: yes
+    includes:
+      in_header: header.tex
+    number_sections: yes
+    toc: yes
+    toc_depth: 2
+  html_document:
+    toc: yes
+    toc_depth: '2'
+---
+
+# test
+dasfasdf
