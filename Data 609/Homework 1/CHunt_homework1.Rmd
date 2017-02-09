@@ -1,5 +1,5 @@
 ---
-title: "Homwork 1"
+title: "Homework 1"
 author: "Christophe Hunt"
 date: "February 5, 2017"
 output:
@@ -96,18 +96,24 @@ $$r_{n+1} = r_n + kr_n(1000- _n)$$
 
 where $k$ is a parameter that depends on how fast the rumor spreads and $n$ is the number of days. Assume $k$ = 0.001 and further assume that four people initially have heard the rumor. How soon will all 1000 employees have heard the rumor? 
 
+```{r}
+r_n <- 1000
+k <- .001
+
+r_n.1 = r_n + kr_n(1000-n)
+```
 
 
 ## Page 55: #6 
 
 ## TODO finish question
 
-An economist is interested in the variation of the price of a sigle product. It is observed that a high price for the product in the market attracts more suppliers. However, increasing the quantity of the product supplied tends to drive the price down. Over time, there is an interatciont between price and supply. The economist has proposed the following model, where $P_n$ represents the price of the product at year $n$, and $Q_n$ represents quantity. Find the equilibirum values for the system.
+An economist is interested in the variation of the price of a single product. It is observed that a high price for the product in the market attracts more suppliers. However, increasing the quantity of the product supplied tends to drive the price down. Over time, there is an interaction between price and supply. The economist has proposed the following model, where $P_n$ represents the price of the product at year $n$, and $Q_n$ represents quantity. Find the equilibrium values for the system.
 
 $$P_{n+1} = P_n - 0.1(Q_n -500)$$
 $$Q_{n+1} = Q_n + .2(P_n - 100)$$
 
-a. Does the model make sense intuitively? What is the significane of the constants 100 and 500? Explain the significane of the sings of the constants -0.1 and 0.2.
+a. Does the model make sense intuitively? What is the significance of the constants 100 and 500? Explain the significance of the sings of the constants -0.1 and 0.2.
 
 b. Test the initial conditions in the following table and predict the long-term behavior
 
