@@ -88,7 +88,7 @@ ggplot(data = df, aes(x = n, y = a_n - a_n2)) +
 ```
 ## Page 34: #13
 
-## double check this question
+## double check this question numbers seem off
 
 Considering the spreading of a rumor through a company of 1000 employees, all working in the same building. We assume that the spreading of a rumor is similar to the spreading of a contagious disease in that the number of people hearing the rumor each day is proportional to the product of the number who have heard the rumor previously and the number who have not heard the rumor. This is given by 
 
@@ -113,9 +113,8 @@ if (r_n <= 0){
 ```
 > All 1000 employees will have heard the rumor by the `r count` day
 
-## Page 55: #6 
+## Page 55: problem 6 
 
-## TODO finish question
 
 An economist is interested in the variation of the price of a single product. It is observed that a high price for the product in the market attracts more suppliers. However, increasing the quantity of the product supplied tends to drive the price down. Over time, there is an interaction between price and supply. The economist has proposed the following model, where $P_n$ represents the price of the product at year $n$, and $Q_n$ represents quantity. Find the equilibrium values for the system.
 
