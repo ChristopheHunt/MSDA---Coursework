@@ -23,8 +23,42 @@ From this vague scenario, identify a problem you would like to study. Which vari
 A company with a fleet of trucks faces increasing maintenance costs as the age and mileage of the trucks increase 
  
 ## Page 79: problem 11    
+
+Determine whether the data set supports the stated proportionality model 
  
+$$y \propto x^3$$
+\begin{table}[!htbp]
+\centering
+\caption{}
+\label{my-label}
+\begin{tabular}{l|llllllllll}
+y & 4 & 11 & 22 & 35 & 56 & 80 & 107 & 140 & 175 & 215 \\ \hline
+x & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10
+\end{tabular}
+\end{table}
+
 ## Page 94: problem 4    
+
+Lumber Cutters - Lumber cutters wish to use readily available measurements to estimate the number of board feet for lumber in a tree. Assume they measure the diameter of the tree in inches at waist height. Develop a model that predicts board feet as a function of diameter in inches. 
+
+Use the following data for your test.
+
+\begin{table}[!htbp]
+\centering
+\caption{}
+\label{my-label}
+\begin{tabular}{l|llllllllll}
+x & 17 & 19 & 20 & 23 & 25 & 28 & 32 & 38 & 39 & 41 \\ \hline
+y & 19 & 25 & 32 & 57 & 71 & 113 & 123 & 252 & 259 & 294
+\end{tabular}
+\end{table}
+
+The variable $x$ is the diameter of a ponderous pine in inches, and y is the number of board feet divided by 10. 
+
+a. Consider two separate assumptions, allowing each to lead to a model. Completely analyze each model.
+  i. Assume that all trees are right-circular cylinders and are approximately the same height.
+  ii. Assume that all trees are right-circular cylinders and that the height of the tree is proportional to the diamete.
+b. Which model appears to be better? Why? Justify your conclusions. 
  
 ## Page 99: problem 3    
  
