@@ -88,7 +88,7 @@ ggplot(data = df, aes(x = n, y = a_n - a_n2)) +
 ```
 ## Page 34: #13
 
-## TODO finish question
+## double check this question
 
 Considering the spreading of a rumor through a company of 1000 employees, all working in the same building. We assume that the spreading of a rumor is similar to the spreading of a contagious disease in that the number of people hearing the rumor each day is proportional to the product of the number who have heard the rumor previously and the number who have not heard the rumor. This is given by 
 
@@ -97,12 +97,21 @@ $$r_{n+1} = r_n + kr_n(1000- _n)$$
 where $k$ is a parameter that depends on how fast the rumor spreads and $n$ is the number of days. Assume $k$ = 0.001 and further assume that four people initially have heard the rumor. How soon will all 1000 employees have heard the rumor? 
 
 ```{r}
-r_n <- 1000
+r_n <- 4
 k <- .001
+count <- 0
 
-r_n.1 = r_n + kr_n(1000-n)
+while (r_n <= 1000){
+r_n <- r_n + ((.001*r_n)*(1000-count))
+count <- count + 1
+if (r_n <= 0){
+  print("no one will have heard the rumor")
+  break
+ }
+}
+
 ```
-
+> All 1000 employees will have heard the rumor by the `r count` day
 
 ## Page 55: #6 
 
@@ -112,8 +121,31 @@ An economist is interested in the variation of the price of a single product. It
 
 $$P_{n+1} = P_n - 0.1(Q_n -500)$$
 $$Q_{n+1} = Q_n + .2(P_n - 100)$$
+Solve for P
+$$0 = P-.1(Q - 500)$$
+$$0 = P-.1Q - 50$$
+$$P = .1Q -50 $$
 
-a. Does the model make sense intuitively? What is the significance of the constants 100 and 500? Explain the significance of the sings of the constants -0.1 and 0.2.
+Now Solve for Q
+$$0 = Q + .2(P - 100)$$
+$$0 = Q +.2p-20$$
+$$Q = -.2P+20$$
+
+Substitue and Solve for Value of Q
+$$Q = -.2(.1Q - 50)+20$$
+$$Q = -.02Q + 30$$
+$$1.02Q = 30$$
+$$Q = 29.41$$
+Substitue and Solve for Value of P
+$$P = (.1*29.41) -50 $$
+$$P = -47.06$$
+
+The equilibrium of the systems is P = -47.06; Q = 29.41. 
+
+
+a. Does the model make sense intuitively? What is the significance of the constants 100 and 500? Explain the significance of the significance of the constants -0.1 and 0.2.
+
+The model does not make sense intuitively because the equilibrium has a negative price, therefore, there must be a price floor that is not explained in this model where we will no longer sell a product for a certain price. The significanes of the constants of 100 and 500 is to reduce the quantity and price for their influence, you'll notice that -500 is used for quantity which makes sense as our price will vary less than the quantity so we will want to reduce its impact. The constants of -0.1 and 0.2 is also to normalize our value, you will notice that the -.1 is for the price because we expect a decrease in price as the quantity increase. 
 
 b. Test the initial conditions in the following table and predict the long-term behavior
 
@@ -125,5 +157,63 @@ row_names <- c("Case A", "Case B", "Case C", "Case D")
 x <- as.data.frame(cbind(price, quantity))
 row.names(x) <- row_names
 kable(x)
+```
+
+
+```{r, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(gridExtra)
+
+lt_behav <- function(df){
+for (i in 1:149){
+  p <- df$p[[i]] - .1*(df$q[[i]] - 500)
+  q <- df$q[[i]] + .2*(df$p[[i]] - 100)
+  result <- cbind(p, q)
+  df <- rbind(df, result)
+  }
+df$count <- as.numeric(row.names(df))
+df <- as.data.frame(gather(df, count))
+colnames(df) <- c('count','cat','value')
+return(df)
+}
+
+p <- x[1,1]
+q <- x[1,2]
+df <- as.data.frame(cbind(p,q))
+df.1 <- lt_behav(df)
+
+p <- x[2,1]
+q <- x[2,2]
+df <- as.data.frame(cbind(p,q))
+df.2 <- lt_behav(df)
+
+p <- x[3,1]
+q <- x[3,2]
+df <- as.data.frame(cbind(p,q))
+df.3 <- lt_behav(df)
+
+p <- x[4,1]
+q <- x[4,2]
+df <- as.data.frame(cbind(p,q))
+df.4 <- lt_behav(df)
+
+
+plot1 <- ggplot(df.1) + 
+         geom_line(aes(x = count, y = value, color = as.factor(cat))) + 
+         theme(legend.position="top", legend.direction="horizontal", legend.title=element_blank()) 
+
+plot2 <- ggplot(df.2) + 
+         geom_line(aes(x = count, y = value, color = as.factor(cat))) + 
+         theme(legend.position="top", legend.direction="horizontal", legend.title=element_blank()) 
+
+plot3 <- ggplot(df.3) + 
+         geom_line(aes(x = count, y = value, color = as.factor(cat))) + 
+         theme(legend.position="top", legend.direction="horizontal", legend.title=element_blank()) 
+
+plot4 <- ggplot(df.4) + 
+         geom_line(aes(x = count, y = value, color = as.factor(cat))) + 
+         theme(legend.position="top", legend.direction="horizontal", legend.title=element_blank()) 
+
+grid.arrange(plot1, plot2, plot3, plot4, ncol=2)
 ```
 

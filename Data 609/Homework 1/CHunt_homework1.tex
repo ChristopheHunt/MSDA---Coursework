@@ -24,7 +24,7 @@
 \usepackage[margin=1in]{geometry}
 \usepackage{hyperref}
 \hypersetup{unicode=true,
-            pdftitle={Homwork 1},
+            pdftitle={Homework 1},
             pdfauthor={Christophe Hunt},
             pdfborder={0 0 0},
             breaklinks=true}
@@ -114,7 +114,7 @@
 }
 
 \setlength{\droptitle}{-2em}
-  \title{Homwork 1}
+  \title{Homework 1}
   \pretitle{\vspace{\droptitle}\centering\huge}
   \posttitle{\par}
   \author{Christophe Hunt}
@@ -242,7 +242,8 @@ over time. Therefore, this model is not appropriate.
 \includegraphics{CHunt_homework1_files/figure-latex/unnamed-chunk-3-1.pdf}
 \#\# Page 34: \#13
 
-\subsection{TODO finish question}\label{todo-finish-question}
+\subsection{double check this
+question}\label{double-check-this-question}
 
 Considering the spreading of a rumor through a company of 1000
 employees, all working in the same building. We assume that the
@@ -258,27 +259,76 @@ and \(n\) is the number of days. Assume \(k\) = 0.001 and further assume
 that four people initially have heard the rumor. How soon will all 1000
 employees have heard the rumor?
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{r_n <-}\StringTok{ }\DecValTok{4}
+\NormalTok{k <-}\StringTok{ }\NormalTok{.}\DecValTok{001}
+\NormalTok{count <-}\StringTok{ }\DecValTok{0}
+
+\NormalTok{while (r_n <=}\StringTok{ }\DecValTok{1000}\NormalTok{)\{}
+\NormalTok{r_n <-}\StringTok{ }\NormalTok{r_n +}\StringTok{ }\NormalTok{((.}\DecValTok{001}\NormalTok{*r_n)*(}\DecValTok{1000}\NormalTok{-count))}
+\NormalTok{count <-}\StringTok{ }\NormalTok{count +}\StringTok{ }\DecValTok{1}
+\NormalTok{if (r_n <=}\StringTok{ }\DecValTok{0}\NormalTok{)\{}
+  \KeywordTok{print}\NormalTok{(}\StringTok{"no one will have heard the rumor"}\NormalTok{)}
+  \NormalTok{break}
+ \NormalTok{\}}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{quote}
+All 1000 employees will have heard the rumor by the 8 day
+\end{quote}
+
 \subsection{Page 55: \#6}\label{page-55-6}
 
-\subsection{TODO finish question}\label{todo-finish-question-1}
+\subsection{TODO finish question}\label{todo-finish-question}
 
-An economist is interested in the variation of the price of a sigle
+An economist is interested in the variation of the price of a single
 product. It is observed that a high price for the product in the market
 attracts more suppliers. However, increasing the quantity of the product
 supplied tends to drive the price down. Over time, there is an
-interatciont between price and supply. The economist has proposed the
+interaction between price and supply. The economist has proposed the
 following model, where \(P_n\) represents the price of the product at
-year \(n\), and \(Q_n\) represents quantity. Find the equilibirum values
+year \(n\), and \(Q_n\) represents quantity. Find the equilibrium values
 for the system.
 
 \[P_{n+1} = P_n - 0.1(Q_n -500)\] \[Q_{n+1} = Q_n + .2(P_n - 100)\]
+Solve for P \[0 = P-.1(Q - 500)\] \[0 = P-.1Q - 50\] \[P = .1Q -50 \]
+
+Now Solve for Q \[0 = Q + .2(P - 100)\] \[0 = Q +.2p-20\]
+\[Q = -.2P+20\]
+
+Substitue and Solve for Value of Q \[Q = -.2(.1Q - 50)+20\]
+\[Q = -.02Q + 30\] \[1.02Q = 30\] \[Q = 29.41\] Substitue and Solve for
+Value of P \[P = (.1*29.41) -50 \] \[P = -47.06\]
+
+The equilibrium of the systems is P = -47.06; Q = 29.41.
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi}.}
+\tightlist
 \item
-  Does the model make sense intuitively? What is the significane of the
-  constants 100 and 500? Explain the significane of the sings of the
-  constants -0.1 and 0.2.
+  Does the model make sense intuitively? What is the significance of the
+  constants 100 and 500? Explain the significance of the significance of
+  the constants -0.1 and 0.2.
+\end{enumerate}
+
+The model does not make sense intuitively because the equilibrium has a
+negative price, therefore, there must be a price floor that is not
+explained in this model where we will no longer sell a product for a
+certain price. The significanes of the constants of 100 and 500 is to
+reduce the quantity and price for their influence, you'll notice that
+-500 is used for quantity which makes sense as our price will vary less
+than the quantity so we will want to reduce its impact. The constants of
+-0.1 and 0.2 is also to normalize our value, you will notice that the
+-.1 is for the price because we expect a decrease in price as the
+quantity increase.
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
 \item
   Test the initial conditions in the following table and predict the
   long-term behavior
@@ -307,6 +357,67 @@ Case C & 100 & 600\tabularnewline
 Case D & 100 & 400\tabularnewline
 \bottomrule
 \end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(tidyverse)}
+\KeywordTok{library}\NormalTok{(gridExtra)}
+
+\NormalTok{lt_behav <-}\StringTok{ }\NormalTok{function(df)\{}
+\NormalTok{for (i in }\DecValTok{1}\NormalTok{:}\DecValTok{149}\NormalTok{)\{}
+  \NormalTok{p <-}\StringTok{ }\NormalTok{df$p[[i]] -}\StringTok{ }\NormalTok{.}\DecValTok{1}\NormalTok{*(df$q[[i]] -}\StringTok{ }\DecValTok{500}\NormalTok{)}
+  \NormalTok{q <-}\StringTok{ }\NormalTok{df$q[[i]] +}\StringTok{ }\NormalTok{.}\DecValTok{2}\NormalTok{*(df$p[[i]] -}\StringTok{ }\DecValTok{100}\NormalTok{)}
+  \NormalTok{result <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(p, q)}
+  \NormalTok{df <-}\StringTok{ }\KeywordTok{rbind}\NormalTok{(df, result)}
+  \NormalTok{\}}
+\NormalTok{df$count <-}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{row.names}\NormalTok{(df))}
+\NormalTok{df <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(}\KeywordTok{gather}\NormalTok{(df, count))}
+\KeywordTok{colnames}\NormalTok{(df) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{'count'}\NormalTok{,}\StringTok{'cat'}\NormalTok{,}\StringTok{'value'}\NormalTok{)}
+\KeywordTok{return}\NormalTok{(df)}
+\NormalTok{\}}
+
+\NormalTok{p <-}\StringTok{ }\NormalTok{x[}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{]}
+\NormalTok{q <-}\StringTok{ }\NormalTok{x[}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{]}
+\NormalTok{df <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(}\KeywordTok{cbind}\NormalTok{(p,q))}
+\NormalTok{df}\FloatTok{.1} \NormalTok{<-}\StringTok{ }\KeywordTok{lt_behav}\NormalTok{(df)}
+
+\NormalTok{p <-}\StringTok{ }\NormalTok{x[}\DecValTok{2}\NormalTok{,}\DecValTok{1}\NormalTok{]}
+\NormalTok{q <-}\StringTok{ }\NormalTok{x[}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{]}
+\NormalTok{df <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(}\KeywordTok{cbind}\NormalTok{(p,q))}
+\NormalTok{df}\FloatTok{.2} \NormalTok{<-}\StringTok{ }\KeywordTok{lt_behav}\NormalTok{(df)}
+
+\NormalTok{p <-}\StringTok{ }\NormalTok{x[}\DecValTok{3}\NormalTok{,}\DecValTok{1}\NormalTok{]}
+\NormalTok{q <-}\StringTok{ }\NormalTok{x[}\DecValTok{3}\NormalTok{,}\DecValTok{2}\NormalTok{]}
+\NormalTok{df <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(}\KeywordTok{cbind}\NormalTok{(p,q))}
+\NormalTok{df}\FloatTok{.3} \NormalTok{<-}\StringTok{ }\KeywordTok{lt_behav}\NormalTok{(df)}
+
+\NormalTok{p <-}\StringTok{ }\NormalTok{x[}\DecValTok{4}\NormalTok{,}\DecValTok{1}\NormalTok{]}
+\NormalTok{q <-}\StringTok{ }\NormalTok{x[}\DecValTok{4}\NormalTok{,}\DecValTok{2}\NormalTok{]}
+\NormalTok{df <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(}\KeywordTok{cbind}\NormalTok{(p,q))}
+\NormalTok{df}\FloatTok{.4} \NormalTok{<-}\StringTok{ }\KeywordTok{lt_behav}\NormalTok{(df)}
+
+
+\NormalTok{plot1 <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(df}\FloatTok{.1}\NormalTok{) +}\StringTok{ }
+\StringTok{         }\KeywordTok{geom_line}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \NormalTok{count, }\DataTypeTok{y =} \NormalTok{value, }\DataTypeTok{color =} \KeywordTok{as.factor}\NormalTok{(cat))) +}\StringTok{ }
+\StringTok{         }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.position=}\StringTok{"top"}\NormalTok{, }\DataTypeTok{legend.direction=}\StringTok{"horizontal"}\NormalTok{, }\DataTypeTok{legend.title=}\KeywordTok{element_blank}\NormalTok{()) }
+
+\NormalTok{plot2 <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(df}\FloatTok{.2}\NormalTok{) +}\StringTok{ }
+\StringTok{         }\KeywordTok{geom_line}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \NormalTok{count, }\DataTypeTok{y =} \NormalTok{value, }\DataTypeTok{color =} \KeywordTok{as.factor}\NormalTok{(cat))) +}\StringTok{ }
+\StringTok{         }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.position=}\StringTok{"top"}\NormalTok{, }\DataTypeTok{legend.direction=}\StringTok{"horizontal"}\NormalTok{, }\DataTypeTok{legend.title=}\KeywordTok{element_blank}\NormalTok{()) }
+
+\NormalTok{plot3 <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(df}\FloatTok{.3}\NormalTok{) +}\StringTok{ }
+\StringTok{         }\KeywordTok{geom_line}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \NormalTok{count, }\DataTypeTok{y =} \NormalTok{value, }\DataTypeTok{color =} \KeywordTok{as.factor}\NormalTok{(cat))) +}\StringTok{ }
+\StringTok{         }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.position=}\StringTok{"top"}\NormalTok{, }\DataTypeTok{legend.direction=}\StringTok{"horizontal"}\NormalTok{, }\DataTypeTok{legend.title=}\KeywordTok{element_blank}\NormalTok{()) }
+
+\NormalTok{plot4 <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(df}\FloatTok{.4}\NormalTok{) +}\StringTok{ }
+\StringTok{         }\KeywordTok{geom_line}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \NormalTok{count, }\DataTypeTok{y =} \NormalTok{value, }\DataTypeTok{color =} \KeywordTok{as.factor}\NormalTok{(cat))) +}\StringTok{ }
+\StringTok{         }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.position=}\StringTok{"top"}\NormalTok{, }\DataTypeTok{legend.direction=}\StringTok{"horizontal"}\NormalTok{, }\DataTypeTok{legend.title=}\KeywordTok{element_blank}\NormalTok{()) }
+
+\KeywordTok{grid.arrange}\NormalTok{(plot1, plot2, plot3, plot4, }\DataTypeTok{ncol=}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{CHunt_homework1_files/figure-latex/unnamed-chunk-6-1.pdf}
 
 
 \end{document}
