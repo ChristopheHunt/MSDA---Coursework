@@ -18,6 +18,10 @@ output:
 
 ## Page 69: problem 12    
  
+From this vague scenario, identify a problem you would like to study. Which variables affect the behavior you have identified in the problem identification? Which variables are the most important? 
+
+A company with a fleet of trucks faces increasing maintenance costs as the age and mileage of the trucks increase 
+ 
 ## Page 79: problem 11    
  
 ## Page 94: problem 4    
