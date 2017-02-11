@@ -194,13 +194,14 @@ x & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10
 \StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\DataTypeTok{data =} \NormalTok{df, }\KeywordTok{aes}\NormalTok{(x, y), }\DataTypeTok{color =} \StringTok{'red'}\NormalTok{) +}
 \StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\DataTypeTok{data =} \NormalTok{df, }\KeywordTok{aes}\NormalTok{(x,y2), }\DataTypeTok{color =} \StringTok{'blue'}\NormalTok{) +}
 \StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\DataTypeTok{data =} \NormalTok{df, }\KeywordTok{aes}\NormalTok{(x,model), }\DataTypeTok{color =} \StringTok{'green'}\NormalTok{) +}
-\StringTok{  }\KeywordTok{theme_minimal}\NormalTok{() }
+\StringTok{  }\KeywordTok{theme_minimal}\NormalTok{() +}
+\StringTok{  }\KeywordTok{ylim}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{100}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \includegraphics{CHunt_homework2_files/figure-latex/unnamed-chunk-1-1.pdf}
 
-The data does not support the proportion modelsince our data does not
+The data does not support the proportion model since our data does not
 pass through the origin (0,0) and our slope is small comparitive to 1.
 Our used model for this data is \(y = .426x^3\) where \(k = .426\). This
 is achieved by taking \(y^\frac{1}{3}\) and from the values in our
@@ -231,16 +232,11 @@ y & 19 & 25 & 32 & 57 & 71 & 113 & 123 & 252 & 259 & 294
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{x <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{17}\NormalTok{,}\DecValTok{19}\NormalTok{,}\DecValTok{20}\NormalTok{,}\DecValTok{23}\NormalTok{,}\DecValTok{25}\NormalTok{,}\DecValTok{28}\NormalTok{,}\DecValTok{32}\NormalTok{,}\DecValTok{39}\NormalTok{,}\DecValTok{41}\NormalTok{)}
+\NormalTok{x <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{17}\NormalTok{,}\DecValTok{19}\NormalTok{,}\DecValTok{20}\NormalTok{,}\DecValTok{23}\NormalTok{,}\DecValTok{25}\NormalTok{,}\DecValTok{28}\NormalTok{,}\DecValTok{32}\NormalTok{,}\DecValTok{38}\NormalTok{,}\DecValTok{39}\NormalTok{,}\DecValTok{41}\NormalTok{)}
 \NormalTok{y <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{19}\NormalTok{,}\DecValTok{25}\NormalTok{,}\DecValTok{32}\NormalTok{,}\DecValTok{57}\NormalTok{,}\DecValTok{71}\NormalTok{,}\DecValTok{113}\NormalTok{,}\DecValTok{123}\NormalTok{,}\DecValTok{252}\NormalTok{,}\DecValTok{259}\NormalTok{,}\DecValTok{294}\NormalTok{)}
-\NormalTok{df <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(x,y)}
+\NormalTok{df <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(}\KeywordTok{cbind}\NormalTok{(x,y))}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-## Warning in cbind(x, y): number of rows of result is not a multiple of
-## vector length (arg 1)
-\end{verbatim}
 
 The variable \(x\) is the diameter of a ponderous pine in inches, and y
 is the number of board feet divided by 10.
@@ -255,12 +251,22 @@ is the number of board feet divided by 10.
   approximately the same height.
 \end{enumerate}
 
+We are assuming proportional change on two dimensions; the diameter
+change and the change in right-circular cylinders (excluding height), we
+therefore have the proportional model \(y \propto x^2\)
+
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{df$y2 <-}\StringTok{ }\NormalTok{df$x^}\DecValTok{3}
+\KeywordTok{library}\NormalTok{(ggplot2)}
+\NormalTok{df$y2 <-}\StringTok{ }\NormalTok{df$y^(}\DecValTok{1}\NormalTok{/}\DecValTok{2}\NormalTok{)}
 \NormalTok{df$k <-}\StringTok{ }\NormalTok{df$y2/df$x}
 \NormalTok{k <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(df$k)}
-\NormalTok{df$model <-}\StringTok{ }\NormalTok{k*df$x^}\DecValTok{3}
+\NormalTok{df$model <-}\StringTok{ }\NormalTok{k*df$x^}\DecValTok{2}
+
+\KeywordTok{ggplot}\NormalTok{() +}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\DataTypeTok{data =} \NormalTok{df, }\KeywordTok{aes}\NormalTok{(x, y), }\DataTypeTok{color =} \StringTok{'red'}\NormalTok{) +}
+\StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\DataTypeTok{data =} \NormalTok{df, }\KeywordTok{aes}\NormalTok{(x, model), }\DataTypeTok{color =} \StringTok{'blue'}\NormalTok{) +}
+\StringTok{  }\KeywordTok{theme_minimal}\NormalTok{() }
 \end{Highlighting}
 \end{Shaded}
 
@@ -273,6 +279,27 @@ is the number of board feet divided by 10.
   of the tree is proportional to the diameter.
 \end{enumerate}
 
+We are assuming proportional change on three dimensions; the diameter
+change, the change in right-circular cylinders, and the change in
+height, we therefore have the proportional model \(y \propto x^3\)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(ggplot2)}
+\NormalTok{df$y2 <-}\StringTok{ }\NormalTok{df$y^(}\DecValTok{1}\NormalTok{/}\DecValTok{3}\NormalTok{)}
+\NormalTok{df$k <-}\StringTok{ }\NormalTok{df$y2/df$x}
+\NormalTok{k <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(df$k)}
+\NormalTok{df$model <-}\StringTok{ }\NormalTok{k*df$x^}\DecValTok{3}
+
+\KeywordTok{ggplot}\NormalTok{() +}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\DataTypeTok{data =} \NormalTok{df, }\KeywordTok{aes}\NormalTok{(x, y), }\DataTypeTok{color =} \StringTok{'red'}\NormalTok{) +}
+\StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\DataTypeTok{data =} \NormalTok{df, }\KeywordTok{aes}\NormalTok{(x,model), }\DataTypeTok{color =} \StringTok{'blue'}\NormalTok{) +}
+\StringTok{  }\KeywordTok{theme_minimal}\NormalTok{() }
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{CHunt_homework2_files/figure-latex/unnamed-chunk-4-1.pdf}
+
 \begin{enumerate}
 \def\labelenumi{\alph{enumi}.}
 \setcounter{enumi}{1}
@@ -281,10 +308,25 @@ is the number of board feet divided by 10.
   Which model appears to be better? Why? Justify your conclusions.
 \end{enumerate}
 
+The second model for \(y \propto x^3\) because it more closely follows
+the shape of the pre
+
 \section{Page 99: problem 3}\label{page-99-problem-3}
 
 Discuss several factors that were completely ignored in our analysis of
 the gasoline mileage problem.
+
+Several factors that were completely ignored are air temperature and the
+age of the vehicle. Hybrid and electric vehicles are becoming more
+common and newer engines are much more fuel efficient so I believe that
+the age of the vehicle would have impact on an appropriate model. The
+ambient air temperature has impact on the air pressure of the tires and
+the friction with the road which would have an impact on our model.
+
+The model limitations statement at the end of the Autmobile Gasline
+Mileage is very clear that the model is quite fragile and has limit
+application. A limitation statement like this makes it quite clear that
+the application of the model is very narrow.
 
 \section{Page 104: problem 2}\label{page-104-problem-2}
 

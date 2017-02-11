@@ -55,10 +55,11 @@ ggplot() +
   geom_line(data = df, aes(x, y), color = 'red') +
   geom_line(data = df, aes(x,y2), color = 'blue') +
   geom_line(data = df, aes(x,model), color = 'green') +
-  theme_minimal() 
+  theme_minimal() +
+  ylim(0,100)
 ```
 
-The data does not support the proportion modelsince our data does not pass through the origin (0,0) and our slope is small comparitive to 1. Our used model for this data is $y = .426x^3$ where $k = .426$. This is achieved by taking $y^\frac{1}{3}$ and from the values in our provided data set. Then we obtain the ratio of $\frac{y^\frac{1}{3}}{x}$ and further obtain the mean which is $.426$. As illustrated above the model illustrates that the data does not follow the proportional model. 
+The data does not support the proportion model since our data does not pass through the origin (0,0) and our slope is small comparitive to 1. Our used model for this data is $y = .426x^3$ where $k = .426$. This is achieved by taking $y^\frac{1}{3}$ and from the values in our provided data set. Then we obtain the ratio of $\frac{y^\frac{1}{3}}{x}$ and further obtain the mean which is $.426$. As illustrated above the model illustrates that the data does not follow the proportional model. 
 
 # Page 94: problem 4    
 
@@ -92,8 +93,8 @@ We are assuming proportional change on two dimensions; the diameter change and t
 
 ```{r, eval = FALSE}
 library(ggplot2)
-df$y2 <- df$x^(2)
-df$k <- df$y/df$y2
+df$y2 <- df$y^(1/2)
+df$k <- df$y2/df$x
 k <- mean(df$k)
 df$model <- k*df$x^2
 
@@ -108,7 +109,7 @@ ggplot() +
   
 We are assuming proportional change on three dimensions; the diameter change, the change in right-circular cylinders, and the change in height, we therefore have the proportional model $y \propto x^3$
 
-```{r, eval = FALSE}
+```{r, eval = TRUE}
 library(ggplot2)
 df$y2 <- df$y^(1/3)
 df$k <- df$y2/df$x
@@ -136,3 +137,5 @@ The model limitations statement at the end of the Autmobile Gasline Mileage is v
 # Page 104: problem 2
 
 Tests exist to measure the percentage of body fat. Assume that such tests are accurate and that a great many carefully collected data are available. You may specify any other statistic, such as waist size and height, that you would like collected. Explain how the data could be arranged to check the assumptions underlying the sub models in this section. For example, suppose the data for males between ages 17 and 21 with constant body fat and height are examined. Explain how the assumption of constant density of the inner core could be checked. 
+
+
