@@ -77,9 +77,9 @@ y & 19 & 25 & 32 & 57 & 71 & 113 & 123 & 252 & 259 & 294
 \end{table}
 
 ```{r}
-x <- c(17,19,20,23,25,28,32,39,41)
+x <- c(17,19,20,23,25,28,32,38,39,41)
 y <- c(19,25,32,57,71,113,123,252,259,294)
-df <- cbind(x,y)
+df <- as.data.frame(cbind(x,y))
 ```
 
 The variable $x$ is the diameter of a ponderous pine in inches, and y is the number of board feet divided by 10. 
@@ -88,23 +88,50 @@ a. Consider two separate assumptions, allowing each to lead to a model. Complete
 
   i. Assume that all trees are right-circular cylinders and are approximately the same height.
 
+We are assuming proportional change on two dimensions; the diameter change and the change in right-circular cylinders (excluding height), we therefore have the proportional model $y \propto x^2$
 
 ```{r, eval = FALSE}
-df$y2 <- df$x^3
-df$k <- df$y2/df$x
+library(ggplot2)
+df$y2 <- df$x^(2)
+df$k <- df$y/df$y2
 k <- mean(df$k)
-df$model <- k*df$x^3
+df$model <- k*df$x^2
 
+ggplot() + 
+  geom_line(data = df, aes(x, y), color = 'red') +
+  geom_line(data = df, aes(x, model), color = 'blue') +
+  theme_minimal() 
 ```
 
   
   ii. Assume that all trees are right-circular cylinders and that the height of the tree is proportional to the diameter.
   
+We are assuming proportional change on three dimensions; the diameter change, the change in right-circular cylinders, and the change in height, we therefore have the proportional model $y \propto x^3$
+
+```{r, eval = FALSE}
+library(ggplot2)
+df$y2 <- df$y^(1/3)
+df$k <- df$y2/df$x
+k <- mean(df$k)
+df$model <- k*df$x^3
+
+ggplot() + 
+  geom_line(data = df, aes(x, y), color = 'red') +
+  geom_line(data = df, aes(x,model), color = 'blue') +
+  theme_minimal() 
+```
+  
 b. Which model appears to be better? Why? Justify your conclusions. 
+
+The second model for $y \propto x^3$ because it more closely follows the shape of the pre
  
 # Page 99: problem 3    
 
 Discuss several factors that were completely ignored in our analysis of the gasoline mileage problem. 
+
+Several factors that were completely ignored are air temperature and the age of the vehicle. Hybrid and electric vehicles are becoming more common and newer engines are much more fuel efficient so I believe that the age of the vehicle would have impact on an appropriate model. The ambient air temperature has impact on the air pressure of the tires and the friction with the road which would have an impact on our model. 
+
+The model limitations statement at the end of the Autmobile Gasline Mileage is very clear that the model is quite fragile and has limit application. A limitation statement like this makes it quite clear that the application of the model is very narrow. 
  
 # Page 104: problem 2
 
