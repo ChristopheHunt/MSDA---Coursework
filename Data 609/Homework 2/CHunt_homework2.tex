@@ -160,6 +160,8 @@ opportunity costs of reliability. The equilibrium of this system would
 be meaningful to make a data driven decision to buy a new vehicle or to
 keep running the aged truck.
 
+\newpage
+
 \section{Page 79: problem 11}\label{page-79-problem-11}
 
 Determine whether the data set supports the stated proportionality
@@ -183,29 +185,29 @@ x & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10
 \NormalTok{y <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{6}\NormalTok{, }\DecValTok{14}\NormalTok{, }\DecValTok{24}\NormalTok{, }\DecValTok{37}\NormalTok{, }\DecValTok{58}\NormalTok{, }\DecValTok{82}\NormalTok{, }\DecValTok{114}\NormalTok{)}
 \NormalTok{x <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{:}\DecValTok{10}\NormalTok{)}
 \NormalTok{df <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(}\KeywordTok{cbind}\NormalTok{(y,x))}
-\NormalTok{df$y2 <-}\StringTok{ }\NormalTok{df$x^}\DecValTok{3}
+\NormalTok{df$y2 <-}\StringTok{ }\NormalTok{df$y^(}\DecValTok{1}\NormalTok{/}\DecValTok{3}\NormalTok{)}
 \NormalTok{df$k <-}\StringTok{ }\NormalTok{df$y2/df$x}
 \NormalTok{k <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(df$k)}
 \NormalTok{df$model <-}\StringTok{ }\NormalTok{k*df$x^}\DecValTok{3}
-
-
 
 \KeywordTok{ggplot}\NormalTok{() +}\StringTok{ }
 \StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\DataTypeTok{data =} \NormalTok{df, }\KeywordTok{aes}\NormalTok{(x, y), }\DataTypeTok{color =} \StringTok{'red'}\NormalTok{) +}
 \StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\DataTypeTok{data =} \NormalTok{df, }\KeywordTok{aes}\NormalTok{(x,y2), }\DataTypeTok{color =} \StringTok{'blue'}\NormalTok{) +}
 \StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\DataTypeTok{data =} \NormalTok{df, }\KeywordTok{aes}\NormalTok{(x,model), }\DataTypeTok{color =} \StringTok{'green'}\NormalTok{) +}
-\StringTok{  }\KeywordTok{theme_minimal}\NormalTok{() +}
-\StringTok{  }\KeywordTok{ylim}\NormalTok{(}\DecValTok{10}\NormalTok{,}\DecValTok{10000}\NormalTok{)}
+\StringTok{  }\KeywordTok{theme_minimal}\NormalTok{() }
 \end{Highlighting}
 \end{Shaded}
 
 \includegraphics{CHunt_homework2_files/figure-latex/unnamed-chunk-1-1.pdf}
 
-The data does not support the proportion model. Our used model for this
-data is \(y = 38.5x^3\) where \(k = 38.5\). This is achieved by taking
-\(y = x^3\) and substituting x for the values in our provided data set.
-Then we obtain the ratio of \(y/x^3\) and further obtain the mean which
-is \(38.5\). As illustrated above the model does not follow.
+The data does not support the proportion modelsince our data does not
+pass through the origin (0,0) and our slope is small comparitive to 1.
+Our used model for this data is \(y = .426x^3\) where \(k = .426\). This
+is achieved by taking \(y^\frac{1}{3}\) and from the values in our
+provided data set. Then we obtain the ratio of
+\(\frac{y^\frac{1}{3}}{x}\) and further obtain the mean which is
+\(.426\). As illustrated above the model illustrates that the data does
+not follow the proportional model.
 
 \section{Page 94: problem 4}\label{page-94-problem-4}
 
@@ -227,12 +229,24 @@ y & 19 & 25 & 32 & 57 & 71 & 113 & 123 & 252 & 259 & 294
 \end{tabular}
 \end{table}
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{17}\NormalTok{,}\DecValTok{19}\NormalTok{,}\DecValTok{20}\NormalTok{,}\DecValTok{23}\NormalTok{,}\DecValTok{25}\NormalTok{,}\DecValTok{28}\NormalTok{,}\DecValTok{32}\NormalTok{,}\DecValTok{39}\NormalTok{,}\DecValTok{41}\NormalTok{)}
+\NormalTok{y <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{19}\NormalTok{,}\DecValTok{25}\NormalTok{,}\DecValTok{32}\NormalTok{,}\DecValTok{57}\NormalTok{,}\DecValTok{71}\NormalTok{,}\DecValTok{113}\NormalTok{,}\DecValTok{123}\NormalTok{,}\DecValTok{252}\NormalTok{,}\DecValTok{259}\NormalTok{,}\DecValTok{294}\NormalTok{)}
+\NormalTok{df <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(x,y)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in cbind(x, y): number of rows of result is not a multiple of
+## vector length (arg 1)
+\end{verbatim}
+
 The variable \(x\) is the diameter of a ponderous pine in inches, and y
 is the number of board feet divided by 10.
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi}.}
-\tightlist
 \item
   Consider two separate assumptions, allowing each to lead to a model.
   Completely analyze each model.
@@ -240,6 +254,15 @@ is the number of board feet divided by 10.
   Assume that all trees are right-circular cylinders and are
   approximately the same height.
 \end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df$y2 <-}\StringTok{ }\NormalTok{df$x^}\DecValTok{3}
+\NormalTok{df$k <-}\StringTok{ }\NormalTok{df$y2/df$x}
+\NormalTok{k <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(df$k)}
+\NormalTok{df$model <-}\StringTok{ }\NormalTok{k*df$x^}\DecValTok{3}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{enumerate}
 \def\labelenumi{\roman{enumi}.}
