@@ -26,7 +26,7 @@ A problem that would be interesting to study is the at what point should the tru
  
 # Page 79: problem 11    
 
-Determine whether the data set supports the stated proportionality model 
+Determine whether the data set supports the stated proportionality model.
  
 $$y \propto x^3$$
 \begin{table}[!htbp]
@@ -38,6 +38,24 @@ y & 4 & 11 & 22 & 35 & 56 & 80 & 107 & 140 & 175 & 215 \\ \hline
 x & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10
 \end{tabular}
 \end{table}
+
+```{r}
+library(ggplot2)
+y <- c(4, 11, 22, 35, 56, 80, 107, 140, 175, 215)
+x <- c(1:10)
+df <- as.data.frame(cbind(y,x))
+y2 <- df$x^3
+df2 <- as.data.frame(cbind(y2,x))
+
+ggplot() + 
+  geom_line(data = df, aes(x, y), color = 'red') +
+  geom_line(data = df2, aes(x,y2), color = 'blue') +
+  theme_minimal() +
+  geom_text(aes(7.5, 500, label="y=x^3")) +
+  geom_text(aes(8, 100, label="provided data")) 
+```
+
+The data does not support the proportion model. 
 
 # Page 94: problem 4    
 
