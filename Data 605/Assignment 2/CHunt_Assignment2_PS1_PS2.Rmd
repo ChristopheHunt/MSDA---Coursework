@@ -8,15 +8,59 @@ output: pdf_document
 ## Problem Set 1 
 
 1. Show that $A^TA\neq AA^T$ in general. (Proof and demonstration.)
-2. For a special type of square matrix A, we get $A^TA\neq AA^T$. Under what conditions could this be true? (Hint: The Identity matrix I is an example of such a matrix).
 
-Please typeset your response using LaTeX mode in RStudio. If you do it in paper, please either scan or take a picture of the work and submit it. Please ensure that your image is legible and that your submissions are named using your first initial, last name, assignment and problem set within the assignment. E.g. LFulton_Assignment2_PS1.png
+If $A$ is a 3x2 matrix then $A^T$ is a 2x3 matrix. 
 
-#For Reference Only
-> For any matrix, we can define a special operation called the transpose. Given a matrix A, we define its transpose, AT as a matrix whose rows are the columns of A and vice versa. So, if A is m × n, AT is n × m. When you have two vectors x and y, we can consider them as essentially two n × 1 matrices. From this perspective, the dot-product between x and y is simply a matrix multiplication between x T and y. x Tis 1 × n and y is n × 1 producing a 1 × 1 product. Therefore x · y is also be written as x T y.
+\[
+\begin{bmatrix}
+    x_{11} & x_{12} & \dots  & x_{1n} \\
+    x_{21} & x_{22} & \dots  & x_{2n} \\
+    \vdots & \vdots & \ddots & \vdots \\
+    x_{d1} & x_{d2} & \dots  & x_{dn}
+\end{bmatrix}
+\]
+
+For the matrix A below
+```{r}
+A <- matrix(c(1,2,3,4,5,6), nrow=2, ncol=3)
+A
+```
+
+The inverse of this matrix is 
+```{r}
+t(A)
+```
+
+The product of the inverse of the matrix and the matrix is as per below.
+```{r}
+t(A)%*%A
+```
+
+Whereas, the product of the matrix and the inverse is as per below. 
+
+```{r}
+A%*%t(A)
+```
+
+Therefore, $A^TA\neq AA^T$. 
+
+2. For a special type of square matrix A, we get $A^TA= AA^T$. Under what conditions could this be true? (Hint: The Identity matrix I is an example of such a matrix).
+
+The conditions under which these are true are for special square matrix. In these instances, the inverse of the matrix is equal to the matrix $A^T = A$. Therefore, if $A^T = A$ then $A^TA= AA^T$. 
 
 
 ## Problem Set 2 
-Matrix factorization is a very important problem. There are supercomputers built just to do matrix factorizations. Every second you are on an airplane, matrices are being factorized. Radars that track flights use a technique called Kalman filtering. At the heart of Kalman Filtering is a Matrix Factorization operation. Kalman Filters are solving linear systems of equations when they track your flight using radars. Write an R function to factorize a square matrix A into LU or LDU, whichever you prefer. Please submit your response in an R Markdown document using our class naming convention, E.g. LFulton_Assignment2_PS2.png You don't have to worry about permuting rows of A and you can assume that A is less than 5x5, if you need to hard-code any variables in your code. If you doing the entire assignment in R, then please submit only one markdown document for both the problems.
+
+Matrix factorization is a very important problem. There are supercomputers built just to do matrix factorizations. Every second you are on an airplane, matrices are being factorized. Radars that track flights use a technique called Kalman filtering. At the heart of Kalman Filtering is a Matrix Factorization operation. Kalman Filters are solving linear systems of equations when they track your flight using radars. 
+
+Write an R function to factorize a square matrix A into LU or LDU, whichever you prefer. Please submit your response in an R Markdown document using our class naming convention, E.g. LFulton_Assignment2_PS2.png You don't have to worry about permuting rows of A and you can assume that A is less than 5x5, if you need to hard-code any variables in your code. If you doing the entire assignment in R, then please submit only one markdown document for both the problems.
+
+```{r}
+
+
+```
+
+
+
 
 
