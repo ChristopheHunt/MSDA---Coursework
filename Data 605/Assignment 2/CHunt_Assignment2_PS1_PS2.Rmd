@@ -107,7 +107,8 @@ factorization <- function(M){
          E32[3,2] <- -M3[3,2] / M3[2,2]
          U <- E32 %*% M3
          L <- solve(E21) %*% solve(E31) %*% solve(E32)
-         list(U,L)
+         return(list("U" = U, "L" = L))
+         
          }
       }
 ```
@@ -116,7 +117,13 @@ factorization <- function(M){
 
 ```{r}
 A <- matrix(c(1,2,3,1,1,1,2,0,1),nrow=3)
-factorization(A)
+factored <- factorization(A)
 ```
 
+```{r}
+factored$U
+```
 
+```{r}
+factored$L
+```
