@@ -9,34 +9,23 @@ output: pdf_document
 
 1. Show that $A^TA\neq AA^T$ in general. (Proof and demonstration.)
 
-If $A$ is a 3x2 matrix then $A^T$ is a 2x3 matrix. 
-
-\[
-\begin{bmatrix}
-    x_{11} & x_{12} & \dots  & x_{1n} \\
-    x_{21} & x_{22} & \dots  & x_{2n} \\
-    \vdots & \vdots & \ddots & \vdots \\
-    x_{d1} & x_{d2} & \dots  & x_{dn}
-\end{bmatrix}
-\]
-
-For the matrix A below
+For a 2x3 matrix A:
 ```{r}
 A <- matrix(c(1,2,3,4,5,6), nrow=2, ncol=3)
 A
 ```
 
-The inverse of this matrix is 
+The inverse of this matrix is:
 ```{r}
 t(A)
 ```
 
-The product of the inverse of the matrix and the matrix is as per below.
+The product of the inverse of the matrix and the matrix is :
 ```{r}
 t(A)%*%A
 ```
 
-Whereas, the product of the matrix and the inverse is as per below. 
+Whereas, the product of the matrix and the inverse is : 
 
 ```{r}
 A%*%t(A)
@@ -44,23 +33,91 @@ A%*%t(A)
 
 Therefore, $A^TA\neq AA^T$. 
 
+\newpage
+
 2. For a special type of square matrix A, we get $A^TA= AA^T$. Under what conditions could this be true? (Hint: The Identity matrix I is an example of such a matrix).
 
 The conditions under which these are true are for special square matrix. In these instances, the inverse of the matrix is equal to the matrix $A^T = A$. Therefore, if $A^T = A$ then $A^TA= AA^T$. 
+
+Such as the matrix :
+
+```{r}
+A <- matrix(c(1,2,3,2,1,2,3,2,1), nrow=3, ncol=3)
+A
+```
+
+The inverse of this matrix is:
+```{r}
+t(A)
+```
+
+The product of the inverse of the matrix and the matrix is :
+```{r}
+t_AA <- t(A)%*%A
+t_AA
+```
+
+The product of the matrix and the inverse is : 
+
+```{r}
+A_At <- A%*%t(A)
+A_At
+```
+
+```{r}
+A_At == t_AA
+```
 
 
 ## Problem Set 2 
 
 Matrix factorization is a very important problem. There are supercomputers built just to do matrix factorizations. Every second you are on an airplane, matrices are being factorized. Radars that track flights use a technique called Kalman filtering. At the heart of Kalman Filtering is a Matrix Factorization operation. Kalman Filters are solving linear systems of equations when they track your flight using radars. 
 
-Write an R function to factorize a square matrix A into LU or LDU, whichever you prefer. Please submit your response in an R Markdown document using our class naming convention, E.g. LFulton_Assignment2_PS2.png You don't have to worry about permuting rows of A and you can assume that A is less than 5x5, if you need to hard-code any variables in your code. If you doing the entire assignment in R, then please submit only one markdown document for both the problems.
+Write an R function to factorize a square matrix A into LU or LDU, whichever you prefer. 
 
 ```{r}
-
-
+factorization <- function(M){
+  if(nrow(M) == 2){
+     if(all(M[, 1] == 0)){
+           return(print("cannot solve"))
+          }
+     while (M[1,1] == 0){
+            M <- M[c(2,1), ]
+          }
+         E21 <- diag(nrow(M))
+         E21[2,1] <- -M[2,1] / M[1,1]
+         U <- E21 %*% M
+         L <- solve(U)
+         print(U)
+         print(L)
+      } else {
+         if(all(M[, 1] == 0)){
+           return(print("cannot solve"))
+          }
+         while (M[1,1] == 0){
+            M <- M[c(2,3:nrow(M),1), ]
+         }
+         E21 <- diag(nrow(M))
+         E21[2,1] <- -M[2,1] / M[1,1]
+         M2 <- E21 %*% M
+         E31 <- diag(nrow(M))
+         E31[3,1] <- -M2[3,1] / M2[1,1]
+         M3 <- E31 %*% M2
+         E32 <- diag(nrow(M))
+         E32[3,2] <- -M3[3,2] / M3[2,2]
+         U <- E32 %*% M3
+         L <- solve(E21) %*% solve(E31) %*% solve(E32)
+         print(U)
+         print(L)
+         }
+      }
 ```
 
 
 
+```{r}
+A <- matrix(c(1,2,3,1,1,1,2,0,1),nrow=3)
+factorization(A)
+```
 
 
