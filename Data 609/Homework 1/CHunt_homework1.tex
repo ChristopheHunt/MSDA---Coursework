@@ -240,7 +240,8 @@ over time. Therefore, this model is not appropriate.
 \end{Shaded}
 
 \includegraphics{CHunt_homework1_files/figure-latex/unnamed-chunk-3-1.pdf}
-\#\# Page 34: \#13
+
+\section{Page 34: problem 13}\label{page-34-problem-13}
 
 Considering the spreading of a rumor through a company of 1000
 employees, all working in the same building. We assume that the
@@ -277,7 +278,7 @@ employees have heard the rumor?
 All 1000 employees will have heard the rumor by the 8 day
 \end{quote}
 
-\subsection{Page 55: problem 6}\label{page-55-problem-6}
+\section{Page 55: problem 6}\label{page-55-problem-6}
 
 An economist is interested in the variation of the price of a single
 product. It is observed that a high price for the product in the market
@@ -394,19 +395,23 @@ Case D & 100 & 400\tabularnewline
 
 \NormalTok{plot1 <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(df}\FloatTok{.1}\NormalTok{) +}\StringTok{ }
 \StringTok{         }\KeywordTok{geom_line}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \NormalTok{count, }\DataTypeTok{y =} \NormalTok{value, }\DataTypeTok{color =} \KeywordTok{as.factor}\NormalTok{(cat))) +}\StringTok{ }
-\StringTok{         }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.position=}\StringTok{"top"}\NormalTok{, }\DataTypeTok{legend.direction=}\StringTok{"horizontal"}\NormalTok{, }\DataTypeTok{legend.title=}\KeywordTok{element_blank}\NormalTok{()) }
+\StringTok{         }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.position=}\StringTok{"top"}\NormalTok{, }\DataTypeTok{legend.direction=}\StringTok{"horizontal"}\NormalTok{, }\DataTypeTok{legend.title=}\KeywordTok{element_blank}\NormalTok{()) +}
+\StringTok{         }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"Case A"}\NormalTok{)}
 
 \NormalTok{plot2 <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(df}\FloatTok{.2}\NormalTok{) +}\StringTok{ }
 \StringTok{         }\KeywordTok{geom_line}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \NormalTok{count, }\DataTypeTok{y =} \NormalTok{value, }\DataTypeTok{color =} \KeywordTok{as.factor}\NormalTok{(cat))) +}\StringTok{ }
-\StringTok{         }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.position=}\StringTok{"top"}\NormalTok{, }\DataTypeTok{legend.direction=}\StringTok{"horizontal"}\NormalTok{, }\DataTypeTok{legend.title=}\KeywordTok{element_blank}\NormalTok{()) }
+\StringTok{         }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.position=}\StringTok{"top"}\NormalTok{, }\DataTypeTok{legend.direction=}\StringTok{"horizontal"}\NormalTok{, }\DataTypeTok{legend.title=}\KeywordTok{element_blank}\NormalTok{()) +}
+\StringTok{         }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"Case B"}\NormalTok{)}
 
 \NormalTok{plot3 <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(df}\FloatTok{.3}\NormalTok{) +}\StringTok{ }
 \StringTok{         }\KeywordTok{geom_line}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \NormalTok{count, }\DataTypeTok{y =} \NormalTok{value, }\DataTypeTok{color =} \KeywordTok{as.factor}\NormalTok{(cat))) +}\StringTok{ }
-\StringTok{         }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.position=}\StringTok{"top"}\NormalTok{, }\DataTypeTok{legend.direction=}\StringTok{"horizontal"}\NormalTok{, }\DataTypeTok{legend.title=}\KeywordTok{element_blank}\NormalTok{()) }
+\StringTok{         }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.position=}\StringTok{"top"}\NormalTok{, }\DataTypeTok{legend.direction=}\StringTok{"horizontal"}\NormalTok{, }\DataTypeTok{legend.title=}\KeywordTok{element_blank}\NormalTok{()) +}
+\StringTok{         }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"Case C"}\NormalTok{)}
 
 \NormalTok{plot4 <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(df}\FloatTok{.4}\NormalTok{) +}\StringTok{ }
 \StringTok{         }\KeywordTok{geom_line}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \NormalTok{count, }\DataTypeTok{y =} \NormalTok{value, }\DataTypeTok{color =} \KeywordTok{as.factor}\NormalTok{(cat))) +}\StringTok{ }
-\StringTok{         }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.position=}\StringTok{"top"}\NormalTok{, }\DataTypeTok{legend.direction=}\StringTok{"horizontal"}\NormalTok{, }\DataTypeTok{legend.title=}\KeywordTok{element_blank}\NormalTok{()) }
+\StringTok{         }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.position=}\StringTok{"top"}\NormalTok{, }\DataTypeTok{legend.direction=}\StringTok{"horizontal"}\NormalTok{, }\DataTypeTok{legend.title=}\KeywordTok{element_blank}\NormalTok{()) +}
+\StringTok{         }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"Case D"}\NormalTok{)}
 
 \KeywordTok{grid.arrange}\NormalTok{(plot1, plot2, plot3, plot4, }\DataTypeTok{ncol=}\DecValTok{2}\NormalTok{)}
 \end{Highlighting}

@@ -48,6 +48,7 @@ When? The annuity will run out at `r count` months.
 
 \newpage
 
+
 # Page 17: problem 9
 
 The data in the accompanying table show the speed n (in increments of 5 mph) of an automobile and the associate distance $a_n$ in feet required to stop it once the breaks are applied. For instance, $n~=~6$ (representing 6 x 5 = 30 mph) requires a stopping distance of $a_6$ = 47ft. 
@@ -86,7 +87,8 @@ ggplot(data = df, aes(x = n, y = a_n - a_n2)) +
         geom_point() + 
         geom_smooth(method = "lm", se = FALSE)
 ```
-## Page 34: #13
+
+# Page 34: problem 13
 
 Considering the spreading of a rumor through a company of 1000 employees, all working in the same building. We assume that the spreading of a rumor is similar to the spreading of a contagious disease in that the number of people hearing the rumor each day is proportional to the product of the number who have heard the rumor previously and the number who have not heard the rumor. This is given by 
 
@@ -111,7 +113,7 @@ if (r_n <= 0){
 ```
 > All 1000 employees will have heard the rumor by the `r count` day
 
-## Page 55: problem 6 
+# Page 55: problem 6 
 
 An economist is interested in the variation of the price of a single product. It is observed that a high price for the product in the market attracts more suppliers. However, increasing the quantity of the product supplied tends to drive the price down. Over time, there is an interaction between price and supply. The economist has proposed the following model, where $P_n$ represents the price of the product at year $n$, and $Q_n$ represents quantity. Find the equilibrium values for the system.
 
@@ -196,19 +198,23 @@ df.4 <- lt_behav(df)
 
 plot1 <- ggplot(df.1) + 
          geom_line(aes(x = count, y = value, color = as.factor(cat))) + 
-         theme(legend.position="top", legend.direction="horizontal", legend.title=element_blank()) 
+         theme(legend.position="top", legend.direction="horizontal", legend.title=element_blank()) +
+         ggtitle("Case A")
 
 plot2 <- ggplot(df.2) + 
          geom_line(aes(x = count, y = value, color = as.factor(cat))) + 
-         theme(legend.position="top", legend.direction="horizontal", legend.title=element_blank()) 
+         theme(legend.position="top", legend.direction="horizontal", legend.title=element_blank()) +
+         ggtitle("Case B")
 
 plot3 <- ggplot(df.3) + 
          geom_line(aes(x = count, y = value, color = as.factor(cat))) + 
-         theme(legend.position="top", legend.direction="horizontal", legend.title=element_blank()) 
+         theme(legend.position="top", legend.direction="horizontal", legend.title=element_blank()) +
+         ggtitle("Case C")
 
 plot4 <- ggplot(df.4) + 
          geom_line(aes(x = count, y = value, color = as.factor(cat))) + 
-         theme(legend.position="top", legend.direction="horizontal", legend.title=element_blank()) 
+         theme(legend.position="top", legend.direction="horizontal", legend.title=element_blank()) +
+         ggtitle("Case D")
 
 grid.arrange(plot1, plot2, plot3, plot4, ncol=2)
 ```
