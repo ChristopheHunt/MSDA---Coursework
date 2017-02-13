@@ -250,7 +250,7 @@ in that the number of people hearing the rumor each day is proportional
 to the product of the number who have heard the rumor previously and the
 number who have not heard the rumor. This is given by
 
-\[r_{n+1} = r_n + kr_n(1000- _n)\]
+\[r_{n+1} = r_n + kr_n(1000-_n)\]
 
 where \(k\) is a parameter that depends on how fast the rumor spreads
 and \(n\) is the number of days. Assume \(k\) = 0.001 and further assume
@@ -264,7 +264,7 @@ employees have heard the rumor?
 \NormalTok{count <-}\StringTok{ }\DecValTok{0}
 
 \NormalTok{while (r_n <=}\StringTok{ }\DecValTok{1000}\NormalTok{)\{}
-\NormalTok{r_n <-}\StringTok{ }\NormalTok{r_n +}\StringTok{ }\NormalTok{((.}\DecValTok{001}\NormalTok{*r_n)*(}\DecValTok{1000}\NormalTok{-count))}
+\NormalTok{r_n <-}\StringTok{ }\NormalTok{(r_n +}\StringTok{ }\NormalTok{((.}\DecValTok{001}\NormalTok{*r_n)*(}\DecValTok{1000}\NormalTok{-count)))}
 \NormalTok{count <-}\StringTok{ }\NormalTok{count +}\StringTok{ }\DecValTok{1}
 \NormalTok{if (r_n <=}\StringTok{ }\DecValTok{0}\NormalTok{)\{}
   \KeywordTok{print}\NormalTok{(}\StringTok{"no one will have heard the rumor"}\NormalTok{)}
@@ -274,9 +274,7 @@ employees have heard the rumor?
 \end{Highlighting}
 \end{Shaded}
 
-\begin{quote}
-All 1000 employees will have heard the rumor by the 8 day
-\end{quote}
+All 1000 employees will have heard the rumor on the 8 day
 
 \section{Page 55: problem 6}\label{page-55-problem-6}
 

@@ -92,7 +92,7 @@ ggplot(data = df, aes(x = n, y = a_n - a_n2)) +
 
 Considering the spreading of a rumor through a company of 1000 employees, all working in the same building. We assume that the spreading of a rumor is similar to the spreading of a contagious disease in that the number of people hearing the rumor each day is proportional to the product of the number who have heard the rumor previously and the number who have not heard the rumor. This is given by 
 
-$$r_{n+1} = r_n + kr_n(1000- _n)$$
+$$r_{n+1} = r_n + kr_n(1000-_n)$$
 
 where $k$ is a parameter that depends on how fast the rumor spreads and $n$ is the number of days. Assume $k$ = 0.001 and further assume that four people initially have heard the rumor. How soon will all 1000 employees have heard the rumor? 
 
@@ -102,7 +102,7 @@ k <- .001
 count <- 0
 
 while (r_n <= 1000){
-r_n <- r_n + ((.001*r_n)*(1000-count))
+r_n <- (r_n + ((.001*r_n)*(1000-count)))
 count <- count + 1
 if (r_n <= 0){
   print("no one will have heard the rumor")
@@ -111,7 +111,8 @@ if (r_n <= 0){
 }
 
 ```
-> All 1000 employees will have heard the rumor by the `r count` day
+
+All 1000 employees will have heard the rumor on the `r count` day
 
 # Page 55: problem 6 
 
