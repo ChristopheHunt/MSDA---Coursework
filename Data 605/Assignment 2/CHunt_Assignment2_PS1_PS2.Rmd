@@ -107,8 +107,7 @@ factorization <- function(M){
          E32[3,2] <- -M3[3,2] / M3[2,2]
          U <- E32 %*% M3
          L <- solve(E21) %*% solve(E31) %*% solve(E32)
-         print(U)
-         print(L)
+         list(U,L)
          }
       }
 ```
