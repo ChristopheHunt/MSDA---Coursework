@@ -1,0 +1,47 @@
+---
+title: "Homework 3"
+author: "Christophe Hunt"
+date: "February 18, 2017"
+output: pdf_document
+---
+
+# Problem : Page 113: 2
+
+The following table gives the elongation $e$ in inches (in./in.) for a given stress $S$ on a steel wire measured in pounds per square inch (lb/in.$^2$). Test the models $e = c_1S$ by plotting the data. Estimate $c_1$ graphically.  
+
+\begin{table}[!htbp]
+\centering
+\caption{}
+\label{my-label}
+\begin{tabular}{l|lllllllllll}
+$S(x10^{-3})$ & 5 & 10 & 20 & 30 & 40  & 50  & 60  & 70  & 80  & 90  & 100 \\ \hline
+$e(x10^5)$    & 0 & 19 & 57 & 94 & 134 & 173 & 216 & 256 & 297 & 343 & 390 
+\end{tabular}
+\end{table}
+
+
+# Problem : Page 121: 2.a
+For each of the following data sets, formulate the mathematical model that minimizes the largest deviation between the data and the line y= ax+b. If a compuet is availae solve for the estiamtes of a and b.
+
+\begin{table}[!htbp]
+\centering
+\caption{}
+\label{my-label}
+\begin{tabular}{l|llllll}
+x & 1   & 2.3 & 3.7 & 4.2 & 6.1 & 7.0 \\ \hline
+y & 3.6 & 3.0 & 3.2 & 5.1 & 5.3 & 6.8  
+\end{tabular}
+\end{table}
+
+
+# Problem : Page 127: 10
+
+# Problem : Page 136: 7
+
+# Problem : Page 146: 5
+
+# Problem : Page 157: 4
+
+# Problem : Page 169: 11
+
+# Problem : Page 181: 5
