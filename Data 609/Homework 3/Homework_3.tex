@@ -1,0 +1,146 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Homework 3},
+            pdfauthor={Christophe Hunt},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+  \title{Homework 3}
+  \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+  \author{Christophe Hunt}
+  \preauthor{\centering\large\emph}
+  \postauthor{\par}
+  \predate{\centering\large\emph}
+  \postdate{\par}
+  \date{February 18, 2017}
+
+\usepackage{relsize}
+\usepackage{setspace}
+\usepackage{amsmath,amsfonts,amsthm}
+\usepackage[sfdefault]{roboto}
+\usepackage[T1]{fontenc}
+\usepackage{float}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\section{Problem : Page 113: 2}\label{problem-page-113-2}
+
+The following table gives the elongation \(e\) in inches (in./in.) for a
+given stress \(S\) on a steel wire measured in pounds per square inch
+(lb/in.\(^2\)). Test the models \(e = c_1S\) by plotting the data.
+Estimate \(c_1\) graphically.
+
+\begin{table}[!htbp]
+\centering
+\caption{}
+\label{my-label}
+\begin{tabular}{l|lllllllllll}
+$S(x10^{-3})$ & 5 & 10 & 20 & 30 & 40  & 50  & 60  & 70  & 80  & 90  & 100 \\ \hline
+$e(x10^5)$    & 0 & 19 & 57 & 94 & 134 & 173 & 216 & 256 & 297 & 343 & 390 
+\end{tabular}
+\end{table}
+
+\section{Problem : Page 121: 2.a}\label{problem-page-121-2.a}
+
+For each of the following data sets, formulate the mathematical model
+that minimizes the largest deviation between the data and the line y=
+ax+b. If a compuet is availae solve for the estiamtes of a and b.
+
+\begin{table}[!htbp]
+\centering
+\caption{}
+\label{my-label}
+\begin{tabular}{l|llllll}
+x & 1   & 2.3 & 3.7 & 4.2 & 6.1 & 7.0 \\ \hline
+y & 3.6 & 3.0 & 3.2 & 5.1 & 5.3 & 6.8  
+\end{tabular}
+\end{table}
+
+\section{Problem : Page 127: 10}\label{problem-page-127-10}
+
+\section{Problem : Page 136: 7}\label{problem-page-136-7}
+
+\section{Problem : Page 146: 5}\label{problem-page-146-5}
+
+\section{Problem : Page 157: 4}\label{problem-page-157-4}
+
+\section{Problem : Page 169: 11}\label{problem-page-169-11}
+
+\section{Problem : Page 181: 5}\label{problem-page-181-5}
+
+
+\end{document}

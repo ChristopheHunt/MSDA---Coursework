@@ -2,8 +2,20 @@
 title: "Homework 3"
 author: "Christophe Hunt"
 date: "February 18, 2017"
-output: pdf_document
+output:
+  pdf_document:
+    fig_caption: yes
+    keep_tex: yes
+    includes:
+      in_header: header.tex
+    number_sections: yes
+    toc: yes
+    toc_depth: 2
+  html_document:
+    toc: yes
+    toc_depth: '2'
 ---
+
 
 # Problem : Page 113: 2
 
