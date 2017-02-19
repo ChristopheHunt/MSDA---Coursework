@@ -291,7 +291,7 @@ Weight, W (oz)  & 27   & 17   & 41    & 26   & 17     & 49    & 23     & 16
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{x <-}\StringTok{ }\NormalTok{length.in <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\FloatTok{14.5}\NormalTok{, }\FloatTok{12.5}\NormalTok{, }\FloatTok{17.25} \NormalTok{, }\FloatTok{14.5} \NormalTok{, }\FloatTok{12.625} \NormalTok{, }\FloatTok{17.75} \NormalTok{, }\FloatTok{14.125} \NormalTok{, }\FloatTok{12.635}\NormalTok{)}
+\NormalTok{x <-}\StringTok{ }\NormalTok{length.in <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\FloatTok{14.5}\NormalTok{, }\FloatTok{12.5}\NormalTok{, }\FloatTok{17.25} \NormalTok{, }\FloatTok{14.5} \NormalTok{, }\FloatTok{12.625} \NormalTok{, }\FloatTok{17.75} \NormalTok{, }\FloatTok{14.125} \NormalTok{, }\FloatTok{12.625}\NormalTok{)}
 \NormalTok{y <-}\StringTok{ }\NormalTok{weight.oz <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{27} \NormalTok{, }\DecValTok{17}   \NormalTok{, }\DecValTok{41}    \NormalTok{, }\DecValTok{26}   \NormalTok{, }\DecValTok{17}     \NormalTok{, }\DecValTok{49}    \NormalTok{, }\DecValTok{23}     \NormalTok{, }\DecValTok{16} \NormalTok{)}
 
 \NormalTok{a <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(x^}\DecValTok{3}\NormalTok{*y)/(}\KeywordTok{sum}\NormalTok{((x^}\DecValTok{2}\NormalTok{)^}\DecValTok{3}\NormalTok{))}
@@ -301,12 +301,31 @@ Weight, W (oz)  & 27   & 17   & 41    & 26   & 17     & 49    & 23     & 16
 \end{Highlighting}
 \end{Shaded}
 
-The least-squares fit of \(W = kl^3\) is \(W = 0.008436l^3\). The sum of
-the squares of the deviations as 12.248814 so \(D = 1.237377\). As the
-largest absoulte deviation is 2.301, \(c_{max}\) can be bound as
+The least-squares fit of \(W = kl^3\) is \(W = 0.008437l^3\). The sum of
+the squares of the deviations as 12.1683418 so \(D = 1.2333056\). As the
+largest absoulte deviation is 2.305, \(c_{max}\) can be bound as
 follows:
 
-\[D = 1.237377 \leq c_{max} \leq 2.301 = d_{max}\]
+\[D = 1.2333056 \leq c_{max} \leq 2.305 = d_{max}\]
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  In the following data, g represents the girth of a fish. Fit the model
+  W = klg\^{}2 to the data using the least squares criterion
+\end{enumerate}
+
+\begin{table}[!htbp]
+\centering
+\label{my-label}
+\begin{tabular}{l|llllllll}
+Length, l (in.) & 14.5 & 12.5 & 17.25 & 14.5 & 12.625 & 17.75 & 14.125 & 12.625 \\ \hline
+Girthm g (in) & 9.75 & 8.375 & 11 & 9.75 & 8.5 & 12.5 & 9.0 & 8.5 \\ \hline
+Weight, W (oz)  & 27   & 17   & 41    & 26   & 17     & 49    & 23     & 16  
+\end{tabular}
+\end{table}
 
 \section{Problem : Page 146: 5}\label{problem-page-146-5}
 
