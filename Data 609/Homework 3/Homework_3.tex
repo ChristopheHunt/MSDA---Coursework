@@ -163,7 +163,8 @@ $e(x10^5)$    & 0 & 19 & 57 & 94 & 134 & 173 & 216 & 256 & 297 & 343 & 390
 \NormalTok{e <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{19}\NormalTok{,}\DecValTok{57}\NormalTok{,}\DecValTok{94}\NormalTok{,}\DecValTok{134}\NormalTok{,}\DecValTok{173}\NormalTok{,}\DecValTok{216}\NormalTok{,}\DecValTok{256}\NormalTok{,}\DecValTok{297}\NormalTok{,}\DecValTok{343}\NormalTok{,}\DecValTok{390}\NormalTok{)}
 \KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =} \KeywordTok{as.data.frame}\NormalTok{(}\KeywordTok{cbind}\NormalTok{(S,e)), }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \NormalTok{S, }\DataTypeTok{y =} \NormalTok{e)) +}\StringTok{ }
 \StringTok{  }\KeywordTok{geom_point}\NormalTok{() +}
-\StringTok{  }\KeywordTok{geom_abline}\NormalTok{(}\DataTypeTok{intercept =} \NormalTok{-}\DecValTok{20}\NormalTok{, }\DataTypeTok{slope =} \DecValTok{4}\NormalTok{)}
+\StringTok{  }\KeywordTok{geom_abline}\NormalTok{(}\DataTypeTok{slope =} \FloatTok{3.6}\NormalTok{, }\DataTypeTok{color =} \StringTok{'blue'}\NormalTok{) +}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_abline}\NormalTok{(}\DataTypeTok{intercept =} \NormalTok{-}\DecValTok{20}\NormalTok{, }\DataTypeTok{slope =} \DecValTok{4}\NormalTok{, }\DataTypeTok{color =} \StringTok{'red'}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -172,8 +173,10 @@ $e(x10^5)$    & 0 & 19 & 57 & 94 & 134 & 173 & 216 & 256 & 297 & 343 & 390
 \begin{quote}
 Above is the graph of the elongation \$e\% versus stress S x
 10\^{}\{-1\}. By eyeballing the results of several plots we can give the
-estimate of \textasciitilde{}4 for \(e\) if provided with an intercept
-of -20. This is simply a best guess.
+estimate of \textasciitilde{}3.6 for \(c_1\) for the model \(e = c_1S\)
+(this is the blue line). However, do see a much better fit with
+\textasciitilde{}4 for \(c_1\), if we provide an intercept of -20. These
+are simply best guesses.
 \end{quote}
 
 \section{Problem : Page 121: 2.a}\label{problem-page-121-2.a}

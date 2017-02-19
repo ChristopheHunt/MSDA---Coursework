@@ -39,10 +39,11 @@ S <- c(5,10,20,30,40,50,60,70,80,90,100)
 e <- c(0,19,57,94,134,173,216,256,297,343,390)
 ggplot(data = as.data.frame(cbind(S,e)), aes(x = S, y = e)) + 
   geom_point() +
-  geom_abline(intercept = -20, slope = 4)
+  geom_abline(slope = 3.6, color = 'blue') + 
+  geom_abline(intercept = -20, slope = 4, color = 'red')
 ```
 
-> Above is the graph of the elongation $e% versus stress S x 10^{-1}. By eyeballing the results of several plots we can give the estimate of ~4 for $e$ if provided with an intercept of -20. This is simply a best guess. 
+> Above is the graph of the elongation $e% versus stress S x 10^{-1}. By eyeballing the results of several plots we can give the estimate of ~3.6 for $c_1$ for the model $e = c_1S$ (this is the blue line). However, do see a much better fit with ~4 for $c_1$, if we provide an intercept of -20. These are simply best guesses. 
 
 
 # Problem : Page 121: 2.a
