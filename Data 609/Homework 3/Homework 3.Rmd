@@ -18,6 +18,8 @@ output:
 
 \newpage
 
+#TODO this problem done, 100% confident complete
+
 # Problem : Page 113: 2
 
 The following table gives the elongation $e$ in inches (in./in.) for a given stress $S$ on a steel wire measured in pounds per square inch (lb/in.$^2$). Test the models $e = c_1S$ by plotting the data. Estimate $c_1$ graphically.  
@@ -45,6 +47,7 @@ ggplot(data = as.data.frame(cbind(S,e)), aes(x = S, y = e)) +
 
 > Above is the graph of the elongation $e% versus stress S x 10^{-1}. By eyeballing the results of several plots we can give the estimate of ~3.6 for $c_1$ for the model $e = c_1S$ (this is the blue line). However, do see a much better fit with ~4 for $c_1$, if we provide an intercept of -20. These are simply best guesses. 
 
+#TODO - this needs r, a, and b solved, 50% complete
 
 # Problem : Page 121: 2.a
 For each of the following data sets, formulate the mathematical model that minimizes the largest deviation between the data and the line y = ax + b. If a computer is available solve for the estimates of a and b.
@@ -80,6 +83,7 @@ y2 <- y - (m*x + b)
 
 The model y = ax + b for this date = y = `r round(m, 2)`x+`r round(b,2)`. 
 
+#TODO this problem is done, 100% confident complete
 
 # Problem : Page 127: 10
 
@@ -125,9 +129,12 @@ a
 
 Resulting in the form $y = `r round(a,4)`n^{3/2}$. 
 
+#TODO - this problem done, 100% confident complete
+
 # Problem : Page 136: 7
 
-a. In the following data, $W$ represents the weight of a fish (bass) and $l$ represents its length. Fit the model $W = kl^3$ to the data using the least-squares criterion. 
+## a. 
+In the following data, $W$ represents the weight of a fish (bass) and $l$ represents its length. Fit the model $W = kl^3$ to the data using the least-squares criterion. 
 
 \begin{table}[!htbp]
 \centering
@@ -149,11 +156,10 @@ y.y2 <- (y - y2)
 D <- (sum(y.y2^2)/8)^(1/2)
 ```
 
-The least-squares fit of $W = kl^3$ is $W = `r round(a, 6)`l^3$. The sum of the squares of the deviations as `r sum(y.y2^2)` so $D = `r D`$. As the largest absoulte deviation is `r round(max(abs(y.y2)),3)`, $c_{max}$ can be bound as follows:
+The least-squares fit of $W = kl^3$ is $W = `r round(a, 6)`l^3$. The sum of the squares of the deviations as `r sum(y.y2^2)` so $D = `r D`$. As the largest absoulte deviation is `r round(max(abs(y.y2)),3)`, $c_{max}$ can be bound as follows: $D = `r D` \leq c_{max} \leq `r round(max(abs(y.y2)),3)` = d_{max}$
 
-$$D = `r D` \leq c_{max} \leq `r round(max(abs(y.y2)),3)` = d_{max}$$
-
-b. In the following data, g represents the girth of a fish. Fit the model $W = klg^2$ to the data using the least squares criterion
+##b. 
+In the following data, g represents the girth of a fish. Fit the model $W = klg^2$ to the data using the least squares criterion
 
 \begin{table}[!htbp]
 \centering
@@ -176,9 +182,14 @@ y.y2 <- (y - y2)
 D <- (sum(y.y2^2)/8)^(1/2)
 ```
 
-The least-squares fit of $W = klg^2$ is $W = `r round(a, 6)`lg^2$. The sum of the squares of the deviations as `r sum(y.y2^2)` so $D = `r D`$. As the largest absoulte deviation is `r round(max(abs(y.y2)),3)`, $c_{max}$ can be bound as follows:
+The least-squares fit of $W = klg^2$ is $W = `r round(a, 6)`lg^2$. The sum of the squares of the deviations as `r sum(y.y2^2)` so $D = `r D`$. As the largest absoulte deviation is `r round(max(abs(y.y2)),3)`, $c_{max}$ can be bound as follows: $D = `r D` \leq c_{max} \leq `r round(max(abs(y.y2)),3)` = d_{max}$  
 
-$$D = `r D` \leq c_{max} \leq `r round(max(abs(y.y2)),3)` = d_{max}$$
+##c.  
+
+Which of the two models fits the data better? Justify fully. Which model do you prefer? Why? 
+
+The first model has the largest absolute deviation at 2.305, whereas, the second model's largest absolute deviation at 2.794. Therefore, it appears that the first model fits the data better with the lowest $d_{max}$. However, using only the criterion may be naive for the data set. My preference would be for the second model because of its account for girth which would suggest a growth in weight and has the smallest $d_{max}$ of the two models. 
+
 
 # Problem : Page 146: 5
 
