@@ -16,6 +16,7 @@ output:
     toc_depth: '2'
 ---
 
+\newpage
 
 # Problem : Page 113: 2
 
@@ -30,6 +31,18 @@ $S(x10^{-3})$ & 5 & 10 & 20 & 30 & 40  & 50  & 60  & 70  & 80  & 90  & 100 \\ \h
 $e(x10^5)$    & 0 & 19 & 57 & 94 & 134 & 173 & 216 & 256 & 297 & 343 & 390 
 \end{tabular}
 \end{table}
+
+
+```{r, fig.height=3, fig.width=7}
+library(ggplot2)
+S <- c(5,10,20,30,40,50,60,70,80,90,100)
+e <- c(0,19,57,94,134,173,216,256,297,343,390)
+ggplot(data = as.data.frame(cbind(S,e)), aes(x = S, y = e)) + 
+  geom_point() +
+  geom_abline(intercept = -20, slope = 4)
+```
+
+> Above is the graph of the elongation $e% versus stress S x 10^{-1}. By eyeballing the results of several plots we can give the estimate of ~4 for $e$ if provided with an intercept of -20. This is simply a best guess. 
 
 
 # Problem : Page 121: 2.a
