@@ -314,7 +314,7 @@ follows:
 \tightlist
 \item
   In the following data, g represents the girth of a fish. Fit the model
-  W = klg\^{}2 to the data using the least squares criterion
+  \(W = klg^2\) to the data using the least squares criterion
 \end{enumerate}
 
 \begin{table}[!htbp]
@@ -322,10 +322,30 @@ follows:
 \label{my-label}
 \begin{tabular}{l|llllllll}
 Length, l (in.) & 14.5 & 12.5 & 17.25 & 14.5 & 12.625 & 17.75 & 14.125 & 12.625 \\ \hline
-Girthm g (in) & 9.75 & 8.375 & 11 & 9.75 & 8.5 & 12.5 & 9.0 & 8.5 \\ \hline
+Girth g (in) & 9.75 & 8.375 & 11 & 9.75 & 8.5 & 12.5 & 9.0 & 8.5 \\ \hline
 Weight, W (oz)  & 27   & 17   & 41    & 26   & 17     & 49    & 23     & 16  
 \end{tabular}
 \end{table}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\NormalTok{length.in <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\FloatTok{14.5}\NormalTok{, }\FloatTok{12.5} \NormalTok{, }\FloatTok{17.25}\NormalTok{, }\FloatTok{14.5}\NormalTok{, }\FloatTok{12.625}\NormalTok{, }\FloatTok{17.75} \NormalTok{, }\FloatTok{14.125} \NormalTok{, }\FloatTok{12.625}\NormalTok{)}
+\NormalTok{y <-}\StringTok{ }\NormalTok{weight.oz <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{27}  \NormalTok{, }\DecValTok{17}   \NormalTok{, }\DecValTok{41}   \NormalTok{, }\DecValTok{26}  \NormalTok{, }\DecValTok{17}    \NormalTok{, }\DecValTok{49}    \NormalTok{, }\DecValTok{23}     \NormalTok{, }\DecValTok{16} \NormalTok{)}
+\NormalTok{z <-}\StringTok{ }\NormalTok{girth.in  <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\FloatTok{9.75}\NormalTok{, }\FloatTok{8.375}\NormalTok{, }\DecValTok{11}   \NormalTok{, }\FloatTok{9.75}\NormalTok{, }\FloatTok{8.5}   \NormalTok{, }\FloatTok{12.5}  \NormalTok{, }\FloatTok{9.0}    \NormalTok{, }\FloatTok{8.5}\NormalTok{)}
+
+\NormalTok{a <-}\StringTok{ }\KeywordTok{sum}\NormalTok{((x*z^}\DecValTok{2}\NormalTok{)*y)/(}\KeywordTok{sum}\NormalTok{((x*z^}\DecValTok{2}\NormalTok{)^}\DecValTok{2}\NormalTok{))}
+\NormalTok{y2 <-}\StringTok{ }\NormalTok{a*(x*z^}\DecValTok{2}\NormalTok{)}
+\NormalTok{y.y2 <-}\StringTok{ }\NormalTok{(y -}\StringTok{ }\NormalTok{y2)}
+\NormalTok{D <-}\StringTok{ }\NormalTok{(}\KeywordTok{sum}\NormalTok{(y.y2^}\DecValTok{2}\NormalTok{)/}\DecValTok{8}\NormalTok{)^(}\DecValTok{1}\NormalTok{/}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+The least-squares fit of \(W = klg^2\) is \(W = 0.018675lg^2\). The sum
+of the squares of the deviations as 17.6710973 so \(D = 1.4862325\). As
+the largest absoulte deviation is 2.794, \(c_{max}\) can be bound as
+follows:
+
+\[D = 1.4862325 \leq c_{max} \leq 2.794 = d_{max}\]
 
 \section{Problem : Page 146: 5}\label{problem-page-146-5}
 

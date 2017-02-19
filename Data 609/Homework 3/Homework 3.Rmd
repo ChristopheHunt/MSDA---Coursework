@@ -153,18 +153,32 @@ The least-squares fit of $W = kl^3$ is $W = `r round(a, 6)`l^3$. The sum of the 
 
 $$D = `r D` \leq c_{max} \leq `r round(max(abs(y.y2)),3)` = d_{max}$$
 
-b. In the following data, g represents the girth of a fish. Fit the model W = klg^2 to the data using the least squares criterion
+b. In the following data, g represents the girth of a fish. Fit the model $W = klg^2$ to the data using the least squares criterion
 
 \begin{table}[!htbp]
 \centering
 \label{my-label}
 \begin{tabular}{l|llllllll}
 Length, l (in.) & 14.5 & 12.5 & 17.25 & 14.5 & 12.625 & 17.75 & 14.125 & 12.625 \\ \hline
-Girthm g (in) & 9.75 & 8.375 & 11 & 9.75 & 8.5 & 12.5 & 9.0 & 8.5 \\ \hline
+Girth g (in) & 9.75 & 8.375 & 11 & 9.75 & 8.5 & 12.5 & 9.0 & 8.5 \\ \hline
 Weight, W (oz)  & 27   & 17   & 41    & 26   & 17     & 49    & 23     & 16  
 \end{tabular}
 \end{table}
 
+```{r}
+x <- length.in <- c(14.5, 12.5 , 17.25, 14.5, 12.625, 17.75 , 14.125 , 12.625)
+y <- weight.oz <- c(27  , 17   , 41   , 26  , 17    , 49    , 23     , 16 )
+z <- girth.in  <- c(9.75, 8.375, 11   , 9.75, 8.5   , 12.5  , 9.0    , 8.5)
+
+a <- sum((x*z^2)*y)/(sum((x*z^2)^2))
+y2 <- a*(x*z^2)
+y.y2 <- (y - y2)
+D <- (sum(y.y2^2)/8)^(1/2)
+```
+
+The least-squares fit of $W = klg^2$ is $W = `r round(a, 6)`lg^2$. The sum of the squares of the deviations as `r sum(y.y2^2)` so $D = `r D`$. As the largest absoulte deviation is `r round(max(abs(y.y2)),3)`, $c_{max}$ can be bound as follows:
+
+$$D = `r D` \leq c_{max} \leq `r round(max(abs(y.y2)),3)` = d_{max}$$
 
 # Problem : Page 146: 5
 
