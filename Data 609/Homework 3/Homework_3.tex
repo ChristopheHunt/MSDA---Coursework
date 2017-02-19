@@ -295,10 +295,18 @@ Weight, W (oz)  & 27   & 17   & 41    & 26   & 17     & 49    & 23     & 16
 \NormalTok{y <-}\StringTok{ }\NormalTok{weight.oz <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{27} \NormalTok{, }\DecValTok{17}   \NormalTok{, }\DecValTok{41}    \NormalTok{, }\DecValTok{26}   \NormalTok{, }\DecValTok{17}     \NormalTok{, }\DecValTok{49}    \NormalTok{, }\DecValTok{23}     \NormalTok{, }\DecValTok{16} \NormalTok{)}
 
 \NormalTok{a <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(x^}\DecValTok{3}\NormalTok{*y)/(}\KeywordTok{sum}\NormalTok{((x^}\DecValTok{2}\NormalTok{)^}\DecValTok{3}\NormalTok{))}
+\NormalTok{y2 <-}\StringTok{ }\NormalTok{a*(x^}\DecValTok{3}\NormalTok{)}
+\NormalTok{y.y2 <-}\StringTok{ }\NormalTok{(y -}\StringTok{ }\NormalTok{y2)}
+\NormalTok{D <-}\StringTok{ }\NormalTok{(}\KeywordTok{sum}\NormalTok{(y.y2^}\DecValTok{2}\NormalTok{)/}\DecValTok{8}\NormalTok{)^(}\DecValTok{1}\NormalTok{/}\DecValTok{2}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-The least-squares fit of \(W = kl^3\) is \(W = 0.008436l^3\).
+The least-squares fit of \(W = kl^3\) is \(W = 0.008436l^3\). The sum of
+the squares of the deviations as 12.248814 so \(D = 1.237377\). As the
+largest absoulte deviation is 2.301, \(c_{max}\) can be bound as
+follows:
+
+\[D = 1.237377 \leq c_{max} \leq 2.301 = d_{max}\]
 
 \section{Problem : Page 146: 5}\label{problem-page-146-5}
 

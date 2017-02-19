@@ -144,10 +144,15 @@ x <- length.in <- c(14.5, 12.5, 17.25 , 14.5 , 12.625 , 17.75 , 14.125 , 12.635)
 y <- weight.oz <- c(27 , 17   , 41    , 26   , 17     , 49    , 23     , 16 )
 
 a <- sum(x^3*y)/(sum((x^2)^3))
+y2 <- a*(x^3)
+y.y2 <- (y - y2)
+D <- (sum(y.y2^2)/8)^(1/2)
 
 ```
 
-The least-squares fit of $W = kl^3$ is $W = `r round(a, 6)`l^3$. 
+The least-squares fit of $W = kl^3$ is $W = `r round(a, 6)`l^3$. The sum of the squares of the deviations as `r sum(y.y2^2)` so $D = `r D`$. As the largest absoulte deviation is `r round(max(abs(y.y2)),3)`, $c_{max}$ can be bound as follows:
+
+$$D = `r D` \leq c_{max} \leq `r round(max(abs(y.y2)),3)` = d_{max}$$
 
 # Problem : Page 146: 5
 
