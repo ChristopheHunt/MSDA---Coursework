@@ -29,6 +29,46 @@
             pdfborder={0 0 0},
             breaklinks=true}
 \urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{{#1}}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{{#1}}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\ImportTok}[1]{{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{{#1}}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{{#1}}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{{#1}}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{{#1}}}}
+\newcommand{\BuiltInTok}[1]{{#1}}
+\newcommand{\ExtensionTok}[1]{{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{{#1}}}
+\newcommand{\RegionMarkerTok}[1]{{#1}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{{#1}}}}
+\newcommand{\NormalTok}[1]{{#1}}
 \usepackage{graphicx,grffile}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
@@ -112,10 +152,81 @@ A = \begin{bmatrix}
 \end{bmatrix}
 \]
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{A <-}\StringTok{ }\KeywordTok{t}\NormalTok{(}\KeywordTok{matrix}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{1} \NormalTok{, }\DecValTok{2} \NormalTok{,}\DecValTok{3} \NormalTok{, }\DecValTok{4}\NormalTok{, }
+              \NormalTok{-}\DecValTok{1} \NormalTok{, }\DecValTok{0} \NormalTok{, }\DecValTok{1} \NormalTok{, }\DecValTok{3}\NormalTok{, }
+              \DecValTok{0} \NormalTok{, }\DecValTok{1} \NormalTok{, -}\DecValTok{2} \NormalTok{, }\DecValTok{1}\NormalTok{, }
+              \DecValTok{5} \NormalTok{, }\DecValTok{4} \NormalTok{, -}\DecValTok{2} \NormalTok{, -}\DecValTok{3}\NormalTok{), }\DataTypeTok{nrow =} \DecValTok{4}\NormalTok{, }\DataTypeTok{ncol =} \DecValTok{4}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+Since A is a square matrix of (4 x 4) and the determinate is -9 which is
+\(\neq\) 0, the rank is simply 4
+
+Below is my attempt to create a function to rank matrix A and matrix B
+in problem 3 programmatically. I feel that the part of the function that
+calculates the determinates of the submatrices could be improved.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{A <-}\StringTok{ }\KeywordTok{t}\NormalTok{(}\KeywordTok{matrix}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{1} \NormalTok{, }\DecValTok{2} \NormalTok{,}\DecValTok{3} \NormalTok{, }\DecValTok{4}\NormalTok{, }
+              \NormalTok{-}\DecValTok{1} \NormalTok{, }\DecValTok{0} \NormalTok{, }\DecValTok{1} \NormalTok{, }\DecValTok{3}\NormalTok{, }
+              \DecValTok{0} \NormalTok{, }\DecValTok{1} \NormalTok{, -}\DecValTok{2} \NormalTok{, }\DecValTok{1}\NormalTok{, }
+              \DecValTok{5} \NormalTok{, }\DecValTok{4} \NormalTok{, -}\DecValTok{2} \NormalTok{, -}\DecValTok{3}\NormalTok{), }\DataTypeTok{nrow =} \DecValTok{4}\NormalTok{, }\DataTypeTok{ncol =} \DecValTok{4}\NormalTok{))}
+
+\NormalTok{subdet <-}\StringTok{ }\NormalTok{function(A, t)\{}
+            \NormalTok{subdet <-}\StringTok{ }\DecValTok{0}
+           \NormalTok{for (i in }\DecValTok{1}\NormalTok{:t)\{}
+             \NormalTok{subdet <-}\StringTok{ }\KeywordTok{rbind}\NormalTok{(subdet,}\KeywordTok{det}\NormalTok{(A[-i,-i]))}
+           \NormalTok{\}}
+           \NormalTok{if (}\KeywordTok{sum}\NormalTok{(subdet) !=}\DecValTok{0}\NormalTok{)\{}
+             \KeywordTok{return}\NormalTok{(}\KeywordTok{as.integer}\NormalTok{(}\KeywordTok{ncol}\NormalTok{(A))-}\DecValTok{1}\NormalTok{)}
+           \NormalTok{\} else \{}
+             \DecValTok{0}
+           \NormalTok{\}}
+\NormalTok{\}}
+
+\NormalTok{Matrix.Rank <-}\StringTok{ }\NormalTok{function(A)\{}
+               \NormalTok{sq.matrix <-}\StringTok{ }\NormalTok{(}\KeywordTok{as.integer}\NormalTok{(}\KeywordTok{ncol}\NormalTok{(A)) ==}\StringTok{ }\KeywordTok{as.integer}\NormalTok{(}\KeywordTok{nrow}\NormalTok{(A)))}
+               \NormalTok{if (}\KeywordTok{all}\NormalTok{(A ==}\StringTok{ }\DecValTok{0}\NormalTok{))\{}
+                 \KeywordTok{return}\NormalTok{(}\DecValTok{0}\NormalTok{)}
+               \NormalTok{\} else if (sq.matrix ==}\StringTok{ }\OtherTok{TRUE}\NormalTok{)\{}
+                 \NormalTok{det}\FloatTok{.0} \NormalTok{<-}\StringTok{ }\KeywordTok{det}\NormalTok{(A) !=}\StringTok{ }\DecValTok{0}
+                 \NormalTok{if (det}\FloatTok{.0} \NormalTok{==}\StringTok{ }\OtherTok{TRUE}\NormalTok{) \{}
+                 \KeywordTok{return}\NormalTok{(}\KeywordTok{as.integer}\NormalTok{(}\KeywordTok{ncol}\NormalTok{(A)))}
+                 \NormalTok{\} else if (}\KeywordTok{subdet}\NormalTok{(A,}\KeywordTok{ncol}\NormalTok{(A)) !=}\StringTok{ }\DecValTok{0}\NormalTok{) \{}
+                  \KeywordTok{return}\NormalTok{(}\KeywordTok{as.integer}\NormalTok{(}\KeywordTok{ncol}\NormalTok{(A))-}\DecValTok{1}\NormalTok{)}
+                 \NormalTok{\} else \{}
+                     \KeywordTok{return}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+                   \NormalTok{\}}
+                 \NormalTok{\}}
+               \NormalTok{\}}
+
+\KeywordTok{Matrix.Rank}\NormalTok{(A)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4
+\end{verbatim}
+
 \subsection{Problem 2}\label{problem-2}
 
 Given an mxn matrix where \(m > n\), what can be the maximum rank? The
 minimum rank, assuming that the matrix is non-zero?
+
+\begin{quote}
+The maximum rank of a rectangular matrix is the maximum columns or rows
+for the lesser value. Therefore, given an mxn matrix where \(m > n\),
+the maximum rank is \(n\).
+\end{quote}
+
+\begin{quote}
+Assuming the rectangular matrix has at least one non-zero element, it's
+minimum rank must be greater than zero, therefore the minimum rank would
+be 1.
+\end{quote}
 
 \subsection{Problem 3}\label{problem-3}
 
@@ -129,6 +240,28 @@ B =
    2 & 4 & 2 \\
 \end{bmatrix}
 \]
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{B <-}\StringTok{ }\KeywordTok{t}\NormalTok{(}\KeywordTok{matrix}\NormalTok{(}\KeywordTok{c}\NormalTok{( }\DecValTok{1} \NormalTok{, }\DecValTok{2} \NormalTok{, }\DecValTok{1} \NormalTok{,  }\DecValTok{3} \NormalTok{,  }\DecValTok{6} \NormalTok{, }\DecValTok{3} \NormalTok{,  }\DecValTok{2} \NormalTok{,  }\DecValTok{4} \NormalTok{, }\DecValTok{2} \NormalTok{), }\DataTypeTok{ncol =} \DecValTok{3}\NormalTok{, }\DataTypeTok{nrow =} \DecValTok{3}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+This matrix rows that are linearly dependent, R2 = 3, 6, 3 and R3 = 2,
+4, 2 are mulitples of R1 = 1, 2, 1. This made my function more
+challenging because the determinates of the submatrices of B are also
+\(= 0\). However, as long as there is at least one non-zero element in
+the matrix the minimum rank will be \(= 1\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{Matrix.Rank}\NormalTok{(B)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1
+\end{verbatim}
 
 \section{Problem Set 2}\label{problem-set-2}
 
@@ -144,6 +277,38 @@ A =
    0 & 0 & 6 \\
 \end{bmatrix}
 \]
+
+\[
+det( 
+\begin{bmatrix}
+   1 & 2 & 3 \\
+   0 & 4 & 5 \\
+   0 & 0 & 6 \\
+\end{bmatrix}
+-
+\begin{bmatrix}
+   \lambda & 0 & 0 \\
+   0 & \lambda  & 0 \\
+   0 & 0 & \lambda  \\
+\end{bmatrix}
+) = 0
+\]
+
+\[
+det( 
+\begin{bmatrix}
+   1 - \lambda & 2 & 3 \\
+   0 & 4 - \lambda & 5 \\
+   0 & 0 & 6- \lambda\\
+\end{bmatrix}
+)
+\]
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{A <-}\StringTok{  }\KeywordTok{t}\NormalTok{(}\KeywordTok{matrix}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{1} \NormalTok{, }\DecValTok{2} \NormalTok{, }\DecValTok{3}\NormalTok{,  }\DecValTok{0} \NormalTok{, }\DecValTok{4} \NormalTok{, }\DecValTok{5} \NormalTok{, }\DecValTok{0} \NormalTok{, }\DecValTok{0} \NormalTok{, }\DecValTok{6} \NormalTok{), }\DataTypeTok{nrow =} \DecValTok{3}\NormalTok{, }\DataTypeTok{ncol=}\DecValTok{3}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
 
 
 \end{document}

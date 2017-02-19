@@ -22,7 +22,6 @@ output:
 
 What is the rank of the matrix A?
 
-
 \[
 A = \begin{bmatrix}
     1 & 2 & 3 &4  \\
@@ -32,9 +31,63 @@ A = \begin{bmatrix}
 \end{bmatrix}
 \]
 
+
+```{r}
+A <- t(matrix(c(1 , 2 ,3 , 4, 
+              -1 , 0 , 1 , 3, 
+              0 , 1 , -2 , 1, 
+              5 , 4 , -2 , -3), nrow = 4, ncol = 4))
+
+```
+Since A is a square matrix of (`r paste(as.integer(ncol(A)), "x",  as.integer(nrow(A)))`) and the determinate is  `r det(A)` which is $\neq$ 0, the rank is simply `r as.integer(ncol(A))`
+
+Below is my attempt to create a function to rank matrix A and matrix B in problem 3 programmatically. I feel that the part of the function that calculates the determinates of the submatrices could be improved. 
+
+```{r}
+A <- t(matrix(c(1 , 2 ,3 , 4, 
+              -1 , 0 , 1 , 3, 
+              0 , 1 , -2 , 1, 
+              5 , 4 , -2 , -3), nrow = 4, ncol = 4))
+
+subdet <- function(A, t){
+            subdet <- 0
+           for (i in 1:t){
+             subdet <- rbind(subdet,det(A[-i,-i]))
+           }
+           if (sum(subdet) !=0){
+             return(as.integer(ncol(A))-1)
+           } else {
+             0
+           }
+}
+
+Matrix.Rank <- function(A){
+               sq.matrix <- (as.integer(ncol(A)) == as.integer(nrow(A)))
+               if (all(A == 0)){
+                 return(0)
+               } else if (sq.matrix == TRUE){
+                 det.0 <- det(A) != 0
+                 if (det.0 == TRUE) {
+                 return(as.integer(ncol(A)))
+                 } else if (subdet(A,ncol(A)) != 0) {
+                  return(as.integer(ncol(A))-1)
+                 } else {
+                     return(1)
+                   }
+                 }
+               }
+
+Matrix.Rank(A)
+```
+
+
 ## Problem 2 
 
 Given an mxn matrix where $m > n$, what can be the maximum rank? The minimum rank, assuming that the matrix is non-zero?
+
+> The maximum rank of a rectangular matrix is the maximum columns or rows for the lesser value. Therefore, given an mxn matrix where $m > n$, the maximum rank is $n$. 
+
+> Assuming the rectangular matrix has at least one non-zero element, it's minimum rank must be greater than zero, therefore the minimum rank would be 1. 
 
 ## Problem 3 
 
@@ -49,6 +102,16 @@ B =
 \end{bmatrix}
 \]
 
+```{r}
+B <- t(matrix(c( 1 , 2 , 1 ,  3 ,  6 , 3 ,  2 ,  4 , 2 ), ncol = 3, nrow = 3))
+```
+
+This matrix rows that are linearly dependent, R2 = `r B[2,]` and R3 = `r B[3,]` are mulitples of R1 = `r B[1,]`. This made my function more challenging because the determinates of the submatrices of B are also $= 0$. However, as long as there is at least one non-zero element in the matrix the minimum rank will be $= 1$.
+
+```{r}
+Matrix.Rank(B)
+```
+
 # Problem Set 2 
 
 Compute the eigenvalues and eigenvectors of the matrix A. You'll need to show your work. You'll need to write out the characteristic polynomial and show your solution.
@@ -61,3 +124,39 @@ A =
    0 & 0 & 6 \\
 \end{bmatrix}
 \]
+
+
+\[
+det( 
+\begin{bmatrix}
+   1 & 2 & 3 \\
+   0 & 4 & 5 \\
+   0 & 0 & 6 \\
+\end{bmatrix}
+-
+\begin{bmatrix}
+   \lambda & 0 & 0 \\
+   0 & \lambda  & 0 \\
+   0 & 0 & \lambda  \\
+\end{bmatrix}
+) = 0
+\]
+
+
+\[
+det( 
+\begin{bmatrix}
+   1 - \lambda & 2 & 3 \\
+   0 & 4 - \lambda & 5 \\
+   0 & 0 & 6- \lambda\\
+\end{bmatrix}
+)
+\]
+
+
+```{r}
+A <-  t(matrix(c(1 , 2 , 3,  0 , 4 , 5 , 0 , 0 , 6 ), nrow = 3, ncol=3))
+```
+
+
+
