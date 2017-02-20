@@ -21,24 +21,21 @@ In this problem, we'll verify using R that SVD and Eigenvalues are related as wo
 
 \[
 A = \begin{bmatrix}
-    1 & 2 & 3 &4  \\
-   -1 & 0 & 1 & 3  \\
-   0 & 1 & -2 & 1   \\
-   5 & 4 & -2 & -3   \\
+    1 & 2 & 3 \\
+   -1 & 0 & 4 
 \end{bmatrix}
 \]
 
-A =
-
-1 2 3
-???1 0 4
-(1)
-write code in R to compute X = AAT and Y = ATA. Then, compute the eigenvalues
-and eigenvectors of X and Y using the built-in commans in R.
-Then, compute the left-singular, singular values, and right-singular vectors of A using
-the svd command. Examine the two sets of singular vectors and show that they are indeed
-eigenvectors of X and Y. In addition, the two non-zero eigenvalues (the 3rd value will
-be very close to zero, if not zero) of both X and Y are the same and are squares of the
-non-zero singular values of A.
-Your code should compute all these vectors and scalars and store them in variables.
+write code in R to compute X = AAT and Y = ATA. Then, compute the eigenvalues and eigenvectors of X and Y using the built-in commads in R. Then, compute the left-singular, singular values, and right-singular vectors of A using the svd command. Examine the two sets of singular vectors and show that they are indeed eigenvectors of X and Y. In addition, the two non-zero eigenvalues (the 3rd value will be very close to zero, if not zero) of both X and Y are the same and are squares of the non-zero singular values of A. 
+
+Your code should compute all these vectors and scalars and store them in variables. 
+
 Please add enough comments in your code to show me how to interpret your steps.
+
+2. Problem Set 2
+Using the procedure outlined in section 1 of the weekly handout, write a function to compute the inverse of a well-conditioned full-rank square matrix using co-factors. In order to compute the co-factors, you may use built-in commands to compute the determinant. Your function should have the following signature: 
+
+B = myinverse(A)
+
+where A is a matrix and B is its inverse and A×B = I. The off-diagonal elements of I should be close to zero, if not zero. Likewise, the diagonal elements should be close to 1, if not 1. Small numerical precision errors are acceptable but the function myinverse should be correct and must use co-factors and determinant of A to compute the inverse. Please submit PS1 and PS2 in an R-markdown document with your first initial and last
+name. 
