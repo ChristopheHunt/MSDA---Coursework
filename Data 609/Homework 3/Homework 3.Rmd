@@ -72,6 +72,7 @@ mean.y <- mean(y)
 x.i <- (x - mean.x)
 y.i <- (y - mean.y)
 
+
 x.i.y.i <- (x.i * y.i)
 x.i.2   <- (x.i^2)
 
@@ -191,16 +192,3 @@ Which of the two models fits the data better? Justify fully. Which model do you 
 The first model has the largest absolute deviation at 2.305, whereas, the second model's largest absolute deviation at 2.794. Therefore, it appears that the first model fits the data better with the lowest $d_{max}$. However, using only the criterion may be naive for the data set. My preference would be for the second model because of its account for girth which would suggest a growth in weight and has the smallest $d_{max}$ of the two models. 
 
 
-# Problem : Page 146: 5
-
-Solve Problems 1 - 4 with the model V = m(log P) + b. Compare the errors with those computed in Problem 4. Compare the two models. Which is better?
-
-
-# Problem : Page 157: 4
-
-
-
-# Problem : Page 169: 11
-
-
-# Problem : Page 181: 5
