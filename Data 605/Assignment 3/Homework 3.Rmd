@@ -41,7 +41,7 @@ A <- t(matrix(c(1 , 2 ,3 , 4,
 ```
 Since A is a square matrix of (`r paste(as.integer(ncol(A)), "x",  as.integer(nrow(A)))`) and the determinate is  `r det(A)` which is $\neq$ 0, the rank is simply `r as.integer(ncol(A))`
 
-Below is my attempt to create a function to rank matrix A and matrix B in problem 3 programmatically. I feel that the part of the function that calculates the determinates of the submatrices could be improved. 
+Below is my attempt to create a function to rank matrix A and matrix B in problem 3 programmatically. I think that the part of the function that calculates the determinates of the submatrices could be improved. 
 
 ```{r}
 A <- t(matrix(c(1 , 2 ,3 , 4, 
@@ -146,12 +146,22 @@ det(
 \[
 det( 
 \begin{bmatrix}
-   1 - \lambda & 2 & 3 \\
-   0 & 4 - \lambda & 5 \\
-   0 & 0 & 6- \lambda\\
+   \lambda -1 & 2 & 3 \\
+   0 & \lambda -4 & 5 \\
+   0 & 0 & \lambda -6 \\
 \end{bmatrix}
-)
+)=0
 \]
+
+which reduces to:
+
+$(\lambda-1)(\lambda - 4)(\lambda- 6) =0$
+
+therefore, our Eigen Values are:
+
+$\lambda_1 = 1 ; \lambda_2 = 4; \lambda_3 = 6$
+
+
 
 
 ```{r}

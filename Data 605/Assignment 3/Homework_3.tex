@@ -165,8 +165,8 @@ Since A is a square matrix of (4 x 4) and the determinate is -9 which is
 \(\neq\) 0, the rank is simply 4
 
 Below is my attempt to create a function to rank matrix A and matrix B
-in problem 3 programmatically. I feel that the part of the function that
-calculates the determinates of the submatrices could be improved.
+in problem 3 programmatically. I think that the part of the function
+that calculates the determinates of the submatrices could be improved.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -297,12 +297,20 @@ det(
 \[
 det( 
 \begin{bmatrix}
-   1 - \lambda & 2 & 3 \\
-   0 & 4 - \lambda & 5 \\
-   0 & 0 & 6- \lambda\\
+   \lambda -1 & 2 & 3 \\
+   0 & \lambda -4 & 5 \\
+   0 & 0 & \lambda -6 \\
 \end{bmatrix}
-)
+)=0
 \]
+
+which reduces to:
+
+\((\lambda-1)(\lambda - 4)(\lambda- 6) =0\)
+
+therefore, our Eigen Values are:
+
+\(\lambda_1 = 1 ; \lambda_2 = 4; \lambda_3 = 6\)
 
 \begin{Shaded}
 \begin{Highlighting}[]
