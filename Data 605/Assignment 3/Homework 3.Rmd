@@ -146,25 +146,170 @@ det(
 \[
 det( 
 \begin{bmatrix}
-   \lambda -1 & 2 & 3 \\
-   0 & \lambda -4 & 5 \\
-   0 & 0 & \lambda -6 \\
+   1 -\lambda  & 2 & 3 \\
+   0 &  4 -\lambda& 5 \\
+   0 & 0 & 6 -\lambda \\
 \end{bmatrix}
 )=0
 \]
 
 which reduces to:
 
-$(\lambda-1)(\lambda - 4)(\lambda- 6) =0$
+$(1-\lambda)(4-\lambda)(6-\lambda) =0$
 
-therefore, our Eigen Values are:
+Therefore, our Eigen Values are:
 
 $\lambda_1 = 1 ; \lambda_2 = 4; \lambda_3 = 6$
 
 
+Our Eigen Vectors are as follows:
 
+$\lambda_1 = 1$
+
+\[
+det( 
+\begin{bmatrix}
+   1 & 2 & 3 \\
+   0 & 4 & 5 \\
+   0 & 0 & 6 \\
+\end{bmatrix}
+-
+\begin{bmatrix}
+   1 & 0 & 0 \\
+   0 & 1  & 0 \\
+   0 & 0 & 1 \\
+\end{bmatrix}
+) = 0
+\]
+
+
+\[
+\begin{bmatrix}
+   0 & 2 & 3 \\
+   0 & 3 & 5 \\
+   0 & 0 & 5 \\
+\end{bmatrix}
+\begin{bmatrix}
+v_1 \\
+v_2 \\
+v_3
+\end{bmatrix}
+=0
+\]
+
+$$v_1 = 1;~v_2 = 0;~v_3 = 0$$
+
+Therefore:
+
+\[
+E\lambda_1 = \
+\begin{bmatrix}
+1 \\
+0 \\
+0
+\end{bmatrix}
+\]
+
+***
+
+$\lambda_2 = 4$
+
+\[
+det( 
+\begin{bmatrix}
+   1 & 2 & 3 \\
+   0 & 4 & 5 \\
+   0 & 0 & 6 \\
+\end{bmatrix}
+-
+\begin{bmatrix}
+   4 & 0 & 0 \\
+   0 & 4  & 0 \\
+   0 & 0 & 4 \\
+\end{bmatrix}
+) = 0
+\]
+
+
+\[
+\begin{bmatrix}
+   -3 & 2 & 3 \\
+   0 & 0 & 5 \\
+   0 & 0 & 2 \\
+\end{bmatrix}
+\begin{bmatrix}
+v_1 \\
+v_2 \\
+v_3
+\end{bmatrix}
+=0
+\]
+
+Which we can reduce to $-3v_1+2v_2+3v_3 = 0~and~v_3 =0$; substituting back we have $-3v_1+2v_2=0$ or $3v_1=2v_2$ or $v_1=\frac{3}{2}v_2$ where $v_1 =1$.
+
+Therefore:
+
+\[
+E\lambda_4 = \
+\begin{bmatrix}
+1 \\
+\frac{3}{2} \\
+0
+\end{bmatrix}
+\]
+
+
+***
+
+$\lambda_3 = 6$
+
+\[
+det( 
+\begin{bmatrix}
+   1 & 2 & 3 \\
+   0 & 4 & 5 \\
+   0 & 0 & 6 \\
+\end{bmatrix}
+-
+\begin{bmatrix}
+   6 & 0 & 0 \\
+   0 & 6 & 0 \\
+   0 & 0 & 6 \\
+\end{bmatrix}
+) = 0
+\]
+
+
+\[
+\begin{bmatrix}
+   -5 & 2 & 3 \\
+   0 & -2 & 5 \\
+   0 & 0 & 0 \\
+\end{bmatrix}
+\begin{bmatrix}
+v_1 \\
+v_2 \\
+v_3
+\end{bmatrix}
+=0
+\]
+
+Which we can reduce to $-5v_1+2v_2+3v_3 = 0~and~-2v_1+5v_2=0$; solving for $-2v_2+5v_3=0$, we reduce to $5v_3=2v_2$ or $v_3=\frac{5}{2}v_2$. Substituting back $v_3=1$ we get $1=\frac{5}{2}v_2$ or $\frac{2}{5}=v_2$. Now, subsituting back to  $-5v_1+2v_2+3v_3 = 0$ or $-5v_1+2(\frac{2}{5})+3(1) = 0$ or $-5v_1+3\frac{4}{5}= 0$ or $5v_1= 3\frac{4}{5}$ or $5v_1= 3\frac{4}{5}$ or $v_1= \frac{19}{25}$
+
+Therefore:
+
+\[
+E\lambda_6 = \
+\begin{bmatrix}
+\frac{19}{25} \\
+\frac{2}{5} \\
+1
+\end{bmatrix}
+\]
 
 ```{r}
+library(MASS)
+fractions(.8)
 A <-  t(matrix(c(1 , 2 , 3,  0 , 4 , 5 , 0 , 0 , 6 ), nrow = 3, ncol=3))
 ```
 
