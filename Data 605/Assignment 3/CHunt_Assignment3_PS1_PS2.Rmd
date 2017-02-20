@@ -210,8 +210,10 @@ E\lambda_{=1} = \
 \end{bmatrix}
 \]
 
-\newpage
+
 ***
+
+\newpage
 
 $$\lambda_2 = 4$$
 
