@@ -202,7 +202,7 @@ $$v_1 = 1;~v_2 = 0;~v_3 = 0$$
 Therefore:
 
 \[
-E\lambda_1 = \
+E\lambda_{=1} = \
 \begin{bmatrix}
 1 \\
 0 \\
@@ -212,7 +212,7 @@ E\lambda_1 = \
 
 ***
 
-$\lambda_2 = 4$
+$$\lambda_2 = 4$$
 
 \[
 det( 
@@ -245,12 +245,12 @@ v_3
 =0
 \]
 
-Which we can reduce to $-3v_1+2v_2+3v_3 = 0~and~v_3 =0$; substituting back we have $-3v_1+2v_2=0$ or $3v_1=2v_2$ or $v_1=\frac{3}{2}v_2$ where $v_1 =1$.
+Which we can reduce to $-3v_1+2v_2+3v_3 = 0~and~v_3 =0$; substituting back we have $-3v_1+2v_2=0$ or $3v_1=2v_2$ then $v_1=\frac{3}{2}v_2$ where $v_1 =1$.
 
 Therefore:
 
 \[
-E\lambda_4 = \
+E\lambda_{=4} = \
 \begin{bmatrix}
 1 \\
 \frac{3}{2} \\
@@ -261,7 +261,7 @@ E\lambda_4 = \
 
 ***
 
-$\lambda_3 = 6$
+$$\lambda_3 = 6$$
 
 \[
 det( 
@@ -294,24 +294,15 @@ v_3
 =0
 \]
 
-Which we can reduce to $-5v_1+2v_2+3v_3 = 0~and~-2v_1+5v_2=0$; solving for $-2v_2+5v_3=0$, we reduce to $5v_3=2v_2$ or $v_3=\frac{5}{2}v_2$. Substituting back $v_3=1$ we get $1=\frac{5}{2}v_2$ or $\frac{2}{5}=v_2$. Now, subsituting back to  $-5v_1+2v_2+3v_3 = 0$ or $-5v_1+2(\frac{2}{5})+3(1) = 0$ or $-5v_1+3\frac{4}{5}= 0$ or $5v_1= 3\frac{4}{5}$ or $5v_1= 3\frac{4}{5}$ or $v_1= \frac{19}{25}$
+Which we can reduce to $-5v_1+2v_2+3v_3 = 0~and~-2v_1+5v_2=0$; solving for $-2v_2+5v_3=0$, we reduce to $5v_3=2v_2$ or $v_3=\frac{5}{2}v_2$. Substituting back $v_3=1$ we get $1=\frac{5}{2}v_2$ or $\frac{2}{5}=v_2$. Now, subsituting back to  $-5v_1+2v_2+3v_3 = 0$ or $-5v_1+2(\frac{2}{5})+3(1) = 0$ then $-5v_1+3\frac{4}{5}= 0$ then $5v_1= 3\frac{4}{5}$ then $5v_1= 3\frac{4}{5}$ then $v_1= \frac{19}{25}$
 
 Therefore:
 
 \[
-E\lambda_6 = \
+E\lambda_{=6} = \
 \begin{bmatrix}
 \frac{19}{25} \\
 \frac{2}{5} \\
 1
 \end{bmatrix}
 \]
-
-```{r}
-library(MASS)
-fractions(.8)
-A <-  t(matrix(c(1 , 2 , 3,  0 , 4 , 5 , 0 , 0 , 6 ), nrow = 3, ncol=3))
-```
-
-
-

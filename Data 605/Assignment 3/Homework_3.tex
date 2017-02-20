@@ -351,7 +351,7 @@ v_3
 Therefore:
 
 \[
-E\lambda_1 = \
+E\lambda_{=1} = \
 \begin{bmatrix}
 1 \\
 0 \\
@@ -361,7 +361,7 @@ E\lambda_1 = \
 
 \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
 
-\(\lambda_2 = 4\)
+\[\lambda_2 = 4\]
 
 \[
 det( 
@@ -394,13 +394,13 @@ v_3
 \]
 
 Which we can reduce to \(-3v_1+2v_2+3v_3 = 0~and~v_3 =0\); substituting
-back we have \(-3v_1+2v_2=0\) or \(3v_1=2v_2\) or \(v_1=\frac{3}{2}v_2\)
-where \(v_1 =1\).
+back we have \(-3v_1+2v_2=0\) or \(3v_1=2v_2\) then
+\(v_1=\frac{3}{2}v_2\) where \(v_1 =1\).
 
 Therefore:
 
 \[
-E\lambda_4 = \
+E\lambda_{=4} = \
 \begin{bmatrix}
 1 \\
 \frac{3}{2} \\
@@ -410,7 +410,7 @@ E\lambda_4 = \
 
 \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
 
-\(\lambda_3 = 6\)
+\[\lambda_3 = 6\]
 
 \[
 det( 
@@ -446,37 +446,20 @@ Which we can reduce to \(-5v_1+2v_2+3v_3 = 0~and~-2v_1+5v_2=0\); solving
 for \(-2v_2+5v_3=0\), we reduce to \(5v_3=2v_2\) or
 \(v_3=\frac{5}{2}v_2\). Substituting back \(v_3=1\) we get
 \(1=\frac{5}{2}v_2\) or \(\frac{2}{5}=v_2\). Now, subsituting back to
-\(-5v_1+2v_2+3v_3 = 0\) or \(-5v_1+2(\frac{2}{5})+3(1) = 0\) or
-\(-5v_1+3\frac{4}{5}= 0\) or \(5v_1= 3\frac{4}{5}\) or
-\(5v_1= 3\frac{4}{5}\) or \(v_1= \frac{19}{25}\)
+\(-5v_1+2v_2+3v_3 = 0\) or \(-5v_1+2(\frac{2}{5})+3(1) = 0\) then
+\(-5v_1+3\frac{4}{5}= 0\) then \(5v_1= 3\frac{4}{5}\) then
+\(5v_1= 3\frac{4}{5}\) then \(v_1= \frac{19}{25}\)
 
 Therefore:
 
 \[
-E\lambda_6 = \
+E\lambda_{=6} = \
 \begin{bmatrix}
 \frac{19}{25} \\
 \frac{2}{5} \\
 1
 \end{bmatrix}
 \]
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(MASS)}
-\KeywordTok{fractions}\NormalTok{(.}\DecValTok{8}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 4/5
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{A <-}\StringTok{  }\KeywordTok{t}\NormalTok{(}\KeywordTok{matrix}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{1} \NormalTok{, }\DecValTok{2} \NormalTok{, }\DecValTok{3}\NormalTok{,  }\DecValTok{0} \NormalTok{, }\DecValTok{4} \NormalTok{, }\DecValTok{5} \NormalTok{, }\DecValTok{0} \NormalTok{, }\DecValTok{0} \NormalTok{, }\DecValTok{6} \NormalTok{), }\DataTypeTok{nrow =} \DecValTok{3}\NormalTok{, }\DataTypeTok{ncol=}\DecValTok{3}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
 
 
 \end{document}
