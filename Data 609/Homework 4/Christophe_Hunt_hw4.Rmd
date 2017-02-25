@@ -16,14 +16,43 @@ output:
     toc_depth: '2'
 ---
 
+\newpage
+
 # Page 191: problem 3
 
-Using Monte Carlo Simulation, write an algorithm to calculate an approximation to \pi by considering the number of random points selected inside the quarter circle 
+Using Monte Carlo Simulation, write an algorithm to calculate an approximation to $\pi$ by considering the number of random points selected inside the quarter circle 
 $$Q:x^2 +y^2 = 1, x \geq 0, y \geq 0$$
-where the quareter circle is taken to be inside the square
-$$S : 0 \leq x \leq 1 and 0 \leq y \leq 1$$
-Use the equation $\pi/4=area$ $Q/area S$. 
+where the quarter circle is taken to be inside the square
+$$S : 0 \leq x \leq 1~and~0 \leq y \leq 1$$
+Use the equation $\frac{\pi}{4}=area$; $\frac{Q}{area}S$. 
 
+```{r}
+set.seed(1234)
+
+monte_carlo <- function(n){
+  counter = 0
+  for (i in 1:n){
+    y <- runif(1, 0, 1)
+    x <- runif(1, 0, 1)
+    if ((x^2 + y^2) < 1){
+      counter <- counter + 1 
+    } else {
+      counter <- counter
+    }
+  }
+  return(counter)
+}
+```
+
+```{r}
+n <- 500
+(monte_carlo(n)/n)*4
+```
+
+```{r}
+n <- 50000
+(monte_carlo(n)/n)*4
+```
 
 # Page 194: problem 1
 Use the middle-square method to generate.
@@ -34,7 +63,7 @@ Use the middle-square method to generate.
 
 
 
-# Page 201: problem 4
+# Page 199: problem 4
 
 
 
