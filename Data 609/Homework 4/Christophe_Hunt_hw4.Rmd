@@ -112,10 +112,59 @@ Die_2 <- c(.3,.1,.2,.1,.05,.25)
 kable(as.data.frame(cbind(Roll, Die_1, Die_2)))
 ```
 
+```{r}
+unfair_roll <- function(n, probs){
+    if (length(probs) != 6){
+      print("missing probabilities for all 6 sides")
+      break
+    }
+    results <- list("1" = 0, "2" = 0 , "3" = 0, "4" = 0, "5" = 0, "6" = 0)
+    for (i in 1:n){
+        x <- runif(1, 0, 1)
+      if (x >= 0 & x <= probs[[1]]){
+        results$`1` <- results$`1` + 1 
+       } else if (x > probs[[1]] & 
+                  x <= sum(probs[[2]], probs[[1]])){
+        results$`2` <- results$`2` + 1 
+       } else if (x > sum(probs[[2]], probs[[1]]) & 
+                  x <= sum(probs[[3]], probs[[2]], probs[[1]])){ 
+        results$`3` <- results$`3` + 1
+       } else if (x > sum(probs[[3]], probs[[2]], probs[[1]]) & 
+                  x <= sum(probs[[4]],probs[[3]], probs[[2]], probs[[1]])){
+        results$`4` <- results$`4` + 1
+       } else if (x > sum(probs[[4]],probs[[3]], probs[[2]], probs[[1]]) & x <= 
+                  sum(probs[[5]],probs[[4]],probs[[3]], probs[[2]], probs[[1]])){
+        results$`5` <- results$`5` + 1
+       } else { 
+        results$`6` <- results$`6` + 1
+       }
+    }
+    for (i in 1:6){
+     results[[i]] <- round(results[[i]]/n,2)
+    }
+  return(results)
+}
+```
+
+```{r}
+unfair_roll(300, Die_1)
+unfair_roll(300, Die_2)
+```
+
 
 # Page 211: problem 3
 
+In many situations, the time $T$ between deliveries and the order quantity $Q$ is not fixed. Instead, an order is placed for a specific amount of gasoline. Depending on how many orders are placed in a given time interval, the time to fill an order varies. You have no reason to believe that the performance of the delivery operation will change. Therefore, you hvae examined records for the past 100 deliveries and found the following lag times, or extra days, required to fill your order:
 
+```{r}
+Lag_time <- c(2:7)
+number_of_occurences <- c(10, 25, 30, 20, 13, 2)
+X <- as.data.frame(cbind(Lag_time, number_of_occurences))
+kable(rbind(X, c(" ", sum(number_of_occurences))))
+```
+
+Construct a Monte Carlo simulation for the lag time submodel. If you have a handheld calculator or computer avaialble, test your submodel by running 1000 trials and comparing the number of occurances of the various lag times with the historical data. 
 
 # Page 221: problem 2
 
+If the waiting time of a person is the time the person stands in a queue - the time from arrival at the lobby until entry into an available elevator - what are the average and maximum times a person waits in a queue? 
