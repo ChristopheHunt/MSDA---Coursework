@@ -228,49 +228,92 @@ Use the middle-square method to generate.
 \end{Highlighting}
 \end{Shaded}
 
-\$instances {[}1{]} 10
-
-\$starting\_seed {[}1{]} 1009
-
-{[}{[}3{]}{]}{[}{[}3{]}{]}\$number {[}1{]} ``01018081''
-
-{[}{[}3{]}{]}\$new\_seed {[}1{]} 180
-
-{[}{[}4{]}{]}{[}{[}4{]}{]}\$number {[}1{]} ``00032400''
-
-{[}{[}4{]}{]}\$new\_seed {[}1{]} 324
-
-{[}{[}5{]}{]}{[}{[}5{]}{]}\$number {[}1{]} ``00104976''
-
-{[}{[}5{]}{]}\$new\_seed {[}1{]} 1049
-
-{[}{[}6{]}{]}{[}{[}6{]}{]}\$number {[}1{]} ``01100401''
-
-{[}{[}6{]}{]}\$new\_seed {[}1{]} 1004
-
-{[}{[}7{]}{]}{[}{[}7{]}{]}\$number {[}1{]} ``01008016''
-
-{[}{[}7{]}{]}\$new\_seed {[}1{]} 80
-
-{[}{[}8{]}{]}{[}{[}8{]}{]}\$number {[}1{]} ``00006400''
-
-{[}{[}8{]}{]}\$new\_seed {[}1{]} 64
-
-{[}{[}9{]}{]}{[}{[}9{]}{]}\$number {[}1{]} ``00004096''
-
-{[}{[}9{]}{]}\$new\_seed {[}1{]} 40
-
-{[}{[}10{]}{]}{[}{[}10{]}{]}\$number {[}1{]} ``00001600''
-
-{[}{[}10{]}{]}\$new\_seed {[}1{]} 16
-
-{[}{[}11{]}{]}{[}{[}11{]}{]}\$number {[}1{]} ``00000256''
-
-{[}{[}11{]}{]}\$new\_seed {[}1{]} 2
-
-{[}{[}12{]}{]}{[}{[}12{]}{]}\$number {[}1{]} ``00000004''
-
-{[}{[}12{]}{]}\$new\_seed {[}1{]} 0
+\begin{verbatim}
+## $instances
+## [1] 10
+## 
+## $starting_seed
+## [1] 1009
+## 
+## [[3]]
+## [[3]]$number
+## [1] "01018081"
+## 
+## [[3]]$new_seed
+## [1] 180
+## 
+## 
+## [[4]]
+## [[4]]$number
+## [1] "00032400"
+## 
+## [[4]]$new_seed
+## [1] 324
+## 
+## 
+## [[5]]
+## [[5]]$number
+## [1] "00104976"
+## 
+## [[5]]$new_seed
+## [1] 1049
+## 
+## 
+## [[6]]
+## [[6]]$number
+## [1] "01100401"
+## 
+## [[6]]$new_seed
+## [1] 1004
+## 
+## 
+## [[7]]
+## [[7]]$number
+## [1] "01008016"
+## 
+## [[7]]$new_seed
+## [1] 80
+## 
+## 
+## [[8]]
+## [[8]]$number
+## [1] "00006400"
+## 
+## [[8]]$new_seed
+## [1] 64
+## 
+## 
+## [[9]]
+## [[9]]$number
+## [1] "00004096"
+## 
+## [[9]]$new_seed
+## [1] 40
+## 
+## 
+## [[10]]
+## [[10]]$number
+## [1] "00001600"
+## 
+## [[10]]$new_seed
+## [1] 16
+## 
+## 
+## [[11]]
+## [[11]]$number
+## [1] "00000256"
+## 
+## [[11]]$new_seed
+## [1] 2
+## 
+## 
+## [[12]]
+## [[12]]$number
+## [1] "00000004"
+## 
+## [[12]]$new_seed
+## [1] 0
+\end{verbatim}
 
 \subsection{\texorpdfstring{b. 20 random numbers using
 \(x_0 = 653217\)}{b. 20 random numbers using x\_0 = 653217}}\label{b.-20-random-numbers-using-x_0-653217}
@@ -469,9 +512,153 @@ Roll & Die\_1 & Die\_2\tabularnewline
 \bottomrule
 \end{longtable}
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{unfair_roll <-}\StringTok{ }\NormalTok{function(n, probs)\{}
+    \NormalTok{if (}\KeywordTok{length}\NormalTok{(probs) !=}\StringTok{ }\DecValTok{6}\NormalTok{)\{}
+      \KeywordTok{print}\NormalTok{(}\StringTok{"missing probabilities for all 6 sides"}\NormalTok{)}
+      \NormalTok{break}
+    \NormalTok{\}}
+    \NormalTok{results <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\StringTok{"1"} \NormalTok{=}\StringTok{ }\DecValTok{0}\NormalTok{, }\StringTok{"2"} \NormalTok{=}\StringTok{ }\DecValTok{0} \NormalTok{, }\StringTok{"3"} \NormalTok{=}\StringTok{ }\DecValTok{0}\NormalTok{, }\StringTok{"4"} \NormalTok{=}\StringTok{ }\DecValTok{0}\NormalTok{, }\StringTok{"5"} \NormalTok{=}\StringTok{ }\DecValTok{0}\NormalTok{, }\StringTok{"6"} \NormalTok{=}\StringTok{ }\DecValTok{0}\NormalTok{)}
+    \NormalTok{for (i in }\DecValTok{1}\NormalTok{:n)\{}
+        \NormalTok{x <-}\StringTok{ }\KeywordTok{runif}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+      \NormalTok{if (x >=}\StringTok{ }\DecValTok{0} \NormalTok{&}\StringTok{ }\NormalTok{x <=}\StringTok{ }\NormalTok{probs[[}\DecValTok{1}\NormalTok{]])\{}
+        \NormalTok{results$}\StringTok{`}\DataTypeTok{1}\StringTok{`} \NormalTok{<-}\StringTok{ }\NormalTok{results$}\StringTok{`}\DataTypeTok{1}\StringTok{`} \NormalTok{+}\StringTok{ }\DecValTok{1} 
+       \NormalTok{\} else if (x >}\StringTok{ }\NormalTok{probs[[}\DecValTok{1}\NormalTok{]] &}\StringTok{ }
+\StringTok{                  }\NormalTok{x <=}\StringTok{ }\KeywordTok{sum}\NormalTok{(probs[[}\DecValTok{2}\NormalTok{]], probs[[}\DecValTok{1}\NormalTok{]]))\{}
+        \NormalTok{results$}\StringTok{`}\DataTypeTok{2}\StringTok{`} \NormalTok{<-}\StringTok{ }\NormalTok{results$}\StringTok{`}\DataTypeTok{2}\StringTok{`} \NormalTok{+}\StringTok{ }\DecValTok{1} 
+       \NormalTok{\} else if (x >}\StringTok{ }\KeywordTok{sum}\NormalTok{(probs[[}\DecValTok{2}\NormalTok{]], probs[[}\DecValTok{1}\NormalTok{]]) &}\StringTok{ }
+\StringTok{                  }\NormalTok{x <=}\StringTok{ }\KeywordTok{sum}\NormalTok{(probs[[}\DecValTok{3}\NormalTok{]], probs[[}\DecValTok{2}\NormalTok{]], probs[[}\DecValTok{1}\NormalTok{]]))\{ }
+        \NormalTok{results$}\StringTok{`}\DataTypeTok{3}\StringTok{`} \NormalTok{<-}\StringTok{ }\NormalTok{results$}\StringTok{`}\DataTypeTok{3}\StringTok{`} \NormalTok{+}\StringTok{ }\DecValTok{1}
+       \NormalTok{\} else if (x >}\StringTok{ }\KeywordTok{sum}\NormalTok{(probs[[}\DecValTok{3}\NormalTok{]], probs[[}\DecValTok{2}\NormalTok{]], probs[[}\DecValTok{1}\NormalTok{]]) &}\StringTok{ }
+\StringTok{                  }\NormalTok{x <=}\StringTok{ }\KeywordTok{sum}\NormalTok{(probs[[}\DecValTok{4}\NormalTok{]],probs[[}\DecValTok{3}\NormalTok{]], probs[[}\DecValTok{2}\NormalTok{]], probs[[}\DecValTok{1}\NormalTok{]]))\{}
+        \NormalTok{results$}\StringTok{`}\DataTypeTok{4}\StringTok{`} \NormalTok{<-}\StringTok{ }\NormalTok{results$}\StringTok{`}\DataTypeTok{4}\StringTok{`} \NormalTok{+}\StringTok{ }\DecValTok{1}
+       \NormalTok{\} else if (x >}\StringTok{ }\KeywordTok{sum}\NormalTok{(probs[[}\DecValTok{4}\NormalTok{]],probs[[}\DecValTok{3}\NormalTok{]], probs[[}\DecValTok{2}\NormalTok{]], probs[[}\DecValTok{1}\NormalTok{]]) &}\StringTok{ }\NormalTok{x <=}\StringTok{ }
+\StringTok{                  }\KeywordTok{sum}\NormalTok{(probs[[}\DecValTok{5}\NormalTok{]],probs[[}\DecValTok{4}\NormalTok{]],probs[[}\DecValTok{3}\NormalTok{]], probs[[}\DecValTok{2}\NormalTok{]], probs[[}\DecValTok{1}\NormalTok{]]))\{}
+        \NormalTok{results$}\StringTok{`}\DataTypeTok{5}\StringTok{`} \NormalTok{<-}\StringTok{ }\NormalTok{results$}\StringTok{`}\DataTypeTok{5}\StringTok{`} \NormalTok{+}\StringTok{ }\DecValTok{1}
+       \NormalTok{\} else \{ }
+        \NormalTok{results$}\StringTok{`}\DataTypeTok{6}\StringTok{`} \NormalTok{<-}\StringTok{ }\NormalTok{results$}\StringTok{`}\DataTypeTok{6}\StringTok{`} \NormalTok{+}\StringTok{ }\DecValTok{1}
+       \NormalTok{\}}
+    \NormalTok{\}}
+    \NormalTok{for (i in }\DecValTok{1}\NormalTok{:}\DecValTok{6}\NormalTok{)\{}
+     \KeywordTok{names}\NormalTok{(results[[i]]) <-}\StringTok{ "occurences"}
+     \NormalTok{results[[i]][[}\StringTok{"probability"}\NormalTok{]] <-}\StringTok{ }\KeywordTok{round}\NormalTok{(results[[i]]/n,}\DecValTok{2}\NormalTok{)}
+    \NormalTok{\}}
+  \KeywordTok{return}\NormalTok{(results)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{unfair_roll}\NormalTok{(}\DecValTok{300}\NormalTok{, Die_1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $`1`
+##  occurences probability 
+##       27.00        0.09 
+## 
+## $`2`
+##  occurences probability 
+##       34.00        0.11 
+## 
+## $`3`
+##  occurences probability 
+##       56.00        0.19 
+## 
+## $`4`
+##  occurences probability 
+##        90.0         0.3 
+## 
+## $`5`
+##  occurences probability 
+##        59.0         0.2 
+## 
+## $`6`
+##  occurences probability 
+##       34.00        0.11
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{unfair_roll}\NormalTok{(}\DecValTok{300}\NormalTok{, Die_2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $`1`
+##  occurences probability 
+##       82.00        0.27 
+## 
+## $`2`
+##  occurences probability 
+##       24.00        0.08 
+## 
+## $`3`
+##  occurences probability 
+##       69.00        0.23 
+## 
+## $`4`
+##  occurences probability 
+##       27.00        0.09 
+## 
+## $`5`
+##  occurences probability 
+##       12.00        0.04 
+## 
+## $`6`
+##  occurences probability 
+##       86.00        0.29
+\end{verbatim}
+
 \section{Page 211: problem 3}\label{page-211-problem-3}
 
+In many situations, the time \(T\) between deliveries and the order
+quantity \(Q\) is not fixed. Instead, an order is placed for a specific
+amount of gasoline. Depending on how many orders are placed in a given
+time interval, the time to fill an order varies. You have no reason to
+believe that the performance of the delivery operation will change.
+Therefore, you hvae examined records for the past 100 deliveries and
+found the following lag times, or extra days, required to fill your
+order:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Lag_time <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{:}\DecValTok{7}\NormalTok{)}
+\NormalTok{number_of_occurences <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{25}\NormalTok{, }\DecValTok{30}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{13}\NormalTok{, }\DecValTok{2}\NormalTok{)}
+\NormalTok{X <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(}\KeywordTok{cbind}\NormalTok{(Lag_time, number_of_occurences))}
+\KeywordTok{kable}\NormalTok{(}\KeywordTok{rbind}\NormalTok{(X, }\KeywordTok{c}\NormalTok{(}\StringTok{" "}\NormalTok{, }\KeywordTok{sum}\NormalTok{(number_of_occurences))))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule
+Lag\_time & number\_of\_occurences\tabularnewline
+\midrule
+\endhead
+2 & 10\tabularnewline
+3 & 25\tabularnewline
+4 & 30\tabularnewline
+5 & 20\tabularnewline
+6 & 13\tabularnewline
+7 & 2\tabularnewline
+& 100\tabularnewline
+\bottomrule
+\end{longtable}
+
+Construct a Monte Carlo simulation for the lag time submodel. If you
+have a handheld calculator or computer avaialble, test your submodel by
+running 1000 trials and comparing the number of occurances of the
+various lag times with the historical data.
+
 \section{Page 221: problem 2}\label{page-221-problem-2}
+
+If the waiting time of a person is the time the person stands in a queue
+- the time from arrival at the lobby until entry into an available
+elevator - what are the average and maximum times a person waits in a
+queue?
 
 
 \end{document}

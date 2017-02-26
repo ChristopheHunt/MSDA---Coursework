@@ -82,7 +82,7 @@ middle_square <- function(n, seed) {
 
 ## a.  10 random numbers using $x_0 = 1009$
 
-```{r, results='asis'}
+```{r}
 middle_square(10, 1009)
 ```
 
@@ -140,7 +140,8 @@ unfair_roll <- function(n, probs){
        }
     }
     for (i in 1:6){
-     results[[i]] <- round(results[[i]]/n,2)
+     names(results[[i]]) <- "occurences"
+     results[[i]][["probability"]] <- round(results[[i]]/n,2)
     }
   return(results)
 }
@@ -148,6 +149,9 @@ unfair_roll <- function(n, probs){
 
 ```{r}
 unfair_roll(300, Die_1)
+```
+
+```{r}
 unfair_roll(300, Die_2)
 ```
 
@@ -164,6 +168,11 @@ kable(rbind(X, c(" ", sum(number_of_occurences))))
 ```
 
 Construct a Monte Carlo simulation for the lag time submodel. If you have a handheld calculator or computer avaialble, test your submodel by running 1000 trials and comparing the number of occurances of the various lag times with the historical data. 
+
+```{r}
+
+```
+
 
 # Page 221: problem 2
 
