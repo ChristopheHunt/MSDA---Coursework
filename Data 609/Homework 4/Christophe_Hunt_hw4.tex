@@ -520,26 +520,22 @@ Roll & Die\_1 & Die\_2\tabularnewline
       \NormalTok{break}
     \NormalTok{\}}
     \NormalTok{results <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\StringTok{"1"} \NormalTok{=}\StringTok{ }\DecValTok{0}\NormalTok{, }\StringTok{"2"} \NormalTok{=}\StringTok{ }\DecValTok{0} \NormalTok{, }\StringTok{"3"} \NormalTok{=}\StringTok{ }\DecValTok{0}\NormalTok{, }\StringTok{"4"} \NormalTok{=}\StringTok{ }\DecValTok{0}\NormalTok{, }\StringTok{"5"} \NormalTok{=}\StringTok{ }\DecValTok{0}\NormalTok{, }\StringTok{"6"} \NormalTok{=}\StringTok{ }\DecValTok{0}\NormalTok{)}
-    \NormalTok{for (i in }\DecValTok{1}\NormalTok{:n)\{}
-        \NormalTok{x <-}\StringTok{ }\KeywordTok{runif}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{)}
-      \NormalTok{if (x >=}\StringTok{ }\DecValTok{0} \NormalTok{&}\StringTok{ }\NormalTok{x <=}\StringTok{ }\NormalTok{probs[[}\DecValTok{1}\NormalTok{]])\{}
-        \NormalTok{results$}\StringTok{`}\DataTypeTok{1}\StringTok{`} \NormalTok{<-}\StringTok{ }\NormalTok{results$}\StringTok{`}\DataTypeTok{1}\StringTok{`} \NormalTok{+}\StringTok{ }\DecValTok{1} 
-       \NormalTok{\} else if (x >}\StringTok{ }\NormalTok{probs[[}\DecValTok{1}\NormalTok{]] &}\StringTok{ }
-\StringTok{                  }\NormalTok{x <=}\StringTok{ }\KeywordTok{sum}\NormalTok{(probs[[}\DecValTok{2}\NormalTok{]], probs[[}\DecValTok{1}\NormalTok{]]))\{}
-        \NormalTok{results$}\StringTok{`}\DataTypeTok{2}\StringTok{`} \NormalTok{<-}\StringTok{ }\NormalTok{results$}\StringTok{`}\DataTypeTok{2}\StringTok{`} \NormalTok{+}\StringTok{ }\DecValTok{1} 
-       \NormalTok{\} else if (x >}\StringTok{ }\KeywordTok{sum}\NormalTok{(probs[[}\DecValTok{2}\NormalTok{]], probs[[}\DecValTok{1}\NormalTok{]]) &}\StringTok{ }
-\StringTok{                  }\NormalTok{x <=}\StringTok{ }\KeywordTok{sum}\NormalTok{(probs[[}\DecValTok{3}\NormalTok{]], probs[[}\DecValTok{2}\NormalTok{]], probs[[}\DecValTok{1}\NormalTok{]]))\{ }
-        \NormalTok{results$}\StringTok{`}\DataTypeTok{3}\StringTok{`} \NormalTok{<-}\StringTok{ }\NormalTok{results$}\StringTok{`}\DataTypeTok{3}\StringTok{`} \NormalTok{+}\StringTok{ }\DecValTok{1}
-       \NormalTok{\} else if (x >}\StringTok{ }\KeywordTok{sum}\NormalTok{(probs[[}\DecValTok{3}\NormalTok{]], probs[[}\DecValTok{2}\NormalTok{]], probs[[}\DecValTok{1}\NormalTok{]]) &}\StringTok{ }
-\StringTok{                  }\NormalTok{x <=}\StringTok{ }\KeywordTok{sum}\NormalTok{(probs[[}\DecValTok{4}\NormalTok{]],probs[[}\DecValTok{3}\NormalTok{]], probs[[}\DecValTok{2}\NormalTok{]], probs[[}\DecValTok{1}\NormalTok{]]))\{}
-        \NormalTok{results$}\StringTok{`}\DataTypeTok{4}\StringTok{`} \NormalTok{<-}\StringTok{ }\NormalTok{results$}\StringTok{`}\DataTypeTok{4}\StringTok{`} \NormalTok{+}\StringTok{ }\DecValTok{1}
-       \NormalTok{\} else if (x >}\StringTok{ }\KeywordTok{sum}\NormalTok{(probs[[}\DecValTok{4}\NormalTok{]],probs[[}\DecValTok{3}\NormalTok{]], probs[[}\DecValTok{2}\NormalTok{]], probs[[}\DecValTok{1}\NormalTok{]]) &}\StringTok{ }\NormalTok{x <=}\StringTok{ }
-\StringTok{                  }\KeywordTok{sum}\NormalTok{(probs[[}\DecValTok{5}\NormalTok{]],probs[[}\DecValTok{4}\NormalTok{]],probs[[}\DecValTok{3}\NormalTok{]], probs[[}\DecValTok{2}\NormalTok{]], probs[[}\DecValTok{1}\NormalTok{]]))\{}
-        \NormalTok{results$}\StringTok{`}\DataTypeTok{5}\StringTok{`} \NormalTok{<-}\StringTok{ }\NormalTok{results$}\StringTok{`}\DataTypeTok{5}\StringTok{`} \NormalTok{+}\StringTok{ }\DecValTok{1}
-       \NormalTok{\} else \{ }
-        \NormalTok{results$}\StringTok{`}\DataTypeTok{6}\StringTok{`} \NormalTok{<-}\StringTok{ }\NormalTok{results$}\StringTok{`}\DataTypeTok{6}\StringTok{`} \NormalTok{+}\StringTok{ }\DecValTok{1}
+         \NormalTok{for (i in }\DecValTok{1}\NormalTok{:n)\{}
+       \NormalTok{j <-}\StringTok{ }\DecValTok{1} 
+       \NormalTok{x <-}\StringTok{ }\KeywordTok{runif}\NormalTok{(j, }\DecValTok{0}\NormalTok{, j)}
+       \NormalTok{if (x ==}\StringTok{ }\DecValTok{0}\NormalTok{)\{}
+        \NormalTok{results[[j]] <-}\StringTok{ }\NormalTok{results[[j]] +}\StringTok{ }\DecValTok{1}
+       \NormalTok{\} else if (x >}\StringTok{ }\DecValTok{0} \NormalTok{&}\StringTok{ }\NormalTok{x <=}\StringTok{ }\NormalTok{probs[[j]])\{}
+        \NormalTok{results[[j]] <-}\StringTok{ }\NormalTok{results[[j]] +}\StringTok{ }\DecValTok{1}
+        \NormalTok{next}
+       \NormalTok{\} else \{}
+       \NormalTok{j <-}\StringTok{ }\NormalTok{j +}\StringTok{ }\DecValTok{1}
+       \NormalTok{while ((x >}\StringTok{ }\KeywordTok{sum}\NormalTok{(probs[}\DecValTok{0}\NormalTok{:(j}\DecValTok{-1}\NormalTok{)]) &}\StringTok{ }\NormalTok{x <=}\StringTok{ }\KeywordTok{sum}\NormalTok{(probs[}\DecValTok{0}\NormalTok{:j])) !=}\StringTok{ }\OtherTok{TRUE}\NormalTok{) \{}
+       \NormalTok{j <-}\StringTok{ }\NormalTok{j +}\StringTok{ }\DecValTok{1}
        \NormalTok{\}}
-    \NormalTok{\}}
+       \NormalTok{results[[j]] <-}\StringTok{ }\NormalTok{results[[j]] +}\StringTok{ }\DecValTok{1}
+       \NormalTok{\}}
+     \NormalTok{\}}
     \NormalTok{for (i in }\DecValTok{1}\NormalTok{:}\DecValTok{6}\NormalTok{)\{}
      \KeywordTok{names}\NormalTok{(results[[i]]) <-}\StringTok{ "occurences"}
      \NormalTok{results[[i]][[}\StringTok{"probability"}\NormalTok{]] <-}\StringTok{ }\KeywordTok{round}\NormalTok{(results[[i]]/n,}\DecValTok{2}\NormalTok{)}
