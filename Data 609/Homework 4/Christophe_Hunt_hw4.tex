@@ -69,6 +69,7 @@
 \newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{{#1}}}
 \newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{{#1}}}}
 \newcommand{\NormalTok}[1]{{#1}}
+\usepackage{longtable,booktabs}
 \usepackage{graphicx,grffile}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
@@ -190,15 +191,283 @@ the equation \(\frac{\pi}{4}=area\); \(\frac{Q}{area}S\).
 ## [1] 3.14312
 \end{verbatim}
 
+\newpage
+
 \section{Page 194: problem 1}\label{page-194-problem-1}
 
 Use the middle-square method to generate.
 
-\subsection{a.}\label{a.}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{middle_square <-}\StringTok{ }\NormalTok{function(n, seed) \{}
+          \KeywordTok{suppressMessages}\NormalTok{(}\KeywordTok{require}\NormalTok{(stringr))}
+          \NormalTok{results <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\StringTok{"instances"} \NormalTok{=}\StringTok{ }\NormalTok{n, }\StringTok{"starting_seed"} \NormalTok{=}\StringTok{ }\NormalTok{seed)}
+          \NormalTok{for (i in }\DecValTok{1}\NormalTok{:n)\{}
+            \NormalTok{j <-}\StringTok{ }\NormalTok{(seed^}\DecValTok{2}\NormalTok{)}
+              \NormalTok{if (}\KeywordTok{nchar}\NormalTok{(j) <}\StringTok{ }\DecValTok{8}\NormalTok{)\{}
+                  \NormalTok{j <-}\StringTok{ }\KeywordTok{str_pad}\NormalTok{(j, }\DecValTok{8}\NormalTok{, }\DataTypeTok{pad =} \StringTok{"0"}\NormalTok{)}
+              \NormalTok{\} else if (}\KeywordTok{nchar}\NormalTok{(j) >}\StringTok{ }\DecValTok{8}\NormalTok{) \{}
+                \NormalTok{j <-}\StringTok{ }\KeywordTok{substr}\NormalTok{(j, }\DecValTok{1}\NormalTok{, }\DecValTok{8}\NormalTok{)}
+              \NormalTok{\}}
+            \NormalTok{t <-}\StringTok{ }\NormalTok{j }
+            \NormalTok{j <-}\StringTok{ }\KeywordTok{substr}\NormalTok{(j, }\DecValTok{3}\NormalTok{, }\DecValTok{6}\NormalTok{)}
+            \NormalTok{seed <-}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(j)}
+            \NormalTok{results[[}\KeywordTok{length}\NormalTok{(results)+}\DecValTok{1}\NormalTok{]] <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\StringTok{"number"} \NormalTok{=}\StringTok{ }\NormalTok{t, }\StringTok{"new_seed"} \NormalTok{=}\StringTok{ }\NormalTok{seed)}
+          \NormalTok{\}}
+         \KeywordTok{return}\NormalTok{(results)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
 
-10 random numbers using \(x_0 = 1009\)
+\subsection{\texorpdfstring{a. 10 random numbers using
+\(x_0 = 1009\)}{a. 10 random numbers using x\_0 = 1009}}\label{a.-10-random-numbers-using-x_0-1009}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{middle_square}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{1009}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\$instances {[}1{]} 10
+
+\$starting\_seed {[}1{]} 1009
+
+{[}{[}3{]}{]}{[}{[}3{]}{]}\$number {[}1{]} ``01018081''
+
+{[}{[}3{]}{]}\$new\_seed {[}1{]} 180
+
+{[}{[}4{]}{]}{[}{[}4{]}{]}\$number {[}1{]} ``00032400''
+
+{[}{[}4{]}{]}\$new\_seed {[}1{]} 324
+
+{[}{[}5{]}{]}{[}{[}5{]}{]}\$number {[}1{]} ``00104976''
+
+{[}{[}5{]}{]}\$new\_seed {[}1{]} 1049
+
+{[}{[}6{]}{]}{[}{[}6{]}{]}\$number {[}1{]} ``01100401''
+
+{[}{[}6{]}{]}\$new\_seed {[}1{]} 1004
+
+{[}{[}7{]}{]}{[}{[}7{]}{]}\$number {[}1{]} ``01008016''
+
+{[}{[}7{]}{]}\$new\_seed {[}1{]} 80
+
+{[}{[}8{]}{]}{[}{[}8{]}{]}\$number {[}1{]} ``00006400''
+
+{[}{[}8{]}{]}\$new\_seed {[}1{]} 64
+
+{[}{[}9{]}{]}{[}{[}9{]}{]}\$number {[}1{]} ``00004096''
+
+{[}{[}9{]}{]}\$new\_seed {[}1{]} 40
+
+{[}{[}10{]}{]}{[}{[}10{]}{]}\$number {[}1{]} ``00001600''
+
+{[}{[}10{]}{]}\$new\_seed {[}1{]} 16
+
+{[}{[}11{]}{]}{[}{[}11{]}{]}\$number {[}1{]} ``00000256''
+
+{[}{[}11{]}{]}\$new\_seed {[}1{]} 2
+
+{[}{[}12{]}{]}{[}{[}12{]}{]}\$number {[}1{]} ``00000004''
+
+{[}{[}12{]}{]}\$new\_seed {[}1{]} 0
+
+\subsection{\texorpdfstring{b. 20 random numbers using
+\(x_0 = 653217\)}{b. 20 random numbers using x\_0 = 653217}}\label{b.-20-random-numbers-using-x_0-653217}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{middle_square}\NormalTok{(}\DecValTok{20}\NormalTok{, }\DecValTok{653217}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\$instances {[}1{]} 20
+
+\$starting\_seed {[}1{]} 653217
+
+{[}{[}3{]}{]}{[}{[}3{]}{]}\$number {[}1{]} ``42669244''
+
+{[}{[}3{]}{]}\$new\_seed {[}1{]} 6692
+
+{[}{[}4{]}{]}{[}{[}4{]}{]}\$number {[}1{]} 44782864
+
+{[}{[}4{]}{]}\$new\_seed {[}1{]} 7828
+
+{[}{[}5{]}{]}{[}{[}5{]}{]}\$number {[}1{]} 61277584
+
+{[}{[}5{]}{]}\$new\_seed {[}1{]} 2775
+
+{[}{[}6{]}{]}{[}{[}6{]}{]}\$number {[}1{]} ``07700625''
+
+{[}{[}6{]}{]}\$new\_seed {[}1{]} 7006
+
+{[}{[}7{]}{]}{[}{[}7{]}{]}\$number {[}1{]} 49084036
+
+{[}{[}7{]}{]}\$new\_seed {[}1{]} 840
+
+{[}{[}8{]}{]}{[}{[}8{]}{]}\$number {[}1{]} ``00705600''
+
+{[}{[}8{]}{]}\$new\_seed {[}1{]} 7056
+
+{[}{[}9{]}{]}{[}{[}9{]}{]}\$number {[}1{]} 49787136
+
+{[}{[}9{]}{]}\$new\_seed {[}1{]} 7871
+
+{[}{[}10{]}{]}{[}{[}10{]}{]}\$number {[}1{]} 61952641
+
+{[}{[}10{]}{]}\$new\_seed {[}1{]} 9526
+
+{[}{[}11{]}{]}{[}{[}11{]}{]}\$number {[}1{]} 90744676
+
+{[}{[}11{]}{]}\$new\_seed {[}1{]} 7446
+
+{[}{[}12{]}{]}{[}{[}12{]}{]}\$number {[}1{]} 55442916
+
+{[}{[}12{]}{]}\$new\_seed {[}1{]} 4429
+
+{[}{[}13{]}{]}{[}{[}13{]}{]}\$number {[}1{]} 19616041
+
+{[}{[}13{]}{]}\$new\_seed {[}1{]} 6160
+
+{[}{[}14{]}{]}{[}{[}14{]}{]}\$number {[}1{]} 37945600
+
+{[}{[}14{]}{]}\$new\_seed {[}1{]} 9456
+
+{[}{[}15{]}{]}{[}{[}15{]}{]}\$number {[}1{]} 89415936
+
+{[}{[}15{]}{]}\$new\_seed {[}1{]} 4159
+
+{[}{[}16{]}{]}{[}{[}16{]}{]}\$number {[}1{]} 17297281
+
+{[}{[}16{]}{]}\$new\_seed {[}1{]} 2972
+
+{[}{[}17{]}{]}{[}{[}17{]}{]}\$number {[}1{]} ``08832784''
+
+{[}{[}17{]}{]}\$new\_seed {[}1{]} 8327
+
+{[}{[}18{]}{]}{[}{[}18{]}{]}\$number {[}1{]} 69338929
+
+{[}{[}18{]}{]}\$new\_seed {[}1{]} 3389
+
+{[}{[}19{]}{]}{[}{[}19{]}{]}\$number {[}1{]} 11485321
+
+{[}{[}19{]}{]}\$new\_seed {[}1{]} 4853
+
+{[}{[}20{]}{]}{[}{[}20{]}{]}\$number {[}1{]} 23551609
+
+{[}{[}20{]}{]}\$new\_seed {[}1{]} 5516
+
+{[}{[}21{]}{]}{[}{[}21{]}{]}\$number {[}1{]} 30426256
+
+{[}{[}21{]}{]}\$new\_seed {[}1{]} 4262
+
+{[}{[}22{]}{]}{[}{[}22{]}{]}\$number {[}1{]} 18164644
+
+{[}{[}22{]}{]}\$new\_seed {[}1{]} 1646
+
+\subsection{\texorpdfstring{c. 15 random numbers using
+\(x_0 = 3043\)}{c. 15 random numbers using x\_0 = 3043}}\label{c.-15-random-numbers-using-x_0-3043}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{middle_square}\NormalTok{(}\DecValTok{15}\NormalTok{, }\DecValTok{3043}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\$instances {[}1{]} 15
+
+\$starting\_seed {[}1{]} 3043
+
+{[}{[}3{]}{]}{[}{[}3{]}{]}\$number {[}1{]} ``09259849''
+
+{[}{[}3{]}{]}\$new\_seed {[}1{]} 2598
+
+{[}{[}4{]}{]}{[}{[}4{]}{]}\$number {[}1{]} ``06749604''
+
+{[}{[}4{]}{]}\$new\_seed {[}1{]} 7496
+
+{[}{[}5{]}{]}{[}{[}5{]}{]}\$number {[}1{]} 56190016
+
+{[}{[}5{]}{]}\$new\_seed {[}1{]} 1900
+
+{[}{[}6{]}{]}{[}{[}6{]}{]}\$number {[}1{]} ``03610000''
+
+{[}{[}6{]}{]}\$new\_seed {[}1{]} 6100
+
+{[}{[}7{]}{]}{[}{[}7{]}{]}\$number {[}1{]} 37210000
+
+{[}{[}7{]}{]}\$new\_seed {[}1{]} 2100
+
+{[}{[}8{]}{]}{[}{[}8{]}{]}\$number {[}1{]} ``04410000''
+
+{[}{[}8{]}{]}\$new\_seed {[}1{]} 4100
+
+{[}{[}9{]}{]}{[}{[}9{]}{]}\$number {[}1{]} 16810000
+
+{[}{[}9{]}{]}\$new\_seed {[}1{]} 8100
+
+{[}{[}10{]}{]}{[}{[}10{]}{]}\$number {[}1{]} 65610000
+
+{[}{[}10{]}{]}\$new\_seed {[}1{]} 6100
+
+{[}{[}11{]}{]}{[}{[}11{]}{]}\$number {[}1{]} 37210000
+
+{[}{[}11{]}{]}\$new\_seed {[}1{]} 2100
+
+{[}{[}12{]}{]}{[}{[}12{]}{]}\$number {[}1{]} ``04410000''
+
+{[}{[}12{]}{]}\$new\_seed {[}1{]} 4100
+
+{[}{[}13{]}{]}{[}{[}13{]}{]}\$number {[}1{]} 16810000
+
+{[}{[}13{]}{]}\$new\_seed {[}1{]} 8100
+
+{[}{[}14{]}{]}{[}{[}14{]}{]}\$number {[}1{]} 65610000
+
+{[}{[}14{]}{]}\$new\_seed {[}1{]} 6100
+
+{[}{[}15{]}{]}{[}{[}15{]}{]}\$number {[}1{]} 37210000
+
+{[}{[}15{]}{]}\$new\_seed {[}1{]} 2100
+
+{[}{[}16{]}{]}{[}{[}16{]}{]}\$number {[}1{]} ``04410000''
+
+{[}{[}16{]}{]}\$new\_seed {[}1{]} 4100
+
+{[}{[}17{]}{]}{[}{[}17{]}{]}\$number {[}1{]} 16810000
+
+{[}{[}17{]}{]}\$new\_seed {[}1{]} 8100 \#\# TODO c. Comment about the
+results of each sequence. Was there cycling? Did each sequence
+degenerate rapidly?
 
 \section{Page 199: problem 4}\label{page-199-problem-4}
+
+Given loaded dice according to the following distribution, use Monte
+Carlo simulation to simulate the sum of 300 rolls of two unfair dice.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(knitr)}
+\NormalTok{Roll <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{:}\DecValTok{6}\NormalTok{)}
+\NormalTok{Die_1 <-}\StringTok{ }\KeywordTok{c}\NormalTok{(.}\DecValTok{1}\NormalTok{,.}\DecValTok{1}\NormalTok{,.}\DecValTok{2}\NormalTok{,.}\DecValTok{3}\NormalTok{,.}\DecValTok{2}\NormalTok{,.}\DecValTok{1}\NormalTok{)}
+\NormalTok{Die_2 <-}\StringTok{ }\KeywordTok{c}\NormalTok{(.}\DecValTok{3}\NormalTok{,.}\DecValTok{1}\NormalTok{,.}\DecValTok{2}\NormalTok{,.}\DecValTok{1}\NormalTok{,.}\DecValTok{05}\NormalTok{,.}\DecValTok{25}\NormalTok{)}
+\KeywordTok{kable}\NormalTok{(}\KeywordTok{as.data.frame}\NormalTok{(}\KeywordTok{cbind}\NormalTok{(Roll, Die_1, Die_2)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}rrr@{}}
+\toprule
+Roll & Die\_1 & Die\_2\tabularnewline
+\midrule
+\endhead
+1 & 0.1 & 0.30\tabularnewline
+2 & 0.1 & 0.10\tabularnewline
+3 & 0.2 & 0.20\tabularnewline
+4 & 0.3 & 0.10\tabularnewline
+5 & 0.2 & 0.05\tabularnewline
+6 & 0.1 & 0.25\tabularnewline
+\bottomrule
+\end{longtable}
 
 \section{Page 211: problem 3}\label{page-211-problem-3}
 

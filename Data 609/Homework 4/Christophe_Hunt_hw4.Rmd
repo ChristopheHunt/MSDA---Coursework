@@ -54,17 +54,63 @@ n <- 50000
 (monte_carlo(n)/n)*4
 ```
 
+\newpage
+
 # Page 194: problem 1
+
 Use the middle-square method to generate.
 
-## a. 
+```{r}
+middle_square <- function(n, seed) {
+          suppressMessages(require(stringr))
+          results <- list("instances" = n, "starting_seed" = seed)
+          for (i in 1:n){
+            j <- (seed^2)
+              if (nchar(j) < 8){
+                  j <- str_pad(j, 8, pad = "0")
+              } else if (nchar(j) > 8) {
+                j <- substr(j, 1, 8)
+              }
+            t <- j 
+            j <- substr(j, 3, 6)
+            seed <- as.numeric(j)
+            results[[length(results)+1]] <- list("number" = t, "new_seed" = seed)
+          }
+         return(results)
+}
+```
 
-10 random numbers using $x_0 = 1009$
+## a.  10 random numbers using $x_0 = 1009$
 
+```{r, results='asis'}
+middle_square(10, 1009)
+```
+
+## b. 20 random numbers using $x_0 = 653217$
+
+```{r, results='asis'}
+middle_square(20, 653217)
+```
+
+## c. 15 random numbers using $x_0 = 3043$
+
+```{r, results='asis'}
+middle_square(15, 3043)
+```
+## TODO c. Comment about the results of each sequence. Was there cycling? Did each sequence degenerate rapidly? 
 
 
 # Page 199: problem 4
 
+Given loaded dice according to the following distribution, use Monte Carlo simulation to simulate the sum of 300 rolls of two unfair dice. 
+
+```{r, results='asis'}
+library(knitr)
+Roll <- c(1:6)
+Die_1 <- c(.1,.1,.2,.3,.2,.1)
+Die_2 <- c(.3,.1,.2,.1,.05,.25)
+kable(as.data.frame(cbind(Roll, Die_1, Die_2)))
+```
 
 
 # Page 211: problem 3
