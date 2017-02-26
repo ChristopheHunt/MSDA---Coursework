@@ -653,12 +653,68 @@ have a handheld calculator or computer avaialble, test your submodel by
 running 1000 trials and comparing the number of occurances of the
 various lag times with the historical data.
 
-\section{Page 221: problem 2}\label{page-221-problem-2}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Lag_time <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{:}\DecValTok{7}\NormalTok{)}
+\NormalTok{number_of_occurences <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{25}\NormalTok{, }\DecValTok{30}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{13}\NormalTok{, }\DecValTok{2}\NormalTok{)}
 
-If the waiting time of a person is the time the person stands in a queue
-- the time from arrival at the lobby until entry into an available
-elevator - what are the average and maximum times a person waits in a
-queue?
+\NormalTok{lag_time <-}\StringTok{ }\NormalTok{function(n, probs, outcomes)\{}
+        \NormalTok{results <-}\StringTok{ }\KeywordTok{list}\NormalTok{()}
+        \NormalTok{for (i in }\DecValTok{1}\NormalTok{:}\KeywordTok{length}\NormalTok{(outcomes))\{}
+         \NormalTok{results[[i]] <-}\StringTok{ }\DecValTok{0}
+         \KeywordTok{names}\NormalTok{(results[[i]]) <-}\StringTok{ }\NormalTok{(}\KeywordTok{paste}\NormalTok{(}\StringTok{"# of deliveries on day"}\NormalTok{, outcomes[[i]]))}
+        \NormalTok{\}}
+     \NormalTok{for (i in }\DecValTok{1}\NormalTok{:n)\{}
+       \NormalTok{j <-}\StringTok{ }\DecValTok{1} 
+       \NormalTok{x <-}\StringTok{ }\KeywordTok{runif}\NormalTok{(j, }\DecValTok{0}\NormalTok{, j)}
+       \NormalTok{if (x ==}\StringTok{ }\DecValTok{0}\NormalTok{)\{}
+        \NormalTok{results[[j]] <-}\StringTok{ }\NormalTok{results[[j]] +}\StringTok{ }\DecValTok{1}
+       \NormalTok{\} else if (x >}\StringTok{ }\DecValTok{0} \NormalTok{&}\StringTok{ }\NormalTok{x <=}\StringTok{ }\NormalTok{probs[[j]])\{}
+        \NormalTok{results[[j]] <-}\StringTok{ }\NormalTok{results[[j]] +}\StringTok{ }\DecValTok{1}
+        \NormalTok{next}
+       \NormalTok{\} else \{}
+       \NormalTok{j <-}\StringTok{ }\NormalTok{j +}\StringTok{ }\DecValTok{1}
+       \NormalTok{while ((x >}\StringTok{ }\KeywordTok{sum}\NormalTok{(probs[}\DecValTok{0}\NormalTok{:(j}\DecValTok{-1}\NormalTok{)]) &}\StringTok{ }\NormalTok{x <=}\StringTok{ }\KeywordTok{sum}\NormalTok{(probs[}\DecValTok{0}\NormalTok{:j])) !=}\StringTok{ }\OtherTok{TRUE}\NormalTok{) \{}
+       \NormalTok{j <-}\StringTok{ }\NormalTok{j +}\StringTok{ }\DecValTok{1}
+       \NormalTok{\}}
+       \NormalTok{results[[j]] <-}\StringTok{ }\NormalTok{results[[j]] +}\StringTok{ }\DecValTok{1}
+       \NormalTok{\}}
+     \NormalTok{\}}
+    \NormalTok{for (i in }\DecValTok{1}\NormalTok{:}\KeywordTok{length}\NormalTok{(results))\{}
+     \NormalTok{results[[i]][[}\StringTok{"probability"}\NormalTok{]] <-}\StringTok{ }\KeywordTok{round}\NormalTok{(results[[i]]/n,}\DecValTok{2}\NormalTok{)}
+    \NormalTok{\}}
+  \KeywordTok{return}\NormalTok{(results)}
+\NormalTok{\}}
+\NormalTok{probs <-}\StringTok{ }\NormalTok{(number_of_occurences/}\KeywordTok{sum}\NormalTok{(number_of_occurences))}
+\KeywordTok{lag_time}\NormalTok{(}\DecValTok{1000}\NormalTok{, }\DataTypeTok{probs =} \NormalTok{probs , }\DataTypeTok{outcomes =} \NormalTok{Lag_time)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+## # of deliveries on day 2              probability 
+##                    102.0                      0.1 
+## 
+## [[2]]
+## # of deliveries on day 3              probability 
+##                   237.00                     0.24 
+## 
+## [[3]]
+## # of deliveries on day 4              probability 
+##                    299.0                      0.3 
+## 
+## [[4]]
+## # of deliveries on day 5              probability 
+##                   211.00                     0.21 
+## 
+## [[5]]
+## # of deliveries on day 6              probability 
+##                   125.00                     0.12 
+## 
+## [[6]]
+## # of deliveries on day 7              probability 
+##                    26.00                     0.03
+\end{verbatim}
 
 
 \end{document}
