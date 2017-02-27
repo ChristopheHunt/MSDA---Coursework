@@ -241,6 +241,60 @@ command.}\label{then-compute-the-left-singular-singular-values-and-right-singula
 are indeed eigenvectors of X and
 Y.}\label{examine-the-two-sets-of-singular-vectors-and-show-that-they-are-indeed-eigenvectors-of-x-and-y.}
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{results$}\StringTok{`}\DataTypeTok{left-singular}\StringTok{`}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##            [,1]       [,2]
+## [1,] -0.6576043 -0.7533635
+## [2,] -0.7533635  0.6576043
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{X_vectors <-}\StringTok{ }\KeywordTok{eigen}\NormalTok{(X)$vectors}
+\NormalTok{X_vectors}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##           [,1]       [,2]
+## [1,] 0.6576043 -0.7533635
+## [2,] 0.7533635  0.6576043
+\end{verbatim}
+
+We can see that the two sets of vectors are indeed eigenvectors of X and
+Y. Also, note that the sign switch does not impact the interpetation of
+the eigenvectors, we can multiply by -1 and it has no further impact.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{results$}\StringTok{`}\DataTypeTok{left-singular}\StringTok{`}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##            [,1]       [,2]
+## [1,] -0.6576043 -0.7533635
+## [2,] -0.7533635  0.6576043
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{X_vectors[,}\DecValTok{1}\NormalTok{] <-}\StringTok{ }\NormalTok{(X_vectors[,}\DecValTok{1}\NormalTok{]*-}\DecValTok{1}\NormalTok{)}
+\NormalTok{X_vectors}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##            [,1]       [,2]
+## [1,] -0.6576043 -0.7533635
+## [2,] -0.7533635  0.6576043
+\end{verbatim}
+
 In addition, the two non-zero eigenvalues (the 3rd value will be very
 close to zero, if not zero) of both X and Y are the same and are squares
 of the non-zero singular values of A.
@@ -256,12 +310,14 @@ steps.
 \setcounter{enumi}{1}
 \tightlist
 \item
-  Problem Set 2 Using the procedure outlined in section 1 of the weekly
-  handout, write a function to compute the inverse of a well-conditioned
-  full-rank square matrix using co-factors. In order to compute the
-  co-factors, you may use built-in commands to compute the determinant.
-  Your function should have the following signature:
+  Problem Set 2
 \end{enumerate}
+
+Using the procedure outlined in section 1 of the weekly handout, write a
+function to compute the inverse of a well-conditioned full-rank square
+matrix using co-factors. In order to compute the co-factors, you may use
+built-in commands to compute the determinant. Your function should have
+the following signature:
 
 B = myinverse(A)
 
@@ -270,8 +326,10 @@ elements of I should be close to zero, if not zero. Likewise, the
 diagonal elements should be close to 1, if not 1. Small numerical
 precision errors are acceptable but the function myinverse should be
 correct and must use co-factors and determinant of A to compute the
-inverse. Please submit PS1 and PS2 in an R-markdown document with your
-first initial and last name.
+inverse.
+
+Please submit PS1 and PS2 in an R-markdown document with your first
+initial and last name.
 
 
 \end{document}
