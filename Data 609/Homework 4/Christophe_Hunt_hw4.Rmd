@@ -54,6 +54,8 @@ n <- 50000
 (monte_carlo(n)/n)*4
 ```
 
+The results of the algorithm get us very close to the value of $\pi$ which is `r pi` as calculated in R. 
+
 \newpage
 
 # Page 194: problem 1
@@ -82,7 +84,7 @@ middle_square <- function(n, seed) {
 
 ## a.  10 random numbers using $x_0 = 1009$
 
-```{r}
+```{r, results='asis'}
 middle_square(10, 1009)
 ```
 
@@ -97,8 +99,14 @@ middle_square(20, 653217)
 ```{r, results='asis'}
 middle_square(15, 3043)
 ```
-## TODO c. Comment about the results of each sequence. Was there cycling? Did each sequence degenerate rapidly? 
 
+
+   
+## d. Comment about the results of each sequence. Was there cycling? Did each sequence degenerate rapidly? 
+
+The first sequence degenerated very rapidly. It reached 0 by the 10 iteration and would not be suitable for use in a very sensitive analysis. It is concerning that the algorithm can reach 0 so quickly. Also, in c. we see the values begin repeating and this again is very concerning for a sensitive analysis. It may be difficult to spot this type of cycling in a simulation and may provide inaccurate results. However, in b. we do see the power of the randomness generation in the algorithm. As the literature says the random generation by this method is no longer a reliable algorithm. 
+
+\newpage
 
 # Page 199: problem 4
 
@@ -151,23 +159,24 @@ unfair_roll(300, Die_1)
 unfair_roll(300, Die_2)
 ```
 
+The simulation provides rolls of the dice as we would expect. The probability is very similar to the distribution provided and is a very useful technique to generate a simulation of random rolls of a dice. 
 
 # Page 211: problem 3
 
-In many situations, the time $T$ between deliveries and the order quantity $Q$ is not fixed. Instead, an order is placed for a specific amount of gasoline. Depending on how many orders are placed in a given time interval, the time to fill an order varies. You have no reason to believe that the performance of the delivery operation will change. Therefore, you hvae examined records for the past 100 deliveries and found the following lag times, or extra days, required to fill your order:
+In many situations, the time $T$ between deliveries and the order quantity $Q$ is not fixed. Instead, an order is placed for a specific amount of gasoline. Depending on how many orders are placed in a given time interval, the time to fill an order varies. You have no reason to believe that the performance of the delivery operation will change. Therefore, you have examined records for the past 100 deliveries and found the following lag times, or extra days, required to fill your order:
 
 ```{r}
 Lag_time <- c(2:7)
-number_of_occurences <- c(10, 25, 30, 20, 13, 2)
-X <- as.data.frame(cbind(Lag_time, number_of_occurences))
-kable(rbind(X, c(" ", sum(number_of_occurences))))
+number_of_occurrences <- c(10, 25, 30, 20, 13, 2)
+X <- as.data.frame(cbind(Lag_time, number_of_occurrences))
+kable(rbind(X, c(" ", sum(number_of_occurrences))))
 ```
 
-Construct a Monte Carlo simulation for the lag time submodel. If you have a handheld calculator or computer avaialble, test your submodel by running 1000 trials and comparing the number of occurances of the various lag times with the historical data. 
+Construct a Monte Carlo simulation for the lag time sub model. If you have a handheld calculator or computer available, test your sub model by running 1000 trials and comparing the number of occurrences of the various lag times with the historical data. 
 
 ```{r}
 Lag_time <- c(2:7)
-number_of_occurences <- c(10, 25, 30, 20, 13, 2)
+number_of_occurrences <- c(10, 25, 30, 20, 13, 2)
 
 lag_time <- function(n, probs, outcomes){
         results <- list()
@@ -196,6 +205,8 @@ lag_time <- function(n, probs, outcomes){
     }
   return(results)
 }
-probs <- (number_of_occurences/sum(number_of_occurences))
+probs <- (number_of_occurrences/sum(number_of_occurrences))
 lag_time(1000, probs = probs , outcomes = Lag_time)
 ```
+
+The results follow the distribution provided, it is easy to compare in this situation because the total observations is 100 making the probabilities quick to spot. It is a useful tool to visualize how many deliveries over the course of 1000 may fall into the lag range and we can plan accordingly. 
