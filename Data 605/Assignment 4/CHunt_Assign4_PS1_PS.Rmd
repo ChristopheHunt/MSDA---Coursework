@@ -72,13 +72,14 @@ X_vectors[,1] <- (X_vectors[,1]*-1)
 X_vectors
 ```
 
-In addition, the two non-zero eigenvalues (the 3rd value will be very close to zero, if not zero) of both X and Y are the same and are squares of the non-zero singular values of A. 
+```{r}
+results$`right-singular`
+Y_vectors <- eigen(Y)$vectors
+Y_vectors[,1] <- (Y_vectors[,1]*-1)
+Y_vectors
+```
 
-Your code should compute all these vectors and scalars and store them in variables. 
-
-Please add enough comments in your code to show me how to interpret your steps.
-
-2. Problem Set 2
+# 2. Problem Set 2
 
 Using the procedure outlined in section 1 of the weekly handout, write a function to compute the inverse of a well-conditioned full-rank square matrix using co-factors. In order to compute the co-factors, you may use built-in commands to compute the determinant. Your function should have the following signature: 
 
@@ -86,5 +87,26 @@ B = myinverse(A)
 
 where A is a matrix and B is its inverse and A×B = I. The off-diagonal elements of I should be close to zero, if not zero. Likewise, the diagonal elements should be close to 1, if not 1. Small numerical precision errors are acceptable but the function myinverse should be correct and must use co-factors and determinant of A to compute the inverse. 
 
-Please submit PS1 and PS2 in an R-markdown document with your first initial and last
-name. 
+```{r, }
+myinverse <- function(M){
+              results <- list()
+              results$original <- M 
+              #save original to compare
+              cofactors <- matrix(nrow = nrow(M), ncol = ncol(M)) 
+              # create empty matrix to store cofactors
+              for(i in 1:nrow(M)){ #loop over rows
+                for (j in 1:ncol(M)) # loop over columns
+                  cofactors[i,j] <- ((-1)^(i + j)*det(M[-i, -j])) 
+                #for row, column; sign * determinate of submatrix
+              }
+              results$inverse <- t(cofactors)/det(M) 
+              #transpose of cofactors matrix / determinate of original matrix
+              return(results)
+            }
+```
+
+```{r}
+M <- matrix(c(1:7,12,20), nrow = 3)
+myinverse(M)
+```
+

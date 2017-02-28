@@ -295,23 +295,35 @@ the eigenvectors, we can multiply by -1 and it has no further impact.
 ## [2,] -0.7533635  0.6576043
 \end{verbatim}
 
-In addition, the two non-zero eigenvalues (the 3rd value will be very
-close to zero, if not zero) of both X and Y are the same and are squares
-of the non-zero singular values of A.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{results$}\StringTok{`}\DataTypeTok{right-singular}\StringTok{`}
+\end{Highlighting}
+\end{Shaded}
 
-Your code should compute all these vectors and scalars and store them in
-variables.
+\begin{verbatim}
+##             [,1]       [,2]
+## [1,]  0.01856629 -0.6727903
+## [2,] -0.25499937 -0.7184510
+## [3,] -0.96676296  0.1765824
+\end{verbatim}
 
-Please add enough comments in your code to show me how to interpret your
-steps.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Y_vectors <-}\StringTok{ }\KeywordTok{eigen}\NormalTok{(Y)$vectors}
+\NormalTok{Y_vectors[,}\DecValTok{1}\NormalTok{] <-}\StringTok{ }\NormalTok{(Y_vectors[,}\DecValTok{1}\NormalTok{]*-}\DecValTok{1}\NormalTok{)}
+\NormalTok{Y_vectors}
+\end{Highlighting}
+\end{Shaded}
 
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{1}
-\tightlist
-\item
-  Problem Set 2
-\end{enumerate}
+\begin{verbatim}
+##             [,1]       [,2]       [,3]
+## [1,]  0.01856629 -0.6727903  0.7396003
+## [2,] -0.25499937 -0.7184510 -0.6471502
+## [3,] -0.96676296  0.1765824  0.1849001
+\end{verbatim}
+
+\section{2. Problem Set 2}\label{problem-set-2}
 
 Using the procedure outlined in section 1 of the weekly handout, write a
 function to compute the inverse of a well-conditioned full-rank square
@@ -328,8 +340,46 @@ precision errors are acceptable but the function myinverse should be
 correct and must use co-factors and determinant of A to compute the
 inverse.
 
-Please submit PS1 and PS2 in an R-markdown document with your first
-initial and last name.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{myinverse <-}\StringTok{ }\NormalTok{function(M)\{}
+              \NormalTok{results <-}\StringTok{ }\KeywordTok{list}\NormalTok{()}
+              \NormalTok{results$original <-}\StringTok{ }\NormalTok{M }
+              \CommentTok{#save original to compare}
+              \NormalTok{cofactors <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\DataTypeTok{nrow =} \KeywordTok{nrow}\NormalTok{(M), }\DataTypeTok{ncol =} \KeywordTok{ncol}\NormalTok{(M)) }
+              \CommentTok{# create empty matrix to store cofactors}
+              \NormalTok{for(i in }\DecValTok{1}\NormalTok{:}\KeywordTok{nrow}\NormalTok{(M))\{ }\CommentTok{#loop over rows}
+                \NormalTok{for (j in }\DecValTok{1}\NormalTok{:}\KeywordTok{ncol}\NormalTok{(M)) }\CommentTok{# loop over columns}
+                  \NormalTok{cofactors[i,j] <-}\StringTok{ }\NormalTok{((-}\DecValTok{1}\NormalTok{)^(i +}\StringTok{ }\NormalTok{j)*}\KeywordTok{det}\NormalTok{(M[-i, -j])) }
+                \CommentTok{#for row, column; sign * determinate of submatrix}
+              \NormalTok{\}}
+              \NormalTok{results$inverse <-}\StringTok{ }\KeywordTok{t}\NormalTok{(cofactors)/}\KeywordTok{det}\NormalTok{(M) }
+              \CommentTok{#transpose of cofactors matrix / determinate of original matrix}
+              \KeywordTok{return}\NormalTok{(results)}
+            \NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{M <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{:}\DecValTok{7}\NormalTok{,}\DecValTok{12}\NormalTok{,}\DecValTok{20}\NormalTok{), }\DataTypeTok{nrow =} \DecValTok{3}\NormalTok{)}
+\KeywordTok{myinverse}\NormalTok{(M)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $original
+##      [,1] [,2] [,3]
+## [1,]    1    4    7
+## [2,]    2    5   12
+## [3,]    3    6   20
+## 
+## $inverse
+##            [,1]       [,2]       [,3]
+## [1,] -3.1111111  4.2222222 -1.4444444
+## [2,]  0.4444444  0.1111111 -0.2222222
+## [3,]  0.3333333 -0.6666667  0.3333333
+\end{verbatim}
 
 
 \end{document}
