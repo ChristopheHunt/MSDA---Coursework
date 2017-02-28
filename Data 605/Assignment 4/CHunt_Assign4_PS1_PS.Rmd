@@ -79,7 +79,9 @@ Y_vectors[,1] <- (Y_vectors[,1]*-1)
 Y_vectors
 ```
 
-# 2. Problem Set 2
+\newpage
+
+# Problem Set 2
 
 Using the procedure outlined in section 1 of the weekly handout, write a function to compute the inverse of a well-conditioned full-rank square matrix using co-factors. In order to compute the co-factors, you may use built-in commands to compute the determinant. Your function should have the following signature: 
 
