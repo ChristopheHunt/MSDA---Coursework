@@ -84,7 +84,24 @@ intercept <- function(x,y){
 intercept(x = height, y = weight)
 ```
 
-The linear model y = ax + b for this data set is $y_{weight} = `r round(slope(x = height, y = weight),2)`x_{height} `r round(intercept(x = height, y = weight),2)`
+The linear model y = ax + b for this data set is $y_{weight} = `r round(slope(x = height, y = weight),2)`x_{height} `r round(intercept(x = height, y = weight),2)`.
+
+Additional measures to aid in our statistical analysis. 
+
+Error sum of squares (SEE): 
+```{r}
+SEE <- function(x, y) {
+    m <- slope(x = x, y = y)
+    b <- intercept(x = x, y = y)
+    return(sum(y - ((m*x) + b))^2)
+}
+options("scipen"=100, "digits"=4)
+SEE(x,y)
+```
+
+Total Corrected Sum of Squares:
+
+SSR, SST, and R^2
 
 We can verify the results with the `lm` function in `base R`.
 
