@@ -1,0 +1,59 @@
+---
+title: "Homework 5"
+author: "Christophe Hunt"
+date: "February 28, 2017"
+output:
+  pdf_document:
+    fig_caption: yes
+    keep_tex: yes
+    includes:
+      in_header: header.tex
+    number_sections: yes
+    toc: yes
+    toc_depth: 2
+  html_document:
+    toc: yes
+    toc_depth: '2'
+---
+
+\newpage
+
+# Page 228: problem 1
+
+Consider a model for the long-term dining behavior of the students at College USA. It is found that 25% of the students who eat at the college's Grease Dining Hall return to eat there again, whereas those who eat at Sweet Dining Hall have a 93% return rate. These are the only two dining halls available on campus, and assume that all students eat at a one of these halls. Formulate a model to solve for the long-term percentage of students eating at each hall.
+
+
+\begin{table}[h]
+\centering
+\caption{Present - Next State for Dining}
+\label{Present - Next State for Dining}
+\begin{tabular}{cl|cc|}
+\cline{3-4}
+ &  & \multicolumn{2}{c|}{NEXT STATE} \\ \cline{3-4} 
+\multicolumn{1}{l}{} &  & \multicolumn{1}{l}{Grease Dinning Hall} & \multicolumn{1}{l|}{Sweet Dining Hall} \\ \hline
+\multicolumn{1}{|c|}{\multirow{2}{*}{PRESENT STATE}} & Grease Dining Hall & .25 & .75 \\
+\multicolumn{1}{|c|}{} & Sweet Dining Hall & .7 & .93 \\ \hline
+\end{tabular}
+\end{table}
+
+## Model to solve for long-term percentage 
+$$Grease_{n+1} = .25~Grease_n + .7~Sweet_N$$
+$$Sweet_{n+1} = .75~Grease_n + .93~Sweet_N$$
+
+
+# Page 232: problem 1
+
+```{r}
+
+```
+
+
+# Page 240: problem 1
+
+```{r}
+
+```
+
+
+# Page 240: problem 2
+
