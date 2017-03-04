@@ -29,6 +29,46 @@
             pdfborder={0 0 0},
             breaklinks=true}
 \urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{{#1}}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{{#1}}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\ImportTok}[1]{{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{{#1}}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{{#1}}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{{#1}}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{{#1}}}}
+\newcommand{\BuiltInTok}[1]{{#1}}
+\newcommand{\ExtensionTok}[1]{{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{{#1}}}
+\newcommand{\RegionMarkerTok}[1]{{#1}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{{#1}}}}
+\newcommand{\NormalTok}[1]{{#1}}
 \usepackage{graphicx,grffile}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
@@ -151,6 +191,110 @@ Compenent Reliability \[R_{s1} = 0.95\]
 \[R_{s1, s2, s3} = .95 * 0.9994 * 0.9999 = 0.9493351\]
 
 \section{Page 240: problem 1}\label{page-240-problem-1}
+
+Use the basic linear model y = ax + b to fit the following data sets.
+Provide the model, provide the values of SEE, SSR, SST, and R\^{}2, and
+provide a residual plot.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{height <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{60}\NormalTok{:}\DecValTok{80}\NormalTok{)}
+\NormalTok{weight <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{132}\NormalTok{, }\DecValTok{136}\NormalTok{, }\DecValTok{141}\NormalTok{, }\DecValTok{145}\NormalTok{, }\DecValTok{150}\NormalTok{, }\DecValTok{155}\NormalTok{, }\DecValTok{160}\NormalTok{, }\DecValTok{165}\NormalTok{, }\DecValTok{170}\NormalTok{, }
+            \DecValTok{175}\NormalTok{, }\DecValTok{180}\NormalTok{, }\DecValTok{185}\NormalTok{, }\DecValTok{190}\NormalTok{, }\DecValTok{195}\NormalTok{, }\DecValTok{201}\NormalTok{, }\DecValTok{206}\NormalTok{, }\DecValTok{212}\NormalTok{, }\DecValTok{218}\NormalTok{, }
+            \DecValTok{223}\NormalTok{, }\DecValTok{229}\NormalTok{, }\DecValTok{234}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{slope <-}\StringTok{ }\NormalTok{function(x,y)\{}
+\KeywordTok{return}\NormalTok{(((}\KeywordTok{length}\NormalTok{(x)*}\KeywordTok{sum}\NormalTok{(x*y)) -}\StringTok{ }\KeywordTok{sum}\NormalTok{(x)*}\KeywordTok{sum}\NormalTok{(y)) /}\StringTok{ }
+\StringTok{       }\NormalTok{((}\KeywordTok{length}\NormalTok{(x)*}\KeywordTok{sum}\NormalTok{(x^}\DecValTok{2}\NormalTok{)) -}\StringTok{ }\KeywordTok{sum}\NormalTok{(x)^}\DecValTok{2}\NormalTok{))}
+     \NormalTok{\}}
+\KeywordTok{slope}\NormalTok{(}\DataTypeTok{x =} \NormalTok{height, }\DataTypeTok{y =} \NormalTok{weight)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 5.136364
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{intercept <-}\StringTok{ }\NormalTok{function(x,y)\{}
+  \NormalTok{(}\KeywordTok{sum}\NormalTok{(x^}\DecValTok{2}\NormalTok{)*}\KeywordTok{sum}\NormalTok{(y) -}\StringTok{ }\KeywordTok{sum}\NormalTok{(x*y)*}\KeywordTok{sum}\NormalTok{(x)) /}
+\StringTok{  }\NormalTok{((}\KeywordTok{length}\NormalTok{(x)*}\KeywordTok{sum}\NormalTok{(x^}\DecValTok{2}\NormalTok{)) -}\StringTok{ }\KeywordTok{sum}\NormalTok{(x)^}\DecValTok{2}\NormalTok{)}
+\NormalTok{\}}
+\KeywordTok{intercept}\NormalTok{(}\DataTypeTok{x =} \NormalTok{height, }\DataTypeTok{y =} \NormalTok{weight)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -178.4978
+\end{verbatim}
+
+The linear model y = ax + b for this data set is \$y\_\{weight\} =
+5.14x\_\{height\} -178.5
+
+We can verify the results with the \texttt{lm} function in
+\texttt{base\ R}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(stargazer)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Please cite as:
+\end{verbatim}
+
+\begin{verbatim}
+##  Hlavac, Marek (2015). stargazer: Well-Formatted Regression and Summary Statistics Tables.
+\end{verbatim}
+
+\begin{verbatim}
+##  R package version 5.2. http://CRAN.R-project.org/package=stargazer
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{stargazer}\NormalTok{(}\KeywordTok{lm}\NormalTok{(weight ~}\StringTok{ }\NormalTok{height))}
+\end{Highlighting}
+\end{Shaded}
+
+\% Table created by stargazer v.5.2 by Marek Hlavac, Harvard University.
+E-mail: hlavac at fas.harvard.edu \% Date and time: Sat, Mar 04, 2017 -
+2:30:11 PM
+
+\begin{table}[!htbp] \centering 
+  \caption{} 
+  \label{} 
+\begin{tabular}{@{\extracolsep{5pt}}lc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{1}{c}{\textit{Dependent variable:}} \\ 
+\cline{2-2} 
+\\[-1.8ex] & weight \\ 
+\hline \\[-1.8ex] 
+ height & 5.136$^{***}$ \\ 
+  & (0.041) \\ 
+  & \\ 
+ Constant & $-$178.498$^{***}$ \\ 
+  & (2.883) \\ 
+  & \\ 
+\hline \\[-1.8ex] 
+Observations & 21 \\ 
+R$^{2}$ & 0.999 \\ 
+Adjusted R$^{2}$ & 0.999 \\ 
+Residual Std. Error & 1.139 (df = 19) \\ 
+F Statistic & 15,668.140$^{***}$ (df = 1; 19) \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{1}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular} 
+\end{table}
 
 \section{Page 240: problem 2}\label{page-240-problem-2}
 

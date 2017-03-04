@@ -59,10 +59,39 @@ $$R_{s1, s2, s3} = .95 * `r (0.98 +.97) - (.98 * .97)` * `r .99 + .99 - (.99 * .
 
 # Page 240: problem 1
 
-```{r}
+Use the basic linear model y = ax + b to fit the following data sets. Provide the model, provide the values of SEE, SSR, SST, and R^2, and provide a residual plot.
 
+```{r}
+height <- c(60:80)
+weight <- c(132, 136, 141, 145, 150, 155, 160, 165, 170, 
+            175, 180, 185, 190, 195, 201, 206, 212, 218, 
+            223, 229, 234)
 ```
 
+```{r}
+slope <- function(x,y){
+return(((length(x)*sum(x*y)) - sum(x)*sum(y)) / 
+       ((length(x)*sum(x^2)) - sum(x)^2))
+     }
+slope(x = height, y = weight)
+```
+
+```{r}
+intercept <- function(x,y){
+  (sum(x^2)*sum(y) - sum(x*y)*sum(x)) /
+  ((length(x)*sum(x^2)) - sum(x)^2)
+}
+intercept(x = height, y = weight)
+```
+
+The linear model y = ax + b for this data set is $y_{weight} = `r round(slope(x = height, y = weight),2)`x_{height} `r round(intercept(x = height, y = weight),2)`
+
+We can verify the results with the `lm` function in `base R`.
+
+```{r, results='asis'}
+library(stargazer)
+stargazer(lm(weight ~ height))
+```
 
 # Page 240: problem 2
 
