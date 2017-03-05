@@ -170,9 +170,10 @@ Intercept:
 
 ```{r}
 intercept(x = height3, y = weight)
+options(scipen=999)
 ```
 
-The linear model y = ax + b for this data set is $y_{weight} = `r round(slope(x = height3, y = weight),2)`x^3_{height}~`r + round(intercept(x = height3, y = weight),2)`$.
+The linear model y = ax + b for this data set is $y_{weight} = `r  round(slope(x = height3, y = weight), 6)`x^3_{height}~+`r  round(intercept(x = height3, y = weight),2)`$.
 
 Additional measures to aid in our statistical analysis. 
 

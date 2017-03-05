@@ -42,12 +42,27 @@ x_2 \\
 ## Write R Markdown script to compute $A^TA$ and $A^Tb$
 
 ```{r}
+A <- matrix(c(1,1,1,1,0,1,3,4), ncol = 2)
+b <- matrix(c(0,8,8,20))
 
+ATA <- t(A) %*% A
+ATb <- t(A) %*% b
 ```
 
 
 ## Solve for $\hat{x}$ in R using the above computed matrices
 
+```{r}
+x <- solve(ATA) %*% ATb
+x
+```
+
+
 ## What is the squared error of this solution?
+
+```{r}
+p <- A %*% x
+```
+
 
 ## Find the exact solution with p instead of b
