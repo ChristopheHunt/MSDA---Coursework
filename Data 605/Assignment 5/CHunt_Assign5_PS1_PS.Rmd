@@ -39,4 +39,15 @@ x_2 \\
 \end{bmatrix}
 \]
 
-## Write R Markdown script to compute $A^TA$
+## Write R Markdown script to compute $A^TA$ and $A^Tb$
+
+```{r}
+
+```
+
+
+## Solve for $\hat{x}$ in R using the above computed matrices
+
+## What is the squared error of this solution?
+
+## Find the exact solution with p instead of b

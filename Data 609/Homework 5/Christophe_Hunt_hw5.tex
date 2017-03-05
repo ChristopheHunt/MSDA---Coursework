@@ -188,7 +188,7 @@ Compenent Reliability \[R_{s1} = 0.95\]
 \[R_{s2} = 0.98 + .97 - (.98 * .97) = 0.9994\]
 \[R_{s3} = .99 + .99 - (.99 * .99) = 0.9999\] Entire system reliability:
 
-\[R_{s1, s2, s3} = .95 * 0.9994 * 0.9999 = 0.9493351\]
+\[R_{s1, s2, s3} = .95 * 0.9994 * 0.9999 = 0.9493351\] \newpage
 
 \section{Page 240: problem 1}\label{page-240-problem-1}
 
@@ -205,6 +205,8 @@ provide a residual plot.
 \end{Highlighting}
 \end{Shaded}
 
+Slope:
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{slope <-}\StringTok{ }\NormalTok{function(x,y)\{}
@@ -218,6 +220,8 @@ provide a residual plot.
 \begin{verbatim}
 ## [1] 5.136364
 \end{verbatim}
+
+Intercept :
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -233,8 +237,8 @@ provide a residual plot.
 ## [1] -178.4978
 \end{verbatim}
 
-The linear model y = ax + b for this data set is \$y\_\{weight\} =
-5.14x\_\{height\} -178.5.
+The linear model y = ax + b for this data set is
+\(y_{weight} = 5.14x_{height} -178.5\).
 
 Additional measures to aid in our statistical analysis.
 
@@ -259,11 +263,48 @@ Total Corrected Sum of Squares (SST):
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{SST <-}\StringTok{ }\NormalTok{function(x,y)}
+\NormalTok{SST <-}\StringTok{ }\NormalTok{function(x,y) \{}
+    \KeywordTok{return}\NormalTok{(}\KeywordTok{sum}\NormalTok{((y -}\StringTok{ }\KeywordTok{mean}\NormalTok{(y))^}\DecValTok{2}\NormalTok{))}
+\NormalTok{\}}
+\KeywordTok{SST}\NormalTok{(}\DataTypeTok{y =} \NormalTok{weight)}
 \end{Highlighting}
 \end{Shaded}
 
-SSR, and R\^{}2
+\begin{verbatim}
+## [1] 20338.95
+\end{verbatim}
+
+Regression sum of squares (SSR):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{SSR <-}\StringTok{ }\NormalTok{function(x,y) \{}
+    \KeywordTok{return}\NormalTok{(}\KeywordTok{SST}\NormalTok{(x,y) -}\StringTok{ }\KeywordTok{SSE}\NormalTok{(x,y))}
+\NormalTok{\}}
+\KeywordTok{SSR}\NormalTok{(}\DataTypeTok{x =} \NormalTok{height, }\DataTypeTok{y =} \NormalTok{weight)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 20314.32
+\end{verbatim}
+
+Coefficient of determination \(R^2\):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{R2 <-}\StringTok{ }\NormalTok{function(x,y)\{}
+  \KeywordTok{return}\NormalTok{(}\DecValTok{1} \NormalTok{-}\StringTok{ }\NormalTok{(}\KeywordTok{SSE}\NormalTok{(x,y)/}\KeywordTok{SST}\NormalTok{(x,y)))}
+\NormalTok{\}}
+\KeywordTok{R2}\NormalTok{(}\DataTypeTok{x =} \NormalTok{height, }\DataTypeTok{y =} \NormalTok{weight)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.9987888
+\end{verbatim}
+
+\newpage
 
 We can verify the results with the \texttt{lm} function in
 \texttt{base\ R}.
@@ -271,32 +312,10 @@ We can verify the results with the \texttt{lm} function in
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{library}\NormalTok{(stargazer)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## 
-## Please cite as:
-\end{verbatim}
-
-\begin{verbatim}
-##  Hlavac, Marek (2015). stargazer: Well-Formatted Regression and Summary Statistics Tables.
-\end{verbatim}
-
-\begin{verbatim}
-##  R package version 5.2. http://CRAN.R-project.org/package=stargazer
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \NormalTok{lm_check <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(weight ~}\StringTok{ }\NormalTok{height)}
-\KeywordTok{stargazer}\NormalTok{(lm_check)}
+\KeywordTok{stargazer}\NormalTok{(lm_check, }\DataTypeTok{header =} \OtherTok{FALSE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
-
-\% Table created by stargazer v.5.2 by Marek Hlavac, Harvard University.
-E-mail: hlavac at fas.harvard.edu \% Date and time: Sat, Mar 04, 2017 -
-8:10:26 PM
 
 \begin{table}[!htbp] \centering 
   \caption{} 
@@ -326,7 +345,167 @@ F Statistic & 15,668.140$^{***}$ (df = 1; 19) \\
 \end{tabular} 
 \end{table}
 
+\newpage
+
+Diagnostic plots
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow =} \KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\KeywordTok{plot}\NormalTok{(lm_check)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Christophe_Hunt_hw5_files/figure-latex/unnamed-chunk-9-1.pdf}
+
+From the residual plots we can tell that the residuals show constant
+variance which violates the models assumptions. This model is not
+actually valid for this data set.
+
+\newpage
+
 \section{Page 240: problem 2}\label{page-240-problem-2}
+
+For Table 2.7, predict weight as a function of the cube of the height.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{height3 <-}\StringTok{ }\NormalTok{height^}\DecValTok{3}
+\end{Highlighting}
+\end{Shaded}
+
+Slope:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{slope}\NormalTok{(}\DataTypeTok{x =} \NormalTok{height3, }\DataTypeTok{y =} \NormalTok{weight)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.0003467044
+\end{verbatim}
+
+Intercept:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{intercept}\NormalTok{(}\DataTypeTok{x =} \NormalTok{height3, }\DataTypeTok{y =} \NormalTok{weight)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 59.4584
+\end{verbatim}
+
+The linear model y = ax + b for this data set is
+\(y_{weight} = 0x^3_{height}~59.46\).
+
+Additional measures to aid in our statistical analysis.
+
+Error sum of squares (SSE):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{SSE}\NormalTok{(}\DataTypeTok{x =} \NormalTok{height3, }\DataTypeTok{y =} \NormalTok{weight)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 39.86196
+\end{verbatim}
+
+Total Correct Sum of Squares (SST):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{SST}\NormalTok{(}\DataTypeTok{y =} \NormalTok{weight)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 20338.95
+\end{verbatim}
+
+Regression sum of squares (SSR):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{SSR}\NormalTok{(}\DataTypeTok{x =} \NormalTok{height3, }\DataTypeTok{y =} \NormalTok{weight)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 20299.09
+\end{verbatim}
+
+Coefficient of determination \(R^2\):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{R2}\NormalTok{(}\DataTypeTok{x =} \NormalTok{height3, }\DataTypeTok{y =} \NormalTok{weight)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.9980401
+\end{verbatim}
+
+\newpage 
+
+We can verify the results with the lm function in base R.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(stargazer)}
+\NormalTok{lm_check <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(weight ~}\StringTok{ }\NormalTok{height3)}
+\KeywordTok{stargazer}\NormalTok{(lm_check, }\DataTypeTok{header =} \OtherTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}[!htbp] \centering 
+  \caption{} 
+  \label{} 
+\begin{tabular}{@{\extracolsep{5pt}}lc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{1}{c}{\textit{Dependent variable:}} \\ 
+\cline{2-2} 
+\\[-1.8ex] & weight \\ 
+\hline \\[-1.8ex] 
+ height3 & 0.0003$^{***}$ \\ 
+  & (0.00000) \\ 
+  & \\ 
+ Constant & 59.458$^{***}$ \\ 
+  & (1.276) \\ 
+  & \\ 
+\hline \\[-1.8ex] 
+Observations & 21 \\ 
+R$^{2}$ & 0.998 \\ 
+Adjusted R$^{2}$ & 0.998 \\ 
+Residual Std. Error & 1.448 (df = 19) \\ 
+F Statistic & 9,675.458$^{***}$ (df = 1; 19) \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{1}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular} 
+\end{table}
+
+\newpage
+
+Diagnostic plots
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow =} \KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\KeywordTok{plot}\NormalTok{(lm_check)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Christophe_Hunt_hw5_files/figure-latex/unnamed-chunk-18-1.pdf}
+
+There appears to be less constant variance in this residual plot, this
+is the least worst model of the two using a basic linear model.
 
 
 \end{document}

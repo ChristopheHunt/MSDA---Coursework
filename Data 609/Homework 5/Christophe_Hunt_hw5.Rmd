@@ -55,7 +55,7 @@ $$R_{s3} = .99 + .99 - (.99 * .99) = `r (.99 + .99) - (.99 * .99)`$$
 Entire system reliability:
 
 $$R_{s1, s2, s3} = .95 * `r (0.98 +.97) - (.98 * .97)` * `r .99 + .99 - (.99 * .99)` = `r .95 * ((0.98 +.97) - (.98 * .97)) * ((.99 + .99) - (.99 * .99))`$$
-
+\newpage
 
 # Page 240: problem 1
 
@@ -68,6 +68,8 @@ weight <- c(132, 136, 141, 145, 150, 155, 160, 165, 170,
             223, 229, 234)
 ```
 
+Slope: 
+
 ```{r}
 slope <- function(x,y){
 return(((length(x)*sum(x*y)) - sum(x)*sum(y)) / 
@@ -75,6 +77,8 @@ return(((length(x)*sum(x*y)) - sum(x)*sum(y)) /
      }
 slope(x = height, y = weight)
 ```
+
+Intercept : 
 
 ```{r}
 intercept <- function(x,y){
@@ -84,7 +88,7 @@ intercept <- function(x,y){
 intercept(x = height, y = weight)
 ```
 
-The linear model y = ax + b for this data set is $y_{weight} = `r round(slope(x = height, y = weight),2)`x_{height} `r round(intercept(x = height, y = weight),2)`.
+The linear model y = ax + b for this data set is $y_{weight} = `r round(slope(x = height, y = weight),2)`x_{height} `r round(intercept(x = height, y = weight),2)`$.
 
 Additional measures to aid in our statistical analysis. 
 
@@ -100,20 +104,118 @@ SSE(x = height, y = weight)
 
 Total Corrected Sum of Squares (SST):
 
-```{r, eval=FALSE}
-SST <- function(x,y)
+```{r}
+SST <- function(x,y) {
+    return(sum((y - mean(y))^2))
+}
+SST(y = weight)
 ```
 
+Regression sum of squares (SSR): 
 
-SSR,  and R^2
+```{r}
+SSR <- function(x,y) {
+    return(SST(x,y) - SSE(x,y))
+}
+SSR(x = height, y = weight)
+```
+
+Coefficient of determination $R^2$:
+
+```{r}
+R2 <- function(x,y){
+  return(1 - (SSE(x,y)/SST(x,y)))
+}
+R2(x = height, y = weight)
+```
+
+\newpage
 
 We can verify the results with the `lm` function in `base R`.
 
-```{r, results='asis'}
+```{r, results='asis', message=FALSE, warning=FALSE}
 library(stargazer)
 lm_check <- lm(weight ~ height)
-stargazer(lm_check)
+stargazer(lm_check, header = FALSE)
 ```
+
+\newpage
+
+Diagnostic plots 
+
+```{r}
+par(mfrow = c(2,2))
+plot(lm_check)
+```
+
+From the residual plots we can tell that the residuals show constant variance which violates the models assumptions. This model is not actually valid for this data set. 
+
+\newpage
 
 # Page 240: problem 2
 
+For Table 2.7, predict weight as a function of the cube of the height. 
+
+```{r}
+height3 <- height^3
+```
+
+Slope:
+
+```{r}
+slope(x = height3, y = weight)
+```
+
+Intercept:
+
+```{r}
+intercept(x = height3, y = weight)
+```
+
+The linear model y = ax + b for this data set is $y_{weight} = `r round(slope(x = height3, y = weight),2)`x^3_{height}~`r + round(intercept(x = height3, y = weight),2)`$.
+
+Additional measures to aid in our statistical analysis. 
+
+Error sum of squares (SSE):
+
+```{r}
+SSE(x = height3, y = weight)
+```
+
+
+Total Correct Sum of Squares (SST):
+```{r}
+SST(y = weight)
+```
+
+Regression sum of squares (SSR): 
+
+```{r}
+SSR(x = height3, y = weight)
+```
+
+Coefficient of determination $R^2$:
+
+```{r}
+R2(x = height3, y = weight)
+```
+
+\newpage 
+
+We can verify the results with the lm function in base R.
+
+```{r, results='asis'}
+library(stargazer)
+lm_check <- lm(weight ~ height3)
+stargazer(lm_check, header = FALSE)
+```
+
+\newpage
+
+Diagnostic plots
+```{r}
+par(mfrow = c(2,2))
+plot(lm_check)
+```
+
+There appears to be less constant variance in this residual plot, this is the least worst model of the two using a basic linear model. 
