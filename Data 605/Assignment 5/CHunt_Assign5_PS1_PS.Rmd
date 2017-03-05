@@ -16,6 +16,9 @@ output:
     toc_depth: '2'
 ---
 
+# Problem Set 1 
+
+Consider the unsolvable system Ax = b as given below:
 \[
 \begin{bmatrix}
     1 & 0  \\
@@ -35,3 +38,5 @@ x_2 \\
 20  \\
 \end{bmatrix}
 \]
+
+## Write R Markdown script to compute $A^TA$
