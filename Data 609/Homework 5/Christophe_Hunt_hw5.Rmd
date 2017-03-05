@@ -59,7 +59,7 @@ $$R_{s1, s2, s3} = .95 * `r (0.98 +.97) - (.98 * .97)` * `r .99 + .99 - (.99 * .
 
 # Page 240: problem 1
 
-Use the basic linear model y = ax + b to fit the following data sets. Provide the model, provide the values of SEE, SSR, SST, and R^2, and provide a residual plot.
+Use the basic linear model y = ax + b to fit the following data sets. Provide the model, provide the values of SSE, SSR, SST, and R^2, and provide a residual plot.
 
 ```{r}
 height <- c(60:80)
@@ -88,26 +88,31 @@ The linear model y = ax + b for this data set is $y_{weight} = `r round(slope(x 
 
 Additional measures to aid in our statistical analysis. 
 
-Error sum of squares (SEE): 
+Error sum of squares (SSE): 
 ```{r}
-SEE <- function(x, y) {
+SSE <- function(x, y) {
     m <- slope(x = x, y = y)
     b <- intercept(x = x, y = y)
-    return(sum(y - ((m*x) + b))^2)
+    return(sum((y - (m*x + b))^2))
 }
-options("scipen"=100, "digits"=4)
-SEE(x,y)
+SSE(x = height, y = weight)
 ```
 
-Total Corrected Sum of Squares:
+Total Corrected Sum of Squares (SST):
 
-SSR, SST, and R^2
+```{r, eval=FALSE}
+SST <- function(x,y)
+```
+
+
+SSR,  and R^2
 
 We can verify the results with the `lm` function in `base R`.
 
 ```{r, results='asis'}
 library(stargazer)
-stargazer(lm(weight ~ height))
+lm_check <- lm(weight ~ height)
+stargazer(lm_check)
 ```
 
 # Page 240: problem 2

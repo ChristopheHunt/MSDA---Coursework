@@ -193,7 +193,7 @@ Compenent Reliability \[R_{s1} = 0.95\]
 \section{Page 240: problem 1}\label{page-240-problem-1}
 
 Use the basic linear model y = ax + b to fit the following data sets.
-Provide the model, provide the values of SEE, SSR, SST, and R\^{}2, and
+Provide the model, provide the values of SSE, SSR, SST, and R\^{}2, and
 provide a residual plot.
 
 \begin{Shaded}
@@ -234,7 +234,36 @@ provide a residual plot.
 \end{verbatim}
 
 The linear model y = ax + b for this data set is \$y\_\{weight\} =
-5.14x\_\{height\} -178.5
+5.14x\_\{height\} -178.5.
+
+Additional measures to aid in our statistical analysis.
+
+Error sum of squares (SSE):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{SSE <-}\StringTok{ }\NormalTok{function(x, y) \{}
+    \NormalTok{m <-}\StringTok{ }\KeywordTok{slope}\NormalTok{(}\DataTypeTok{x =} \NormalTok{x, }\DataTypeTok{y =} \NormalTok{y)}
+    \NormalTok{b <-}\StringTok{ }\KeywordTok{intercept}\NormalTok{(}\DataTypeTok{x =} \NormalTok{x, }\DataTypeTok{y =} \NormalTok{y)}
+    \KeywordTok{return}\NormalTok{(}\KeywordTok{sum}\NormalTok{((y -}\StringTok{ }\NormalTok{(m*x +}\StringTok{ }\NormalTok{b))^}\DecValTok{2}\NormalTok{))}
+\NormalTok{\}}
+\KeywordTok{SSE}\NormalTok{(}\DataTypeTok{x =} \NormalTok{height, }\DataTypeTok{y =} \NormalTok{weight)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 24.6342
+\end{verbatim}
+
+Total Corrected Sum of Squares (SST):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{SST <-}\StringTok{ }\NormalTok{function(x,y)}
+\end{Highlighting}
+\end{Shaded}
+
+SSR, and R\^{}2
 
 We can verify the results with the \texttt{lm} function in
 \texttt{base\ R}.
@@ -260,13 +289,14 @@ We can verify the results with the \texttt{lm} function in
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{stargazer}\NormalTok{(}\KeywordTok{lm}\NormalTok{(weight ~}\StringTok{ }\NormalTok{height))}
+\NormalTok{lm_check <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(weight ~}\StringTok{ }\NormalTok{height)}
+\KeywordTok{stargazer}\NormalTok{(lm_check)}
 \end{Highlighting}
 \end{Shaded}
 
 \% Table created by stargazer v.5.2 by Marek Hlavac, Harvard University.
 E-mail: hlavac at fas.harvard.edu \% Date and time: Sat, Mar 04, 2017 -
-2:30:11 PM
+8:10:26 PM
 
 \begin{table}[!htbp] \centering 
   \caption{} 
