@@ -307,5 +307,86 @@ orthogonal, their dot product is zero.
 
 \section{Problem Set 2}\label{problem-set-2}
 
+Write an R markdown script that takes in the auto-mpg data, extracts an
+A matrix from the ???rst 4 columns and b vector from the fifth (mpg)
+column.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\KeywordTok{as.matrix}\NormalTok{(}\KeywordTok{read.table}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20605/Assignment%205/auto-mpg.data"}\NormalTok{))}
+
+\NormalTok{A <-}\StringTok{ }\KeywordTok{as.matrix}\NormalTok{(x[,}\DecValTok{1}\NormalTok{:}\DecValTok{4}\NormalTok{])}
+\NormalTok{b <-}\StringTok{ }\KeywordTok{as.matrix}\NormalTok{(x[,}\DecValTok{5}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+Using the least squares approach, your code should compute the best
+fitting solution
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ATA <-}\StringTok{ }\KeywordTok{t}\NormalTok{(A) %*%}\StringTok{ }\NormalTok{A}
+\NormalTok{ATb <-}\StringTok{ }\KeywordTok{t}\NormalTok{(A) %*%}\StringTok{ }\NormalTok{b}
+\NormalTok{results <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\StringTok{"ATA"} \NormalTok{=}\StringTok{ }\NormalTok{ATA, }\StringTok{"ATb"} \NormalTok{=}\StringTok{ }\NormalTok{ATb)}
+\NormalTok{results}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $ATA
+##           V1          V2         V3         V4
+## V1  19097634   9374647.0  259345480  1123011.9
+## V2   9374647   4857524.0  132989885   607832.3
+## V3 259345480 132989885.0 3757575489 17758103.6
+## V4   1123012    607832.3   17758104    97656.9
+## 
+## $ATb
+##          [,1]
+## V1  1529685.9
+## V2   868718.8
+## V3 25209061.4
+## V4   146401.4
+\end{verbatim}
+
+\subsection{\texorpdfstring{Solve for \(\hat{x}\) in R using the above
+computed
+matrices}{Solve for \textbackslash{}hat\{x\} in R using the above computed matrices}}\label{solve-for-hatx-in-r-using-the-above-computed-matrices-1}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\KeywordTok{solve}\NormalTok{(ATA) %*%}\StringTok{ }\NormalTok{ATb}
+\NormalTok{x}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##            [,1]
+## V1 -0.030037938
+## V2  0.157115685
+## V3 -0.006217883
+## V4  1.997320955
+\end{verbatim}
+
+Finally, calculate the fitting error between the predicted mpg of your
+model and the actual mpg
+
+\subsection{What is the squared error of this
+solution?}\label{what-is-the-squared-error-of-this-solution-1}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p <-}\StringTok{ }\NormalTok{A %*%}\StringTok{ }\NormalTok{x}
+\CommentTok{#b = p + e or e = p - b which we can substitute in our given values. }
+\NormalTok{e <-}\StringTok{ }\NormalTok{p -}\StringTok{ }\NormalTok{b}
+\CommentTok{# we then sum the square of errors. }
+\NormalTok{e2 <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(e^}\DecValTok{2}\NormalTok{)}
+\NormalTok{e2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 13101.43
+\end{verbatim}
+
 
 \end{document}

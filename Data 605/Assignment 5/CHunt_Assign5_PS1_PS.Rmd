@@ -112,3 +112,41 @@ sum(e*A[,1])
 
 
 # Problem Set 2 
+
+Write an R markdown script that takes in the auto-mpg data, extracts an A matrix from the ???rst 4 columns and b vector from the fifth (mpg) column.
+
+```{r}
+x <- as.matrix(read.table("https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20605/Assignment%205/auto-mpg.data"))
+
+A <- as.matrix(x[,1:4])
+b <- as.matrix(x[,5])
+```
+
+Using the least squares approach, your code should compute the best fitting solution
+
+```{r}
+ATA <- t(A) %*% A
+ATb <- t(A) %*% b
+results <- list("ATA" = ATA, "ATb" = ATb)
+results
+```
+
+## Solve for $\hat{x}$ in R using the above computed matrices
+
+```{r}
+x <- solve(ATA) %*% ATb
+x
+```
+
+Finally, calculate the fitting error between the predicted mpg of your model and the actual mpg
+
+## What is the squared error of this solution?
+
+```{r}
+p <- A %*% x
+#b = p + e or e = p - b which we can substitute in our given values. 
+e <- p - b
+# we then sum the square of errors. 
+e2 <- sum(e^2)
+e2
+```
