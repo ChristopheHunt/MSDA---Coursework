@@ -120,7 +120,10 @@ Write an R markdown script that takes in the auto-mpg data, extracts an A matrix
 Apparently, an added column of 1 is necessary to obtain an intercept. 
 
 ```{r}
-x <- as.matrix(read.table("https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20605/Assignment%205/auto-mpg.data"))
+x <- as.matrix(read.table(paste0("https://raw.githubusercontent.com",
+                                 "/ChristopheHunt/MSDA---Coursework",
+                                 "/master/Data%20605/Assignment%205/",
+                                 "auto-mpg.data")))
 
 A <- as.matrix(cbind(x[,1:4],1))
 b <- as.matrix(x[,5])
@@ -161,6 +164,7 @@ e <- p - b
 e
 ```
 
+## What is the squared error of the solution?
 
 ```{r}
 e2 <- sum(e^2)

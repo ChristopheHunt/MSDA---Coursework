@@ -317,7 +317,10 @@ Apparently, an added column of 1 is necessary to obtain an intercept.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{x <-}\StringTok{ }\KeywordTok{as.matrix}\NormalTok{(}\KeywordTok{read.table}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20605/Assignment%205/auto-mpg.data"}\NormalTok{))}
+\NormalTok{x <-}\StringTok{ }\KeywordTok{as.matrix}\NormalTok{(}\KeywordTok{read.table}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com"}\NormalTok{,}
+                                 \StringTok{"/ChristopheHunt/MSDA---Coursework"}\NormalTok{,}
+                                 \StringTok{"/master/Data%20605/Assignment%205/"}\NormalTok{,}
+                                 \StringTok{"auto-mpg.data"}\NormalTok{)))}
 
 \NormalTok{A <-}\StringTok{ }\KeywordTok{as.matrix}\NormalTok{(}\KeywordTok{cbind}\NormalTok{(x[,}\DecValTok{1}\NormalTok{:}\DecValTok{4}\NormalTok{],}\DecValTok{1}\NormalTok{))}
 \NormalTok{b <-}\StringTok{ }\KeywordTok{as.matrix}\NormalTok{(x[,}\DecValTok{5}\NormalTok{])}
@@ -791,6 +794,9 @@ mpg.}\label{the-fitting-error-to-the-predicted-mpg-and-the-actual-mpg.}
 ## [391,]  -1.20586132
 ## [392,]  -4.85085028
 \end{verbatim}
+
+\subsection{What is the squared error of the
+solution?}\label{what-is-the-squared-error-of-the-solution}
 
 \begin{Shaded}
 \begin{Highlighting}[]
