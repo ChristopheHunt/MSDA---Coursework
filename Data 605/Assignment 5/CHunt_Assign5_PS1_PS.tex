@@ -308,14 +308,16 @@ orthogonal, their dot product is zero.
 \section{Problem Set 2}\label{problem-set-2}
 
 Write an R markdown script that takes in the auto-mpg data, extracts an
-A matrix from the ???rst 4 columns and b vector from the fifth (mpg)
+A matrix from the first 4 columns and b vector from the fifth (mpg)
 column.
+
+Apparently, an added column of 1 is necessary to obtain an intercept.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{x <-}\StringTok{ }\KeywordTok{as.matrix}\NormalTok{(}\KeywordTok{read.table}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20605/Assignment%205/auto-mpg.data"}\NormalTok{))}
 
-\NormalTok{A <-}\StringTok{ }\KeywordTok{as.matrix}\NormalTok{(x[,}\DecValTok{1}\NormalTok{:}\DecValTok{4}\NormalTok{])}
+\NormalTok{A <-}\StringTok{ }\KeywordTok{as.matrix}\NormalTok{(}\KeywordTok{cbind}\NormalTok{(x[,}\DecValTok{1}\NormalTok{:}\DecValTok{4}\NormalTok{],}\DecValTok{1}\NormalTok{))}
 \NormalTok{b <-}\StringTok{ }\KeywordTok{as.matrix}\NormalTok{(x[,}\DecValTok{5}\NormalTok{])}
 \end{Highlighting}
 \end{Shaded}
@@ -334,11 +336,12 @@ fitting solution
 
 \begin{verbatim}
 ## $ATA
-##           V1          V2         V3         V4
-## V1  19097634   9374647.0  259345480  1123011.9
-## V2   9374647   4857524.0  132989885   607832.3
-## V3 259345480 132989885.0 3757575489 17758103.6
-## V4   1123012    607832.3   17758104    97656.9
+##             V1          V2         V3         V4          
+## V1  19097634.2   9374647.0  259345480  1123011.9   76209.5
+## V2   9374647.0   4857524.0  132989885   607832.3   40952.0
+## V3 259345480.0 132989885.0 3757575489 17758103.6 1167213.0
+## V4   1123011.9    607832.3   17758104    97656.9    6092.2
+##        76209.5     40952.0    1167213     6092.2     392.0
 ## 
 ## $ATb
 ##          [,1]
@@ -346,6 +349,7 @@ fitting solution
 ## V2   868718.8
 ## V3 25209061.4
 ## V4   146401.4
+##        9190.8
 \end{verbatim}
 
 \subsection{\texorpdfstring{Solve for \(\hat{x}\) in R using the above
@@ -361,14 +365,20 @@ matrices}{Solve for \textbackslash{}hat\{x\} in R using the above computed matri
 
 \begin{verbatim}
 ##            [,1]
-## V1 -0.030037938
-## V2  0.157115685
-## V3 -0.006217883
-## V4  1.997320955
+## V1 -0.006000871
+## V2 -0.043607731
+## V3 -0.005280508
+## V4 -0.023147999
+##    45.251139699
 \end{verbatim}
 
-Finally, calculate the fitting error between the predicted mpg of your
-model and the actual mpg
+The least squares model using this method is:
+
+\[mpg = -0.006displacement + -0.04361horsepower + -0.00528weight + -0.02315acceleration 
+ + 45.25114\]
+
+Finally, calculate the fitting error between the predicted mpg of youur
+model and actual mpg.
 
 \subsection{What is the squared error of this
 solution?}\label{what-is-the-squared-error-of-this-solution-1}
@@ -385,7 +395,7 @@ solution?}\label{what-is-the-squared-error-of-this-solution-1}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 13101.43
+## [1] 6979.413
 \end{verbatim}
 
 

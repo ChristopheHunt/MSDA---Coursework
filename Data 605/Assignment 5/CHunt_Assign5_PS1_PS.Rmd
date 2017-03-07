@@ -113,12 +113,14 @@ sum(e*A[,1])
 
 # Problem Set 2 
 
-Write an R markdown script that takes in the auto-mpg data, extracts an A matrix from the ???rst 4 columns and b vector from the fifth (mpg) column.
+Write an R markdown script that takes in the auto-mpg data, extracts an A matrix from the first 4 columns and b vector from the fifth (mpg) column.
+
+Apparently, an added column of 1 is necessary to obtain an intercept. 
 
 ```{r}
 x <- as.matrix(read.table("https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20605/Assignment%205/auto-mpg.data"))
 
-A <- as.matrix(x[,1:4])
+A <- as.matrix(cbind(x[,1:4],1))
 b <- as.matrix(x[,5])
 ```
 
@@ -138,7 +140,13 @@ x <- solve(ATA) %*% ATb
 x
 ```
 
-Finally, calculate the fitting error between the predicted mpg of your model and the actual mpg
+The least squares model using this method is:
+
+$$mpg = `r round(x[1,], 5)`displacement + `r round(x[2,], 5)`horsepower + `r round(x[3,], 5)`weight + `r round(x[4,], 5)`acceleration 
+ + `r round(x[5,], 5)`$$
+
+
+Finally, calculate the fitting error between the predicted mpg of youur model and actual mpg. 
 
 ## What is the squared error of this solution?
 
