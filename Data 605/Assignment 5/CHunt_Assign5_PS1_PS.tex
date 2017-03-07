@@ -170,8 +170,23 @@ and
 
 \NormalTok{ATA <-}\StringTok{ }\KeywordTok{t}\NormalTok{(A) %*%}\StringTok{ }\NormalTok{A}
 \NormalTok{ATb <-}\StringTok{ }\KeywordTok{t}\NormalTok{(A) %*%}\StringTok{ }\NormalTok{b}
+
+\NormalTok{results <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\StringTok{"ATA"} \NormalTok{=}\StringTok{ }\NormalTok{ATA, }\StringTok{"ATb"} \NormalTok{=}\StringTok{ }\NormalTok{ATb)}
+\NormalTok{results}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+## $ATA
+##      [,1] [,2]
+## [1,]    4    8
+## [2,]    8   26
+## 
+## $ATb
+##      [,1]
+## [1,]   36
+## [2,]  112
+\end{verbatim}
 
 \subsection{\texorpdfstring{Solve for \(\hat{x}\) in R using the above
 computed
@@ -196,11 +211,101 @@ solution?}\label{what-is-the-squared-error-of-this-solution}
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{p <-}\StringTok{ }\NormalTok{A %*%}\StringTok{ }\NormalTok{x}
+\CommentTok{#b = p + e or e = p - b which we can substitute in our given values. }
+\NormalTok{e <-}\StringTok{ }\NormalTok{p -}\StringTok{ }\NormalTok{b}
+\CommentTok{# we then sum the square of errors. }
+\NormalTok{e2 <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(e^}\DecValTok{2}\NormalTok{)}
+\NormalTok{e2}
 \end{Highlighting}
 \end{Shaded}
 
+\begin{verbatim}
+## [1] 44
+\end{verbatim}
+
 \subsection{Find the exact solution with p instead of
 b}\label{find-the-exact-solution-with-p-instead-of-b}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{options}\NormalTok{(}\DataTypeTok{scipen =} \DecValTok{999}\NormalTok{)}
+\NormalTok{p   <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{13}\NormalTok{,}\DecValTok{17}\NormalTok{))}
+\NormalTok{ATp <-}\StringTok{ }\KeywordTok{t}\NormalTok{(A) %*%}\StringTok{ }\NormalTok{p}
+\NormalTok{xp  <-}\StringTok{ }\KeywordTok{solve}\NormalTok{(ATA) %*%}\StringTok{ }\NormalTok{ATp}
+\NormalTok{p2  <-}\StringTok{ }\NormalTok{A %*%}\StringTok{ }\NormalTok{xp}
+\NormalTok{e   <-}\StringTok{ }\NormalTok{p2-p}
+\NormalTok{e}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                          [,1]
+## [1,] 0.0000000000000000000000
+## [2,] 0.0000000000000008881784
+## [3,] 0.0000000000000035527137
+## [4,] 0.0000000000000035527137
+\end{verbatim}
+
+Essentially, the error vector e is = 0.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{e2p <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(e^}\DecValTok{2}\NormalTok{)}
+\NormalTok{e2p}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.00000000000000000000000000002603241
+\end{verbatim}
+
+Show that the error \(e = b - p = [-1;3;-5;3]\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{b -}\StringTok{ }\NormalTok{p}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1]
+## [1,]   -1
+## [2,]    3
+## [3,]   -5
+## [4,]    3
+\end{verbatim}
+
+Show that the error \(e\) is orthogonal to \(p\) and to each of the
+columns of \(A\).
+
+As per the week 5 handout - We know that when two vectors are
+orthogonal, their dot product is zero.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{e*p}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                         [,1]
+## [1,] 0.000000000000000000000
+## [2,] 0.000000000000004440892
+## [3,] 0.000000000000046185278
+## [4,] 0.000000000000060396133
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{sum}\NormalTok{(e*A[,}\DecValTok{1}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.000000000000007993606
+\end{verbatim}
+
+\section{Problem Set 2}\label{problem-set-2}
 
 
 \end{document}

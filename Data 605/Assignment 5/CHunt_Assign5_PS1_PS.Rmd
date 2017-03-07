@@ -47,7 +47,11 @@ b <- matrix(c(0,8,8,20))
 
 ATA <- t(A) %*% A
 ATb <- t(A) %*% b
+
+results <- list("ATA" = ATA, "ATb" = ATb)
+results
 ```
+
 
 
 ## Solve for $\hat{x}$ in R using the above computed matrices
@@ -62,7 +66,49 @@ x
 
 ```{r}
 p <- A %*% x
+#b = p + e or e = p - b which we can substitute in our given values. 
+e <- p - b
+# we then sum the square of errors. 
+e2 <- sum(e^2)
+e2
 ```
 
 
 ## Find the exact solution with p instead of b
+
+```{r}
+options(scipen = 999)
+p   <- matrix(c(1,5,13,17))
+ATp <- t(A) %*% p
+xp  <- solve(ATA) %*% ATp
+p2  <- A %*% xp
+e   <- p2-p
+e
+```
+
+Essentially, the error vector e is = 0. 
+
+```{r}
+e2p <- sum(e^2)
+e2p
+```
+
+Show that the error $e = b - p = [-1;3;-5;3]$.
+```{r}
+b - p
+```
+
+Show that the error $e$ is orthogonal to $p$ and to each of the columns of $A$. 
+
+As per the week 5 handout - We know that when two vectors are orthogonal, their dot product is zero. 
+
+```{r}
+e*p
+```
+
+```{r}
+sum(e*A[,1])
+```
+
+
+# Problem Set 2 
