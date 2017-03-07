@@ -152,13 +152,18 @@ $$mpg = `r round(x[1,], 5)`*displacement + `r round(x[2,], 5)`*horsepower + `r r
 
 Finally, calculate the fitting error between the predicted mpg of youur model and actual mpg. 
 
-## What is the squared error of this solution?
+## The fitting error to the predicted mpg and the actual mpg. 
 
 ```{r}
 p <- A %*% x
 #b = p + e or e = p - b which we can substitute in our given values. 
 e <- p - b
-# we then sum the square of errors. 
+e
+```
+
+
+```{r}
 e2 <- sum(e^2)
 e2
 ```
+
