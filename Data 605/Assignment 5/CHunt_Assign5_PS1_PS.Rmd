@@ -111,6 +111,8 @@ sum(e*A[,1])
 ```
 
 
+\newpage
+
 # Problem Set 2 
 
 Write an R markdown script that takes in the auto-mpg data, extracts an A matrix from the first 4 columns and b vector from the fifth (mpg) column.
@@ -133,6 +135,8 @@ results <- list("ATA" = ATA, "ATb" = ATb)
 results
 ```
 
+\newpage
+
 ## Solve for $\hat{x}$ in R using the above computed matrices
 
 ```{r}
@@ -142,7 +146,7 @@ x
 
 The least squares model using this method is:
 
-$$mpg = `r round(x[1,], 5)`displacement + `r round(x[2,], 5)`horsepower + `r round(x[3,], 5)`weight + `r round(x[4,], 5)`acceleration 
+$$mpg = `r round(x[1,], 5)`*displacement + `r round(x[2,], 5)`*horsepower + `r round(x[3,], 5)`*weight + `r round(x[4,], 5)`*acceleration 
  + `r round(x[5,], 5)`$$
 
 
