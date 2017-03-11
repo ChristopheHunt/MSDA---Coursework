@@ -1,0 +1,38 @@
+---
+title: "Homework 6"
+author: "Christophe Hunt"
+date: "March 10, 2017"
+output:
+  pdf_document:
+    fig_caption: yes
+    keep_tex: yes
+    includes:
+      in_header: header.tex
+    number_sections: yes
+    toc: yes
+    toc_depth: 2
+  html_document:
+    toc: yes
+    toc_depth: '2'
+---
+
+Page 251: problem 2
+
+Nutritional Requirements - A rancher has determined that the minimum weekly nutritional requirements for an average-sized horse include 40lb of protein, 20 lb of carbohydrates, and 45lb of roughage. These are obtain from the following sources in varying amounts at the prices indicated:
+
+![image.](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20609/Homework%206/problem%202.PNG)
+
+Formulate a mathematical model to determine how to meeting the minimum nutritional requirements at minimum cost. 
+
+Page 264: problem 6
+
+
+
+Page 268: problem 6 (i.e., only question #6 in section 7.2)
+
+
+Page 278: problem 6 (i.e., only question #6 in section 7.2)
+
+Page 284: problem 1
+
+Page 295: problem 3
