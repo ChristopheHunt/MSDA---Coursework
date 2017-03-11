@@ -18,6 +18,12 @@ output:
 
 Page 251: problem 2
 
+Use the model-building process described in Chapter 2 to analyze the following scenarios. After identifying the problem to be solved using the process, you may find it helpful to answer the following questions in words before formulating the optimization model. 
+
+a. Identify the decision variables: What decision is to be made?
+b. Formulate the objective function: How doe these decisions affect the objective?
+c. Formulate the constraint set: What constraints must be satisfied? Be sure to consider whether negative values of the decision variables are allowed by the problem, and ensure they are so constrained if required. 
+
 Nutritional Requirements - A rancher has determined that the minimum weekly nutritional requirements for an average-sized horse include 40lb of protein, 20 lb of carbohydrates, and 45lb of roughage. These are obtain from the following sources in varying amounts at the prices indicated:
 
 ![image.](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20609/Homework%206/problem%202.PNG)
@@ -56,7 +62,7 @@ $$y \geq 0$$
 
 Page 278: problem 6 (i.e., only question #6 in section 7.2)
 
-Using teh Simplex Method to resolve the problems. Using the Simplex Method to find both the maximum solution and the minimum solution to Problems 8-12. Assume x $\geq$ 0 and y $\geq$ 0 for each problem.
+Using the Simplex Method to resolve the problems. Using the Simplex Method to find both the maximum solution and the minimum solution to Problems 8-12. Assume x $\geq$ 0 and y $\geq$ 0 for each problem.
 
 Maximize 10x + 35y
 subject to 
@@ -75,4 +81,8 @@ For the example problems in this section, determine the sensitivity of the optim
 
 Page 295: problem 3
 
+Using the curve-fitting criterion to minimize the sum of the absolute deviations for the following models and data set:
 
+$$y = ax$$
+$$y = ax^2$$
+$$y = ax^3$$
