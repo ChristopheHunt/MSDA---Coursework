@@ -26,13 +26,53 @@ Formulate a mathematical model to determine how to meeting the minimum nutrition
 
 Page 264: problem 6
 
+Solve using graphical analysis
+
+Maximize 10x + 35y
+subject to 
+
+$$2x + 3y \geq 6$$
+$$3x - y \leq 15$$
+$$-x + y \leq 4$$
+$$2x + y \leq 27$$
+$$x \geq 0$$
+$$y \geq 0$$
 
 
 Page 268: problem 6 (i.e., only question #6 in section 7.2)
 
+Using the $Methods$ of 7.3 solve problems 6 from section 7.2
+
+Maximize 10x + 35y
+subject to 
+
+$$2x + 3y \geq 6$$
+$$3x - y \leq 15$$
+$$-x + y \leq 4$$
+$$2x + y \leq 27$$
+$$x \geq 0$$
+$$y \geq 0$$
+
 
 Page 278: problem 6 (i.e., only question #6 in section 7.2)
 
+Using teh Simplex Method to resolve the problems. Using the Simplex Method to find both the maximum solution and the minimum solution to Problems 8-12. Assume x $\geq$ 0 and y $\geq$ 0 for each problem.
+
+Maximize 10x + 35y
+subject to 
+
+$$2x + 3y \geq 6$$
+$$3x - y \leq 15$$
+$$-x + y \leq 4$$
+$$2x + y \leq 27$$
+$$x \geq 0$$
+$$y \geq 0$$
+
+
 Page 284: problem 1
 
+For the example problems in this section, determine the sensitivity of the optimal solution to a change in $c_2$ using the objective function $25x_1 + c_2x_2$. 
+
 Page 295: problem 3
+
+
