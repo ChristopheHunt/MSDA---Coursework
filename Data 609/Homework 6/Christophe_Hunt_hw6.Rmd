@@ -60,13 +60,27 @@ Maximize 10x + 35y
 
 subject to 
 
-$$2x + 3y \geq 6$$
-$$3x - y \leq 15$$
-$$-x + y \leq 4$$
-$$2x + y \leq 27$$
-$$x \geq 0$$
-$$y \geq 0$$
+$8x + 6y \leq 48 ~(board-feet~of~lumber$   
+$4x - y \leq 20 ~ (hours~of~carpentry$   
+$x \geq 5 (demand)$    
+$x,y \geq 0 (nonnegativity$    
 
+```{r, fig.height=3}
+suppressMessages(suppressWarnings(library(mosaic)))
+plotFun(((-8/6)*x) + (48/6) ~ x, xlim = c(0, 20), ylim = c(0,30), ylab = "")
+```
+
+```{r, fig.height=3}
+plotFun((-4*x)+ 20 ~ x, xlim = c(0, 20), ylim = c(0,30), col = c("red"), add = TRUE, under = TRUE,  ylab = "")
+```
+
+```{r, fig.height=3}
+plotFun(0*x+5 ~ x, xlim = c(0, 20), ylim = c(0,30), col = c("green"), add = TRUE, under = TRUE,  ylab = "")
+```
+
+```{r, fig.height=3}
+plotFun(0*x+5 ~ x, xlim = c(0, 20), ylim = c(0,30), col = c("green"), add = TRUE, under = TRUE,  ylab = "")
+```
 
 # Page 268: problem 6 (i.e., only question #6 in section 7.2)
 
