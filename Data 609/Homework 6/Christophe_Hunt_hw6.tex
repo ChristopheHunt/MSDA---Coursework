@@ -98,7 +98,9 @@
 \setcounter{tocdepth}{2}
 \tableofcontents
 }
-Page 251: problem 2
+\newpage
+
+\section{Page 251: problem 2}\label{page-251-problem-2}
 
 Use the model-building process described in Chapter 2 to analyze the
 following scenarios. After identifying the problem to be solved using
@@ -111,7 +113,7 @@ in words before formulating the optimization model.
 \item
   Identify the decision variables: What decision is to be made?
 \item
-  Formulate the objective function: How doe these decisions affect the
+  Formulate the objective function: How does these decisions affect the
   objective?
 \item
   Formulate the constraint set: What constraints must be satisfied? Be
@@ -129,22 +131,53 @@ indicated:
 \begin{figure}[htbp]
 \centering
 \includegraphics{https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data\%20609/Homework\%206/problem\%202.PNG}
-\caption{image.}
+\caption{}
 \end{figure}
 
 Formulate a mathematical model to determine how to meeting the minimum
 nutritional requirements at minimum cost.
 
-Page 264: problem 6
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\item
+  The decision to be made is how best to meet the nutritional needs of
+  an average-sized horse while maintaining costs a minimum.
+\item
+  There are 4 choices available with varying protein, carbohydrate, and
+  roughage values that influence the decision. The decision to purchase
+  one choice over the other impacts prices
+\item
+  Constraint set
+\end{enumerate}
+
+\(x_1 = Hay~(per~table)\)\\
+\(x_2 = Oats(per~sack)\)\\
+\(x_3 = Feeding~blocks(per~block)\)\\
+\(x_4 = High-protein~concentrate(per~sack)\)
+
+Cost = \(1.8x_1 + 3.5x_2 + .4x_3 + 1x_4\)
+
+We want to minimize cost but we have the following constraints or
+subject to:
+
+\[0.5x_1 + 1.0x_2 + 2.0x_3 + 6.0x_4 \geq 40.0\]
+\[2.0x_1 + 4.0x_2 + 0.5x_3 + 1.0x_4 \geq 20.0\]
+\[5.0x_1 + 2.0x_2 + 1.0x_3 + 2.5x_4 \geq 45.0\]
+\[x_1, x_2, x_3, x_4 \geq 0\]
+
+\section{Page 264: problem 6}\label{page-264-problem-6}
 
 Solve using graphical analysis
 
-Maximize 10x + 35y subject to
+Maximize 10x + 35y
+
+subject to
 
 \[2x + 3y \geq 6\] \[3x - y \leq 15\] \[-x + y \leq 4\]
 \[2x + y \leq 27\] \[x \geq 0\] \[y \geq 0\]
 
-Page 268: problem 6 (i.e., only question \#6 in section 7.2)
+\section{Page 268: problem 6 (i.e., only question \#6 in section
+7.2)}\label{page-268-problem-6-i.e.-only-question-6-in-section-7.2}
 
 Using the \(Methods\) of 7.3 solve problems 6 from section 7.2
 
@@ -153,7 +186,8 @@ Maximize 10x + 35y subject to
 \[2x + 3y \geq 6\] \[3x - y \leq 15\] \[-x + y \leq 4\]
 \[2x + y \leq 27\] \[x \geq 0\] \[y \geq 0\]
 
-Page 278: problem 6 (i.e., only question \#6 in section 7.2)
+\section{Page 278: problem 6 (i.e., only question \#6 in section
+7.2)}\label{page-278-problem-6-i.e.-only-question-6-in-section-7.2}
 
 Using the Simplex Method to resolve the problems. Using the Simplex
 Method to find both the maximum solution and the minimum solution to
@@ -164,13 +198,13 @@ Maximize 10x + 35y subject to
 \[2x + 3y \geq 6\] \[3x - y \leq 15\] \[-x + y \leq 4\]
 \[2x + y \leq 27\] \[x \geq 0\] \[y \geq 0\]
 
-Page 284: problem 1
+\section{Page 284: problem 1}\label{page-284-problem-1}
 
 For the example problems in this section, determine the sensitivity of
 the optimal solution to a change in \(c_2\) using the objective function
 \(25x_1 + c_2x_2\).
 
-Page 295: problem 3
+\section{Page 295: problem 3}\label{page-295-problem-3}
 
 Using the curve-fitting criterion to minimize the sum of the absolute
 deviations for the following models and data set:

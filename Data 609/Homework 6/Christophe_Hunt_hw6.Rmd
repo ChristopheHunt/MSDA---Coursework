@@ -15,26 +15,49 @@ output:
     toc: yes
     toc_depth: '2'
 ---
+\newpage
 
-Page 251: problem 2
+# Page 251: problem 2
 
 Use the model-building process described in Chapter 2 to analyze the following scenarios. After identifying the problem to be solved using the process, you may find it helpful to answer the following questions in words before formulating the optimization model. 
 
 a. Identify the decision variables: What decision is to be made?
-b. Formulate the objective function: How doe these decisions affect the objective?
+b. Formulate the objective function: How does these decisions affect the objective?
 c. Formulate the constraint set: What constraints must be satisfied? Be sure to consider whether negative values of the decision variables are allowed by the problem, and ensure they are so constrained if required. 
 
 Nutritional Requirements - A rancher has determined that the minimum weekly nutritional requirements for an average-sized horse include 40lb of protein, 20 lb of carbohydrates, and 45lb of roughage. These are obtain from the following sources in varying amounts at the prices indicated:
 
-![image.](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20609/Homework%206/problem%202.PNG)
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20609/Homework%206/problem%202.PNG)
 
 Formulate a mathematical model to determine how to meeting the minimum nutritional requirements at minimum cost. 
 
-Page 264: problem 6
+a. The decision to be made is how best to meet the nutritional needs of an average-sized horse while maintaining costs a minimum. 
+
+b. There are 4 choices available with varying protein, carbohydrate, and roughage values that influence the decision. The decision to purchase one choice over the other impacts prices
+
+c. Constraint set
+
+$x_1 = Hay~(per~table)$   
+$x_2 = Oats(per~sack)$   
+$x_3 = Feeding~blocks(per~block)$   
+$x_4 = High-protein~concentrate(per~sack)$
+
+Cost = $1.8x_1 + 3.5x_2 + .4x_3 + 1x_4$
+
+We want to minimize cost but we have the following constraints or subject to: 
+
+$$0.5x_1 + 1.0x_2 + 2.0x_3 + 6.0x_4 \geq 40.0$$
+$$2.0x_1 + 4.0x_2 + 0.5x_3 + 1.0x_4 \geq 20.0$$
+$$5.0x_1 + 2.0x_2 + 1.0x_3 + 2.5x_4 \geq 45.0$$
+$$x_1, x_2, x_3, x_4 \geq 0$$
+
+
+# Page 264: problem 6
 
 Solve using graphical analysis
 
 Maximize 10x + 35y
+
 subject to 
 
 $$2x + 3y \geq 6$$
@@ -45,7 +68,7 @@ $$x \geq 0$$
 $$y \geq 0$$
 
 
-Page 268: problem 6 (i.e., only question #6 in section 7.2)
+# Page 268: problem 6 (i.e., only question #6 in section 7.2)
 
 Using the $Methods$ of 7.3 solve problems 6 from section 7.2
 
@@ -60,7 +83,7 @@ $$x \geq 0$$
 $$y \geq 0$$
 
 
-Page 278: problem 6 (i.e., only question #6 in section 7.2)
+# Page 278: problem 6 (i.e., only question #6 in section 7.2)
 
 Using the Simplex Method to resolve the problems. Using the Simplex Method to find both the maximum solution and the minimum solution to Problems 8-12. Assume x $\geq$ 0 and y $\geq$ 0 for each problem.
 
@@ -75,11 +98,11 @@ $$x \geq 0$$
 $$y \geq 0$$
 
 
-Page 284: problem 1
+# Page 284: problem 1
 
 For the example problems in this section, determine the sensitivity of the optimal solution to a change in $c_2$ using the objective function $25x_1 + c_2x_2$. 
 
-Page 295: problem 3
+# Page 295: problem 3
 
 Using the curve-fitting criterion to minimize the sum of the absolute deviations for the following models and data set:
 
