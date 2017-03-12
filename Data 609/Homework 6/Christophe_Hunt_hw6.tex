@@ -209,9 +209,7 @@ subject to:
 
 Solve using graphical analysis
 
-Maximize 10x + 35y
-
-subject to
+Maximize 10x + 35y subject to
 
 \(8x + 6y \leq 48 ~(board-feet~of~lumber)\)\\
 \(4x - y \leq 20 ~ (hours~of~carpentry)\)\\
@@ -257,20 +255,50 @@ above this line is acceptable.
 
 As we are trying to maximize \(10x + 35y\), we look at the graph above
 and the highest point within our feasibility range is (0,8). Which when
-applied is 360.
+applied is 280.
 
-\section{Page 268: problem 6 (i.e., only question \#6 in section
-7.2)}\label{page-268-problem-6-i.e.-only-question-6-in-section-7.2}
+\section{TODO Page 268: problem 6 (i.e., only question \#6 in section
+7.2)}\label{todo-page-268-problem-6-i.e.-only-question-6-in-section-7.2}
 
-Using the \(Methods\) of 7.3 solve problems 6 from section 7.2
+Using the \(methods\) of 7.3 solve problems 6 from section 7.2
 
 Maximize 10x + 35y subject to
 
-\[2x + 3y \geq 6\] \[3x - y \leq 15\] \[-x + y \leq 4\]
-\[2x + y \leq 27\] \[x \geq 0\] \[y \geq 0\]
+\(8x + 6y \leq 48 ~(board-feet~of~lumber)\)\\
+\(4x - y \leq 20 ~ (hours~of~carpentry)\)\\
+\(x \geq 5 (demand)\)\\
+\(x,y \geq 0 (nonnegativity)\)
 
-\section{Page 278: problem 6 (i.e., only question \#6 in section
-7.2)}\label{page-278-problem-6-i.e.-only-question-6-in-section-7.2}
+We add a ``slack'' variable
+
+\(8x + 6y + z_1 = 48 ~(board-feet~of~lumber)\)\\
+\(4x - y + z_2 = 20 ~ (hours~of~carpentry)\)\\
+\(x = 5 (demand)\)\\
+\(x,y, z_1, z_2 \geq 0 (nonnegativity)\)
+
+Lets begin by setting x and y to 0 for our first intersection.
+
+\(z_1 = 48\)\\
+\(z_2 = 20\) \(0 = 5\)
+
+\begin{quote}
+This is unfeasible as x is constrained to 5.
+\end{quote}
+
+For the second intersection lets set y to 0 and z\_1 to 0.
+
+\(8x = 48\) = \(x = 6\)\\
+\(4x + z_2 = 20\) = \(24 + z _2 = 20\) = \(z_2 = -4\)
+
+\begin{quote}
+This is unfeasible as z\_2 is constrained to \(\geq\) 0 for
+nonnegativity.
+\end{quote}
+
+For the third intersection lest
+
+\section{TODO Page 278: problem 6 (i.e., only question \#6 in section
+7.2)}\label{todo-page-278-problem-6-i.e.-only-question-6-in-section-7.2}
 
 Using the Simplex Method to resolve the problems. Using the Simplex
 Method to find both the maximum solution and the minimum solution to
@@ -278,16 +306,18 @@ Problems 8-12. Assume x \(\geq\) 0 and y \(\geq\) 0 for each problem.
 
 Maximize 10x + 35y subject to
 
-\[2x + 3y \geq 6\] \[3x - y \leq 15\] \[-x + y \leq 4\]
-\[2x + y \leq 27\] \[x \geq 0\] \[y \geq 0\]
+\(8x + 6y \leq 48 ~(board-feet~of~lumber)\)\\
+\(4x - y \leq 20 ~ (hours~of~carpentry)\)\\
+\(x \geq 5 (demand)\)\\
+\(x,y \geq 0 (nonnegativity\)
 
-\section{Page 284: problem 1}\label{page-284-problem-1}
+\section{TODO Page 284: problem 1}\label{todo-page-284-problem-1}
 
 For the example problems in this section, determine the sensitivity of
 the optimal solution to a change in \(c_2\) using the objective function
 \(25x_1 + c_2x_2\).
 
-\section{Page 295: problem 3}\label{page-295-problem-3}
+\section{TODO Page 295: problem 3}\label{todo-page-295-problem-3}
 
 Using the curve-fitting criterion to minimize the sum of the absolute
 deviations for the following models and data set:
