@@ -164,7 +164,7 @@ $20 - y = 20$ = $y = 0$
 
 > I am also concerned about this method or at least my attempt to solve this system using this method since (2.5, 5) is clearly a solution in the graphical solution but I did not arrive at it in my algebraically approach. 
 
-# TODO Page 284: problem 1
+# Page 284: problem 1
 
 For the example problems in this section, determine the sensitivity of the optimal solution to a change in $c_2$ using the objective function $25x_1 + c_2x_2$. 
 
@@ -182,5 +182,21 @@ $x_2 = -\frac{25}{c_2}x_1$
 > $\frac{2}{3}~\geq~\frac{25}{c_2}~\geq~\frac{5}{4}$ 
 
 > We can then determine the upper and lower bounds by setting our $\frac{25}{c_2}$ = $\frac{2}{3}$ and $\frac{25}{c_2}$ = $\frac{5}{4}$  
+
+> $\frac{25}{c_2}$ = $\frac{2}{3}$   
+Take the reciprocal of both sides:  
+$\frac{c_2}{25}$ = $\frac{3}{2}$   
+Multiply by both sides by 25  
+$c_2$ = $\frac{75}{2}$ = $37.5$  
+
+> $\frac{25}{c_2}$ = $\frac{5}{4}$
+Take the reciprocal of both sides:  
+$\frac{c_2}{25}$ = $\frac{4}{5}$   
+Multiply by both sides by 25
+$c_2$ = $\frac{75}{4}$ = $20$
+
+> Therefore, our final inequality is:
+
+$$20 \leq c_2 \leq 37.5$$
 
 
