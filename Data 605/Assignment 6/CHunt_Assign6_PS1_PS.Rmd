@@ -16,15 +16,43 @@ output:
     toc_depth: '2'
 ---
 
+```{r, include=FALSE}
+library(scales)
+```
+
+
 # Problem Set 1 
 
 ## (1) When you roll a fair die 3 times, how many possible outcomes are there?
 
+> Sample space of a die = (1, 2, 3, 4, 5, 6)
+
+> Number of outcomes = $6^3$ or `r 6^3`
+
 ## (2) What is the probability of getting a sum total of 3 when you roll a die two times? 
+
+> Sample space of a die = (1, 2, 3, 4, 5, 6)
+
+> Possible combinations equal to 3 when $die_1$ is rolled twice = (1,2), (2,1).   
+
+> There are two (2) possible combinations out of a total of $6^2$ or `r 6^2` combinations.  
+
+> Therefore, the probability is  
+> $\frac{2}{`r 6^2`}$ = `r percent(2/(6^2))`
+
+```{r}
+
+```
+
 
 ## (3) Birthday problem
 
 Assume a room of 25 strangers. What is the probability that two of them have the same birthday? 
+
+```{r}
+
+```
+
 
 Assume that all birthdays are equally likely and equal to 1/365 each. What happens to this probability when there are 50 people in the room?
 
