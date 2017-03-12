@@ -44,7 +44,7 @@ library(scales)
 
 Assume a room of 25 strangers. What is the probability that two of them have the same birthday? 
 
-> We begin by calculating the probability that someone has a birthday that is not shared with another person. (e.g. the second person has a probability of 364 out of 365 of not sharing a birthday with another individual)
+> We begin by calculating the probability that someone has a birthday that is not shared with another person. (e.g. the second person has a probability of 364 out of 365 of not sharing a birthday with another individual). Then we subtract that probability from one to arrive at the probability that a number of people share a birthday. 
 
 ```{r}
 prob_birth <- (0:24)
@@ -78,5 +78,10 @@ For instance, when you have to compute the probability of various english words,
 Write a program to take a document in English and print out the estimated probabilities for each of the words that occur in that document. Your program should take in a file containing a large document and write out the probabilities of each of the words that appear in that document. Please remove all punctuation (quotes, commas, hyphens etc) and convert the words to lower case before you perform your calculations.
 
 Extend your program to calculate the probability of two words occurring adjacent to each other. It should take in a document, and two words (say the and for) and compute the probability of each of the words occurring in the document and the joint probability of both of them occurring together. The order of the two words is not important.
+
+```{r}
+
+```
+
 
 Use the accompanying document for your testing purposes. Compare your probabilities of various words with the Time Magazine corpus: http://corpus.byu.edu/time/
