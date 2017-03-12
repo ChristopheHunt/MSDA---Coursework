@@ -40,25 +40,40 @@ library(scales)
 > Therefore, the probability is  
 > $\frac{2}{`r 6^2`}$ = `r percent(2/(6^2))`
 
-```{r}
-
-```
-
-
-## (3) Birthday problem
+## (3) Birthday problems
 
 Assume a room of 25 strangers. What is the probability that two of them have the same birthday? 
 
-```{r}
+> We begin by calculating the probability that someone has a birthday that is not shared with another person. (e.g. the second person has a probability of 364 out of 365 of not sharing a birthday with another individual)
 
+```{r}
+prob_birth <- (0:24)
+prob_birth <- 365 - prob_birth
+prob_birth <- prob_birth/365
+paste0("The probability that two people do not share a birthday out of ", 
+       length(prob_birth), " is ", percent(prod(prob_birth)))
+paste0("The probability that two people do share a birthday out of ", 
+       length(prob_birth), " is ", percent(1 - prod(prob_birth)))
 ```
 
 
 Assume that all birthdays are equally likely and equal to 1/365 each. What happens to this probability when there are 50 people in the room?
 
+```{r}
+prob_birth <- (0:49)
+prob_birth <- 365 - prob_birth
+prob_birth <- prob_birth/365
+paste0("The probability that two people do not share a birthday out of ", 
+       length(prob_birth), " is ", percent(prod(prob_birth)))
+paste0("The probability that two people do share a birthday out of ", 
+       length(prob_birth), " is ", percent(1 - prod(prob_birth)))
+```
+
 # Problem Set 2 
 
-Sometimes you cannot compute the probability of an outcome by measuring the sample space and examining the symmetries of the underlying physical phenomenon, as you could do when you rolled die or picked a card from a shu???ed deck. You have to estimate probabilities by other means. For instance, when you have to compute the probability of various english words, it is not possible to do it by examination of the sample space as it is too large. You have to resort to empirical techniques to get a good enough estimate. One such approach would be to take a large corpus of documents and from those documents, count the number of occurrences of a particular character or word and then base your estimate on that.
+Sometimes you cannot compute the probability of an outcome by measuring the sample space and examining the symmetries of the underlying physical phenomenon, as you could do when you rolled die or picked a card from a shuffled deck. You have to estimate probabilities by other means. 
+
+For instance, when you have to compute the probability of various english words, it is not possible to do it by examination of the sample space as it is too large. You have to resort to empirical techniques to get a good enough estimate. One such approach would be to take a large corpus of documents and from those documents, count the number of occurrences of a particular character or word and then base your estimate on that.
 
 Write a program to take a document in English and print out the estimated probabilities for each of the words that occur in that document. Your program should take in a file containing a large document and write out the probabilities of each of the words that appear in that document. Please remove all punctuation (quotes, commas, hyphens etc) and convert the words to lower case before you perform your calculations.
 

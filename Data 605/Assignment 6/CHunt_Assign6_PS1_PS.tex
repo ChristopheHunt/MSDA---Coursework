@@ -29,6 +29,46 @@
             pdfborder={0 0 0},
             breaklinks=true}
 \urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{{#1}}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{{#1}}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\ImportTok}[1]{{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{{#1}}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{{#1}}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{{#1}}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{{#1}}}}
+\newcommand{\BuiltInTok}[1]{{#1}}
+\newcommand{\ExtensionTok}[1]{{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{{#1}}}
+\newcommand{\RegionMarkerTok}[1]{{#1}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{{#1}}}}
+\newcommand{\NormalTok}[1]{{#1}}
 \usepackage{graphicx,grffile}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
@@ -135,26 +175,85 @@ Therefore, the probability is\\
 \(\frac{2}{36}\) = 5.56\%
 \end{quote}
 
-\subsection{(3) Birthday problem}\label{birthday-problem}
+\subsection{(3) Birthday problems}\label{birthday-problems}
 
 Assume a room of 25 strangers. What is the probability that two of them
 have the same birthday?
 
+\begin{quote}
+We begin by calculating the probability that someone has a birthday that
+is not shared with another person. (e.g.~the second person has a
+probability of 364 out of 365 of not sharing a birthday with another
+individual)
+\end{quote}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{prob_birth <-}\StringTok{ }\NormalTok{(}\DecValTok{0}\NormalTok{:}\DecValTok{24}\NormalTok{)}
+\NormalTok{prob_birth <-}\StringTok{ }\DecValTok{365} \NormalTok{-}\StringTok{ }\NormalTok{prob_birth}
+\NormalTok{prob_birth <-}\StringTok{ }\NormalTok{prob_birth/}\DecValTok{365}
+\KeywordTok{paste0}\NormalTok{(}\StringTok{"The probability that two people do not share a birthday out of "}\NormalTok{, }
+       \KeywordTok{length}\NormalTok{(prob_birth), }\StringTok{" is "}\NormalTok{, }\KeywordTok{percent}\NormalTok{(}\KeywordTok{prod}\NormalTok{(prob_birth)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "The probability that two people do not share a birthday out of 25 is 43.1%"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{paste0}\NormalTok{(}\StringTok{"The probability that two people do share a birthday out of "}\NormalTok{, }
+       \KeywordTok{length}\NormalTok{(prob_birth), }\StringTok{" is "}\NormalTok{, }\KeywordTok{percent}\NormalTok{(}\DecValTok{1} \NormalTok{-}\StringTok{ }\KeywordTok{prod}\NormalTok{(prob_birth)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "The probability that two people do share a birthday out of 25 is 56.9%"
+\end{verbatim}
+
 Assume that all birthdays are equally likely and equal to 1/365 each.
 What happens to this probability when there are 50 people in the room?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{prob_birth <-}\StringTok{ }\NormalTok{(}\DecValTok{0}\NormalTok{:}\DecValTok{49}\NormalTok{)}
+\NormalTok{prob_birth <-}\StringTok{ }\DecValTok{365} \NormalTok{-}\StringTok{ }\NormalTok{prob_birth}
+\NormalTok{prob_birth <-}\StringTok{ }\NormalTok{prob_birth/}\DecValTok{365}
+\KeywordTok{paste0}\NormalTok{(}\StringTok{"The probability that two people do not share a birthday out of "}\NormalTok{, }
+       \KeywordTok{length}\NormalTok{(prob_birth), }\StringTok{" is "}\NormalTok{, }\KeywordTok{percent}\NormalTok{(}\KeywordTok{prod}\NormalTok{(prob_birth)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "The probability that two people do not share a birthday out of 50 is 2.96%"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{paste0}\NormalTok{(}\StringTok{"The probability that two people do share a birthday out of "}\NormalTok{, }
+       \KeywordTok{length}\NormalTok{(prob_birth), }\StringTok{" is "}\NormalTok{, }\KeywordTok{percent}\NormalTok{(}\DecValTok{1} \NormalTok{-}\StringTok{ }\KeywordTok{prod}\NormalTok{(prob_birth)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "The probability that two people do share a birthday out of 50 is 97%"
+\end{verbatim}
 
 \section{Problem Set 2}\label{problem-set-2}
 
 Sometimes you cannot compute the probability of an outcome by measuring
 the sample space and examining the symmetries of the underlying physical
 phenomenon, as you could do when you rolled die or picked a card from a
-shu???ed deck. You have to estimate probabilities by other means. For
-instance, when you have to compute the probability of various english
-words, it is not possible to do it by examination of the sample space as
-it is too large. You have to resort to empirical techniques to get a
-good enough estimate. One such approach would be to take a large corpus
-of documents and from those documents, count the number of occurrences
-of a particular character or word and then base your estimate on that.
+shuffled deck. You have to estimate probabilities by other means.
+
+For instance, when you have to compute the probability of various
+english words, it is not possible to do it by examination of the sample
+space as it is too large. You have to resort to empirical techniques to
+get a good enough estimate. One such approach would be to take a large
+corpus of documents and from those documents, count the number of
+occurrences of a particular character or word and then base your
+estimate on that.
 
 Write a program to take a document in English and print out the
 estimated probabilities for each of the words that occur in that
