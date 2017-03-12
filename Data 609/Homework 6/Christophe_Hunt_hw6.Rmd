@@ -51,6 +51,7 @@ $$2.0x_1 + 4.0x_2 + 0.5x_3 + 1.0x_4 \geq 20.0$$
 $$5.0x_1 + 2.0x_2 + 1.0x_3 + 2.5x_4 \geq 45.0$$
 $$x_1, x_2, x_3, x_4 \geq 0$$
 
+\newpage
 
 # Page 264: problem 6
 
@@ -66,26 +67,28 @@ $x,y \geq 0 (nonnegativity$
 
 We first plot the constraint $8x + 6y \leq 48 ~(board-feet~of~lumber)$ as $y = -\frac{8}{6}x + \frac{48}{6}$, so anything below this line is acceptable. 
 
-```{r, fig.height=3}
+```{r, fig.height=3, cache=TRUE}
 suppressMessages(suppressWarnings(library(mosaic)))
 plotFun(((-8/6)*x) + (48/6) ~ x, xlim = c(0, 10), ylim = c(0,15), ylab = "")
 ```
 
 We now plot the constraint $4x - y \leq 20 ~ (hours~of~carpentry)$ as $y = -4x + 20$. Anything below this line is acceptable. 
 
-```{r, fig.height=3}
+```{r, fig.height=3 , cache=TRUE}
 plotFun((-4*x)+ 20 ~ x, xlim = c(0, 10), ylim = c(0,15), 
         col = c("red"), add = TRUE, under = TRUE,  ylab = "")
 ```
 
 We now plot the constraint $x \geq 5 (demand)$ as $y = 5$. Anything above this line is acceptable.  
 
-```{r, fig.height=3}
+```{r, fig.height=3, cache=TRUE}
 plotFun(0*x+5 ~ x, xlim = c(0, 10), ylim = c(0,15),
         col = c("green"), add = TRUE, under = TRUE,  ylab = "")
 ```
 
 As we are trying to maximize $10x + 35y$, we look at the graph above and the highest point within our feasibility range is (0,8). Which when applied is `r 10*0 + 35*8`. 
+
+\newpage
 
 # Page 268: problem 6 (i.e., only question #6 in section 7.2)
 
@@ -170,8 +173,14 @@ $25x_1 + c_2x_2$
 $c_2x_2 = -25x_1$  
 $x_2 = -\frac{25}{c_2}x_1$  
 
+> The slope of the first constraint is $-\frac{2}{3}$. The slope of the second constraint is $-\frac{5}{4}$. Therefore, the inequality exists as:
 
-We first determine the slope 
+$-\frac{2}{3}~\leq~-\frac{25}{c_2}x_1~\leq~-\frac{5}{4}$  
+
+> We further multiply by -1 to get:
+
+$\frac{2}{3}~\leq~\frac{25}{c_2}x_1~\leq~\frac{5}{4}$ 
+
 
 # TODO Page 295: problem 3
 
