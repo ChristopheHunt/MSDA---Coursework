@@ -60,27 +60,33 @@ Maximize 10x + 35y
 
 subject to 
 
-$8x + 6y \leq 48 ~(board-feet~of~lumber$   
-$4x - y \leq 20 ~ (hours~of~carpentry$   
+$8x + 6y \leq 48 ~(board-feet~of~lumber)$   
+$4x - y \leq 20 ~ (hours~of~carpentry)$   
 $x \geq 5 (demand)$    
 $x,y \geq 0 (nonnegativity$    
 
+We first plot the constraint $8x + 6y \leq 48 ~(board-feet~of~lumber)$ as $y = -\frac{8}{6}x + \frac{48}{6}$, so anything below this line is acceptable. 
+
 ```{r, fig.height=3}
 suppressMessages(suppressWarnings(library(mosaic)))
-plotFun(((-8/6)*x) + (48/6) ~ x, xlim = c(0, 20), ylim = c(0,30), ylab = "")
+plotFun(((-8/6)*x) + (48/6) ~ x, xlim = c(0, 10), ylim = c(0,15), ylab = "")
 ```
 
-```{r, fig.height=3}
-plotFun((-4*x)+ 20 ~ x, xlim = c(0, 20), ylim = c(0,30), col = c("red"), add = TRUE, under = TRUE,  ylab = "")
-```
+We now plot the constraint $4x - y \leq 20 ~ (hours~of~carpentry)$ as $y = -4x + 20$. Anything below this line is acceptable. 
 
 ```{r, fig.height=3}
-plotFun(0*x+5 ~ x, xlim = c(0, 20), ylim = c(0,30), col = c("green"), add = TRUE, under = TRUE,  ylab = "")
+plotFun((-4*x)+ 20 ~ x, xlim = c(0, 10), ylim = c(0,15), 
+        col = c("red"), add = TRUE, under = TRUE,  ylab = "")
 ```
 
+We now plot the constraint $x \geq 5 (demand)$ as $y = 5$. Anything above this line is acceptable.  
+
 ```{r, fig.height=3}
-plotFun(0*x+5 ~ x, xlim = c(0, 20), ylim = c(0,30), col = c("green"), add = TRUE, under = TRUE,  ylab = "")
+plotFun(0*x+5 ~ x, xlim = c(0, 10), ylim = c(0,15),
+        col = c("green"), add = TRUE, under = TRUE,  ylab = "")
 ```
+
+As we are trying to maximize $10x + 35y$, we look at the graph above and the highest point within our feasibility range is (0,8). Which when applied is `r 10*8 + 35*8`. 
 
 # Page 268: problem 6 (i.e., only question #6 in section 7.2)
 

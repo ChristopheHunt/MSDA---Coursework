@@ -213,43 +213,51 @@ Maximize 10x + 35y
 
 subject to
 
-\(8x + 6y \leq 48 ~(board-feet~of~lumber\)\\
-\(4x - y \leq 20 ~ (hours~of~carpentry\)\\
+\(8x + 6y \leq 48 ~(board-feet~of~lumber)\)\\
+\(4x - y \leq 20 ~ (hours~of~carpentry)\)\\
 \(x \geq 5 (demand)\)\\
 \(x,y \geq 0 (nonnegativity\)
+
+We first plot the constraint \(8x + 6y \leq 48 ~(board-feet~of~lumber)\)
+as \(y = -\frac{8}{6}x + \frac{48}{6}\), so anything below this line is
+acceptable.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{suppressMessages}\NormalTok{(}\KeywordTok{suppressWarnings}\NormalTok{(}\KeywordTok{library}\NormalTok{(mosaic)))}
-\KeywordTok{plotFun}\NormalTok{(((-}\DecValTok{8}\NormalTok{/}\DecValTok{6}\NormalTok{)*x) +}\StringTok{ }\NormalTok{(}\DecValTok{48}\NormalTok{/}\DecValTok{6}\NormalTok{) ~}\StringTok{ }\NormalTok{x, }\DataTypeTok{xlim =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{20}\NormalTok{), }\DataTypeTok{ylim =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{30}\NormalTok{), }\DataTypeTok{ylab =} \StringTok{""}\NormalTok{)}
+\KeywordTok{plotFun}\NormalTok{(((-}\DecValTok{8}\NormalTok{/}\DecValTok{6}\NormalTok{)*x) +}\StringTok{ }\NormalTok{(}\DecValTok{48}\NormalTok{/}\DecValTok{6}\NormalTok{) ~}\StringTok{ }\NormalTok{x, }\DataTypeTok{xlim =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{10}\NormalTok{), }\DataTypeTok{ylim =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{15}\NormalTok{), }\DataTypeTok{ylab =} \StringTok{""}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \includegraphics{Christophe_Hunt_hw6_files/figure-latex/unnamed-chunk-1-1.pdf}
 
+We now plot the constraint \(4x - y \leq 20 ~ (hours~of~carpentry)\) as
+\(y = -4x + 20\). Anything below this line is acceptable.
+
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{plotFun}\NormalTok{((-}\DecValTok{4}\NormalTok{*x)+}\StringTok{ }\DecValTok{20} \NormalTok{~}\StringTok{ }\NormalTok{x, }\DataTypeTok{xlim =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{20}\NormalTok{), }\DataTypeTok{ylim =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{30}\NormalTok{), }\DataTypeTok{col =} \KeywordTok{c}\NormalTok{(}\StringTok{"red"}\NormalTok{), }\DataTypeTok{add =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{under =} \OtherTok{TRUE}\NormalTok{,  }\DataTypeTok{ylab =} \StringTok{""}\NormalTok{)}
+\KeywordTok{plotFun}\NormalTok{((-}\DecValTok{4}\NormalTok{*x)+}\StringTok{ }\DecValTok{20} \NormalTok{~}\StringTok{ }\NormalTok{x, }\DataTypeTok{xlim =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{10}\NormalTok{), }\DataTypeTok{ylim =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{15}\NormalTok{), }
+        \DataTypeTok{col =} \KeywordTok{c}\NormalTok{(}\StringTok{"red"}\NormalTok{), }\DataTypeTok{add =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{under =} \OtherTok{TRUE}\NormalTok{,  }\DataTypeTok{ylab =} \StringTok{""}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \includegraphics{Christophe_Hunt_hw6_files/figure-latex/unnamed-chunk-2-1.pdf}
 
+We now plot the constraint \(x \geq 5 (demand)\) as \(y = 5\). Anything
+above this line is acceptable.
+
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{plotFun}\NormalTok{(}\DecValTok{0}\NormalTok{*x}\DecValTok{+5} \NormalTok{~}\StringTok{ }\NormalTok{x, }\DataTypeTok{xlim =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{20}\NormalTok{), }\DataTypeTok{ylim =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{30}\NormalTok{), }\DataTypeTok{col =} \KeywordTok{c}\NormalTok{(}\StringTok{"green"}\NormalTok{), }\DataTypeTok{add =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{under =} \OtherTok{TRUE}\NormalTok{,  }\DataTypeTok{ylab =} \StringTok{""}\NormalTok{)}
+\KeywordTok{plotFun}\NormalTok{(}\DecValTok{0}\NormalTok{*x}\DecValTok{+5} \NormalTok{~}\StringTok{ }\NormalTok{x, }\DataTypeTok{xlim =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{10}\NormalTok{), }\DataTypeTok{ylim =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{15}\NormalTok{),}
+        \DataTypeTok{col =} \KeywordTok{c}\NormalTok{(}\StringTok{"green"}\NormalTok{), }\DataTypeTok{add =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{under =} \OtherTok{TRUE}\NormalTok{,  }\DataTypeTok{ylab =} \StringTok{""}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \includegraphics{Christophe_Hunt_hw6_files/figure-latex/unnamed-chunk-3-1.pdf}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{plotFun}\NormalTok{(}\DecValTok{0}\NormalTok{*x}\DecValTok{+5} \NormalTok{~}\StringTok{ }\NormalTok{x, }\DataTypeTok{xlim =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{20}\NormalTok{), }\DataTypeTok{ylim =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{30}\NormalTok{), }\DataTypeTok{col =} \KeywordTok{c}\NormalTok{(}\StringTok{"green"}\NormalTok{), }\DataTypeTok{add =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{under =} \OtherTok{TRUE}\NormalTok{,  }\DataTypeTok{ylab =} \StringTok{""}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\includegraphics{Christophe_Hunt_hw6_files/figure-latex/unnamed-chunk-4-1.pdf}
+As we are trying to maximize \(10x + 35y\), we look at the graph above
+and the highest point within our feasibility range is (0,8). Which when
+applied is 360.
 
 \section{Page 268: problem 6 (i.e., only question \#6 in section
 7.2)}\label{page-268-problem-6-i.e.-only-question-6-in-section-7.2}
