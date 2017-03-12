@@ -1,0 +1,149 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Homework 6},
+            pdfauthor={Christophe Hunt},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+  \title{Homework 6}
+  \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+  \author{Christophe Hunt}
+  \preauthor{\centering\large\emph}
+  \postauthor{\par}
+  \predate{\centering\large\emph}
+  \postdate{\par}
+  \date{March 12, 2017}
+
+\usepackage{relsize}
+\usepackage{setspace}
+\usepackage{amsmath,amsfonts,amsthm}
+\usepackage[sfdefault]{roboto}
+\usepackage[T1]{fontenc}
+\usepackage{float}
+\usepackage{multirow}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\section{Problem Set 1}\label{problem-set-1}
+
+\subsection{(1) When you roll a fair die 3 times, how many possible
+outcomes are
+there?}\label{when-you-roll-a-fair-die-3-times-how-many-possible-outcomes-are-there}
+
+\subsection{(2) What is the probability of getting a sum total of 3 when
+you roll a die two
+times?}\label{what-is-the-probability-of-getting-a-sum-total-of-3-when-you-roll-a-die-two-times}
+
+\subsection{(3) Assume a room of 25 strangers. What is the probability
+that two of them have the same birthday? Assume that all birthdays are
+equally likely and equal to 1/365 each. What happens to this probability
+when there are 50 people in the
+room?}\label{assume-a-room-of-25-strangers.-what-is-the-probability-that-two-of-them-have-the-same-birthday-assume-that-all-birthdays-are-equally-likely-and-equal-to-1365-each.-what-happens-to-this-probability-when-there-are-50-people-in-the-room}
+
+\section{Problem Set 2}\label{problem-set-2}
+
+Sometimes you cannot compute the probability of an outcome by measuring
+the sample space and examining the symmetries of the underlying physical
+phenomenon, as you could do when you rolled die or picked a card from a
+shu???ed deck. You have to estimate probabilities by other means. For
+instance, when you have to compute the probability of various english
+words, it is not possible to do it by examination of the sample space as
+it is too large. You have to resort to empirical techniques to get a
+good enough estimate. One such approach would be to take a large corpus
+of documents and from those documents, count the number of occurrences
+of a particular character or word and then base your estimate on that.
+
+Write a program to take a document in English and print out the
+estimated probabilities for each of the words that occur in that
+document. Your program should take in a ???le containing a large
+document and write out the probabilities of each of the words that
+appear in that document. Please remove all punctuation (quotes, commas,
+hyphens etc) and convert the words to lower case before you perform your
+calculations.
+
+Extend your program to calculate the probability of two words occurring
+adjacent to each other. It should take in a document, and two words (say
+the and for) and compute the probability of each of the words occurring
+in the document and the joint probability of both of them occurring
+together. The order of the two words is not important.
+
+Use the accompanying document for your testing purposes. Compare your
+probabilities of various words with the Time Magazine corpus:
+\url{http://corpus.byu.edu/time/}
+
+
+\end{document}
