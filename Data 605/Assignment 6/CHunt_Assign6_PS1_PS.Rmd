@@ -110,36 +110,28 @@ freq <- as.data.frame(colSums(as.matrix(clean_doc[1:20000,])))
 freq <- setDT(freq, keep.rownames = TRUE)[]
 colnames(freq) <- c("word_type", "prob_appearance")
 freq$prob_appearance <- percent(freq$prob_appearance/sum(freq$prob_appearance))
-
 kable(head(arrange(freq,desc(prob_appearance)), n = 10))
 ```
 
 
 Extend your program to calculate the probability of two words occurring adjacent to each other. It should take in a document, and two words (say the and for) and compute the probability of each of the words occurring in the document and the joint probability of both of them occurring together. The order of the two words is not important.
 
-```{r, eval=FALSE}
-library(tm)
-library(dplyr)
-library(knitr)
-library(RTextTools)
-library(ggplot2)
-library(scales)
-library(DT)
-library(stringr)
-library(data.table)
-library(lda)
+```{r}
+clean_doc 
 
-doc <- Corpus(VectorSource(doc))
-
-clean_doc <-  doc                                       %>%
+test      <-  doc                                       %>%
               tm_map(content_transformer(tolower))      %>%
               tm_map(removeNumbers)                     %>%
               tm_map(removeWords, stopwords("english")) %>%
               tm_map(removePunctuation)                 %>%
-              tm_map(stemDocument)                      %>%
-              DocumentTermMatrix()
+              str_replace(gsub("\\s+", " ", str_trim(doc)))
+              
 
+replace_space <- function(x){
+                 gsub("([^ ]+ [^ ]+) ", "\\.", x) 
+}
 
+replace_space(test)
 ##the entire document is too large so subsetting the matrix
 freq <- colSums(as.matrix(clean_doc[1:10000,]))
 freq <- freq/length(freq)
