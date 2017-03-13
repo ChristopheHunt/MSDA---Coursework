@@ -69,6 +69,8 @@ paste0("The probability that two people do share a birthday out of ",
        length(prob_birth), " is ", percent(1 - prod(prob_birth)))
 ```
 
+\newpage
+
 # Problem Set 2 
 
 Sometimes you cannot compute the probability of an outcome by measuring the sample space and examining the symmetries of the underlying physical phenomenon, as you could do when you rolled die or picked a card from a shuffled deck. You have to estimate probabilities by other means. 
@@ -77,10 +79,70 @@ For instance, when you have to compute the probability of various english words,
 
 Write a program to take a document in English and print out the estimated probabilities for each of the words that occur in that document. Your program should take in a file containing a large document and write out the probabilities of each of the words that appear in that document. Please remove all punctuation (quotes, commas, hyphens etc) and convert the words to lower case before you perform your calculations.
 
+```{r, message=FALSE, warning=FALSE}
+library(tm)
+library(dplyr)
+library(knitr)
+library(RTextTools)
+library(ggplot2)
+library(scales)
+library(DT)
+library(stringr)
+library(data.table)
+```
+
+```{r, cache = TRUE}
+doc <- readLines("https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20605/Assignment%206/text%20document.txt")
+
+doc <- Corpus(VectorSource(doc))
+
+clean_doc <-  doc                                       %>%
+              tm_map(content_transformer(tolower))      %>%
+              tm_map(removeNumbers)                     %>%
+              tm_map(removeWords, stopwords("english")) %>%
+              tm_map(removePunctuation)                 %>%
+              #tm_map(stemDocument)                      %>%
+              DocumentTermMatrix()
+
+
+##the entire document is too large so subsetting the matrix
+freq <- as.data.frame(colSums(as.matrix(clean_doc[1:20000,])))
+freq <- setDT(freq, keep.rownames = TRUE)[]
+colnames(freq) <- c("word_type", "prob_appearance")
+freq$prob_appearance <- percent(freq$prob_appearance/sum(freq$prob_appearance))
+
+kable(head(arrange(freq,desc(prob_appearance)), n = 10))
+```
+
+
 Extend your program to calculate the probability of two words occurring adjacent to each other. It should take in a document, and two words (say the and for) and compute the probability of each of the words occurring in the document and the joint probability of both of them occurring together. The order of the two words is not important.
 
-```{r}
+```{r, eval=FALSE}
+library(tm)
+library(dplyr)
+library(knitr)
+library(RTextTools)
+library(ggplot2)
+library(scales)
+library(DT)
+library(stringr)
+library(data.table)
+library(lda)
 
+doc <- Corpus(VectorSource(doc))
+
+clean_doc <-  doc                                       %>%
+              tm_map(content_transformer(tolower))      %>%
+              tm_map(removeNumbers)                     %>%
+              tm_map(removeWords, stopwords("english")) %>%
+              tm_map(removePunctuation)                 %>%
+              tm_map(stemDocument)                      %>%
+              DocumentTermMatrix()
+
+
+##the entire document is too large so subsetting the matrix
+freq <- colSums(as.matrix(clean_doc[1:10000,]))
+freq <- freq/length(freq)
 ```
 
 

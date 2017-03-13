@@ -69,6 +69,7 @@
 \newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{{#1}}}
 \newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{{#1}}}}
 \newcommand{\NormalTok}[1]{{#1}}
+\usepackage{longtable,booktabs}
 \usepackage{graphicx,grffile}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
@@ -184,7 +185,8 @@ have the same birthday?
 We begin by calculating the probability that someone has a birthday that
 is not shared with another person. (e.g.~the second person has a
 probability of 364 out of 365 of not sharing a birthday with another
-individual)
+individual). Then we subtract that probability from one to arrive at the
+probability that a number of people share a birthday.
 \end{quote}
 
 \begin{Shaded}
@@ -240,6 +242,8 @@ What happens to this probability when there are 50 people in the room?
 ## [1] "The probability that two people do share a birthday out of 50 is 97%"
 \end{verbatim}
 
+\newpage
+
 \section{Problem Set 2}\label{problem-set-2}
 
 Sometimes you cannot compute the probability of an outcome by measuring
@@ -263,11 +267,98 @@ document. Please remove all punctuation (quotes, commas, hyphens etc)
 and convert the words to lower case before you perform your
 calculations.
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(tm)}
+\KeywordTok{library}\NormalTok{(dplyr)}
+\KeywordTok{library}\NormalTok{(knitr)}
+\KeywordTok{library}\NormalTok{(RTextTools)}
+\KeywordTok{library}\NormalTok{(ggplot2)}
+\KeywordTok{library}\NormalTok{(scales)}
+\KeywordTok{library}\NormalTok{(DT)}
+\KeywordTok{library}\NormalTok{(stringr)}
+\KeywordTok{library}\NormalTok{(data.table)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{doc <-}\StringTok{ }\KeywordTok{readLines}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20605/Assignment%206/text%20document.txt"}\NormalTok{)}
+
+\NormalTok{doc <-}\StringTok{ }\KeywordTok{Corpus}\NormalTok{(}\KeywordTok{VectorSource}\NormalTok{(doc))}
+
+\NormalTok{clean_doc <-}\StringTok{  }\NormalTok{doc                                       %>%}
+\StringTok{              }\KeywordTok{tm_map}\NormalTok{(}\KeywordTok{content_transformer}\NormalTok{(tolower))      %>%}
+\StringTok{              }\KeywordTok{tm_map}\NormalTok{(removeNumbers)                     %>%}
+\StringTok{              }\KeywordTok{tm_map}\NormalTok{(removeWords, }\KeywordTok{stopwords}\NormalTok{(}\StringTok{"english"}\NormalTok{)) %>%}
+\StringTok{              }\KeywordTok{tm_map}\NormalTok{(removePunctuation)                 %>%}
+\StringTok{              }\CommentTok{#tm_map(stemDocument)                      %>%}
+\StringTok{              }\KeywordTok{DocumentTermMatrix}\NormalTok{()}
+
+
+\NormalTok{##the entire document is too large so subsetting the matrix}
+\NormalTok{freq <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(}\KeywordTok{colSums}\NormalTok{(}\KeywordTok{as.matrix}\NormalTok{(clean_doc[}\DecValTok{1}\NormalTok{:}\DecValTok{20000}\NormalTok{,])))}
+\NormalTok{freq <-}\StringTok{ }\KeywordTok{setDT}\NormalTok{(freq, }\DataTypeTok{keep.rownames =} \OtherTok{TRUE}\NormalTok{)[]}
+\KeywordTok{colnames}\NormalTok{(freq) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"word_type"}\NormalTok{, }\StringTok{"prob_appearance"}\NormalTok{)}
+\NormalTok{freq$prob_appearance <-}\StringTok{ }\KeywordTok{percent}\NormalTok{(freq$prob_appearance/}\KeywordTok{sum}\NormalTok{(freq$prob_appearance))}
+
+\KeywordTok{kable}\NormalTok{(}\KeywordTok{head}\NormalTok{(}\KeywordTok{arrange}\NormalTok{(freq,}\KeywordTok{desc}\NormalTok{(prob_appearance)), }\DataTypeTok{n =} \DecValTok{10}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule
+word\_type & prob\_appearance\tabularnewline
+\midrule
+\endhead
+upon & 0.609\%\tabularnewline
+one & 0.542\%\tabularnewline
+new & 0.507\%\tabularnewline
+said & 0.466\%\tabularnewline
+states & 0.462\%\tabularnewline
+holmes & 0.399\%\tabularnewline
+american & 0.363\%\tabularnewline
+man & 0.317\%\tabularnewline
+will & 0.317\%\tabularnewline
+government & 0.305\%\tabularnewline
+\bottomrule
+\end{longtable}
+
 Extend your program to calculate the probability of two words occurring
 adjacent to each other. It should take in a document, and two words (say
 the and for) and compute the probability of each of the words occurring
 in the document and the joint probability of both of them occurring
 together. The order of the two words is not important.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(tm)}
+\KeywordTok{library}\NormalTok{(dplyr)}
+\KeywordTok{library}\NormalTok{(knitr)}
+\KeywordTok{library}\NormalTok{(RTextTools)}
+\KeywordTok{library}\NormalTok{(ggplot2)}
+\KeywordTok{library}\NormalTok{(scales)}
+\KeywordTok{library}\NormalTok{(DT)}
+\KeywordTok{library}\NormalTok{(stringr)}
+\KeywordTok{library}\NormalTok{(data.table)}
+\KeywordTok{library}\NormalTok{(lda)}
+
+\NormalTok{doc <-}\StringTok{ }\KeywordTok{Corpus}\NormalTok{(}\KeywordTok{VectorSource}\NormalTok{(doc))}
+
+\NormalTok{clean_doc <-}\StringTok{  }\NormalTok{doc                                       %>%}
+\StringTok{              }\KeywordTok{tm_map}\NormalTok{(}\KeywordTok{content_transformer}\NormalTok{(tolower))      %>%}
+\StringTok{              }\KeywordTok{tm_map}\NormalTok{(removeNumbers)                     %>%}
+\StringTok{              }\KeywordTok{tm_map}\NormalTok{(removeWords, }\KeywordTok{stopwords}\NormalTok{(}\StringTok{"english"}\NormalTok{)) %>%}
+\StringTok{              }\KeywordTok{tm_map}\NormalTok{(removePunctuation)                 %>%}
+\StringTok{              }\KeywordTok{tm_map}\NormalTok{(stemDocument)                      %>%}
+\StringTok{              }\KeywordTok{DocumentTermMatrix}\NormalTok{()}
+
+
+\NormalTok{##the entire document is too large so subsetting the matrix}
+\NormalTok{freq <-}\StringTok{ }\KeywordTok{colSums}\NormalTok{(}\KeywordTok{as.matrix}\NormalTok{(clean_doc[}\DecValTok{1}\NormalTok{:}\DecValTok{10000}\NormalTok{,]))}
+\NormalTok{freq <-}\StringTok{ }\NormalTok{freq/}\KeywordTok{length}\NormalTok{(freq)}
+\end{Highlighting}
+\end{Shaded}
 
 Use the accompanying document for your testing purposes. Compare your
 probabilities of various words with the Time Magazine corpus:
