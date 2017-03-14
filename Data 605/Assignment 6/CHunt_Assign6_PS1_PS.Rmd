@@ -108,7 +108,7 @@ clean_doc <-  doc                                       %>%
 ##the entire document is too large so subsetting the matrix
 freq <- as.data.frame(colSums(as.matrix(clean_doc[1:20000,])))
 freq <- setDT(freq, keep.rownames = TRUE)[]
-colnames(freq) <- c("word_type", "prob_appearance")
+colnames(freq) <- c("word", "prob_appearance")
 freq$prob_appearance <- percent(freq$prob_appearance/sum(freq$prob_appearance))
 kable(head(arrange(freq,desc(prob_appearance)), n = 10))
 ```
@@ -116,26 +116,57 @@ kable(head(arrange(freq,desc(prob_appearance)), n = 10))
 
 Extend your program to calculate the probability of two words occurring adjacent to each other. It should take in a document, and two words (say the and for) and compute the probability of each of the words occurring in the document and the joint probability of both of them occurring together. The order of the two words is not important.
 
-```{r}
-clean_doc 
-
-test      <-  doc                                       %>%
-              tm_map(content_transformer(tolower))      %>%
-              tm_map(removeNumbers)                     %>%
-              tm_map(removeWords, stopwords("english")) %>%
-              tm_map(removePunctuation)                 %>%
-              str_replace(gsub("\\s+", " ", str_trim(doc)))
+```{r, cache = TRUE}
+library(tidyr)
+two_word      <-  doc                                       %>%
+                  tm_map(content_transformer(tolower))      %>%
+                  tm_map(removeNumbers)                     %>%
+                  tm_map(removeWords, stopwords("english")) %>%
+                  tm_map(removePunctuation)                 
               
-
-replace_space <- function(x){
-                 gsub("([^ ]+ [^ ]+) ", "\\.", x) 
+new_list <- NULL
+for (i in 1:length(two_word)){
+  new_list[i] <- unlist(as.character(two_word[[i]][1]))
 }
 
-replace_space(test)
-##the entire document is too large so subsetting the matrix
-freq <- colSums(as.matrix(clean_doc[1:10000,]))
-freq <- freq/length(freq)
+new_list <- paste(new_list, collapse = " ")
+new_list <- gsub("\\s+"," ",new_list)
+new_list <- unlist(strsplit(new_list, " "))
+
+temp <- NULL
+for (i in 1:60000) {
+  temp <- append(temp, paste(new_list[i], new_list[i+1], sep = ":"))
+}
+
+new_list <- as.data.frame(new_list)
+
+single_list <-  new_list %>%
+                group_by(new_list) %>%
+                top_n(n = 60000) %>%
+                mutate(prob_appearance_single = n()) %>%
+                mutate(prob_appearance_single = percent(prob_appearance_single/length(new_list$new_list)))
+
+temp     <- as.data.frame(temp)
+
+final_list <- temp %>% 
+              group_by(temp) %>% 
+              mutate(prob_appearance_together = n()) %>%
+              arrange(desc(prob_appearance_together)) %>%
+              distinct(.keep_all = TRUE) %>%
+              mutate(prob_appearance_together = percent(prob_appearance_together/length(temp$temp))) %>%
+              separate(col = "temp", into = c("single word 1", "single word 2"), ':') 
+
+final <- final_list %>% 
+              inner_join( single_list, by = c("single word 1" = "new_list")) %>% 
+              distinct(.keep_all = TRUE) %>% 
+              inner_join( single_list, by = c("single word 2" = "new_list")) %>% 
+              distinct(.keep_all = TRUE)
 ```
 
+```{r, cache=TRUE, results='asis'}
+colnames(final) <- c("first word", "second word", 
+                          "prob of words together", "prob of first word", 
+                          "prob of second word")
+kable(head(final, n = 20))
+```
 
-Use the accompanying document for your testing purposes. Compare your probabilities of various words with the Time Magazine corpus: http://corpus.byu.edu/time/

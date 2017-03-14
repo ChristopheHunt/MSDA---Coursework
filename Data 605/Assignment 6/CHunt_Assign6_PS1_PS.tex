@@ -299,16 +299,15 @@ calculations.
 \NormalTok{##the entire document is too large so subsetting the matrix}
 \NormalTok{freq <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(}\KeywordTok{colSums}\NormalTok{(}\KeywordTok{as.matrix}\NormalTok{(clean_doc[}\DecValTok{1}\NormalTok{:}\DecValTok{20000}\NormalTok{,])))}
 \NormalTok{freq <-}\StringTok{ }\KeywordTok{setDT}\NormalTok{(freq, }\DataTypeTok{keep.rownames =} \OtherTok{TRUE}\NormalTok{)[]}
-\KeywordTok{colnames}\NormalTok{(freq) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"word_type"}\NormalTok{, }\StringTok{"prob_appearance"}\NormalTok{)}
+\KeywordTok{colnames}\NormalTok{(freq) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"word"}\NormalTok{, }\StringTok{"prob_appearance"}\NormalTok{)}
 \NormalTok{freq$prob_appearance <-}\StringTok{ }\KeywordTok{percent}\NormalTok{(freq$prob_appearance/}\KeywordTok{sum}\NormalTok{(freq$prob_appearance))}
-
 \KeywordTok{kable}\NormalTok{(}\KeywordTok{head}\NormalTok{(}\KeywordTok{arrange}\NormalTok{(freq,}\KeywordTok{desc}\NormalTok{(prob_appearance)), }\DataTypeTok{n =} \DecValTok{10}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{longtable}[]{@{}ll@{}}
 \toprule
-word\_type & prob\_appearance\tabularnewline
+word & prob\_appearance\tabularnewline
 \midrule
 \endhead
 upon & 0.609\%\tabularnewline
@@ -332,37 +331,106 @@ together. The order of the two words is not important.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(tm)}
-\KeywordTok{library}\NormalTok{(dplyr)}
-\KeywordTok{library}\NormalTok{(knitr)}
-\KeywordTok{library}\NormalTok{(RTextTools)}
-\KeywordTok{library}\NormalTok{(ggplot2)}
-\KeywordTok{library}\NormalTok{(scales)}
-\KeywordTok{library}\NormalTok{(DT)}
-\KeywordTok{library}\NormalTok{(stringr)}
-\KeywordTok{library}\NormalTok{(data.table)}
-\KeywordTok{library}\NormalTok{(lda)}
+\KeywordTok{library}\NormalTok{(tidyr)}
+\NormalTok{two_word      <-}\StringTok{  }\NormalTok{doc                                       %>%}
+\StringTok{                  }\KeywordTok{tm_map}\NormalTok{(}\KeywordTok{content_transformer}\NormalTok{(tolower))      %>%}
+\StringTok{                  }\KeywordTok{tm_map}\NormalTok{(removeNumbers)                     %>%}
+\StringTok{                  }\KeywordTok{tm_map}\NormalTok{(removeWords, }\KeywordTok{stopwords}\NormalTok{(}\StringTok{"english"}\NormalTok{)) %>%}
+\StringTok{                  }\KeywordTok{tm_map}\NormalTok{(removePunctuation)                 }
+              
+\NormalTok{new_list <-}\StringTok{ }\OtherTok{NULL}
+\NormalTok{for (i in }\DecValTok{1}\NormalTok{:}\KeywordTok{length}\NormalTok{(two_word))\{}
+  \NormalTok{new_list[i] <-}\StringTok{ }\KeywordTok{unlist}\NormalTok{(}\KeywordTok{as.character}\NormalTok{(two_word[[i]][}\DecValTok{1}\NormalTok{]))}
+\NormalTok{\}}
 
-\NormalTok{doc <-}\StringTok{ }\KeywordTok{Corpus}\NormalTok{(}\KeywordTok{VectorSource}\NormalTok{(doc))}
+\NormalTok{new_list <-}\StringTok{ }\KeywordTok{paste}\NormalTok{(new_list, }\DataTypeTok{collapse =} \StringTok{" "}\NormalTok{)}
+\NormalTok{new_list <-}\StringTok{ }\KeywordTok{gsub}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{s+"}\NormalTok{,}\StringTok{" "}\NormalTok{,new_list)}
+\NormalTok{new_list <-}\StringTok{ }\KeywordTok{unlist}\NormalTok{(}\KeywordTok{strsplit}\NormalTok{(new_list, }\StringTok{" "}\NormalTok{))}
 
-\NormalTok{clean_doc <-}\StringTok{  }\NormalTok{doc                                       %>%}
-\StringTok{              }\KeywordTok{tm_map}\NormalTok{(}\KeywordTok{content_transformer}\NormalTok{(tolower))      %>%}
-\StringTok{              }\KeywordTok{tm_map}\NormalTok{(removeNumbers)                     %>%}
-\StringTok{              }\KeywordTok{tm_map}\NormalTok{(removeWords, }\KeywordTok{stopwords}\NormalTok{(}\StringTok{"english"}\NormalTok{)) %>%}
-\StringTok{              }\KeywordTok{tm_map}\NormalTok{(removePunctuation)                 %>%}
-\StringTok{              }\KeywordTok{tm_map}\NormalTok{(stemDocument)                      %>%}
-\StringTok{              }\KeywordTok{DocumentTermMatrix}\NormalTok{()}
+\NormalTok{temp <-}\StringTok{ }\OtherTok{NULL}
+\NormalTok{for (i in }\DecValTok{1}\NormalTok{:}\DecValTok{60000}\NormalTok{) \{}
+  \NormalTok{temp <-}\StringTok{ }\KeywordTok{append}\NormalTok{(temp, }\KeywordTok{paste}\NormalTok{(new_list[i], new_list[i}\DecValTok{+1}\NormalTok{], }\DataTypeTok{sep =} \StringTok{":"}\NormalTok{))}
+\NormalTok{\}}
 
+\NormalTok{new_list <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(new_list)}
 
-\NormalTok{##the entire document is too large so subsetting the matrix}
-\NormalTok{freq <-}\StringTok{ }\KeywordTok{colSums}\NormalTok{(}\KeywordTok{as.matrix}\NormalTok{(clean_doc[}\DecValTok{1}\NormalTok{:}\DecValTok{10000}\NormalTok{,]))}
-\NormalTok{freq <-}\StringTok{ }\NormalTok{freq/}\KeywordTok{length}\NormalTok{(freq)}
+\NormalTok{single_list <-}\StringTok{  }\NormalTok{new_list %>%}
+\StringTok{                }\KeywordTok{group_by}\NormalTok{(new_list) %>%}
+\StringTok{                }\KeywordTok{top_n}\NormalTok{(}\DataTypeTok{n =} \DecValTok{60000}\NormalTok{) %>%}
+\StringTok{                }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{prob_appearance_single =} \KeywordTok{n}\NormalTok{()) %>%}
+\StringTok{                }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{prob_appearance_single =} \KeywordTok{percent}\NormalTok{(prob_appearance_single/}\KeywordTok{length}\NormalTok{(new_list$new_list)))}
 \end{Highlighting}
 \end{Shaded}
 
-Use the accompanying document for your testing purposes. Compare your
-probabilities of various words with the Time Magazine corpus:
-\url{http://corpus.byu.edu/time/}
+\begin{verbatim}
+## Selecting by new_list
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{temp     <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(temp)}
+
+\NormalTok{final_list <-}\StringTok{ }\NormalTok{temp %>%}\StringTok{ }
+\StringTok{              }\KeywordTok{group_by}\NormalTok{(temp) %>%}\StringTok{ }
+\StringTok{              }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{prob_appearance_together =} \KeywordTok{n}\NormalTok{()) %>%}
+\StringTok{              }\KeywordTok{arrange}\NormalTok{(}\KeywordTok{desc}\NormalTok{(prob_appearance_together)) %>%}
+\StringTok{              }\KeywordTok{distinct}\NormalTok{(}\DataTypeTok{.keep_all =} \OtherTok{TRUE}\NormalTok{) %>%}
+\StringTok{              }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{prob_appearance_together =} \KeywordTok{percent}\NormalTok{(prob_appearance_together/}\KeywordTok{length}\NormalTok{(temp$temp))) %>%}
+\StringTok{              }\KeywordTok{separate}\NormalTok{(}\DataTypeTok{col =} \StringTok{"temp"}\NormalTok{, }\DataTypeTok{into =} \KeywordTok{c}\NormalTok{(}\StringTok{"single word 1"}\NormalTok{, }\StringTok{"single word 2"}\NormalTok{), }\StringTok{':'}\NormalTok{) }
+
+\NormalTok{final <-}\StringTok{ }\NormalTok{final_list %>%}\StringTok{ }
+\StringTok{              }\KeywordTok{inner_join}\NormalTok{( single_list, }\DataTypeTok{by =} \KeywordTok{c}\NormalTok{(}\StringTok{"single word 1"} \NormalTok{=}\StringTok{ "new_list"}\NormalTok{)) %>%}\StringTok{ }
+\StringTok{              }\KeywordTok{distinct}\NormalTok{(}\DataTypeTok{.keep_all =} \OtherTok{TRUE}\NormalTok{) %>%}\StringTok{ }
+\StringTok{              }\KeywordTok{inner_join}\NormalTok{( single_list, }\DataTypeTok{by =} \KeywordTok{c}\NormalTok{(}\StringTok{"single word 2"} \NormalTok{=}\StringTok{ "new_list"}\NormalTok{)) %>%}\StringTok{ }
+\StringTok{              }\KeywordTok{distinct}\NormalTok{(}\DataTypeTok{.keep_all =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in inner_join_impl(x, y, by$x, by$y, suffix$x, suffix$y): joining
+## character vector and factor, coercing into character vector
+
+## Warning in inner_join_impl(x, y, by$x, by$y, suffix$x, suffix$y): joining
+## character vector and factor, coercing into character vector
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{colnames}\NormalTok{(final) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"first word"}\NormalTok{, }\StringTok{"second word"}\NormalTok{, }
+                          \StringTok{"prob of words together"}\NormalTok{, }\StringTok{"prob of first word"}\NormalTok{, }
+                          \StringTok{"prob of second word"}\NormalTok{)}
+\KeywordTok{kable}\NormalTok{(}\KeywordTok{head}\NormalTok{(final, }\DataTypeTok{n =} \DecValTok{20}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lllll@{}}
+\toprule
+first word & second word & prob of words together & prob of first word &
+prob of second word\tabularnewline
+\midrule
+\endhead
+said & holmes & 0.185\% & 0.646\% & 0.0869\%\tabularnewline
+sherlock & holmes & 0.167\% & 0.0189\% & 0.0869\%\tabularnewline
+mr & holmes & 0.118\% & 0.0669\% & 0.0869\%\tabularnewline
+new & england & 0.0683\% & 0.224\% & 0.0555\%\tabularnewline
+st & simon & 0.065\% & 0.0271\% & 0.00971\%\tabularnewline
+new & york & 0.065\% & 0.224\% & 0.0361\%\tabularnewline
+project & gutenberg & 0.05\% & 0.0529\% & 0.0211\%\tabularnewline
+baker & street & 0.0483\% & 0.00841\% & 0.0332\%\tabularnewline
+united & states & 0.0483\% & 0.104\% & 0.181\%\tabularnewline
+lord & st & 0.0467\% & 0.0235\% & 0.0271\%\tabularnewline
+st & clair & 0.0383\% & 0.0271\% & 0.0043\%\tabularnewline
+let & us & 0.0367\% & 0.0884\% & 0.129\%\tabularnewline
+upon & table & 0.0333\% & 0.207\% & 0.0532\%\tabularnewline
+young & lady & 0.0333\% & 0.116\% & 0.0288\%\tabularnewline
+one & side & 0.0283\% & 0.601\% & 0.0934\%\tabularnewline
+yes & sir & 0.0283\% & 0.127\% & 0.0325\%\tabularnewline
+hosmer & angel & 0.0283\% & 0.00448\% & 0.00672\%\tabularnewline
+miss & hunter & 0.0283\% & 0.0205\% & 0.0056\%\tabularnewline
+mr & rucastle & 0.0283\% & 0.0669\% & 0.00635\%\tabularnewline
+one & two & 0.0267\% & 0.601\% & 0.2\%\tabularnewline
+\bottomrule
+\end{longtable}
 
 
 \end{document}
