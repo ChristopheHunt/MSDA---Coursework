@@ -1,0 +1,31 @@
+---
+title: "Homework 7"
+author: "Christophe Hunt"
+date: "March 18, 2017"
+output:
+  pdf_document:
+    fig_caption: yes
+    keep_tex: yes
+    includes:
+      in_header: header.tex
+    number_sections: yes
+    toc: yes
+    toc_depth: 2
+  html_document:
+    toc: yes
+    toc_depth: '2'
+---
+
+\newpage
+
+# Page 304: problem 2
+
+# Page 307: problem 1
+
+# Page 320: problem 10
+
+# Page 330: problem 1 
+
+# Page 330: problem 3
+
+# Page 338: problem 4
