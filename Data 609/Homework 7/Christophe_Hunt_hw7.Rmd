@@ -116,6 +116,7 @@ Deb - Center
 
 > If the coach decides she can't play Hermione in position 3 swing, she wont be able to fill the lineup. This is because Deb and Gladys are the only others that can play position 3 but they also are the only ones that can play other positions. 
 
+\newpage
 
 # Page 331: problem 1 
 
@@ -123,12 +124,24 @@ Find a shortest path from node $a$ to node $j4$ in the graph in Figure 8.33 with
 
 ![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20609/Homework%207/problem1.PNG)
 
+```{r}
+path <- data.frame(from=c('a','a','b','b','c','c',
+                          'd','e','g','f','i','e',
+                          'h', 'e'),
+                   to =c('b','c','e','d','e','f',
+                         'g','g','i','i','j','h',
+                         'j','i'),
+                        weight = c(2,4,7,2,4,2,
+                                   2,1,8,6,2,2,
+                                   4,3))
 
-# Page 331: problem 3
+g <- graph.data.frame(path, directed=FALSE)
 
+path_length <- shortest.paths(g, v = 'a', to = 'j')
 
+path_output <- get.shortest.paths(g, 'a', 'j')
 
-# Page 338: problem 4
+path_output$vpath[[1]]
+```
 
-
-
+The shortest path is `r path_length` and the path is (a b d g e i j). 

@@ -284,6 +284,8 @@ only others that can play position 3 but they also are the only ones
 that can play other positions.
 \end{quote}
 
+\newpage
+
 \section{Page 331: problem 1}\label{page-331-problem-1}
 
 Find a shortest path from node \(a\) to node \(j4\) in the graph in
@@ -295,9 +297,34 @@ Figure 8.33 with edge weights shown on the graph.
 \caption{}
 \end{figure}
 
-\section{Page 331: problem 3}\label{page-331-problem-3}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{path <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{from=}\KeywordTok{c}\NormalTok{(}\StringTok{'a'}\NormalTok{,}\StringTok{'a'}\NormalTok{,}\StringTok{'b'}\NormalTok{,}\StringTok{'b'}\NormalTok{,}\StringTok{'c'}\NormalTok{,}\StringTok{'c'}\NormalTok{,}
+                          \StringTok{'d'}\NormalTok{,}\StringTok{'e'}\NormalTok{,}\StringTok{'g'}\NormalTok{,}\StringTok{'f'}\NormalTok{,}\StringTok{'i'}\NormalTok{,}\StringTok{'e'}\NormalTok{,}
+                          \StringTok{'h'}\NormalTok{, }\StringTok{'e'}\NormalTok{),}
+                   \DataTypeTok{to =}\KeywordTok{c}\NormalTok{(}\StringTok{'b'}\NormalTok{,}\StringTok{'c'}\NormalTok{,}\StringTok{'e'}\NormalTok{,}\StringTok{'d'}\NormalTok{,}\StringTok{'e'}\NormalTok{,}\StringTok{'f'}\NormalTok{,}
+                         \StringTok{'g'}\NormalTok{,}\StringTok{'g'}\NormalTok{,}\StringTok{'i'}\NormalTok{,}\StringTok{'i'}\NormalTok{,}\StringTok{'j'}\NormalTok{,}\StringTok{'h'}\NormalTok{,}
+                         \StringTok{'j'}\NormalTok{,}\StringTok{'i'}\NormalTok{),}
+                        \DataTypeTok{weight =} \KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{7}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{2}\NormalTok{,}
+                                   \DecValTok{2}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{8}\NormalTok{,}\DecValTok{6}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{,}
+                                   \DecValTok{4}\NormalTok{,}\DecValTok{3}\NormalTok{))}
 
-\section{Page 338: problem 4}\label{page-338-problem-4}
+\NormalTok{g <-}\StringTok{ }\KeywordTok{graph.data.frame}\NormalTok{(path, }\DataTypeTok{directed=}\OtherTok{FALSE}\NormalTok{)}
+
+\NormalTok{path_length <-}\StringTok{ }\KeywordTok{shortest.paths}\NormalTok{(g, }\DataTypeTok{v =} \StringTok{'a'}\NormalTok{, }\DataTypeTok{to =} \StringTok{'j'}\NormalTok{)}
+
+\NormalTok{path_output <-}\StringTok{ }\KeywordTok{get.shortest.paths}\NormalTok{(g, }\StringTok{'a'}\NormalTok{, }\StringTok{'j'}\NormalTok{)}
+
+\NormalTok{path_output$vpath[[}\DecValTok{1}\NormalTok{]]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## + 7/10 vertices, named:
+## [1] a b d g e i j
+\end{verbatim}
+
+The shortest path is 12 and the path is (a b d g e i j).
 
 
 \end{document}
