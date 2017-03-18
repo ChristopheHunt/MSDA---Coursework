@@ -42,13 +42,15 @@ We can start our walk at 2 and then traverse as follows:
 8. 4 to 6     
 9. 6 to 5    
 
-#TODO Recheck # Page 307: problem 1
+\newpage
+
+# Page 307: problem 1
 
 Consider the graph in Figure 8.11.
 
 ## a. Write down the set of edges E(G)
 
-$$E(G) = \{ab, ae, af, bc, bd, cd, de, df, ef\}$$
+> $E(G) = \{ab, ae, af, bc, bd, cd, de, df, ef\}$
 
 ## b. Which edges are incident with vertex b? 
 
@@ -60,21 +62,70 @@ $$E(G) = \{ab, ae, af, bc, bd, cd, de, df, ef\}$$
 
 ## d. Compute deg(a)
 
-> deg(a) = 3
+> deg(a) = {ab, ae, af} = 3
 
 ## e. Compute $|E(G)|$
 
-$$|E(G)|= \{ab, ae, af, bc, bd, cd, de, df, ef\} = 9$$
+> $|E(G)|= \{ab, ae, af, bc, bd, cd, de, df, ef\} = 9$
 
+\newpage
 
 # Page 320: problem 10
+
+A basketball coach needs to find a starting lineup for her team. There are five positions that must be filled: point guard (1), shooting guard (2), swing(3), power forward (4), and center (5). Given the Table 8.7, create a graph model and use it to find a feasible starting lineup. What changes if the coach decides she cant play Hermione in position 3? 
+
+```{r, message=FALSE, warning=FALSE}
+library(igraph)
+```
+
+```{r, fig.width=5}
+b_team <- data.frame(from = c('Alice','Alice',
+                                 'Bonnie', 
+                                 'Courtney', 'Courtney', 
+                                 'Deb',  'Deb',  'Deb',
+                                 'Ellen', 
+                                 'Fay',
+                                 'Gladys', 'Gladys',
+                                 'Hermione', 'Hermione'),
+                        
+                        to = c('point guard (1)','shooting guard (2)',
+                               'point guard (1)',
+                               'point guard (1)','shooting guard (2)',
+                               'swing (3)', 'power forward (4)', 'center (5)',
+                               'shooting guard (2)',
+                               'point guard (1)',
+                               'swing (3)', 'power forward (4)',
+                               'point guard (1)', 'swing (3)'),
+                        weight = c(1,1,1,1,1,1,1,1,1,1,1,1,1,1 ))
+
+df_b_team <- graph.data.frame(b_team, directed=FALSE)
+plot(df_b_team,vertex.color="gold", 
+     vertex.size=6, 
+     asp = .7,
+     vertex.frame.color="gray", 
+     vertex.label.color="black",  
+     edge.curved=0.2)
+```
+
+> Using the graph, we can see that a possible lineup is:    
+Ellen - Shooting Guard  
+Fay - Point Guard   
+Hermione - Swing   
+Gladys - Power Forward    
+Deb - Center   
+
+> If the coach decides she can't play Hermione in position 3 swing, she wont be able to fill the lineup. This is because Deb and Gladys are the only others that can play position 3 but they also are the only ones that can play other positions. 
 
 
 # Page 330: problem 1 
 
 
+
 # Page 330: problem 3
 
 
+
 # Page 338: problem 4
+
+
 

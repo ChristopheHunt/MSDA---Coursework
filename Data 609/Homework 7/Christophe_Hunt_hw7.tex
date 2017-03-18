@@ -29,6 +29,46 @@
             pdfborder={0 0 0},
             breaklinks=true}
 \urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{{#1}}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{{#1}}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\ImportTok}[1]{{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{{#1}}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{{#1}}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{{#1}}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{{#1}}}}
+\newcommand{\BuiltInTok}[1]{{#1}}
+\newcommand{\ExtensionTok}[1]{{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{{#1}}}
+\newcommand{\RegionMarkerTok}[1]{{#1}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{{#1}}}}
+\newcommand{\NormalTok}[1]{{#1}}
 \usepackage{graphicx,grffile}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
@@ -139,15 +179,18 @@ We can start our walk at 2 and then traverse as follows:\\
 9. 6 to 5
 \end{quote}
 
-\section{TODO Recheck \# Page 307: problem
-1}\label{todo-recheck-page-307-problem-1}
+\newpage
+
+\section{Page 307: problem 1}\label{page-307-problem-1}
 
 Consider the graph in Figure 8.11.
 
 \subsection{a. Write down the set of edges
 E(G)}\label{a.-write-down-the-set-of-edges-eg}
 
-\[E(G) = \{ab, ae, af, bc, bd, cd, de, df, ef\}\]
+\begin{quote}
+\(E(G) = \{ab, ae, af, bc, bd, cd, de, df, ef\}\)
+\end{quote}
 
 \subsection{b. Which edges are incident with vertex
 b?}\label{b.-which-edges-are-incident-with-vertex-b}
@@ -166,15 +209,80 @@ b and d
 \subsection{d. Compute deg(a)}\label{d.-compute-dega}
 
 \begin{quote}
-deg(a) = 3
+deg(a) = \{ab, ae, af\} = 3
 \end{quote}
 
 \subsection{\texorpdfstring{e. Compute
 \(|E(G)|\)}{e. Compute \textbar{}E(G)\textbar{}}}\label{e.-compute-eg}
 
-\[|E(G)|= \{ab, ae, af, bc, bd, cd, de, df, ef\} = 9\]
+\begin{quote}
+\(|E(G)|= \{ab, ae, af, bc, bd, cd, de, df, ef\} = 9\)
+\end{quote}
+
+\newpage
 
 \section{Page 320: problem 10}\label{page-320-problem-10}
+
+A basketball coach needs to find a starting lineup for her team. There
+are five positions that must be filled: point guard (1), shooting guard
+(2), swing(3), power forward (4), and center (5). Given the Table 8.7,
+create a graph model and use it to find a feasible starting lineup. What
+changes if the coach decides she cant play Hermione in position 3?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(igraph)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{b_team <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{from =} \KeywordTok{c}\NormalTok{(}\StringTok{'Alice'}\NormalTok{,}\StringTok{'Alice'}\NormalTok{,}
+                                 \StringTok{'Bonnie'}\NormalTok{, }
+                                 \StringTok{'Courtney'}\NormalTok{, }\StringTok{'Courtney'}\NormalTok{, }
+                                 \StringTok{'Deb'}\NormalTok{,  }\StringTok{'Deb'}\NormalTok{,  }\StringTok{'Deb'}\NormalTok{,}
+                                 \StringTok{'Ellen'}\NormalTok{, }
+                                 \StringTok{'Fay'}\NormalTok{,}
+                                 \StringTok{'Gladys'}\NormalTok{, }\StringTok{'Gladys'}\NormalTok{,}
+                                 \StringTok{'Hermione'}\NormalTok{, }\StringTok{'Hermione'}\NormalTok{),}
+                        
+                        \DataTypeTok{to =} \KeywordTok{c}\NormalTok{(}\StringTok{'point guard (1)'}\NormalTok{,}\StringTok{'shooting guard (2)'}\NormalTok{,}
+                               \StringTok{'point guard (1)'}\NormalTok{,}
+                               \StringTok{'point guard (1)'}\NormalTok{,}\StringTok{'shooting guard (2)'}\NormalTok{,}
+                               \StringTok{'swing (3)'}\NormalTok{, }\StringTok{'power forward (4)'}\NormalTok{, }\StringTok{'center (5)'}\NormalTok{,}
+                               \StringTok{'shooting guard (2)'}\NormalTok{,}
+                               \StringTok{'point guard (1)'}\NormalTok{,}
+                               \StringTok{'swing (3)'}\NormalTok{, }\StringTok{'power forward (4)'}\NormalTok{,}
+                               \StringTok{'point guard (1)'}\NormalTok{, }\StringTok{'swing (3)'}\NormalTok{),}
+                        \DataTypeTok{weight =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1} \NormalTok{))}
+
+\NormalTok{df_b_team <-}\StringTok{ }\KeywordTok{graph.data.frame}\NormalTok{(b_team, }\DataTypeTok{directed=}\OtherTok{FALSE}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(df_b_team,}\DataTypeTok{vertex.color=}\StringTok{"gold"}\NormalTok{, }
+     \DataTypeTok{vertex.size=}\DecValTok{6}\NormalTok{, }
+     \DataTypeTok{asp =} \NormalTok{.}\DecValTok{7}\NormalTok{,}
+     \DataTypeTok{vertex.frame.color=}\StringTok{"gray"}\NormalTok{, }
+     \DataTypeTok{vertex.label.color=}\StringTok{"black"}\NormalTok{,  }
+     \DataTypeTok{edge.curved=}\FloatTok{0.2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Christophe_Hunt_hw7_files/figure-latex/unnamed-chunk-2-1.pdf}
+
+\begin{quote}
+Using the graph, we can see that a possible lineup is:\\
+Ellen - Shooting Guard\\
+Fay - Point Guard\\
+Hermione - Swing\\
+Gladys - Power Forward\\
+Deb - Center
+\end{quote}
+
+\begin{quote}
+If the coach decides she can't play Hermione in position 3 swing, she
+wont be able to fill the lineup. This is because Deb and Gladys are the
+only others that can play position 3 but they also are the only ones
+that can play other positions.
+\end{quote}
 
 \section{Page 330: problem 1}\label{page-330-problem-1}
 
