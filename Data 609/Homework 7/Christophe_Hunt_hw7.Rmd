@@ -20,24 +20,27 @@ output:
 
 # Page 304: problem 2
 
-```{r}
-Al <- c(2,8)
-Bo <- c(1,5,7)
-Che <- c(2,3)
-Doug <- c(1,4,5,6,7)
-Ella <- c(3,8)
-Fay <- c(10,11)
-Gene <- c(3,8,11)
-Hal <- c(2,4,9)
-Ian <- c(8,9,10)
-John <- c(1,5,6,7)
-Kit <- c(8,9)
-Leo <- c(3,9,11)
-Moe <- c(1,4,6,7)
-Ned <- NULL
-Paul <- c(9,10)
-```
+The bridges and land masses of a certain city can be modeled with graph G in figure 8.7. 
 
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20609/Homework%207/bridges.PNG)
+
+## a. is G Eularian? Why or why not?
+
+> No, because there are vertices of odd degrees (2 and 5). 
+
+## b. Suppose we relax the requirement of the walk so that the walker need not start and end at the same land mass but still must traverse every bridge exactly once. Is this type of walk possible in a city modeled by the graph in figure 8.7? If so, how? If not, why not?
+
+> Yes, it is possible to travese each edge once.    
+We can start our walk at 2 and then traverse as follows:     
+1. 2 to 1   
+2. 1 to 3   
+3. 3 to 2   
+4. 2 to 4    
+5. 4 to 5     
+6. 5 to 3     
+7. 3 to 4     
+8. 4 to 6     
+9. 6 to 5    
 
 # Page 307: problem 1
 
