@@ -47,10 +47,24 @@ We can start our walk at 2 and then traverse as follows:
 Consider the graph in Figure 8.11.
 
 ## a. Write down the set of edges E(G)
-## b. Which edges are incidnent with vertex b? 
+$$E(G) = \{ab, ae, af, bc, bd, cd, de, df, ef\}$$
+
+## b. Which edges are incident with vertex b? 
+
+$ab, bc, and bd$
+
 ## c. Which vertices are adjacent to vertex c?
+
+$b and d$
+
 ## d. Compute deg(a)
+
+$deg(a) = 3$
+
 ## e. Compute $|E(G)|$
+
+$$|E(G)|= \{ab, ae, af, bc, bd, cd, de, df, ef\} = 9$$
+
 
 # Page 320: problem 10
 
