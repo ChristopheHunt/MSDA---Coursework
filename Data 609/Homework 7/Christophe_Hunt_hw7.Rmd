@@ -20,12 +20,18 @@ output:
 
 # Page 304: problem 2
 
+
 # Page 307: problem 1
+
 
 # Page 320: problem 10
 
+
 # Page 330: problem 1 
+
 
 # Page 330: problem 3
 
+
 # Page 338: problem 4
+
