@@ -117,11 +117,14 @@ Deb - Center
 > If the coach decides she can't play Hermione in position 3 swing, she wont be able to fill the lineup. This is because Deb and Gladys are the only others that can play position 3 but they also are the only ones that can play other positions. 
 
 
-# Page 330: problem 1 
+# Page 331: problem 1 
+
+Find a shortest path from node $a$ to node $j4$ in the graph in Figure 8.33 with edge weights shown on the graph. 
+
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20609/Homework%207/problem1.PNG)
 
 
-
-# Page 330: problem 3
+# Page 331: problem 3
 
 
 
