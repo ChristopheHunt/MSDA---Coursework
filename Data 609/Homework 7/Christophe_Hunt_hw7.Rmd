@@ -20,9 +20,34 @@ output:
 
 # Page 304: problem 2
 
+```{r}
+Al <- c(2,8)
+Bo <- c(1,5,7)
+Che <- c(2,3)
+Doug <- c(1,4,5,6,7)
+Ella <- c(3,8)
+Fay <- c(10,11)
+Gene <- c(3,8,11)
+Hal <- c(2,4,9)
+Ian <- c(8,9,10)
+John <- c(1,5,6,7)
+Kit <- c(8,9)
+Leo <- c(3,9,11)
+Moe <- c(1,4,6,7)
+Ned <- NULL
+Paul <- c(9,10)
+```
+
 
 # Page 307: problem 1
 
+Consider the graph in Figure 8.11.
+
+## a. Write down the set of edges E(G)
+## b. Which edges are incidnent with vertex b? 
+## c. Which vertices are adjacent to vertex c?
+## d. Compute deg(a)
+## e. Compute $|E(G)|$
 
 # Page 320: problem 10
 
