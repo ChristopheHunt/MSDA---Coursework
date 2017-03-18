@@ -42,24 +42,25 @@ We can start our walk at 2 and then traverse as follows:
 8. 4 to 6     
 9. 6 to 5    
 
-# Page 307: problem 1
+#TODO Recheck # Page 307: problem 1
 
 Consider the graph in Figure 8.11.
 
 ## a. Write down the set of edges E(G)
+
 $$E(G) = \{ab, ae, af, bc, bd, cd, de, df, ef\}$$
 
 ## b. Which edges are incident with vertex b? 
 
-$ab, bc, and bd$
+> ab, bc, and bd
 
 ## c. Which vertices are adjacent to vertex c?
 
-$b and d$
+> b and d
 
 ## d. Compute deg(a)
 
-$deg(a) = 3$
+> deg(a) = 3
 
 ## e. Compute $|E(G)|$
 
