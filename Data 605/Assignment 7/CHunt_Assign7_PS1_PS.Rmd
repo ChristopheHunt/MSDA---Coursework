@@ -15,3 +15,99 @@ output:
     toc: yes
     toc_depth: '2'
 ---
+
+# Problem Set 1
+
+This week, you'll have only one programming assignment. Please write a function to compute the expected value and standard deviation of an array of values. Compare your results with that of R's mean and std functions. Please document your work in an RMarkdown file and ensure that you have good comments to help the reader follow your work. 
+
+
+```{r}
+# vectors of different length
+
+V1 <- c(5,9,3,23)
+V2 <- c(10,11,12,13,14,15,10,13)
+V3 <- c(1:20)
+
+# vectors added to array
+array_x <- array(c(V1,V2, V3))
+
+# Expected results is the mean sum/count
+
+expected_results <- function(x){
+  return(sum(x)/dim(x)[1])
+}
+
+# Standard deviation of the sample population is the value less the mean, then squared, 
+#the sum of that divided by the length less 1 (adjustment made for sample population),
+#then the square root of that final result
+
+stand_dv_samp <- function(x){
+  return(sqrt(sum((x - expected_results(x))^2)/(dim(x)[1] - 1)))
+}
+```
+
+\newpage 
+
+```{r}
+list("user defined mean function" = expected_results(array_x),
+     "base R mean function" = mean(array_x))
+```
+
+```{r}
+list("user defined sd function" = stand_dv_samp(array_x), 
+     "base R sd function" = sd(array_x))
+```
+
+Now, consider that instead of being able to neatly fit the values in memory in an array, you have an infinite stream of numbers coming by. How would you estimate the mean and standard deviation of such a stream? Your function should be able to return the current estimate of the mean and standard deviation at any time it is asked. Your program should maintain these current estimates and return them back at any invocation of these functions. (Hint: You can maintain a rolling estimate of the mean and standard deviation and allow these to slowly change over time as you see more and more new values).
+
+
+```{r}
+require(RSQLite)
+##set up a temporary sql database
+x <- as.data.frame(array_x)
+tmp <- dbConnect(SQLite(), ":memory:")
+dbWriteTable(tmp, "temp_values", x)
+x <- c(2,1,4,5,6)
+avg_sd_stream <- function(x){
+                  suppressWarnings(dbWriteTable(tmp, "temp_values", as.data.frame(x), append = TRUE))
+                  x <- dbGetQuery(tmp, "SELECT * FROM temp_values")
+                  return(list("stream_avg" = expected_results(x), "stream_sd" = stand_dv_samp(x)))
+}
+```
+
+
+```{r}
+#original results 
+list("original avg" = expected_results(array_x), "oringal sd" = stand_dv_samp(array_x))
+avg_sd_stream(x = c(1,2,35,12,41,15))
+avg_sd_stream(x = c(2,7.6,100,2.67,129))
+```
+
+
+```{r}
+results <- list("samp_size" = dim(array_x)[1], 
+                "sum" = sum(array_x), 
+                "sum_sqrs" = sum(array_x^2), 
+                "last_mean" = mean(array_x),
+                "last_sd" = sd(array_x))
+results
+
+avg_sd_stream <- function(results, x){
+                 results$samp_size <- results$samp_size + length(x)
+                 results$sum <- results$sum + sum(x)
+                 results$last_mean <- (results$sum/ results$samp_size) 
+                 
+                 results$sum_sqrs <- results$sum_sqrs + sum(x^2)
+                 
+                 sigma_sq <- (results$sum_sqrs / 
+                                results$samp_size) - (results$last_mean^2)
+                 
+                 results$last_sd <- sqrt(sigma_sq)
+                 return(results) 
+}
+results <- avg_sd_stream(results, c(1,2,4,5,6,7))
+results
+results <- avg_sd_stream(results, c(1,2,4,5,6,7))
+results
+```
+
