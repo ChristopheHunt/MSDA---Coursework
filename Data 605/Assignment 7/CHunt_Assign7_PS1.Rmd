@@ -62,52 +62,64 @@ Now, consider that instead of being able to neatly fit the values in memory in a
 
 
 ```{r}
-require(RSQLite)
-##set up a temporary sql database
-x <- as.data.frame(array_x)
-tmp <- dbConnect(SQLite(), ":memory:")
-dbWriteTable(tmp, "temp_values", x)
-x <- c(2,1,4,5,6)
-avg_sd_stream <- function(x){
-                  suppressWarnings(dbWriteTable(tmp, "temp_values", as.data.frame(x), append = TRUE))
-                  x <- dbGetQuery(tmp, "SELECT * FROM temp_values")
-                  return(list("stream_avg" = expected_results(x), "stream_sd" = stand_dv_samp(x)))
-}
-```
+# vectors of different length
 
+V1 <- c(5,9,3,23)
+V2 <- c(10,11,12,13,14,15,10,13)
+V3 <- c(1:20)
 
-```{r}
-#original results 
-list("original avg" = expected_results(array_x), "oringal sd" = stand_dv_samp(array_x))
-avg_sd_stream(x = c(1,2,35,12,41,15))
-avg_sd_stream(x = c(2,7.6,100,2.67,129))
-```
+# vectors added to array
+array_x <- array(c(V1,V2, V3))
 
-
-```{r}
+# we create our intial list of values to interate from
 results <- list("samp_size" = dim(array_x)[1], 
                 "sum" = sum(array_x), 
                 "sum_sqrs" = sum(array_x^2), 
                 "last_mean" = mean(array_x),
                 "last_sd" = sd(array_x))
 results
+```
 
+```{r}
 avg_sd_stream <- function(results, x){
                  results$samp_size <- results$samp_size + length(x)
                  results$sum <- results$sum + sum(x)
                  results$last_mean <- (results$sum/ results$samp_size) 
-                 
                  results$sum_sqrs <- results$sum_sqrs + sum(x^2)
-                 
                  sigma_sq <- (results$sum_sqrs / 
-                                results$samp_size) - (results$last_mean^2)
-                 
-                 results$last_sd <- sqrt(sigma_sq)
+                                results$samp_size) - 
+                             (results$last_mean^2)
+                 results$last_sd <- sqrt(sigma_sq) * 
+                                    sqrt(results$samp_size/
+                                           (results$samp_size-1))
                  return(results) 
 }
+
 results <- avg_sd_stream(results, c(1,2,4,5,6,7))
 results
-results <- avg_sd_stream(results, c(1,2,4,5,6,7))
+```
+
+```{r}
+results <- avg_sd_stream(results, c(20, 30, 40, 50))
+results
+```
+
+\newpage
+
+Now to check out last run of the avg_sd_stream function. I duplicate the full results and re-run using base R functions to see if we are achieiving the same results. 
+
+```{r}
+V4 <- c(1,2,4,5,6,7)
+V5 <- c(20, 30, 40, 50)
+# vectors added to array
+array_x <- array(c(V1,V2, V3, V4, V5))
+
+# we create our intial list of values to interate from
+results <- list("samp_size" = dim(array_x)[1], 
+                "sum" = sum(array_x), 
+                "sum_sqrs" = sum(array_x^2), 
+                "last_mean" = mean(array_x),
+                "last_sd" = sd(array_x))
 results
 ```
 

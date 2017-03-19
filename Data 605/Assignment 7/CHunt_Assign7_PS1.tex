@@ -218,83 +218,16 @@ as you see more and more new values).
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{require}\NormalTok{(RSQLite)}
-\end{Highlighting}
-\end{Shaded}
+\CommentTok{# vectors of different length}
 
-\begin{verbatim}
-## Loading required package: RSQLite
-\end{verbatim}
+\NormalTok{V1 <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{,}\DecValTok{9}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{23}\NormalTok{)}
+\NormalTok{V2 <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{10}\NormalTok{,}\DecValTok{11}\NormalTok{,}\DecValTok{12}\NormalTok{,}\DecValTok{13}\NormalTok{,}\DecValTok{14}\NormalTok{,}\DecValTok{15}\NormalTok{,}\DecValTok{10}\NormalTok{,}\DecValTok{13}\NormalTok{)}
+\NormalTok{V3 <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{:}\DecValTok{20}\NormalTok{)}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{##set up a temporary sql database}
-\NormalTok{x <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(array_x)}
-\NormalTok{tmp <-}\StringTok{ }\KeywordTok{dbConnect}\NormalTok{(}\KeywordTok{SQLite}\NormalTok{(), }\StringTok{":memory:"}\NormalTok{)}
-\KeywordTok{dbWriteTable}\NormalTok{(tmp, }\StringTok{"temp_values"}\NormalTok{, x)}
-\end{Highlighting}
-\end{Shaded}
+\CommentTok{# vectors added to array}
+\NormalTok{array_x <-}\StringTok{ }\KeywordTok{array}\NormalTok{(}\KeywordTok{c}\NormalTok{(V1,V2, V3))}
 
-\begin{verbatim}
-## [1] TRUE
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{x <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{6}\NormalTok{)}
-\NormalTok{avg_sd_stream <-}\StringTok{ }\NormalTok{function(x)\{}
-                  \KeywordTok{suppressWarnings}\NormalTok{(}\KeywordTok{dbWriteTable}\NormalTok{(tmp, }\StringTok{"temp_values"}\NormalTok{, }\KeywordTok{as.data.frame}\NormalTok{(x), }\DataTypeTok{append =} \OtherTok{TRUE}\NormalTok{))}
-                  \NormalTok{x <-}\StringTok{ }\KeywordTok{dbGetQuery}\NormalTok{(tmp, }\StringTok{"SELECT * FROM temp_values"}\NormalTok{)}
-                  \KeywordTok{return}\NormalTok{(}\KeywordTok{list}\NormalTok{(}\StringTok{"stream_avg"} \NormalTok{=}\StringTok{ }\KeywordTok{expected_results}\NormalTok{(x), }\StringTok{"stream_sd"} \NormalTok{=}\StringTok{ }\KeywordTok{stand_dv_samp}\NormalTok{(x)))}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{#original results }
-\KeywordTok{list}\NormalTok{(}\StringTok{"original avg"} \NormalTok{=}\StringTok{ }\KeywordTok{expected_results}\NormalTok{(array_x), }\StringTok{"oringal sd"} \NormalTok{=}\StringTok{ }\KeywordTok{stand_dv_samp}\NormalTok{(array_x))}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## $`original avg`
-## [1] 10.875
-## 
-## $`oringal sd`
-## [1] 5.545995
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{avg_sd_stream}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{35}\NormalTok{,}\DecValTok{12}\NormalTok{,}\DecValTok{41}\NormalTok{,}\DecValTok{15}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## $stream_avg
-## [1] 11.94737
-## 
-## $stream_sd
-## [1] 8.372889
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{avg_sd_stream}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\FloatTok{7.6}\NormalTok{,}\DecValTok{100}\NormalTok{,}\FloatTok{2.67}\NormalTok{,}\DecValTok{129}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## $stream_avg
-## [1] 16.16907
-## 
-## $stream_sd
-## [1] 23.64722
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
+\CommentTok{# we create our intial list of values to interate from}
 \NormalTok{results <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\StringTok{"samp_size"} \NormalTok{=}\StringTok{ }\KeywordTok{dim}\NormalTok{(array_x)[}\DecValTok{1}\NormalTok{], }
                 \StringTok{"sum"} \NormalTok{=}\StringTok{ }\KeywordTok{sum}\NormalTok{(array_x), }
                 \StringTok{"sum_sqrs"} \NormalTok{=}\StringTok{ }\KeywordTok{sum}\NormalTok{(array_x^}\DecValTok{2}\NormalTok{), }
@@ -327,15 +260,16 @@ as you see more and more new values).
                  \NormalTok{results$samp_size <-}\StringTok{ }\NormalTok{results$samp_size +}\StringTok{ }\KeywordTok{length}\NormalTok{(x)}
                  \NormalTok{results$sum <-}\StringTok{ }\NormalTok{results$sum +}\StringTok{ }\KeywordTok{sum}\NormalTok{(x)}
                  \NormalTok{results$last_mean <-}\StringTok{ }\NormalTok{(results$sum/}\StringTok{ }\NormalTok{results$samp_size) }
-                 
                  \NormalTok{results$sum_sqrs <-}\StringTok{ }\NormalTok{results$sum_sqrs +}\StringTok{ }\KeywordTok{sum}\NormalTok{(x^}\DecValTok{2}\NormalTok{)}
-                 
                  \NormalTok{sigma_sq <-}\StringTok{ }\NormalTok{(results$sum_sqrs /}\StringTok{ }
-\StringTok{                                }\NormalTok{results$samp_size) -}\StringTok{ }\NormalTok{(results$last_mean^}\DecValTok{2}\NormalTok{)}
-                 
-                 \NormalTok{results$last_sd <-}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(sigma_sq)}
+\StringTok{                                }\NormalTok{results$samp_size) -}\StringTok{ }
+\StringTok{                             }\NormalTok{(results$last_mean^}\DecValTok{2}\NormalTok{)}
+                 \NormalTok{results$last_sd <-}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(sigma_sq) *}\StringTok{ }
+\StringTok{                                    }\KeywordTok{sqrt}\NormalTok{(results$samp_size/}
+\StringTok{                                           }\NormalTok{(results$samp_size}\DecValTok{-1}\NormalTok{))}
                  \KeywordTok{return}\NormalTok{(results) }
 \NormalTok{\}}
+
 \NormalTok{results <-}\StringTok{ }\KeywordTok{avg_sd_stream}\NormalTok{(results, }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{6}\NormalTok{,}\DecValTok{7}\NormalTok{))}
 \NormalTok{results}
 \end{Highlighting}
@@ -355,31 +289,71 @@ as you see more and more new values).
 ## [1] 9.815789
 ## 
 ## $last_sd
-## [1] 5.63754
+## [1] 5.713215
 \end{verbatim}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{results <-}\StringTok{ }\KeywordTok{avg_sd_stream}\NormalTok{(results, }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{6}\NormalTok{,}\DecValTok{7}\NormalTok{))}
+\NormalTok{results <-}\StringTok{ }\KeywordTok{avg_sd_stream}\NormalTok{(results, }\KeywordTok{c}\NormalTok{(}\DecValTok{20}\NormalTok{, }\DecValTok{30}\NormalTok{, }\DecValTok{40}\NormalTok{, }\DecValTok{50}\NormalTok{))}
 \NormalTok{results}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
 ## $samp_size
-## [1] 44
+## [1] 42
 ## 
 ## $sum
-## [1] 398
+## [1] 513
 ## 
 ## $sum_sqrs
-## [1] 5000
+## [1] 10269
 ## 
 ## $last_mean
-## [1] 9.045455
+## [1] 12.21429
 ## 
 ## $last_sd
-## [1] 5.640578
+## [1] 9.881087
+\end{verbatim}
+
+\newpage
+
+Now to check out last run of the avg\_sd\_stream function. I duplicate
+the full results and re-run using base R functions to see if we are
+achieiving the same results.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{V4 <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{6}\NormalTok{,}\DecValTok{7}\NormalTok{)}
+\NormalTok{V5 <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{20}\NormalTok{, }\DecValTok{30}\NormalTok{, }\DecValTok{40}\NormalTok{, }\DecValTok{50}\NormalTok{)}
+\CommentTok{# vectors added to array}
+\NormalTok{array_x <-}\StringTok{ }\KeywordTok{array}\NormalTok{(}\KeywordTok{c}\NormalTok{(V1,V2, V3, V4, V5))}
+
+\CommentTok{# we create our intial list of values to interate from}
+\NormalTok{results <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\StringTok{"samp_size"} \NormalTok{=}\StringTok{ }\KeywordTok{dim}\NormalTok{(array_x)[}\DecValTok{1}\NormalTok{], }
+                \StringTok{"sum"} \NormalTok{=}\StringTok{ }\KeywordTok{sum}\NormalTok{(array_x), }
+                \StringTok{"sum_sqrs"} \NormalTok{=}\StringTok{ }\KeywordTok{sum}\NormalTok{(array_x^}\DecValTok{2}\NormalTok{), }
+                \StringTok{"last_mean"} \NormalTok{=}\StringTok{ }\KeywordTok{mean}\NormalTok{(array_x),}
+                \StringTok{"last_sd"} \NormalTok{=}\StringTok{ }\KeywordTok{sd}\NormalTok{(array_x))}
+\NormalTok{results}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $samp_size
+## [1] 42
+## 
+## $sum
+## [1] 513
+## 
+## $sum_sqrs
+## [1] 10269
+## 
+## $last_mean
+## [1] 12.21429
+## 
+## $last_sd
+## [1] 9.881087
 \end{verbatim}
 
 
