@@ -82,7 +82,9 @@ kable(as.data.frame(querygrain(l.g , nodes=c("difficulty"), type = "marginal")))
 ## In addition, now present the evidence that both SAT scores were good and the letter of recommendation was good, What is the probability of the Difficulty of Course now? 
 
 ```{r, tidy=TRUE}
-s.l.g <- setFinding(setFinding(pn, nodes = c("letter"), states = c("high")), nodes = c("sat"), states = c("high"))
+s.l.g <- setFinding(setFinding(pn, nodes = c("letter"), states = c("high")), 
+                    nodes = c("sat"), states = c("high")
+                    )
 kable(as.data.frame(querygrain(s.l.g, nodes=c("difficulty"), type = "marginal")))
 ```
 
