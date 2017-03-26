@@ -69,6 +69,7 @@
 \newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{{#1}}}
 \newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{{#1}}}}
 \newcommand{\NormalTok}[1]{{#1}}
+\usepackage{longtable,booktabs}
 \usepackage{graphicx,grffile}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
@@ -132,7 +133,6 @@
 \usepackage{multirow}
 \usepackage{mathtools}
 \usepackage{tikz}
-\tikzset{every tree node/.style={align=center,anchor=north}}
 
 \begin{document}
 \maketitle
@@ -154,6 +154,10 @@ time today, what is the probability that she took the bus to work today?
 \(P(bus|on~time) = \frac{P(on~time|bus)*P(Bus)}{P(on~time|bus)*P(Bus) + P(on~time|Train)*P(Train)}\)
 \end{quote}
 
+\begin{center}
+\line(1,0){250}
+\end{center}
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{library}\NormalTok{(scales)}
@@ -174,15 +178,83 @@ The probability that my colleague took the bus given that she is on time
 is 21.7\%
 \end{quote}
 
+\newpage
+
 \section{Problem Set 2}\label{problem-set-2}
 
-In the Grade Network that we looked at in the notes, what happens to the
-probability of Difficulty of Course when you present the evidence that
-the received recommendation letter was good? In addition, now present
-the evidence that both SAT scores were good and the letter of
-recommendation was good, What is the probability of the Difficulty of
-Course now? You should use the gRain package in R to build your network
-and perform these calculations.
+In the Grade Network that we looked at in the notes,
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data\%20605/Assignment\%208/figure1.PNG}
+\caption{}
+\end{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(gRain)}
+\CommentTok{# Build the network}
+\NormalTok{n.y <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"no"}\NormalTok{, }\StringTok{"yes"}\NormalTok{)}
+\NormalTok{l.h <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"low"}\NormalTok{, }\StringTok{"high"}\NormalTok{)}
+\NormalTok{d <-}\StringTok{ }\KeywordTok{cptable}\NormalTok{(~difficulty, }\DataTypeTok{values =} \KeywordTok{c}\NormalTok{(}\FloatTok{0.3}\NormalTok{, }\FloatTok{0.7}\NormalTok{), }\DataTypeTok{levels =} \NormalTok{n.y)}
+\NormalTok{i <-}\StringTok{ }\KeywordTok{cptable}\NormalTok{(~intelligence, }\DataTypeTok{values =} \KeywordTok{c}\NormalTok{(}\FloatTok{0.8}\NormalTok{, }\FloatTok{0.2}\NormalTok{), }\DataTypeTok{levels =} \NormalTok{l.h)}
+\NormalTok{s.i <-}\StringTok{ }\KeywordTok{cptable}\NormalTok{(~sat |}\StringTok{ }\NormalTok{intelligence, }\DataTypeTok{values =} \KeywordTok{c}\NormalTok{(}\FloatTok{0.9}\NormalTok{, }\FloatTok{0.1}\NormalTok{, }\FloatTok{0.2}\NormalTok{, }\FloatTok{0.8}\NormalTok{), }\DataTypeTok{levels =} \NormalTok{l.h)}
+\NormalTok{g.d.i <-}\StringTok{ }\KeywordTok{cptable}\NormalTok{(~grade |}\StringTok{ }\NormalTok{difficulty:intelligence, }\DataTypeTok{values =} \KeywordTok{c}\NormalTok{(}\FloatTok{0.6}\NormalTok{, }\FloatTok{0.4}\NormalTok{, }\FloatTok{0.8}\NormalTok{, }
+    \FloatTok{0.2}\NormalTok{, }\FloatTok{0.1}\NormalTok{, }\FloatTok{0.99}\NormalTok{, }\FloatTok{0.1}\NormalTok{, }\FloatTok{0.9}\NormalTok{), }\DataTypeTok{levels =} \NormalTok{l.h)}
+\NormalTok{l.g <-}\StringTok{ }\KeywordTok{cptable}\NormalTok{(~letter |}\StringTok{ }\NormalTok{grade, }\DataTypeTok{values =} \KeywordTok{c}\NormalTok{(}\FloatTok{0.9}\NormalTok{, }\FloatTok{0.1}\NormalTok{, }\FloatTok{0.5}\NormalTok{, }\FloatTok{0.95}\NormalTok{), }\DataTypeTok{levels =} \NormalTok{l.h)}
+\NormalTok{p <-}\StringTok{ }\KeywordTok{compileCPT}\NormalTok{(}\KeywordTok{list}\NormalTok{(d, i, s.i, g.d.i, l.g))}
+\NormalTok{pn <-}\StringTok{ }\KeywordTok{grain}\NormalTok{(p)}
+\end{Highlighting}
+\end{Shaded}
+
+\newpage
+
+\subsection{What happens to the probability of Difficulty of Course when
+you present the evidence that the received recommendation letter was
+good?}\label{what-happens-to-the-probability-of-difficulty-of-course-when-you-present-the-evidence-that-the-received-recommendation-letter-was-good}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{l.g <-}\StringTok{ }\KeywordTok{setFinding}\NormalTok{(pn, }\DataTypeTok{nodes =} \KeywordTok{c}\NormalTok{(}\StringTok{"letter"}\NormalTok{), }\DataTypeTok{states =} \KeywordTok{c}\NormalTok{(}\StringTok{"high"}\NormalTok{))}
+\KeywordTok{kable}\NormalTok{(}\KeywordTok{as.data.frame}\NormalTok{(}\KeywordTok{querygrain}\NormalTok{(l.g, }\DataTypeTok{nodes =} \KeywordTok{c}\NormalTok{(}\StringTok{"difficulty"}\NormalTok{), }\DataTypeTok{type =} \StringTok{"marginal"}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lr@{}}
+\toprule
+& difficulty\tabularnewline
+\midrule
+\endhead
+no & 0.3597003\tabularnewline
+yes & 0.6402997\tabularnewline
+\bottomrule
+\end{longtable}
+
+\subsection{In addition, now present the evidence that both SAT scores
+were good and the letter of recommendation was good, What is the
+probability of the Difficulty of Course
+now?}\label{in-addition-now-present-the-evidence-that-both-sat-scores-were-good-and-the-letter-of-recommendation-was-good-what-is-the-probability-of-the-difficulty-of-course-now}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{s.l.g <-}\StringTok{ }\KeywordTok{setFinding}\NormalTok{(}\KeywordTok{setFinding}\NormalTok{(pn, }\DataTypeTok{nodes =} \KeywordTok{c}\NormalTok{(}\StringTok{"letter"}\NormalTok{), }\DataTypeTok{states =} \KeywordTok{c}\NormalTok{(}\StringTok{"high"}\NormalTok{)), }
+    \DataTypeTok{nodes =} \KeywordTok{c}\NormalTok{(}\StringTok{"sat"}\NormalTok{), }\DataTypeTok{states =} \KeywordTok{c}\NormalTok{(}\StringTok{"high"}\NormalTok{))}
+\KeywordTok{kable}\NormalTok{(}\KeywordTok{as.data.frame}\NormalTok{(}\KeywordTok{querygrain}\NormalTok{(s.l.g, }\DataTypeTok{nodes =} \KeywordTok{c}\NormalTok{(}\StringTok{"difficulty"}\NormalTok{), }\DataTypeTok{type =} \StringTok{"marginal"}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lr@{}}
+\toprule
+& difficulty\tabularnewline
+\midrule
+\endhead
+no & 0.3174519\tabularnewline
+yes & 0.6825481\tabularnewline
+\bottomrule
+\end{longtable}
+
+You should use the gRain package in R to build your network and perform
+these calculations.
 
 You may need to install RBGL package from BioConductor in R to get gRain
 working. See
