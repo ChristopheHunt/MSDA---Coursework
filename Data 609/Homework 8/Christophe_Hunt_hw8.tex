@@ -186,6 +186,8 @@ The logical conclusion is to sell Cola since it has over twice the
 expected value.
 \end{quote}
 
+\newpage
+
 \section{Page 355: problem 3}\label{page-355-problem-3}
 
 The financial success of a ski resort in Squaw valley is dependent on
@@ -199,6 +201,37 @@ expected revenue for the previous 10 seasons. A hotel chain has offered
 to lease the resort during the winter for \$100,000. You must decide
 whether to operate yourself or lease the resort. Build a decision tree
 to assist in the decision.
+
+\begin{center}
+\begin{forest} 
+[$Resort$, tikz={\draw[{Latex}-, thick] (.north) --++ (0,1);}
+    [$Lease$,edge label={node[midway,left] {1\,\,\,}} 
+            [\$100000] 
+    ]   
+    [$Keep$ 
+        [$Sucessful$,edge label={node[midway,left] {.40\,\,\,}}
+            [\$280000] 
+        ]    
+        [$Moderate$,edge label={node[midway,right] {\,\,.20}}
+            [\$100000] 
+        ] 
+        [$Poor$,edge label={node[midway,right] {\,\,\,.40}}
+            [-\$40000] 
+        ] 
+    ]   
+] 
+\end{forest}
+\end{center}
+
+\begin{quote}
+\(E(Lease) = 1 * 100000\)\\
+\(E(Keep) = .4 * 280000 + .2 * 100000 + .4 * -40000 = 116000\)
+\end{quote}
+
+\begin{quote}
+Since our expected value is greater if we keep the property, then the
+ski resort should keep the property.
+\end{quote}
 
 \section{Page 364: problem 3}\label{page-364-problem-3}
 
