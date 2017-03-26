@@ -56,8 +56,8 @@ Consider a firm handling concessions for a sporting vent. The firm's manager nee
 \end{center}
 
 > Therefore the expected values are as follows:  
-> $E(Cola) = .7 * 5000 + .3 * 1500 = 3900$   
-> $E(Coffee) = .7 * 1000 + .3 * 4000 = 1900$   
+> $E(Cola) = .7 * 5000 + .3 * 1500 = \$3,900$   
+> $E(Coffee) = .7 * 1000 + .3 * 4000 = \$1,900$   
 
 > The logical conclusion is to sell Cola since it has over twice the expected value. 
 
@@ -92,8 +92,8 @@ The financial success of a ski resort in Squaw valley is dependent on the amount
 options(scipen=999)
 ```
 
-> $E(Lease) = 1 * 100000$  
-> $E(Keep) = .4 * 280000 + .2 * 100000 + .4 * -40000 = `r (.4 * 280000) + (.2 * 100000) + (.4 * -40000)`$
+> $E(Lease) = 1 * 100000 = \$100,000$  
+> $E(Keep) = .4 * 280000 + .2 * 100000 + .4 * -40000 = \`r dollar((.4 * 280000) + (.2 * 100000) + (.4 * -40000))`$
 
 > Since our expected value is greater if we keep the property, then the ski resort should keep the property. 
 
