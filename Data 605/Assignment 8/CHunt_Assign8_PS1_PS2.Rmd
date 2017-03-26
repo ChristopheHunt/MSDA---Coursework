@@ -20,6 +20,23 @@ output:
 
 Your colleague either commutes by train or by the bus. 20 days of the month, she takes the train and the remaining 10 days she takes the bus. If she takes the train, she reaches work on time with a probability of 0.9. If she takes the bus, she frequently gets stuck in traffic and reaches work on time with a probability of 0.5. Given that she was on time today, what is the probability that she took the bus to work today?
 
+
+> $P(bus|on~time) = \frac{P(on~time|bus)*P(Bus)}{P(on~time|bus)*P(Bus) + P(on~time|Train)*P(Train)}$   
+
+
+```{r, results='asis'}
+library(scales)
+train <- 20/30
+bus <- 10/30
+ontime_train <- .9
+ontime_bus <- .5
+
+bus_ontime <- (ontime_bus * bus)/ ((ontime_bus * bus) + (ontime_train*train))
+percent(bus_ontime)
+```
+
+> The probability that my colleague took the bus given that she is on time is `r percent(bus_ontime)`
+
 # Problem Set 2
 
 In the Grade Network that we looked at in the notes, what happens to the probability of Difficulty of Course when you present the evidence that the received recommendation letter was good? In addition, now present the evidence that both SAT scores were good and the letter of recommendation was good, What is the probability of the Difficulty of Course now? You should use the gRain package in R to build your network and perform these calculations.
