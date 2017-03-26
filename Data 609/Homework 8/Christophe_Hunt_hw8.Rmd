@@ -16,6 +16,10 @@ output:
     toc_depth: '2'
 ---
 
+```{r, include=FALSE}
+library(scales)
+```
+
 \newpage
 
 # Page 347: problem 4
@@ -97,4 +101,38 @@ options(scipen=999)
 
 A big private oil company must decide whether to drill in the Gulf of Mexico. It costs \$1 million to drill, and if oil is found its value is estimated at \$6 million. At present, the oil company believes that there is a 45% chance that oil is present. Before drilling begins, the big private oil company can hire a geologist for \$100,000 to obtain samples and test for oil. There is only about a 60% chance that the geologist will issue a favorable report. Given that the geologist does issue a favorable report, there is an 85% chance that there is oil. Given an unfavorable report, there is a 22% chance that there is oil. Determine what the big private oil company should do. 
 
-# Page 373: problem 1
+
+\begin{center}
+\begin{forest} 
+[$Drill$, tikz={\draw[{Latex}-, thick] (.north) --++ (0,1);}
+    [$hire~geologist$ 
+        [$favorable~report$,edge label={node[midway,left] {\,\,\,.60}}
+        [$oil$,edge label={node[midway,left] {.85\,\,\,}}
+            [\$4900000] 
+        ] 
+        [$no~oil$,edge label={node[midway,right] {\,\,\,.15}}
+            [-\$110000] 
+        ] 
+        ] 
+        [$unfavorable~report$,edge label={node[midway,right] {.40\,\,\,}}
+        [$oil$,edge label={node[midway,left] {.22\,\,\,}}
+            [\$4900000] 
+        ] 
+        [$no~oil$,edge label={node[midway,right] {\,\,\,.78}}
+            [-\$1100000] 
+        ] 
+        ] 
+    ]   
+    [$no~geologist$ 
+        [$oil$,edge label={node[midway,left] {.45\,\,\,}}
+            [\$4900000] 
+        ] 
+        [$no~oil$,edge label={node[midway,right] {\,\,\,.55}}
+            [-\$1100000] 
+        ] 
+    ]   
+] 
+\end{forest}
+\end{center}
+
+\small{E(hire geoglist) = (.6 * .85 * 4900000) + (.6 * .15 * -1100000) + (.4 * .22 * 4900000) + (.4 * .78 * -1100000) = \`r dollar((.6 * .85 * 4900000) + (.6 * .15 * -1100000) + (.4 * .22 * 4900000) + (.4 * .78 * -1100000))`}

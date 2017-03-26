@@ -246,7 +246,40 @@ issue a favorable report, there is an 85\% chance that there is oil.
 Given an unfavorable report, there is a 22\% chance that there is oil.
 Determine what the big private oil company should do.
 
-\section{Page 373: problem 1}\label{page-373-problem-1}
+\begin{center}
+\begin{forest} 
+[$Drill$, tikz={\draw[{Latex}-, thick] (.north) --++ (0,1);}
+    [$hire~geologist$ 
+        [$favorable~report$,edge label={node[midway,left] {\,\,\,.60}}
+        [$oil$,edge label={node[midway,left] {.85\,\,\,}}
+            [\$4900000] 
+        ] 
+        [$no~oil$,edge label={node[midway,right] {\,\,\,.15}}
+            [-\$110000] 
+        ] 
+        ] 
+        [$unfavorable~report$,edge label={node[midway,right] {.40\,\,\,}}
+        [$oil$,edge label={node[midway,left] {.22\,\,\,}}
+            [\$4900000] 
+        ] 
+        [$no~oil$,edge label={node[midway,right] {\,\,\,.78}}
+            [-\$1100000] 
+        ] 
+        ] 
+    ]   
+    [$no~geologist$ 
+        [$oil$,edge label={node[midway,left] {.45\,\,\,}}
+            [\$4900000] 
+        ] 
+        [$no~oil$,edge label={node[midway,right] {\,\,\,.55}}
+            [-\$1100000] 
+        ] 
+    ]   
+] 
+\end{forest}
+\end{center}
+
+\small{E(hire geoglist) = (.6 * .85 * 4900000) + (.6 * .15 * -1100000) + (.4 * .22 * 4900000) + (.4 * .78 * -1100000) = \$2,488,000}
 
 
 \end{document}
