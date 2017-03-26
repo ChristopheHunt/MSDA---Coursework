@@ -16,15 +16,46 @@ output:
     toc_depth: '2'
 ---
 
+\newpage
+
 # Page 347: problem 4
 
 We have engaged in a business venture. Assume the probability of success is $P(s) = \frac{2}{5}$; further assume that if we are successful we make \$55,000, and we are unsuccessful we lose \$1,750. Find the expected value of then business venture. 
 
-> $9200
+> $E = (\$55,000)*`r 2/5` + (-\$1,750)*`r 1-(2/5)`$ = $\$20,950$
 
 # Page 347: problem 6
 
 Consider a firm handling concessions for a sporting vent. The firm's manager needs to know whether to stock up with coffee or cola and is formulation policies for specific weather predictions. A local agreement restricts the firm to selling only one type of beverage. The firm estimates a \$1,500 profit selling cola if the weather is cold and a \$5,000 profit selling cola if the weather is warm. The firm also estimates a \$4,000 profit selling coffee if it is cold and a \$1000 profit selling coffee if the weather is warm. The weather forecast says that there is a 30% of a cold front; otherwise, the weather will be warm. Build a decision tree to assist with the decision. What should the firm handling concessions do? 
+
+\begin{center}
+\begin{forest} 
+[$Weather$, tikz={\draw[{Latex}-, thick] (.north) --++ (0,1);}
+    [$Warm$,edge label={node[midway,left] {.70\,\,\,}} 
+        [$Cola$
+            [\$5000] 
+        ]    
+        [$Coffee$
+            [\$1000] 
+        ]    
+    ]   
+    [$Cold$,edge label={node[midway,right] {\,\,\,.30}} 
+        [$Cola$
+            [\$1500] 
+        ]    
+        [$Coffee$
+            [\$4000] 
+        ] 
+    ]   
+] 
+\end{forest}
+\end{center}
+
+> Therefore the expected values are as follows:  
+> $E(Cola) = .7 * 5000 + .3 * 1500 = 3900$   
+> $E(Coffee) = .7 * 1000 + .3 * 4000 = 1900$   
+
+> The logical conclusion is to sell Cola since it has over twice the expected value. 
 
 # Page 355: problem 3
 

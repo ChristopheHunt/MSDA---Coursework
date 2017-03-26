@@ -91,6 +91,32 @@
 \usepackage{float}
 \usepackage{multirow}
 \usepackage{mathtools}
+\usepackage{tikz,forest}
+\usetikzlibrary{arrows.meta}
+\forestset{
+    .style={
+        for tree={
+            base=bottom,
+            child anchor=north,
+            align=center,
+            s sep+=1cm,
+    straight edge/.style={
+        edge path={\noexpand\path[\forestoption{edge},thick,-{Latex}]
+        (!u.parent anchor) -- (.child anchor);}
+    },
+    if n children={0}
+        {tier=word, draw, thick, rectangle}
+        {draw, diamond, thick, aspect=2},
+    if n=1{%
+        edge path={\noexpand\path[\forestoption{edge},thick,-{Latex}]
+        (!u.parent anchor) -| (.child anchor) node[pos=.2, above] {Y};}
+        }{
+        edge path={\noexpand\path[\forestoption{edge},thick,-{Latex}]
+        (!u.parent anchor) -| (.child anchor) node[pos=.2, above] {N};}
+        }
+        }
+    }
+}
 
 \begin{document}
 \maketitle
@@ -99,6 +125,8 @@
 \setcounter{tocdepth}{2}
 \tableofcontents
 }
+\newpage
+
 \section{Page 347: problem 4}\label{page-347-problem-4}
 
 We have engaged in a business venture. Assume the probability of success
@@ -107,7 +135,7 @@ make \$55,000, and we are unsuccessful we lose \$1,750. Find the
 expected value of then business venture.
 
 \begin{quote}
-\$9200
+\(E = (\$55,000)*0.4 + (-\$1,750)*0.6\) = \(\$20,950\)
 \end{quote}
 
 \section{Page 347: problem 6}\label{page-347-problem-6}
@@ -123,6 +151,40 @@ profit selling coffee if the weather is warm. The weather forecast says
 that there is a 30\% of a cold front; otherwise, the weather will be
 warm. Build a decision tree to assist with the decision. What should the
 firm handling concessions do?
+
+\begin{center}
+\begin{forest} 
+[$Weather$, tikz={\draw[{Latex}-, thick] (.north) --++ (0,1);}
+    [$Warm$,edge label={node[midway,left] {.70\,\,\,}} 
+        [$Cola$
+            [\$5000] 
+        ]    
+        [$Coffee$
+            [\$1000] 
+        ]    
+    ]   
+    [$Cold$,edge label={node[midway,right] {\,\,\,.30}} 
+        [$Cola$
+            [\$1500] 
+        ]    
+        [$Coffee$
+            [\$4000] 
+        ] 
+    ]   
+] 
+\end{forest}
+\end{center}
+
+\begin{quote}
+Therefore the expected values are as follows:\\
+\(E(Cola) = .7 * 5000 + .3 * 1500 = 3900\)\\
+\(E(Coffee) = .7 * 1000 + .3 * 4000 = 1900\)
+\end{quote}
+
+\begin{quote}
+The logical conclusion is to sell Cola since it has over twice the
+expected value.
+\end{quote}
 
 \section{Page 355: problem 3}\label{page-355-problem-3}
 
