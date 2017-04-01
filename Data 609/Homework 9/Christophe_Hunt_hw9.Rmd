@@ -33,6 +33,7 @@ Rose & R1 & \multicolumn{1}{c}{10} & 10 \\
 \end{tabular}
 \end{table}
 
+
 ```{r, fig.height= 3, warning=FALSE, message=FALSE, cache=TRUE}
 library(DiagrammeR)
 grViz("digraph boxes {
@@ -47,7 +48,7 @@ grViz("digraph boxes {
   D [label = 'C2, R2 \n (0)']; 
 
   # several 'edge' statements
-  B->A C->A D->B D->C
+  B->A C->A A->C D->B D->C 
 }
 ")
 ```
@@ -69,6 +70,27 @@ Rose & R1 & \multicolumn{1}{c}{1/2} & 1/2 \\
  & R2 & \multicolumn{1}{c}{1} & 0 \\ \hline
 \end{tabular}
 \end{table}
+
+```{r, fig.height= 3, warning=FALSE, message=FALSE, cache=TRUE}
+grViz("digraph boxes {
+
+  graph [overlap = true, fontsize = 8]
+
+  node [shape = box]
+
+  A [label = 'C1, R1 \n (1/2)']; 
+  B [label = 'C1, R2 \n (1)']; 
+  C [label = 'C2, R1 \n (1/2)']; 
+  D [label = 'C2, R2 \n (0)']; 
+
+  # several 'edge' statements
+  D->B D->C A->B A->C C->A
+}
+")
+```
+
+The value is 1/2 when Rose plays strategy 1 and Colin plays strategy 2. 
+
 
 # Page 404: problem 2 a
 
