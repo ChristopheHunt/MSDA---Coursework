@@ -24,18 +24,28 @@ Using the defintion provided for the movement diagram, determine wheter the foll
 
 \begin{table}[!h]
 \centering
-\caption{My caption}
-\label{my-label}
 \begin{tabular}{lllc}
  &  & \multicolumn{2}{l}{Colin} \\ \cline{3-4}
  &  & C1 & \multicolumn{1}{l}{C2} \\ \hline
-Rose & R1 & \multicolumn{1}{c}{10} & 0 \\
+Rose & R1 & \multicolumn{1}{c}{10} & 10 \\
  & R2 & \multicolumn{1}{c}{5} & 0 \\ \hline
 \end{tabular}
 \end{table}
 
-
 # Page 385: problem 1 c
+
+Using the defintion provided for the movement diagram, determine wheter the following zero-sum games have a pure strategy Nash equilibrium. If the game does have a pure strategy Nash equilibrium, state the Nash equilibrium. Assume the row player is maximizing his playoffs which are showing in hte matrixes below.
+
+\begin{table}[!h]
+\centering
+\begin{tabular}{lllc}
+ &  & \multicolumn{2}{l}{Colin} \\ \cline{3-4}
+ &  & C1 & \multicolumn{1}{l}{C2} \\ \hline
+Rose & R1 & \multicolumn{1}{c}{1/2} & 1/2 \\
+ & R2 & \multicolumn{1}{c}{1} & 0 \\ \hline
+\end{tabular}
+\end{table}
+
 
 # Page 404: problem 2 a
 
