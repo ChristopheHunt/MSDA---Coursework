@@ -66,8 +66,6 @@ We are considering three alternatives A, B, and C under states of nature 1, 2 ,3
 
 \begin{table}[!h]
 \centering
-\caption{My caption}
-\label{my-label}
 \begin{tabular}{crrrr}
 \multicolumn{5}{l}{\textbf{States of Nature}} \\ \hline
 \begin{tabular}[c]{@{}c@{}}Investor's choices \\ Alternatives\end{tabular} & \multicolumn{1}{c}{Condition \#1} & \multicolumn{1}{c}{Condition \#2} & \multicolumn{1}{c}{Condition \#3} & \multicolumn{1}{l}{Condition \#4} \\ \hline
@@ -79,9 +77,46 @@ C & 700 & 1200 & 500 & 900 \\ \hline
 
 # Page 420: problem 1
 
+In the following problems, use the maximim and minimax method and movement diagram to determine if any pure strategy solution exist. Assume the row player is maximizing his payoffs which are shown in the matrices below. 
+
+\begin{table}[!h]
+\centering
+\begin{tabular}{lllc}
+ &  & \multicolumn{2}{l}{Colin} \\ \cline{3-4}
+ &  & C1 & \multicolumn{1}{l}{C2} \\ \hline
+Rose & R1 & \multicolumn{1}{c}{10} & 10 \\
+ & R2 & \multicolumn{1}{c}{5} & 0 \\ \hline
+\end{tabular}
+\end{table}
+
 
 # Page 428: problem 3
 
+Using the alternative methods (a) equating expected value and (b) methods of oddments to find the solutions to the following games. Assume the row player is maximizing his payoffs which are shown in the matrices below. 
+
+\begin{table}[!h]
+\centering
+\begin{tabular}{lllc}
+ &  & \multicolumn{2}{l}{Colin} \\ \cline{3-4}
+ &  & C1 & \multicolumn{1}{l}{C2} \\ \hline
+Rose & R1 & \multicolumn{1}{c}{0.5} & 0.3 \\
+ & R2 & \multicolumn{1}{c}{0.6} & 1 \\ \hline
+\end{tabular}
+\end{table}
+
 # Page 440: problem 2
+
+Use movements diagrams to find all the stable outcomes in Problems 1 through 5. Then use strategic moves (using Table 10.2) to determine if Rose can get a better outcome. 
+
+\begin{table}[!h]
+\centering
+\begin{tabular}{lllc}
+ &  & \multicolumn{2}{l}{Colin} \\ \cline{3-4}
+ &  & C1 & \multicolumn{1}{l}{C2} \\ \hline
+Rose & R1 & \multicolumn{1}{c}{(1,2)} & (3,1) \\
+ & R2 & \multicolumn{1}{c}{(2, 4)} & (4, 3)\\ \hline
+\end{tabular}
+\end{table}
+
 
 # Page 454: problem 3
