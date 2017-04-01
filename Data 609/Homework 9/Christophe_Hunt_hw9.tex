@@ -29,6 +29,46 @@
             pdfborder={0 0 0},
             breaklinks=true}
 \urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{{#1}}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{{#1}}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\ImportTok}[1]{{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{{#1}}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{{#1}}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{{#1}}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{{#1}}}}
+\newcommand{\BuiltInTok}[1]{{#1}}
+\newcommand{\ExtensionTok}[1]{{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{{#1}}}
+\newcommand{\RegionMarkerTok}[1]{{#1}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{{#1}}}}
+\newcommand{\NormalTok}[1]{{#1}}
 \usepackage{graphicx,grffile}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
@@ -120,6 +160,36 @@ Rose & R1 & \multicolumn{1}{c}{10} & 10 \\
 \end{tabular}
 \end{table}
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(DiagrammeR)}
+\KeywordTok{grViz}\NormalTok{(}\StringTok{"digraph boxes \{}
+
+\StringTok{  graph [overlap = true, fontsize = 8]}
+
+\StringTok{  node [shape = box]}
+
+\StringTok{  A [label = 'C1, R1 }\CharTok{\textbackslash{}n}\StringTok{ (10)']; }
+\StringTok{  B [label = 'C1, R2 }\CharTok{\textbackslash{}n}\StringTok{ (5)']; }
+\StringTok{  C [label = 'C2, R1 }\CharTok{\textbackslash{}n}\StringTok{ (10)']; }
+\StringTok{  D [label = 'C2, R2 }\CharTok{\textbackslash{}n}\StringTok{ (0)']; }
+
+\StringTok{  # several 'edge' statements}
+\StringTok{  B->A C->A D->B D->C}
+\StringTok{\}}
+\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Christophe_Hunt_hw9_files/figure-latex/unnamed-chunk-1-1.pdf}
+
+We do have a pure strategy Nash equilibrium of 10 as our arrows all
+point to one value, when Rose plays strategy 1 and Colin plays either
+strategy 1 or 2. For graphing similicity I set the strategy to Rose 1
+and Colin 1.
+
+\newpage
+
 \section{Page 385: problem 1 c}\label{page-385-problem-1-c}
 
 Using the definition provided for the movement diagram, determine
@@ -173,7 +243,7 @@ C & 700 & 1200 & 500 & 900 \\ \hline
 
 \section{Page 420: problem 1}\label{page-420-problem-1}
 
-In the following porlbems, use the maximim and minimax method and
+In the following problems, use the maximim and minimax method and
 movement diagram to determine if any pure strategy solution exist.
 Assume the row player is maximizing his payoffs which are shown in the
 matrices below.
@@ -190,9 +260,10 @@ Rose & R1 & \multicolumn{1}{c}{10} & 10 \\
 
 \section{Page 428: problem 3}\label{page-428-problem-3}
 
-Using the alternative methods (a) equating expected value and (b) mthods
-of oddments to find the solutions to the following games. Assume the row
-player is maximizing his payoffs which are shown in the matrices below.
+Using the alternative methods (a) equating expected value and (b)
+methods of oddments to find the solutions to the following games. Assume
+the row player is maximizing his payoffs which are shown in the matrices
+below.
 
 \begin{table}[!h]
 \centering

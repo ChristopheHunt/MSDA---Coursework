@@ -14,6 +14,7 @@ output:
   html_document:
     toc: yes
     toc_depth: '2'
+always_allow_html: yes  
 ---
 
 \newpage
@@ -31,6 +32,29 @@ Rose & R1 & \multicolumn{1}{c}{10} & 10 \\
  & R2 & \multicolumn{1}{c}{5} & 0 \\ \hline
 \end{tabular}
 \end{table}
+
+```{r, fig.height= 3, warning=FALSE, message=FALSE, cache=TRUE}
+library(DiagrammeR)
+grViz("digraph boxes {
+
+  graph [overlap = true, fontsize = 8]
+
+  node [shape = box]
+
+  A [label = 'C1, R1 \n (10)']; 
+  B [label = 'C1, R2 \n (5)']; 
+  C [label = 'C2, R1 \n (10)']; 
+  D [label = 'C2, R2 \n (0)']; 
+
+  # several 'edge' statements
+  B->A C->A D->B D->C
+}
+")
+```
+
+We do have a pure strategy Nash equilibrium of 10 as our arrows all point to one value, when Rose plays strategy 1 and Colin plays either strategy 1 or 2. For graphing similicity I set the strategy to Rose 1 and Colin 1.  
+
+\newpage
 
 # Page 385: problem 1 c
 
