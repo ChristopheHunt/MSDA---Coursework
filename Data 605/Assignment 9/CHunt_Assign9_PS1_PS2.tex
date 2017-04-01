@@ -1,0 +1,157 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Homework 9},
+            pdfauthor={Christophe Hunt},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+  \title{Homework 9}
+  \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+  \author{Christophe Hunt}
+  \preauthor{\centering\large\emph}
+  \postauthor{\par}
+  \predate{\centering\large\emph}
+  \postdate{\par}
+  \date{April 1, 2017}
+
+\usepackage{relsize}
+\usepackage{setspace}
+\usepackage{amsmath,amsfonts,amsthm}
+\usepackage[sfdefault]{roboto}
+\usepackage[T1]{fontenc}
+\usepackage{float}
+\usepackage{multirow}
+\usepackage{mathtools}
+\usepackage{tikz}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+This week, we'll empirically verify Central Limit Theorem. We'll write
+code to run a small simulation on some distributions and verify that the
+results match what we expect from Central Limit Theorem. Please use R
+markdown to capture all your experiments and code. Please submit your
+Rmd file with your name as the filename.
+
+\section{(1) First write a function that will produce a sample of random
+variable that is distributed as
+follows:}\label{first-write-a-function-that-will-produce-a-sample-of-random-variable-that-is-distributed-as-follows}
+
+\subsection{TODO - check these formulas might have not copied
+correctly}\label{todo---check-these-formulas-might-have-not-copied-correctly}
+
+\(f(x) = x, 0 \leq x \leq 1\) \(f(x) = 2 > x, 1 < x \leq 2\)
+
+That is, when your function is called, it will return a random variable
+between 0 and 2 that is distributed according to the above PDF. Please
+note that this is not the same as writing a function and sampling
+uniformly from it. In the online session this week, I'll cover Sampling
+techniques. You will find it useful when you do the assignment for this
+week. In addition, as usual, there are one-liners in R that will give
+you samples from a function. We'll cover both of these approaches in the
+online session.
+
+\section{(2) Now, write a function that will produce a sample of random
+variable that is distributed as
+follows:}\label{now-write-a-function-that-will-produce-a-sample-of-random-variable-that-is-distributed-as-follows}
+
+\subsection{TODO - check these formulas might have not copied
+correctly}\label{todo---check-these-formulas-might-have-not-copied-correctly-1}
+
+\(f(x) = 1 > x, 0 \leq x \leq 1\) \(f(x) = x > 1, 1 < x \leq 2 (2)\)
+
+\section{(3) Draw 1000 samples (call your function 1000 times each) from
+each of the above two distributions and plot the resulting histograms.
+You should have one histogram for each PDF. See that it matches your
+understanding of these
+PDFs.}\label{draw-1000-samples-call-your-function-1000-times-each-from-each-of-the-above-two-distributions-and-plot-the-resulting-histograms.-you-should-have-one-histogram-for-each-pdf.-see-that-it-matches-your-understanding-of-these-pdfs.}
+
+\section{(4) Now, write a program that will take a sample set size n as
+a parameter and the PDF as the second parameter, and perform 1000
+iterations where it samples from the PDF, each time taking n samples and
+computes the mean of these n samples. It then plots a histogram of these
+1000 means that it
+computes.}\label{now-write-a-program-that-will-take-a-sample-set-size-n-as-a-parameter-and-the-pdf-as-the-second-parameter-and-perform-1000-iterations-where-it-samples-from-the-pdf-each-time-taking-n-samples-and-computes-the-mean-of-these-n-samples.-it-then-plots-a-histogram-of-these-1000-means-that-it-computes.}
+
+\section{(5) Verify that as you set n to something like 10 or 20, each
+of the two PDFs produce normally distributed mean of samples,
+empirically verifying the Central Limit Theorem. Please play around with
+various values of n and you'll see that even for reasonably small sample
+sizes such as 10, Central Limit Theorem
+holds.}\label{verify-that-as-you-set-n-to-something-like-10-or-20-each-of-the-two-pdfs-produce-normally-distributed-mean-of-samples-empirically-verifying-the-central-limit-theorem.-please-play-around-with-various-values-of-n-and-youll-see-that-even-for-reasonably-small-sample-sizes-such-as-10-central-limit-theorem-holds.}
+
+
+\end{document}
