@@ -201,10 +201,10 @@ playoffs which are showing in the matrices below.
 \begin{table}[!h]
 \centering
 \begin{tabular}{lllc}
- &  & \multicolumn{2}{l}{Colin} \\ \cline{3-4}
- &  & C1 & \multicolumn{1}{l}{C2} \\ \hline
-Rose & R1 & \multicolumn{1}{c}{1/2} & 1/2 \\
- & R2 & \multicolumn{1}{c}{1} & 0 \\ \hline
+ &  & \multicolumn{2}{l}{Pitcher} \\ \cline{3-4}
+ &  & Fastball & \multicolumn{1}{l}{Knuckleball} \\ \hline
+Batter & GFast & \multicolumn{1}{c}{.400} & .100 \\
+ & Gknuckle & \multicolumn{1}{c}{.300} & .250 \\ \hline
 \end{tabular}
 \end{table}
 
@@ -212,17 +212,17 @@ Rose & R1 & \multicolumn{1}{c}{1/2} & 1/2 \\
 \begin{Highlighting}[]
 \KeywordTok{grViz}\NormalTok{(}\StringTok{"digraph boxes \{}
 
-\StringTok{  graph [overlap = true, fontsize = 8]}
+\StringTok{  graph [layout = neato, overlap = true, outputorder = edgefirst]}
 
 \StringTok{  node [shape = box]}
 
-\StringTok{  A [label = 'C1, R1 }\CharTok{\textbackslash{}n}\StringTok{ (1/2)']; }
-\StringTok{  B [label = 'C1, R2 }\CharTok{\textbackslash{}n}\StringTok{ (1)']; }
-\StringTok{  C [label = 'C2, R1 }\CharTok{\textbackslash{}n}\StringTok{ (1/2)']; }
-\StringTok{  D [label = 'C2, R2 }\CharTok{\textbackslash{}n}\StringTok{ (0)']; }
+\StringTok{  A [pos = '-1, 1!', label = 'Fastball, GFast }\CharTok{\textbackslash{}n}\StringTok{ (.400)']; }
+\StringTok{  B [pos = ' 1, 1!', label = 'Knuckle, GFast  }\CharTok{\textbackslash{}n}\StringTok{ (.100)']; }
+\StringTok{  C [pos = ' -1, -1!', label = 'Fast, GKnuckle }\CharTok{\textbackslash{}n}\StringTok{ (.300)']; }
+\StringTok{  D [pos = ' 1, -1!', label = 'Knuckle, GKnuckle }\CharTok{\textbackslash{}n}\StringTok{ (.250)']; }
 
 \StringTok{  # several 'edge' statements}
-\StringTok{  D->B D->C A->B A->C C->A}
+\StringTok{  C->D A->B C->A B->D}
 \StringTok{\}}
 \StringTok{"}\NormalTok{)}
 \end{Highlighting}
@@ -230,7 +230,10 @@ Rose & R1 & \multicolumn{1}{c}{1/2} & 1/2 \\
 
 \includegraphics{Christophe_Hunt_hw9_files/figure-latex/unnamed-chunk-2-1.pdf}
 
-The value is 1/2 when Rose plays strategy 1 and Colin plays strategy 2.
+The value is .250 when the pitcher pitches a knuckle and the batter
+guesses a knuckle ball.
+
+\newpage
 
 \section{Page 404: problem 2 a}\label{page-404-problem-2-a}
 

@@ -42,7 +42,7 @@ grViz("digraph boxes {
 
   node [shape = box]
 
-  A [label = 'C1, R1 \n (10)']; 
+  A [pos = '-1, 1!', label = 'C1, R1 \n (10)']; 
   B [label = 'C1, R2 \n (5)']; 
   C [label = 'C2, R1 \n (10)']; 
   D [label = 'C2, R2 \n (0)']; 
@@ -64,33 +64,34 @@ Using the definition provided for the movement diagram, determine whether the fo
 \begin{table}[!h]
 \centering
 \begin{tabular}{lllc}
- &  & \multicolumn{2}{l}{Colin} \\ \cline{3-4}
- &  & C1 & \multicolumn{1}{l}{C2} \\ \hline
-Rose & R1 & \multicolumn{1}{c}{1/2} & 1/2 \\
- & R2 & \multicolumn{1}{c}{1} & 0 \\ \hline
+ &  & \multicolumn{2}{l}{Pitcher} \\ \cline{3-4}
+ &  & Fastball & \multicolumn{1}{l}{Knuckleball} \\ \hline
+Batter & GFast & \multicolumn{1}{c}{.400} & .100 \\
+ & Gknuckle & \multicolumn{1}{c}{.300} & .250 \\ \hline
 \end{tabular}
 \end{table}
 
 ```{r, fig.height= 3, warning=FALSE, message=FALSE, cache=TRUE}
 grViz("digraph boxes {
 
-  graph [overlap = true, fontsize = 8]
+  graph [layout = neato, overlap = true, outputorder = edgefirst]
 
   node [shape = box]
 
-  A [label = 'C1, R1 \n (1/2)']; 
-  B [label = 'C1, R2 \n (1)']; 
-  C [label = 'C2, R1 \n (1/2)']; 
-  D [label = 'C2, R2 \n (0)']; 
+  A [pos = '-1, 1!', label = 'Fastball, GFast \n (.400)']; 
+  B [pos = ' 1, 1!', label = 'Knuckle, GFast  \n (.100)']; 
+  C [pos = ' -1, -1!', label = 'Fast, GKnuckle \n (.300)']; 
+  D [pos = ' 1, -1!', label = 'Knuckle, GKnuckle \n (.250)']; 
 
   # several 'edge' statements
-  D->B D->C A->B A->C C->A
+  C->D A->B C->A B->D
 }
 ")
 ```
 
-The value is 1/2 when Rose plays strategy 1 and Colin plays strategy 2. 
+The value is .250 when the pitcher pitches a knuckle and the batter guesses a knuckle ball.  
 
+\newpage
 
 # Page 404: problem 2 a
 
@@ -105,6 +106,8 @@ Rose & R1 & \multicolumn{1}{c}{10} & 10 \\
  & R2 & \multicolumn{1}{c}{5} & 0 \\ \hline
 \end{tabular}
 \end{table}
+
+
 
 # Page 413: problem 3
 
