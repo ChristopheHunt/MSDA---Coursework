@@ -29,6 +29,46 @@
             pdfborder={0 0 0},
             breaklinks=true}
 \urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{{#1}}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{{#1}}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\ImportTok}[1]{{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{{#1}}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{{#1}}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{{#1}}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{{#1}}}}
+\newcommand{\BuiltInTok}[1]{{#1}}
+\newcommand{\ExtensionTok}[1]{{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{{#1}}}
+\newcommand{\RegionMarkerTok}[1]{{#1}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{{#1}}}}
+\newcommand{\NormalTok}[1]{{#1}}
 \usepackage{graphicx,grffile}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
@@ -106,14 +146,16 @@ results match what we expect from Central Limit Theorem. Please use R
 markdown to capture all your experiments and code. Please submit your
 Rmd file with your name as the filename.
 
-\section{(1) First write a function that will produce a sample of random
-variable that is distributed as
-follows:}\label{first-write-a-function-that-will-produce-a-sample-of-random-variable-that-is-distributed-as-follows}
+\newpage
 
-\subsection{TODO - check these formulas might have not copied
-correctly}\label{todo---check-these-formulas-might-have-not-copied-correctly}
+\section{(1) produce a sample of random
+variable}\label{produce-a-sample-of-random-variable}
 
-\(f(x) = x, 0 \leq x \leq 1\) \(f(x) = 2 > x, 1 < x \leq 2\)
+First write a function that will produce a sample of random variable
+that is distributed as follows:
+
+\(f(x) = x, 0 \leq x \leq 1\)\\
+\(f(x) = 2 - x, 1 < x \leq 2\)
 
 That is, when your function is called, it will return a random variable
 between 0 and 2 that is distributed according to the above PDF. Please
@@ -124,34 +166,145 @@ week. In addition, as usual, there are one-liners in R that will give
 you samples from a function. We'll cover both of these approaches in the
 online session.
 
-\section{(2) Now, write a function that will produce a sample of random
-variable that is distributed as
-follows:}\label{now-write-a-function-that-will-produce-a-sample-of-random-variable-that-is-distributed-as-follows}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{random <-}\StringTok{ }\NormalTok{function()\{}
+          \NormalTok{num <-}\StringTok{ }\KeywordTok{runif}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DataTypeTok{min =} \DecValTok{0}\NormalTok{, }\DataTypeTok{max =} \DecValTok{2}\NormalTok{) }
+          \NormalTok{if(num >}\StringTok{ }\DecValTok{1} \NormalTok{&&}\StringTok{ }\NormalTok{num <=}\StringTok{ }\DecValTok{2}\NormalTok{)\{}
+             \KeywordTok{return}\NormalTok{(}\DecValTok{2}\NormalTok{-num)}
+            \NormalTok{\} else \{}
+              \KeywordTok{return}\NormalTok{(num)}
+            \NormalTok{\}}
+          \NormalTok{\} }
+\KeywordTok{random}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
 
-\subsection{TODO - check these formulas might have not copied
-correctly}\label{todo---check-these-formulas-might-have-not-copied-correctly-1}
+\begin{verbatim}
+## [1] 0.6448829
+\end{verbatim}
 
-\(f(x) = 1 > x, 0 \leq x \leq 1\) \(f(x) = x > 1, 1 < x \leq 2 (2)\)
+\section{(2) produce a sample of random
+variable}\label{produce-a-sample-of-random-variable-1}
 
-\section{(3) Draw 1000 samples (call your function 1000 times each) from
-each of the above two distributions and plot the resulting histograms.
-You should have one histogram for each PDF. See that it matches your
-understanding of these
-PDFs.}\label{draw-1000-samples-call-your-function-1000-times-each-from-each-of-the-above-two-distributions-and-plot-the-resulting-histograms.-you-should-have-one-histogram-for-each-pdf.-see-that-it-matches-your-understanding-of-these-pdfs.}
+Now, write a function that will produce a sample of random variable that
+is distributed as follows:
 
-\section{(4) Now, write a program that will take a sample set size n as
-a parameter and the PDF as the second parameter, and perform 1000
-iterations where it samples from the PDF, each time taking n samples and
-computes the mean of these n samples. It then plots a histogram of these
-1000 means that it
-computes.}\label{now-write-a-program-that-will-take-a-sample-set-size-n-as-a-parameter-and-the-pdf-as-the-second-parameter-and-perform-1000-iterations-where-it-samples-from-the-pdf-each-time-taking-n-samples-and-computes-the-mean-of-these-n-samples.-it-then-plots-a-histogram-of-these-1000-means-that-it-computes.}
+\(f(x) = 1 - x, 0 \leq x \leq 1\)\\
+\(f(x) = x - 1, 1 < x \leq 2\)
 
-\section{(5) Verify that as you set n to something like 10 or 20, each
-of the two PDFs produce normally distributed mean of samples,
-empirically verifying the Central Limit Theorem. Please play around with
-various values of n and you'll see that even for reasonably small sample
-sizes such as 10, Central Limit Theorem
-holds.}\label{verify-that-as-you-set-n-to-something-like-10-or-20-each-of-the-two-pdfs-produce-normally-distributed-mean-of-samples-empirically-verifying-the-central-limit-theorem.-please-play-around-with-various-values-of-n-and-youll-see-that-even-for-reasonably-small-sample-sizes-such-as-10-central-limit-theorem-holds.}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{random2 <-}\StringTok{ }\NormalTok{function()\{}
+          \NormalTok{num <-}\StringTok{ }\KeywordTok{runif}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DataTypeTok{min =} \DecValTok{0}\NormalTok{, }\DataTypeTok{max =} \DecValTok{2}\NormalTok{) }
+          \NormalTok{if(num >}\StringTok{ }\DecValTok{1} \NormalTok{&&}\StringTok{ }\NormalTok{num <=}\StringTok{ }\DecValTok{2}\NormalTok{)\{}
+             \KeywordTok{return}\NormalTok{(num}\DecValTok{-1}\NormalTok{)}
+            \NormalTok{\} else \{}
+              \KeywordTok{return}\NormalTok{(}\DecValTok{1}\NormalTok{-num)}
+            \NormalTok{\}}
+          \NormalTok{\} }
+\KeywordTok{random2}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.2957906
+\end{verbatim}
+
+\section{(3) Draw 1000 samples}\label{draw-1000-samples}
+
+Draw 1000 samples (call your function 1000 times each) from each of the
+above two distributions and plot the resulting histograms. You should
+have one histogram for each PDF. See that it matches your understanding
+of these PDFs.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{values <-}\StringTok{ }\KeywordTok{replicate}\NormalTok{(}\DecValTok{1000}\NormalTok{, }\KeywordTok{random}\NormalTok{())}
+\KeywordTok{hist}\NormalTok{(values)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{CHunt_Assign9_PS1_PS2_files/figure-latex/unnamed-chunk-3-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{values <-}\StringTok{ }\KeywordTok{replicate}\NormalTok{(}\DecValTok{1000}\NormalTok{, }\KeywordTok{random2}\NormalTok{())}
+\KeywordTok{hist}\NormalTok{(values)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{CHunt_Assign9_PS1_PS2_files/figure-latex/unnamed-chunk-4-1.pdf}
+
+\section{(4) Function to take means and generate
+histogram}\label{function-to-take-means-and-generate-histogram}
+
+Now, write a program that will take a sample set size n as a parameter
+and the PDF as the second parameter, and perform 1000 iterations where
+it samples from the PDF, each time taking n samples and computes the
+mean of these n samples. It then plots a histogram of these 1000 means
+that it computes.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{means.hist <-}\StringTok{ }\NormalTok{function(n, PDF)\{}
+          \NormalTok{x <-}\StringTok{ }\OtherTok{NULL}
+          \NormalTok{for (i in }\DecValTok{1}\NormalTok{:}\DecValTok{1000}\NormalTok{)\{}
+           \NormalTok{z <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(}\KeywordTok{replicate}\NormalTok{(n, }\KeywordTok{PDF}\NormalTok{()))}
+           \NormalTok{x <-}\StringTok{ }\KeywordTok{rbind}\NormalTok{(x, z)}
+          \NormalTok{\}}
+          \KeywordTok{hist}\NormalTok{(x)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Histogram of first random
+function}\label{histogram-of-first-random-function}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{means.hist}\NormalTok{(}\DecValTok{30}\NormalTok{, }\DataTypeTok{PDF =} \NormalTok{random)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{CHunt_Assign9_PS1_PS2_files/figure-latex/unnamed-chunk-6-1.pdf}
+
+\subsection{Histogram of second random
+function}\label{histogram-of-second-random-function}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{means.hist}\NormalTok{(}\DecValTok{30}\NormalTok{, }\DataTypeTok{PDF =} \NormalTok{random2)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{CHunt_Assign9_PS1_PS2_files/figure-latex/unnamed-chunk-7-1.pdf}
+\newpage
+
+\section{(5) empirically verifying the Central Limit
+Theorem}\label{empirically-verifying-the-central-limit-theorem}
+
+Verify that as you set n to something like 10 or 20, each of the two
+PDFs produce normally distributed mean of samples, empirically verifying
+the Central Limit Theorem. Please play around with various values of n
+and you'll see that even for reasonably small sample sizes such as 10,
+Central Limit Theorem holds.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{means.hist}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DataTypeTok{PDF =} \NormalTok{random)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{CHunt_Assign9_PS1_PS2_files/figure-latex/unnamed-chunk-8-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{means.hist}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DataTypeTok{PDF =} \NormalTok{random2)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{CHunt_Assign9_PS1_PS2_files/figure-latex/unnamed-chunk-8-2.pdf}
 
 
 \end{document}
