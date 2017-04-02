@@ -165,14 +165,14 @@ Rose & R1 & \multicolumn{1}{c}{10} & 10 \\
 \KeywordTok{library}\NormalTok{(DiagrammeR)}
 \KeywordTok{grViz}\NormalTok{(}\StringTok{"digraph boxes \{}
 
-\StringTok{  graph [overlap = true, fontsize = 8]}
+\StringTok{  graph [layout = neato, overlap = true, outputorder = edgefirst]}
 
 \StringTok{  node [shape = box]}
 
 \StringTok{  A [pos = '-1, 1!', label = 'C1, R1 }\CharTok{\textbackslash{}n}\StringTok{ (10)']; }
-\StringTok{  B [label = 'C1, R2 }\CharTok{\textbackslash{}n}\StringTok{ (5)']; }
-\StringTok{  C [label = 'C2, R1 }\CharTok{\textbackslash{}n}\StringTok{ (10)']; }
-\StringTok{  D [label = 'C2, R2 }\CharTok{\textbackslash{}n}\StringTok{ (0)']; }
+\StringTok{  B [pos = ' -1, -1!', label = 'C1, R2 }\CharTok{\textbackslash{}n}\StringTok{ (5)']; }
+\StringTok{  C [pos = ' 1, 1!',label = 'C2, R1 }\CharTok{\textbackslash{}n}\StringTok{ (10)']; }
+\StringTok{  D [pos = ' 1, -1!', label = 'C2, R2 }\CharTok{\textbackslash{}n}\StringTok{ (0)']; }
 
 \StringTok{  # several 'edge' statements}
 \StringTok{  B->A C->A A->C D->B D->C }
@@ -252,23 +252,64 @@ Rose & R1 & \multicolumn{1}{c}{10} & 10 \\
 \end{tabular}
 \end{table}
 
-EV
+R1 has probability \(p = x\), therefore the probability of R2 is
+\(p=1-x\).
 
-\section{Page 413: problem 3}\label{page-413-problem-3}
+\(V_{C1}\) \(\leq\) 10x + 5(1-x) = 5x + 5\\
+\(V_{C2}\) \(\leq\) 10x + 0(1-x)= 10x\\
+\(x \leq 1\)\\
+\(x \geq 0\)
 
-We are considering three alternatives A, B, and C under states of nature
-1, 2 ,3, and 4, set up and solve both the investor's and nature's game:
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(ggplot2)}
+\NormalTok{plotc <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{)), }\KeywordTok{aes}\NormalTok{(x)) +}\StringTok{ }\KeywordTok{stat_function}\NormalTok{(}\DataTypeTok{fun =} \NormalTok{function(x) }\DecValTok{5} \NormalTok{*}\StringTok{ }
+\StringTok{    }\NormalTok{x +}\StringTok{ }\DecValTok{5}\NormalTok{, }\DataTypeTok{geom =} \StringTok{"line"}\NormalTok{, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{colour =} \StringTok{"C1"}\NormalTok{)) +}\StringTok{ }\KeywordTok{stat_function}\NormalTok{(}\DataTypeTok{fun =} \NormalTok{function(x) }\DecValTok{10} \NormalTok{*}\StringTok{ }
+\StringTok{    }\NormalTok{x, }\DataTypeTok{geom =} \StringTok{"line"}\NormalTok{, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{colour =} \StringTok{"C2"}\NormalTok{)) +}\StringTok{ }\KeywordTok{geom_vline}\NormalTok{(}\DataTypeTok{xintercept =} \DecValTok{1}\NormalTok{) +}\StringTok{ }\KeywordTok{geom_vline}\NormalTok{(}\DataTypeTok{xintercept =} \DecValTok{0}\NormalTok{)}
+\NormalTok{plotc}
+\end{Highlighting}
+\end{Shaded}
 
-\begin{table}[!h]
-\centering
-\begin{tabular}{crrrr}
-\multicolumn{5}{l}{\textbf{States of Nature}} \\ \hline
-\begin{tabular}[c]{@{}c@{}}Investor's choices \\ Alternatives\end{tabular} & \multicolumn{1}{c}{Condition \#1} & \multicolumn{1}{c}{Condition \#2} & \multicolumn{1}{c}{Condition \#3} & \multicolumn{1}{l}{Condition \#4} \\ \hline
-A & 1100 & 900 & 400 & 300 \\
-B & 850 & 1500 & 1000 & 500 \\
-C & 700 & 1200 & 500 & 900 \\ \hline
-\end{tabular}
-\end{table}
+\includegraphics{Christophe_Hunt_hw9_files/figure-latex/unnamed-chunk-3-1.pdf}
+
+Both are maxed at x = 1, \(V_{C1}\) = 10, \(V_{C2}\) = 10.
+
+C1 has probability \(p = x\), therefore the probability of C2 is
+\(p=1-x\).
+
+\(V_{R1}\) = 10x + 10(1-x) = 10 \(V_{R2}\) = 5x + 0(1-x)= 5x
+\(x \leq 1\) \(x \geq 0\)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{plotr <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{)), }\KeywordTok{aes}\NormalTok{(x)) +}\StringTok{ }\KeywordTok{stat_function}\NormalTok{(}\DataTypeTok{fun =} \NormalTok{function(x) }\DecValTok{5} \NormalTok{*}\StringTok{ }
+\StringTok{    }\NormalTok{x, }\DataTypeTok{geom =} \StringTok{"line"}\NormalTok{, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{colour =} \StringTok{"R1"}\NormalTok{)) +}\StringTok{ }\KeywordTok{stat_function}\NormalTok{(}\DataTypeTok{fun =} \NormalTok{function(x) }\DecValTok{10}\NormalTok{, }
+    \DataTypeTok{geom =} \StringTok{"line"}\NormalTok{, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{colour =} \StringTok{"R2"}\NormalTok{)) +}\StringTok{ }\KeywordTok{geom_vline}\NormalTok{(}\DataTypeTok{xintercept =} \DecValTok{1}\NormalTok{) +}\StringTok{ }\KeywordTok{geom_vline}\NormalTok{(}\DataTypeTok{xintercept =} \DecValTok{0}\NormalTok{)}
+\NormalTok{plotr}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Christophe_Hunt_hw9_files/figure-latex/unnamed-chunk-4-1.pdf}
+
+Now we plot both strategies for Rose and Colin.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{plotrc <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{)), }\KeywordTok{aes}\NormalTok{(x)) +}\StringTok{ }\KeywordTok{stat_function}\NormalTok{(}\DataTypeTok{fun =} \NormalTok{function(x) }\DecValTok{5} \NormalTok{*}\StringTok{ }
+\StringTok{    }\NormalTok{x, }\DataTypeTok{geom =} \StringTok{"line"}\NormalTok{, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{colour =} \StringTok{"R1"}\NormalTok{)) +}\StringTok{ }\KeywordTok{stat_function}\NormalTok{(}\DataTypeTok{fun =} \NormalTok{function(x) }\DecValTok{10}\NormalTok{, }
+    \DataTypeTok{geom =} \StringTok{"line"}\NormalTok{, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{colour =} \StringTok{"R2"}\NormalTok{)) +}\StringTok{ }\KeywordTok{stat_function}\NormalTok{(}\DataTypeTok{fun =} \NormalTok{function(x) }\DecValTok{5} \NormalTok{*}\StringTok{ }
+\StringTok{    }\NormalTok{x +}\StringTok{ }\DecValTok{5}\NormalTok{, }\DataTypeTok{geom =} \StringTok{"line"}\NormalTok{, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{colour =} \StringTok{"C1"}\NormalTok{)) +}\StringTok{ }\KeywordTok{stat_function}\NormalTok{(}\DataTypeTok{fun =} \NormalTok{function(x) }\DecValTok{10} \NormalTok{*}\StringTok{ }
+\StringTok{    }\NormalTok{x, }\DataTypeTok{geom =} \StringTok{"line"}\NormalTok{, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{colour =} \StringTok{"C2"}\NormalTok{)) +}\StringTok{ }\KeywordTok{geom_vline}\NormalTok{(}\DataTypeTok{xintercept =} \DecValTok{1}\NormalTok{) +}\StringTok{ }\KeywordTok{geom_vline}\NormalTok{(}\DataTypeTok{xintercept =} \DecValTok{0}\NormalTok{)}
+\NormalTok{plotrc}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Christophe_Hunt_hw9_files/figure-latex/unnamed-chunk-5-1.pdf}
+
+R1 is a constant at 10, whereas, R2 is maxed at x = 1; \(V_{R2}\) = 5.
+
+Therefore, Rose will play strategy R1 and Colin can play either strategy
+1 or 2.
 
 \section{Page 420: problem 1}\label{page-420-problem-1}
 
@@ -277,50 +318,29 @@ movement diagram to determine if any pure strategy solution exist.
 Assume the row player is maximizing his payoffs which are shown in the
 matrices below.
 
-\begin{table}[!h]
-\centering
-\begin{tabular}{lllc}
- &  & \multicolumn{2}{l}{Colin} \\ \cline{3-4}
- &  & C1 & \multicolumn{1}{l}{C2} \\ \hline
-Rose & R1 & \multicolumn{1}{c}{10} & 10 \\
- & R2 & \multicolumn{1}{c}{5} & 0 \\ \hline
-\end{tabular}
+\begin{table}[h]
+    \begin{tabular}{lllcc}
+    ~    & ~  & Colin & ~  & Row Minimum  \\
+    ~    & ~  & C1    & C2 & ~            \\
+    Rose & R1 & 10    & 10 & \textbf{10}   \\
+    ~    & R2 & 5     & 0  & \textbf{0}   \\ \hline
+    \end{tabular}
 \end{table}
 
-\section{Page 428: problem 3}\label{page-428-problem-3}
-
-Using the alternative methods (a) equating expected value and (b)
-methods of oddments to find the solutions to the following games. Assume
-the row player is maximizing his payoffs which are shown in the matrices
-below.
-
-\begin{table}[!h]
-\centering
-\begin{tabular}{lllc}
- &  & \multicolumn{2}{l}{Colin} \\ \cline{3-4}
- &  & C1 & \multicolumn{1}{l}{C2} \\ \hline
-Rose & R1 & \multicolumn{1}{c}{0.5} & 0.3 \\
- & R2 & \multicolumn{1}{c}{0.6} & 1 \\ \hline
-\end{tabular}
+\begin{table}[h]
+    \begin{tabular}{lllc}
+    ~    & ~  & Colin & ~   \\
+    ~    & ~  & C1    & C2  \\
+    Rose & R1 & 10    & 10  \\
+    ~    & R2 & 5     & 0     \\ 
+    Column Maximum  & & \textbf{10} & \textbf{0}
+    \\ \hline
+    \end{tabular}
 \end{table}
 
-\section{Page 440: problem 2}\label{page-440-problem-2}
-
-Use movements diagrams to find all the stable outcomes in Problems 1
-through 5. Then use strategic moves (using Table 10.2) to determine if
-Rose can get a better outcome.
-
-\begin{table}[!h]
-\centering
-\begin{tabular}{lllc}
- &  & \multicolumn{2}{l}{Colin} \\ \cline{3-4}
- &  & C1 & \multicolumn{1}{l}{C2} \\ \hline
-Rose & R1 & \multicolumn{1}{c}{(1,2)} & (3,1) \\
- & R2 & \multicolumn{1}{c}{(2, 4)} & (4, 3)\\ \hline
-\end{tabular}
-\end{table}
-
-\section{Page 454: problem 3}\label{page-454-problem-3}
+As we can see from the row minimum that Colin can play either C1 or C2;
+and the column maximum indicates that Rose plays R1 which would be a
+pure strategy.
 
 
 \end{document}

@@ -34,18 +34,18 @@ Rose & R1 & \multicolumn{1}{c}{10} & 10 \\
 \end{table}
 
 
-```{r, fig.height= 3, warning=FALSE, message=FALSE, cache=TRUE}
+```{r, fig.height= 3, warning=FALSE, message=FALSE, cache=TRUE, tidy=TRUE}
 library(DiagrammeR)
 grViz("digraph boxes {
 
-  graph [overlap = true, fontsize = 8]
+  graph [layout = neato, overlap = true, outputorder = edgefirst]
 
   node [shape = box]
 
   A [pos = '-1, 1!', label = 'C1, R1 \n (10)']; 
-  B [label = 'C1, R2 \n (5)']; 
-  C [label = 'C2, R1 \n (10)']; 
-  D [label = 'C2, R2 \n (0)']; 
+  B [pos = ' -1, -1!', label = 'C1, R2 \n (5)']; 
+  C [pos = ' 1, 1!',label = 'C2, R1 \n (10)']; 
+  D [pos = ' 1, -1!', label = 'C2, R2 \n (0)']; 
 
   # several 'edge' statements
   B->A C->A A->C D->B D->C 
@@ -53,7 +53,7 @@ grViz("digraph boxes {
 ")
 ```
 
-We do have a pure strategy Nash equilibrium of 10 as our arrows all point to one value, when Rose plays strategy 1 and Colin plays either strategy 1 or 2. For graphing similicity I set the strategy to Rose 1 and Colin 1.  
+We do have a pure strategy Nash equilibrium of 10 as our arrows all point to one value, when Rose plays strategy 1 and Colin plays either strategy 1 or 2. For graphing simplicity I set the strategy to Rose 1 and Colin 1.  
 
 \newpage
 
@@ -71,7 +71,7 @@ Batter & GFast & \multicolumn{1}{c}{.400} & .100 \\
 \end{tabular}
 \end{table}
 
-```{r, fig.height= 3, warning=FALSE, message=FALSE, cache=TRUE}
+```{r, fig.height= 3, tidy=TRUE, cache=TRUE, warning=FALSE, message=FALSE}
 grViz("digraph boxes {
 
   graph [layout = neato, overlap = true, outputorder = edgefirst]
@@ -107,66 +107,88 @@ Rose & R1 & \multicolumn{1}{c}{10} & 10 \\
 \end{tabular}
 \end{table}
 
-EV
+R1 has probability $p = x$, therefore the probability of R2 is $p=1-x$. 
+
+$V_{C1}$ $\leq$ 10x + 5(1-x) = 5x + 5      
+$V_{C2}$ $\leq$ 10x + 0(1-x)= 10x       
+$x \leq 1$      
+$x \geq 0$     
+
+```{r, tidy=TRUE, cache=TRUE, warning=FALSE, message=FALSE}
+library(ggplot2)
+plotc <- ggplot(data.frame(x=c(0,1)), aes(x)) +
+          stat_function(fun=function(x)5*x+5, geom="line", aes(colour = "C1")) +
+          stat_function(fun=function(x)10*x, geom="line", aes(colour = "C2")) +
+            geom_vline(xintercept = 1) + 
+          geom_vline(xintercept = 0)
+plotc
+```
+
+Both are maxed at x = 1, $V_{C1}$ = 10, $V_{C2}$ = 10.
+
+C1 has probability $p = x$, therefore the probability of C2 is $p=1-x$. 
+
+$V_{R1}$ = 10x + 10(1-x) = 10
+$V_{R2}$ = 5x + 0(1-x)= 5x
+$x \leq 1$
+$x \geq 0$
+
+```{r, tidy=TRUE, cache=TRUE, message=TRUE, warning=TRUE}
+
+plotr <- ggplot(data.frame(x=c(0,1)), aes(x)) +
+          stat_function(fun=function(x)5*x, geom="line", aes(colour = "R1")) +
+          stat_function(fun=function(x)10, geom="line", aes(colour = "R2")) + 
+            geom_vline(xintercept = 1) + 
+          geom_vline(xintercept = 0)
+plotr
+```
+
+Now we plot both strategies for Rose and Colin. 
+
+```{r, tidy=TRUE, cache=TRUE, message = TRUE, warning=TRUE}
+
+plotrc <- ggplot(data.frame(x=c(0,1)), aes(x)) +
+          stat_function(fun=function(x)5*x, geom="line", aes(colour = "R1")) +
+          stat_function(fun=function(x)10, geom="line", aes(colour = "R2")) +
+          stat_function(fun=function(x)5*x+5, geom="line", aes(colour = "C1")) +
+          stat_function(fun=function(x)10*x, geom="line", aes(colour = "C2")) +
+          geom_vline(xintercept = 1) + 
+          geom_vline(xintercept = 0)
+plotrc
+```
+
+R1 is a constant at 10, whereas, R2 is maxed at x = 1; $V_{R2}$ = 5. 
+
+Geometrically we can therefore determine that Rose will play strategy R1 and Colin can play either strategy 1 or 2. 
+
+Algebraically:
 
 
-# Page 413: problem 3
-
-We are considering three alternatives A, B, and C under states of nature 1, 2 ,3, and 4, set up and solve both the investor's and nature's game:
-
-\begin{table}[!h]
-\centering
-\begin{tabular}{crrrr}
-\multicolumn{5}{l}{\textbf{States of Nature}} \\ \hline
-\begin{tabular}[c]{@{}c@{}}Investor's choices \\ Alternatives\end{tabular} & \multicolumn{1}{c}{Condition \#1} & \multicolumn{1}{c}{Condition \#2} & \multicolumn{1}{c}{Condition \#3} & \multicolumn{1}{l}{Condition \#4} \\ \hline
-A & 1100 & 900 & 400 & 300 \\
-B & 850 & 1500 & 1000 & 500 \\
-C & 700 & 1200 & 500 & 900 \\ \hline
-\end{tabular}
-\end{table}
 
 # Page 420: problem 1
 
 In the following problems, use the maximim and minimax method and movement diagram to determine if any pure strategy solution exist. Assume the row player is maximizing his payoffs which are shown in the matrices below. 
 
-\begin{table}[!h]
-\centering
-\begin{tabular}{lllc}
- &  & \multicolumn{2}{l}{Colin} \\ \cline{3-4}
- &  & C1 & \multicolumn{1}{l}{C2} \\ \hline
-Rose & R1 & \multicolumn{1}{c}{10} & 10 \\
- & R2 & \multicolumn{1}{c}{5} & 0 \\ \hline
-\end{tabular}
+\begin{table}[h]
+    \begin{tabular}{lllcc}
+    ~    & ~  & Colin & ~  & Row Minimum  \\
+    ~    & ~  & C1    & C2 & ~            \\
+    Rose & R1 & 10    & 10 & \textbf{10}   \\
+    ~    & R2 & 5     & 0  & \textbf{0}   \\ \hline
+    \end{tabular}
 \end{table}
 
-
-# Page 428: problem 3
-
-Using the alternative methods (a) equating expected value and (b) methods of oddments to find the solutions to the following games. Assume the row player is maximizing his payoffs which are shown in the matrices below. 
-
-\begin{table}[!h]
-\centering
-\begin{tabular}{lllc}
- &  & \multicolumn{2}{l}{Colin} \\ \cline{3-4}
- &  & C1 & \multicolumn{1}{l}{C2} \\ \hline
-Rose & R1 & \multicolumn{1}{c}{0.5} & 0.3 \\
- & R2 & \multicolumn{1}{c}{0.6} & 1 \\ \hline
-\end{tabular}
+\begin{table}[h]
+    \begin{tabular}{lllc}
+    ~    & ~  & Colin & ~   \\
+    ~    & ~  & C1    & C2  \\
+    Rose & R1 & 10    & 10  \\
+    ~    & R2 & 5     & 0     \\ 
+    Column Maximum  & & \textbf{10} & \textbf{0}
+    \\ \hline
+    \end{tabular}
 \end{table}
 
-# Page 440: problem 2
-
-Use movements diagrams to find all the stable outcomes in Problems 1 through 5. Then use strategic moves (using Table 10.2) to determine if Rose can get a better outcome. 
-
-\begin{table}[!h]
-\centering
-\begin{tabular}{lllc}
- &  & \multicolumn{2}{l}{Colin} \\ \cline{3-4}
- &  & C1 & \multicolumn{1}{l}{C2} \\ \hline
-Rose & R1 & \multicolumn{1}{c}{(1,2)} & (3,1) \\
- & R2 & \multicolumn{1}{c}{(2, 4)} & (4, 3)\\ \hline
-\end{tabular}
-\end{table}
+As we can see from the row minimum that Colin can play either C1 or C2; and the column maximum indicates that Rose plays R1 which would be a pure strategy. 
 
 
-# Page 454: problem 3
