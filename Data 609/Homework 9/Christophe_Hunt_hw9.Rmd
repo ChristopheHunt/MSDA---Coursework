@@ -89,7 +89,7 @@ grViz("digraph boxes {
 ")
 ```
 
-The value is .250 when the pitcher pitches a knuckle and the batter guesses a knuckle ball.  
+The EV = .250 when the pitcher pitches a knuckle and the batter guesses a knuckle ball.  
 
 \newpage
 
@@ -107,6 +107,7 @@ Rose & R1 & \multicolumn{1}{c}{10} & 10 \\
 \end{tabular}
 \end{table}
 
+EV
 
 
 # Page 413: problem 3
