@@ -69,6 +69,7 @@
 \newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{{#1}}}
 \newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{{#1}}}}
 \newcommand{\NormalTok}[1]{{#1}}
+\usepackage{longtable,booktabs}
 \usepackage{graphicx,grffile}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
@@ -185,7 +186,7 @@ Rose & R1 & \multicolumn{1}{c}{10} & 10 \\
 
 We do have a pure strategy Nash equilibrium of 10 as our arrows all
 point to one value, when Rose plays strategy 1 and Colin plays either
-strategy 1 or 2. For graphing similicity I set the strategy to Rose 1
+strategy 1 or 2. For graphing simplicity I set the strategy to Rose 1
 and Colin 1.
 
 \newpage
@@ -252,6 +253,8 @@ Rose & R1 & \multicolumn{1}{c}{10} & 10 \\
 \end{tabular}
 \end{table}
 
+Geometrically:
+
 R1 has probability \(p = x\), therefore the probability of R2 is
 \(p=1-x\).
 
@@ -262,54 +265,107 @@ R1 has probability \(p = x\), therefore the probability of R2 is
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(ggplot2)}
-\NormalTok{plotc <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{)), }\KeywordTok{aes}\NormalTok{(x)) +}\StringTok{ }\KeywordTok{stat_function}\NormalTok{(}\DataTypeTok{fun =} \NormalTok{function(x) }\DecValTok{5} \NormalTok{*}\StringTok{ }
-\StringTok{    }\NormalTok{x +}\StringTok{ }\DecValTok{5}\NormalTok{, }\DataTypeTok{geom =} \StringTok{"line"}\NormalTok{, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{colour =} \StringTok{"C1"}\NormalTok{)) +}\StringTok{ }\KeywordTok{stat_function}\NormalTok{(}\DataTypeTok{fun =} \NormalTok{function(x) }\DecValTok{10} \NormalTok{*}\StringTok{ }
-\StringTok{    }\NormalTok{x, }\DataTypeTok{geom =} \StringTok{"line"}\NormalTok{, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{colour =} \StringTok{"C2"}\NormalTok{)) +}\StringTok{ }\KeywordTok{geom_vline}\NormalTok{(}\DataTypeTok{xintercept =} \DecValTok{1}\NormalTok{) +}\StringTok{ }\KeywordTok{geom_vline}\NormalTok{(}\DataTypeTok{xintercept =} \DecValTok{0}\NormalTok{)}
-\NormalTok{plotc}
+\KeywordTok{library}\NormalTok{(knitr)}
+\NormalTok{x <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\NormalTok{A <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{10}\NormalTok{)}
+\KeywordTok{kable}\NormalTok{(}\KeywordTok{as.data.frame}\NormalTok{(}\KeywordTok{cbind}\NormalTok{(x,A)))}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Christophe_Hunt_hw9_files/figure-latex/unnamed-chunk-3-1.pdf}
-
-Both are maxed at x = 1, \(V_{C1}\) = 10, \(V_{C2}\) = 10.
-
-C1 has probability \(p = x\), therefore the probability of C2 is
-\(p=1-x\).
-
-\(V_{R1}\) = 10x + 10(1-x) = 10 \(V_{R2}\) = 5x + 0(1-x)= 5x
-\(x \leq 1\) \(x \geq 0\)
+\begin{longtable}[]{@{}rr@{}}
+\toprule
+x & A\tabularnewline
+\midrule
+\endhead
+0 & 5\tabularnewline
+1 & 10\tabularnewline
+0 & 0\tabularnewline
+1 & 10\tabularnewline
+\bottomrule
+\end{longtable}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{plotr <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{)), }\KeywordTok{aes}\NormalTok{(x)) +}\StringTok{ }\KeywordTok{stat_function}\NormalTok{(}\DataTypeTok{fun =} \NormalTok{function(x) }\DecValTok{5} \NormalTok{*}\StringTok{ }
-\StringTok{    }\NormalTok{x, }\DataTypeTok{geom =} \StringTok{"line"}\NormalTok{, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{colour =} \StringTok{"R1"}\NormalTok{)) +}\StringTok{ }\KeywordTok{stat_function}\NormalTok{(}\DataTypeTok{fun =} \NormalTok{function(x) }\DecValTok{10}\NormalTok{, }
-    \DataTypeTok{geom =} \StringTok{"line"}\NormalTok{, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{colour =} \StringTok{"R2"}\NormalTok{)) +}\StringTok{ }\KeywordTok{geom_vline}\NormalTok{(}\DataTypeTok{xintercept =} \DecValTok{1}\NormalTok{) +}\StringTok{ }\KeywordTok{geom_vline}\NormalTok{(}\DataTypeTok{xintercept =} \DecValTok{0}\NormalTok{)}
-\NormalTok{plotr}
+\KeywordTok{library}\NormalTok{(ggplot2)}
+\NormalTok{plotc <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{x=}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{)), }\KeywordTok{aes}\NormalTok{(x)) +}
+\StringTok{          }\KeywordTok{stat_function}\NormalTok{(}\DataTypeTok{fun=}\NormalTok{function(x)}\DecValTok{5}\NormalTok{*x}\DecValTok{+5}\NormalTok{, }\DataTypeTok{geom=}\StringTok{"line"}\NormalTok{, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{colour =} \StringTok{"C1"}\NormalTok{)) +}
+\StringTok{          }\KeywordTok{stat_function}\NormalTok{(}\DataTypeTok{fun=}\NormalTok{function(x)}\DecValTok{10}\NormalTok{*x, }\DataTypeTok{geom=}\StringTok{"line"}\NormalTok{, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{colour =} \StringTok{"C2"}\NormalTok{)) +}
+\StringTok{            }\KeywordTok{geom_vline}\NormalTok{(}\DataTypeTok{xintercept =} \DecValTok{1}\NormalTok{) +}\StringTok{ }
+\StringTok{          }\KeywordTok{geom_vline}\NormalTok{(}\DataTypeTok{xintercept =} \DecValTok{0}\NormalTok{)}
+\NormalTok{plotc}
 \end{Highlighting}
 \end{Shaded}
 
 \includegraphics{Christophe_Hunt_hw9_files/figure-latex/unnamed-chunk-4-1.pdf}
 
+Both are maxed at x = 1, \(V_{C1}\) = 10, \(V_{C2}\) = 10.
+
+\newpage
+
+R1 has probability \(p = x\), therefore the probability of R2 is
+\(p=1-x\).
+
+\(V_{R1}\) \(\leq\) 10x + 10(1-x) = 10 \(V_{R2}\) \(\leq\) 5x + 0(1-x)=
+5x \(x \leq 1\) \(x \geq 0\)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(knitr)}
+\NormalTok{x <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\NormalTok{A <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{5}\NormalTok{)}
+\KeywordTok{kable}\NormalTok{(}\KeywordTok{as.data.frame}\NormalTok{(}\KeywordTok{cbind}\NormalTok{(x,A)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}rr@{}}
+\toprule
+x & A\tabularnewline
+\midrule
+\endhead
+0 & 10\tabularnewline
+1 & 10\tabularnewline
+0 & 0\tabularnewline
+1 & 5\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{plotr <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{x=}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{)), }\KeywordTok{aes}\NormalTok{(x)) +}
+\StringTok{          }\KeywordTok{stat_function}\NormalTok{(}\DataTypeTok{fun=}\NormalTok{function(x)}\DecValTok{5}\NormalTok{*x, }\DataTypeTok{geom=}\StringTok{"line"}\NormalTok{, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{colour =} \StringTok{"R1"}\NormalTok{)) +}
+\StringTok{          }\KeywordTok{stat_function}\NormalTok{(}\DataTypeTok{fun=}\NormalTok{function(x)}\DecValTok{10}\NormalTok{, }\DataTypeTok{geom=}\StringTok{"line"}\NormalTok{, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{colour =} \StringTok{"R2"}\NormalTok{)) +}\StringTok{ }
+\StringTok{            }\KeywordTok{geom_vline}\NormalTok{(}\DataTypeTok{xintercept =} \DecValTok{1}\NormalTok{) +}\StringTok{ }
+\StringTok{          }\KeywordTok{geom_vline}\NormalTok{(}\DataTypeTok{xintercept =} \DecValTok{0}\NormalTok{)}
+\NormalTok{plotr}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Christophe_Hunt_hw9_files/figure-latex/unnamed-chunk-6-1.pdf}
+\newpage
+
 Now we plot both strategies for Rose and Colin.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{plotrc <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{)), }\KeywordTok{aes}\NormalTok{(x)) +}\StringTok{ }\KeywordTok{stat_function}\NormalTok{(}\DataTypeTok{fun =} \NormalTok{function(x) }\DecValTok{5} \NormalTok{*}\StringTok{ }
-\StringTok{    }\NormalTok{x, }\DataTypeTok{geom =} \StringTok{"line"}\NormalTok{, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{colour =} \StringTok{"R1"}\NormalTok{)) +}\StringTok{ }\KeywordTok{stat_function}\NormalTok{(}\DataTypeTok{fun =} \NormalTok{function(x) }\DecValTok{10}\NormalTok{, }
-    \DataTypeTok{geom =} \StringTok{"line"}\NormalTok{, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{colour =} \StringTok{"R2"}\NormalTok{)) +}\StringTok{ }\KeywordTok{stat_function}\NormalTok{(}\DataTypeTok{fun =} \NormalTok{function(x) }\DecValTok{5} \NormalTok{*}\StringTok{ }
-\StringTok{    }\NormalTok{x +}\StringTok{ }\DecValTok{5}\NormalTok{, }\DataTypeTok{geom =} \StringTok{"line"}\NormalTok{, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{colour =} \StringTok{"C1"}\NormalTok{)) +}\StringTok{ }\KeywordTok{stat_function}\NormalTok{(}\DataTypeTok{fun =} \NormalTok{function(x) }\DecValTok{10} \NormalTok{*}\StringTok{ }
-\StringTok{    }\NormalTok{x, }\DataTypeTok{geom =} \StringTok{"line"}\NormalTok{, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{colour =} \StringTok{"C2"}\NormalTok{)) +}\StringTok{ }\KeywordTok{geom_vline}\NormalTok{(}\DataTypeTok{xintercept =} \DecValTok{1}\NormalTok{) +}\StringTok{ }\KeywordTok{geom_vline}\NormalTok{(}\DataTypeTok{xintercept =} \DecValTok{0}\NormalTok{)}
+\KeywordTok{library}\NormalTok{(ggplot2)}
+\NormalTok{plotrc <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{x=}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{)), }\KeywordTok{aes}\NormalTok{(x)) +}
+\StringTok{          }\KeywordTok{stat_function}\NormalTok{(}\DataTypeTok{fun=}\NormalTok{function(x)}\DecValTok{5}\NormalTok{*x, }\DataTypeTok{geom=}\StringTok{"line"}\NormalTok{, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{colour =} \StringTok{"R1"}\NormalTok{)) +}
+\StringTok{          }\KeywordTok{stat_function}\NormalTok{(}\DataTypeTok{fun=}\NormalTok{function(x)}\DecValTok{10}\NormalTok{, }\DataTypeTok{geom=}\StringTok{"line"}\NormalTok{, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{colour =} \StringTok{"R2"}\NormalTok{)) +}
+\StringTok{          }\KeywordTok{stat_function}\NormalTok{(}\DataTypeTok{fun=}\NormalTok{function(x)}\DecValTok{5}\NormalTok{*x +}\StringTok{ }\DecValTok{5}\NormalTok{, }\DataTypeTok{geom=}\StringTok{"line"}\NormalTok{, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{colour =} \StringTok{"C1"}\NormalTok{)) +}
+\StringTok{          }\KeywordTok{stat_function}\NormalTok{(}\DataTypeTok{fun=}\NormalTok{function(x)}\DecValTok{10}\NormalTok{*x, }\DataTypeTok{geom=}\StringTok{"line"}\NormalTok{, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{colour =} \StringTok{"C2"}\NormalTok{)) +}
+\StringTok{          }\KeywordTok{geom_vline}\NormalTok{(}\DataTypeTok{xintercept =} \DecValTok{1}\NormalTok{) +}\StringTok{ }
+\StringTok{          }\KeywordTok{geom_vline}\NormalTok{(}\DataTypeTok{xintercept =} \DecValTok{0}\NormalTok{)}
 \NormalTok{plotrc}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Christophe_Hunt_hw9_files/figure-latex/unnamed-chunk-5-1.pdf}
+\includegraphics{Christophe_Hunt_hw9_files/figure-latex/unnamed-chunk-7-1.pdf}
 
-R1 is a constant at 10, whereas, R2 is maxed at x = 1; \(V_{R2}\) = 5.
+\(V_{R1}\) is a constant at 10, whereas, \(V_{R2}\) is maxed at x = 1;
+\(V_{R2}\) = 5.
 
-Therefore, Rose will play strategy R1 and Colin can play either strategy
-1 or 2.
+We can therefore determine that Rose will play strategy R1 and Colin can
+play either strategy C1 or C2.
 
 \section{Page 420: problem 1}\label{page-420-problem-1}
 

@@ -107,6 +107,8 @@ Rose & R1 & \multicolumn{1}{c}{10} & 10 \\
 \end{tabular}
 \end{table}
 
+Geometrically: 
+
 R1 has probability $p = x$, therefore the probability of R2 is $p=1-x$. 
 
 $V_{C1}$ $\leq$ 10x + 5(1-x) = 5x + 5      
@@ -114,7 +116,15 @@ $V_{C2}$ $\leq$ 10x + 0(1-x)= 10x
 $x \leq 1$      
 $x \geq 0$     
 
-```{r, tidy=TRUE, cache=TRUE, warning=FALSE, message=FALSE}
+```{r}
+library(knitr)
+x <- c(0, 1, 0, 1)
+A <- c(5, 10, 0, 10)
+kable(as.data.frame(cbind(x,A)))
+```
+
+
+```{r, fig.height=2, fig.width=6, cache=TRUE, warning=FALSE, message=FALSE}
 library(ggplot2)
 plotc <- ggplot(data.frame(x=c(0,1)), aes(x)) +
           stat_function(fun=function(x)5*x+5, geom="line", aes(colour = "C1")) +
@@ -126,14 +136,24 @@ plotc
 
 Both are maxed at x = 1, $V_{C1}$ = 10, $V_{C2}$ = 10.
 
-C1 has probability $p = x$, therefore the probability of C2 is $p=1-x$. 
+\newpage
 
-$V_{R1}$ = 10x + 10(1-x) = 10
-$V_{R2}$ = 5x + 0(1-x)= 5x
+R1 has probability $p = x$, therefore the probability of R2 is $p=1-x$. 
+
+$V_{R1}$ $\leq$ 10x + 10(1-x) = 10
+$V_{R2}$ $\leq$ 5x + 0(1-x)= 5x
 $x \leq 1$
 $x \geq 0$
 
-```{r, tidy=TRUE, cache=TRUE, message=TRUE, warning=TRUE}
+```{r}
+library(knitr)
+x <- c(0, 1, 0, 1)
+A <- c(10, 10, 0, 5)
+kable(as.data.frame(cbind(x,A)))
+```
+
+
+```{r,  cache=TRUE, message=TRUE, warning=TRUE, fig.height=2, fig.width=6}
 
 plotr <- ggplot(data.frame(x=c(0,1)), aes(x)) +
           stat_function(fun=function(x)5*x, geom="line", aes(colour = "R1")) +
@@ -142,27 +162,25 @@ plotr <- ggplot(data.frame(x=c(0,1)), aes(x)) +
           geom_vline(xintercept = 0)
 plotr
 ```
+\newpage
 
 Now we plot both strategies for Rose and Colin. 
 
-```{r, tidy=TRUE, cache=TRUE, message = TRUE, warning=TRUE}
-
+```{r,  cache=TRUE, message = TRUE, warning=TRUE , fig.height=3}
+library(ggplot2)
 plotrc <- ggplot(data.frame(x=c(0,1)), aes(x)) +
           stat_function(fun=function(x)5*x, geom="line", aes(colour = "R1")) +
           stat_function(fun=function(x)10, geom="line", aes(colour = "R2")) +
-          stat_function(fun=function(x)5*x+5, geom="line", aes(colour = "C1")) +
+          stat_function(fun=function(x)5*x + 5, geom="line", aes(colour = "C1")) +
           stat_function(fun=function(x)10*x, geom="line", aes(colour = "C2")) +
           geom_vline(xintercept = 1) + 
           geom_vline(xintercept = 0)
 plotrc
 ```
 
-R1 is a constant at 10, whereas, R2 is maxed at x = 1; $V_{R2}$ = 5. 
+$V_{R1}$ is a constant at 10, whereas, $V_{R2}$ is maxed at x = 1; $V_{R2}$ = 5. 
 
-Geometrically we can therefore determine that Rose will play strategy R1 and Colin can play either strategy 1 or 2. 
-
-Algebraically:
-
+We can therefore determine that Rose will play strategy R1 and Colin can play either strategy C1 or C2. 
 
 
 # Page 420: problem 1
