@@ -20,7 +20,7 @@ This week, we'll empirically verify Central Limit Theorem. We'll write code to r
 
 \newpage
 
-# (1) produce a sample of random variable
+# (1) Produce a sample of random variable
 
 First write a function that will produce a sample of random variable that is distributed as follows:
 
@@ -43,7 +43,7 @@ random()
 ```
 
 
-# (2) produce a sample of random variable
+# (2) Produce a sample of random variable
 
 Now, write a function that will produce a sample of random variable that is distributed as follows:
 
@@ -105,7 +105,7 @@ means.hist(30, PDF = random2)
 ```
 \newpage
 
-# (5) empirically verifying the Central Limit Theorem
+# (5) Empirically verifying the Central Limit Theorem
 
 Verify that as you set n to something like 10 or 20, each of the two PDFs produce normally distributed mean of samples, empirically verifying the Central Limit Theorem. Please play around with various values of n and you'll see that even for reasonably small sample sizes such as 10, Central Limit Theorem holds.
 
