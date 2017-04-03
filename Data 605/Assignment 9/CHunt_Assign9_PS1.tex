@@ -181,7 +181,7 @@ online session.
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.743576
+## [1] 0.650578
 \end{verbatim}
 
 \section{(2) Produce a sample of random
@@ -208,8 +208,10 @@ is distributed as follows:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.5226763
+## [1] 0.5838077
 \end{verbatim}
+
+\newpage
 
 \section{(3) Draw 1000 samples}\label{draw-1000-samples}
 
@@ -218,6 +220,11 @@ above two distributions and plot the resulting histograms. You should
 have one histogram for each PDF. See that it matches your understanding
 of these PDFs.
 
+\begin{quote}
+The histograms do match my understanding of the PDFs as I expect the
+values to be between 0 and 1 for both PDFs.
+\end{quote}
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{values <-}\StringTok{ }\KeywordTok{replicate}\NormalTok{(}\DecValTok{1000}\NormalTok{, }\KeywordTok{random}\NormalTok{())}
@@ -225,7 +232,7 @@ of these PDFs.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{CHunt_Assign9_PS1_PS2_files/figure-latex/unnamed-chunk-3-1.pdf}
+\includegraphics{CHunt_Assign9_PS1_files/figure-latex/unnamed-chunk-3-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -234,7 +241,9 @@ of these PDFs.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{CHunt_Assign9_PS1_PS2_files/figure-latex/unnamed-chunk-4-1.pdf}
+\includegraphics{CHunt_Assign9_PS1_files/figure-latex/unnamed-chunk-4-1.pdf}
+
+\newpage
 
 \section{(4) Function to take means and generate
 histogram}\label{function-to-take-means-and-generate-histogram}
@@ -267,7 +276,9 @@ function}\label{histogram-of-first-random-function}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{CHunt_Assign9_PS1_PS2_files/figure-latex/unnamed-chunk-6-1.pdf}
+\includegraphics{CHunt_Assign9_PS1_files/figure-latex/unnamed-chunk-6-1.pdf}
+
+\newpage
 
 \subsection{Histogram of second random
 function}\label{histogram-of-second-random-function}
@@ -278,7 +289,7 @@ function}\label{histogram-of-second-random-function}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{CHunt_Assign9_PS1_PS2_files/figure-latex/unnamed-chunk-7-1.pdf}
+\includegraphics{CHunt_Assign9_PS1_files/figure-latex/unnamed-chunk-7-1.pdf}
 \newpage
 
 \section{(5) Empirically verifying the Central Limit
@@ -290,13 +301,38 @@ the Central Limit Theorem. Please play around with various values of n
 and you'll see that even for reasonably small sample sizes such as 10,
 Central Limit Theorem holds.
 
+\begin{quote}
+It is true that the central limit theorem holds at very low values. Even
+at only 5 iterations we can see the normal distribution appearing.
+\end{quote}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{means.hist}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DataTypeTok{PDF =} \NormalTok{random)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{CHunt_Assign9_PS1_files/figure-latex/unnamed-chunk-8-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{means.hist}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DataTypeTok{PDF =} \NormalTok{random2)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{CHunt_Assign9_PS1_files/figure-latex/unnamed-chunk-8-2.pdf}
+
+\begin{quote}
+At the n = 10 suggestion the central limit theorem becomes very clear.
+\end{quote}
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{means.hist}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DataTypeTok{PDF =} \NormalTok{random)}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{CHunt_Assign9_PS1_PS2_files/figure-latex/unnamed-chunk-8-1.pdf}
+\includegraphics{CHunt_Assign9_PS1_files/figure-latex/unnamed-chunk-9-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -304,7 +340,7 @@ Central Limit Theorem holds.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{CHunt_Assign9_PS1_PS2_files/figure-latex/unnamed-chunk-8-2.pdf}
+\includegraphics{CHunt_Assign9_PS1_files/figure-latex/unnamed-chunk-9-2.pdf}
 
 
 \end{document}

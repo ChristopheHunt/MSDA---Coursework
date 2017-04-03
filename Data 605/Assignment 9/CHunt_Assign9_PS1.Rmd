@@ -27,7 +27,6 @@ First write a function that will produce a sample of random variable that is dis
 $f(x) = x, 0 \leq x \leq 1$    
 $f(x) = 2 - x, 1 < x \leq 2$   
 
-
 That is, when your function is called, it will return a random variable between 0 and 2 that is distributed according to the above PDF. Please note that this is not the same as writing a function and sampling uniformly from it. In the online session this week, I'll cover Sampling techniques. You will find it useful when you do the assignment for this week. In addition, as usual, there are one-liners in R that will give you samples from a function. We'll cover both of these approaches in the online session.
 
 ```{r}
@@ -63,9 +62,13 @@ random2()
 ```
 
 
+\newpage
+
 # (3) Draw 1000 samples 
 
 Draw 1000 samples (call your function 1000 times each) from each of the above two distributions and plot the resulting histograms. You should have one histogram for each PDF. See that it matches your understanding of these PDFs.
+
+> The histograms do match my understanding of the PDFs as I expect the values to be between 0 and 1 for both PDFs. 
 
 ```{r, fig.height=3}
 values <- replicate(1000, random())
@@ -76,6 +79,8 @@ hist(values)
 values <- replicate(1000, random2())
 hist(values)
 ```
+
+\newpage
 
 # (4) Function to take means and generate histogram
 
@@ -98,6 +103,8 @@ means.hist <- function(n, PDF){
 means.hist(30, PDF = random)
 ```
 
+\newpage
+
 ## Histogram of second random function
 
 ```{r, fig.height=3}
@@ -107,7 +114,17 @@ means.hist(30, PDF = random2)
 
 # (5) Empirically verifying the Central Limit Theorem
 
-Verify that as you set n to something like 10 or 20, each of the two PDFs produce normally distributed mean of samples, empirically verifying the Central Limit Theorem. Please play around with various values of n and you'll see that even for reasonably small sample sizes such as 10, Central Limit Theorem holds.
+Verify that as you set n to something like 10 or 20, each of the two PDFs produce normally distributed mean of samples, empirically verifying the Central Limit Theorem. Please play around with various values of n and you'll see that even for reasonably small sample sizes such as 10, Central Limit Theorem holds. 
+
+> It is true that the central limit theorem holds at very low values. Even at only 5 iterations we can see the normal distribution appearing. 
+
+```{r, fig.height=3}
+means.hist(5, PDF = random)
+means.hist(5, PDF = random2)
+```
+
+
+> At the n = 10 suggestion the central limit theorem becomes very clear. 
 
 ```{r, fig.height=3}
 means.hist(10, PDF = random)
