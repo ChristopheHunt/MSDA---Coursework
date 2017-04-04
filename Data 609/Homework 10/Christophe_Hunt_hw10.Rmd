@@ -1,0 +1,30 @@
+---
+title: "Homework 10"
+author: "Christophe Hunt"
+date: "April 3, 2017"
+output:
+  pdf_document:
+    fig_caption: yes
+    keep_tex: yes
+    includes:
+      in_header: header.tex
+    number_sections: yes
+    toc: yes
+    toc_depth: 2
+  html_document:
+    toc: yes
+    toc_depth: '2'
+always_allow_html: yes
+---
+
+\newpage
+
+# Page 469: problem 3
+
+# Page 478: problem 6
+
+# Page 481: problem 1
+
+# Page 522: problem 21
+
+# Page 522: problem 22
