@@ -123,8 +123,3 @@ C
 ```
 
 The total volume of oxygen after 5L has passed through a 1L flask is `r percent(C)`
-
-
-
-
-
