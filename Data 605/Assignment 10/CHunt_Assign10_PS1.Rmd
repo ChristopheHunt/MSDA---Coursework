@@ -52,7 +52,7 @@ r <- A %*% r
 r
 ```
 
-As we can see this matches $r_f$ from our notes. We should also address the dangling node for node 2. A simple solution is to replace the zero column with 1/N as per the following resource http://home.ie.cuhk.edu.hk/~wkshum/papers/pagerank.pdf.
+As we can see this matches $r_f$ from our notes. We should also address the dangling node for node 2. A simple solution is to replace the zero column with 1/N as per the following resource [http://home.ie.cuhk.edu.hk/~wkshum/papers/pagerank.pdf](http://home.ie.cuhk.edu.hk/~wkshum/papers/pagerank.pdf).
 
 ```{r, cache=TRUE}
 A2 <- A
