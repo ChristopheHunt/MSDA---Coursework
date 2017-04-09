@@ -28,6 +28,8 @@ For this directed graph, perform the following calculations in $R$.
 ## 1 
 Form the A matrix. Then, introduce decay and form the $B$ matrix as we did in the course notes.
 
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20605/Assignment%2010/matrix.PNG)
+
 ## 2 
 Start with a uniform rank vector r and perform power iterations on B till convergence. That is, compute the solution $r = B^n x r$. Attempt this for a sufficiently large $n$ so that $r$ actually converges.
 
