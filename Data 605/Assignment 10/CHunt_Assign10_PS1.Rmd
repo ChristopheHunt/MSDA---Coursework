@@ -146,7 +146,9 @@ power_int(B, 63, r)
 
 Although the order is different, the PageRank vector is similar to the vector obtained previously.
 
-```{r, cache=TRUE, fig.height=3.5, fig.width=6}
+\newpage
+
+```{r, cache=TRUE, fig.height=6, fig.width=6}
 igraph::plot.igraph(g)
 ```
 
