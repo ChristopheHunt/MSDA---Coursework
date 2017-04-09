@@ -29,6 +29,46 @@
             pdfborder={0 0 0},
             breaklinks=true}
 \urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{{#1}}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{{#1}}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\ImportTok}[1]{{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{{#1}}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{{#1}}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{{#1}}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{{#1}}}}
+\newcommand{\BuiltInTok}[1]{{#1}}
+\newcommand{\ExtensionTok}[1]{{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{{#1}}}
+\newcommand{\RegionMarkerTok}[1]{{#1}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{{#1}}}}
+\newcommand{\NormalTok}[1]{{#1}}
 \usepackage{graphicx,grffile}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
@@ -122,42 +162,146 @@ P (t) & 125 & 275 & 830 & 1200 & 1750 & 1650
 \subsection{\texorpdfstring{a. Make an estimate of \(M\) by graphing
 \(P(t)\).}{a. Make an estimate of M by graphing P(t).}}\label{a.-make-an-estimate-of-m-by-graphing-pt.}
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{t <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1814}\NormalTok{, }\DecValTok{1824}\NormalTok{, }\DecValTok{1834}\NormalTok{, }\DecValTok{1844}\NormalTok{, }\DecValTok{1854}\NormalTok{, }\DecValTok{1864}\NormalTok{)}
+\NormalTok{P.t <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{125}\NormalTok{, }\DecValTok{275}\NormalTok{, }\DecValTok{830}\NormalTok{, }\DecValTok{1200}\NormalTok{, }\DecValTok{1750}\NormalTok{, }\DecValTok{1650}\NormalTok{)}
+\NormalTok{df <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(}\KeywordTok{cbind}\NormalTok{(t, P.t))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(tidyverse)}
+
+\NormalTok{number_ticks <-}\StringTok{ }\NormalTok{function(n) \{}
+  \NormalTok{function(limits) }\KeywordTok{pretty}\NormalTok{(limits, n)}
+  \NormalTok{\} }\CommentTok{# http://stackoverflow.com/a/17257422/4153261}
+
+\KeywordTok{ggplot}\NormalTok{(df, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \NormalTok{t, }\DataTypeTok{y =} \NormalTok{P.t)) +}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{() +}
+\StringTok{  }\KeywordTok{scale_y_continuous}\NormalTok{(}\DataTypeTok{breaks =} \KeywordTok{number_ticks}\NormalTok{(}\DecValTok{15}\NormalTok{), }\DataTypeTok{limits =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{2000}\NormalTok{)) +}\StringTok{ }
+\StringTok{  }\KeywordTok{xlim}\NormalTok{(}\DecValTok{1800}\NormalTok{, }\DecValTok{1875}\NormalTok{) +}
+\StringTok{  }\KeywordTok{stat_smooth}\NormalTok{(}\DataTypeTok{method =} \StringTok{"lm"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Christophe_Hunt_hw10_files/figure-latex/unnamed-chunk-3-1.pdf}
+
+\begin{quote}
+Based on the above graph I would estimate the population limit at \(M\)
+= 1900.
+\end{quote}
+
 \subsection{\texorpdfstring{b. Plot ln{[}P/(M-P){]} against \(t\). If a
 logistic curve seems reasonable, estimate \(rM\) and
 \(t\)*.}{b. Plot ln{[}P/(M-P){]} against t. If a logistic curve seems reasonable, estimate rM and t*.}}\label{b.-plot-lnpm-p-against-t.-if-a-logistic-curve-seems-reasonable-estimate-rm-and-t.}
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{M <-}\StringTok{ }\DecValTok{1900}
+\NormalTok{ln.p <-}\StringTok{ }\KeywordTok{log}\NormalTok{(P.t/(M -}\StringTok{ }\NormalTok{P.t))}
+\NormalTok{df2 <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(}\KeywordTok{cbind}\NormalTok{(t,ln.p))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(df, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \NormalTok{t, }\DataTypeTok{y =} \NormalTok{ln.p)) +}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{() +}
+\StringTok{  }\KeywordTok{stat_smooth}\NormalTok{(}\DataTypeTok{method =} \StringTok{"lm"}\NormalTok{, }\DataTypeTok{se =} \OtherTok{FALSE}\NormalTok{) +}
+\StringTok{  }\KeywordTok{theme_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Christophe_Hunt_hw10_files/figure-latex/unnamed-chunk-5-1.pdf}
+
+\begin{quote}
+This graph result does approximate a straight line, thus we accept the
+assumptions of logistic growth. Therefore, lets estimate estimate \(rM\)
+and \(t\)*.
+\end{quote}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rM <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(ln.p ~}\StringTok{ }\NormalTok{t)$coefficients[}\StringTok{"t"}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\(rM\) = 0.1034121
+
+\begin{quote}
+\(t^*\) follows this equation: \(t* = \frac{-C}{rM}\)
+\end{quote}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{C <-}\StringTok{ }\KeywordTok{log}\NormalTok{(P.t[}\DecValTok{1}\NormalTok{]/(M -}\StringTok{ }\NormalTok{P.t[}\DecValTok{1}\NormalTok{]))-rM}
+\StringTok{`}\DataTypeTok{t*}\StringTok{`} \NormalTok{<-}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(-C/rM) +}\StringTok{ }\NormalTok{t[}\DecValTok{1}\NormalTok{]}
+\StringTok{`}\DataTypeTok{t*}\StringTok{`} 
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1840.657
+\end{verbatim}
+
+\(t^*= 1841\)
+
+\newpage
+
 \section{Page 478: problem 6}\label{page-478-problem-6}
 
 Suggest other phenomena for which the model described in the text might
-be used
+be used.
 
-\section{Page 481: problem 1}\label{page-481-problem-1}
-
-\subsection{\texorpdfstring{a. Using the estimate that \(d_a\) =
-0.054\(v^2\), where 0.054 has dimensions ft*hr\textsuperscript{2/Mi}2,
-show that the constant \(k\) in Equation (11.29) has the value 19.9
-ft/sec\^{}2.}{a. Using the estimate that d\_a = 0.054v\^{}2, where 0.054 has dimensions ft*hr2/Mi2, show that the constant k in Equation (11.29) has the value 19.9 ft/sec\^{}2.}}\label{a.-using-the-estimate-that-d_a-0.054v2-where-0.054-has-dimensions-fthr2mi2-show-that-the-constant-k-in-equation-11.29-has-the-value-19.9-ftsec2.}
-
-\subsection{\texorpdfstring{b. Using the data in Table 4.4, plot \(d_b\)
-in ft versuse v\^{}2/2 in ft\textsuperscript{2/sec}2 to estimate 1/\(k\)
-directly.}{b. Using the data in Table 4.4, plot d\_b in ft versuse v\^{}2/2 in ft2/sec2 to estimate 1/k directly.}}\label{b.-using-the-data-in-table-4.4-plot-d_b-in-ft-versuse-v22-in-ft2sec2-to-estimate-1k-directly.}
+\begin{quote}
+Ancedontally, I understand that a major utility cost of a building is
+the heating and cooling. Administering the correct ``dosage'' of heated
+air or cooled air to maintain a constant comfortable temparture would be
+a fiscal and pyschological benefit. By using the model it seems possible
+to tune the air volume to correct the internal temperature in the most
+effecient manner.
+\end{quote}
 
 \section{Page 522: problem 21}\label{page-522-problem-21}
 
-Oxygen flows through on tube into a liter flasks filled with air, and
-the mixture of oxygen and air (considered well stirred) escapes through
+Oxygen flows through a tube into a liter flask filled with air, and the
+mixture of oxygen and air (considered well stirred) escapes through
 another tube. Assuming that air contains 21\% oxygen, what percentage of
 oxygen will the flask contain after 5 L have passed through the intake
 tube?
 
-\section{Page 522: problem 22}\label{page-522-problem-22}
+\begin{quote}
+Reframing the question, 100\% Oxygen is flowing into a liter flask that
+is currently filled at 21\% oxygen and 79\% air, as the mixture leaves
+the liter flask the air is being replaced by oxygen so we are interested
+in the change in the volume of oxygen in the liter flask. We are further
+interested in the total oxygen volume after 5L has been passed through
+the 1L flask.
+\end{quote}
 
-If the average person breathes 20 times per minute, exhaling each time
-100 in\^{}3 of air containing 4\% carbon dioxide. Find the percentage of
-carbon dioxide in the air of a 10,000 ft\^{}3 closed room 1 hr after a
-class of 30 students enters. Assume that the air is fresh at the start,
-that the ventilators admit 1000 ft\^{}3 of fresh air per minute, and
-that the fresh air contains 0.04\% carbon dioxide.
+\(V'C_r = V'C + V_r + V_r \frac{dC}{dt}\)
+
+\(Cr = 1, C_0 = .21, V_r = 1\)
+
+\(\frac{V^1}{V_r}t = ln\frac{C_r-C}{C_r-C_0} = ln\frac{1-C}{1-0.21}\)
+
+\(C = 1 - 0.79e^{\frac{-v^1t}{v_r}}\)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{C <-}\StringTok{ }\DecValTok{1} \NormalTok{-}\StringTok{ }\FloatTok{0.79}\NormalTok{*}\KeywordTok{exp}\NormalTok{(-}\DecValTok{5}\NormalTok{)}
+\NormalTok{C}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.994677
+\end{verbatim}
+
+The total volume of oxygen after 5L has passed through a 1L flask is
+99.5\%
 
 
 \end{document}

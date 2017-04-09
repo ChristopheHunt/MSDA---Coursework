@@ -19,6 +19,7 @@ always_allow_html: yes
 
 ```{r, include = FALSE}
 library(tidyverse)
+library(scales)
 ```
 
 \newpage
@@ -45,38 +46,85 @@ P.t <- c(125, 275, 830, 1200, 1750, 1650)
 df <- as.data.frame(cbind(t, P.t))
 ```
 
-```{r}
+```{r, fig.height=3, cache=TRUE}
 library(tidyverse)
-number_ticks <- function(n) {function(limits) pretty(limits, n)} # http://stackoverflow.com/a/17257422/4153261
+
+number_ticks <- function(n) {
+  function(limits) pretty(limits, n)
+  } # http://stackoverflow.com/a/17257422/4153261
+
 ggplot(df, aes(x = t, y = P.t)) +
   geom_point() +
   scale_y_continuous(breaks = number_ticks(15), limits = c(0, 2000)) + 
-  xlim(1800, 1900) 
+  xlim(1800, 1875) +
+  stat_smooth(method = "lm")
 ```
 
-> Based on the above graph I would estimate $M$ = 2000. 
+> Based on the above graph I would estimate the population limit at $M$ = 1900. 
 
 ## b. Plot ln[P/(M-P)] against $t$. If a logistic curve seems reasonable, estimate $rM$ and $t$*.  
 
 ```{r}
-
+M <- 1900
+ln.p <- log(P.t/(M - P.t))
+df2 <- as.data.frame(cbind(t,ln.p))
 ```
 
+```{r, fig.height=3, cache=TRUE}
+ggplot(df, aes(x = t, y = ln.p)) +
+  geom_point() +
+  stat_smooth(method = "lm", se = FALSE) +
+  theme_minimal()
+```
+
+> This graph result does approximate a straight line, thus we accept the assumptions of logistic growth. Therefore, lets estimate estimate $rM$ and $t$*. 
+
+```{r}
+rM <- lm(ln.p ~ t)$coefficients["t"]
+```
+
+$rM$ = `r rM`
+
+> $t^*$ follows this equation: $t* = \frac{-C}{rM}$
+
+```{r}
+C <- log(P.t[1]/(M - P.t[1]))-rM
+`t*` <- as.numeric(-C/rM) + t[1]
+`t*` 
+```
+
+$t^*= 1841$ 
+ 
+\newpage
 
 # Page 478: problem 6
 
-Suggest other phenomena for which the model described in the text might be used
+Suggest other phenomena for which the model described in the text might be used.
 
-# Page 481: problem 1
-
-## a. Using the estimate that $d_a$ = 0.054$v^2$, where 0.054 has dimensions ft*hr^2/Mi^2, show that the constant $k$ in Equation (11.29) has the value 19.9 ft/sec^2. 
-
-## b. Using the data in Table 4.4, plot $d_b$ in ft versuse v^2/2 in ft^2/sec^2 to estimate 1/$k$ directly. 
+> Ancedontally, I understand that a major utility cost of a building is the heating and cooling. Administering the correct "dosage" of heated air or cooled air to maintain a constant comfortable temparture would be a fiscal and pyschological benefit. By using the model it seems possible to tune the air volume to correct the internal temperature in the most effecient manner. 
 
 # Page 522: problem 21
 
-Oxygen flows through on tube into a liter flasks filled with air, and the mixture of oxygen and air (considered well stirred) escapes through another tube. Assuming that air contains 21% oxygen, what percentage of oxygen will the flask contain after 5 L have passed through the intake tube? 
+Oxygen flows through a tube into a liter flask filled with air, and the mixture of oxygen and air (considered well stirred) escapes through another tube. Assuming that air contains 21% oxygen, what percentage of oxygen will the flask contain after 5 L have passed through the intake tube? 
 
-# Page 522: problem 22
+> Reframing the question, 100% Oxygen is flowing into a liter flask that is currently filled at 21% oxygen and 79% air, as the mixture leaves the liter flask the air is being replaced by oxygen so we are interested in the change in the volume of oxygen in the liter flask. We are further interested in the total oxygen volume after 5L has been passed through the 1L flask. 
 
-If the average person breathes 20 times per minute, exhaling each time 100 in^3 of air containing 4% carbon dioxide. Find the percentage of carbon dioxide in the air of a 10,000 ft^3 closed room 1 hr after a class of 30 students enters. Assume that the air is fresh at the start, that the ventilators admit 1000 ft^3 of fresh air per minute, and that the fresh air contains 0.04% carbon dioxide. 
+$V'C_r = V'C + V_r + V_r \frac{dC}{dt}$
+
+$Cr = 1, C_0 = .21, V_r = 1$   
+
+$\frac{V^1}{V_r}t =  ln\frac{C_r-C}{C_r-C_0} = ln\frac{1-C}{1-0.21}$
+
+$C = 1 - 0.79e^{\frac{-v^1t}{v_r}}$
+
+```{r}
+C <- 1 - 0.79*exp(-5)
+C
+```
+
+The total volume of oxygen after 5L has passed through a 1L flask is `r percent(C)`
+
+
+
+
+
