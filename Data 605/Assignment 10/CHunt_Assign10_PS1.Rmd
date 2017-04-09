@@ -2,12 +2,26 @@
 title: "Homework 10"
 author: "Christophe Hunt"
 date: "April 3, 2017"
-output: pdf_document
+output:
+  pdf_document:
+    fig_caption: yes
+    keep_tex: yes
+    includes:
+      in_header: header.tex
+    number_sections: yes
+    toc: yes
+    toc_depth: 2
+  html_document:
+    toc: yes
+    toc_depth: '2'
+always_allow_html: yes
 ---
 
 # 1. Problem Set
 
 Playing with PageRank You'll verify for yourself that PageRank works by performing calculations on a small universe of web pages. Let's use the 6 page universe that we had in the course notes.
+
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20605/Assignment%2010/PS1.PNG)
 
 For this directed graph, perform the following calculations in $R$.
 
