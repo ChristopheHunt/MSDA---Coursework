@@ -90,10 +90,10 @@ i <- i + 1
 i
 ```
 
-It appears that r converges at `r i`. 
+It appears that r converges at n = `r i`. 
 
 ```{r}
-power_int(B, 63, r)
+power_int(B, 64, r)
 ```
 
 \newpage
