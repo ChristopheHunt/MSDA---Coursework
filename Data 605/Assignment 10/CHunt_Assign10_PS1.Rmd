@@ -20,6 +20,8 @@ always_allow_html: yes
 ```{r, include = FALSE}
 library(knitr)
 library(printr)
+library(expm) 
+library(matrixcalc)
 ```
 
 # 1. Problem Set
@@ -33,50 +35,89 @@ For this directed graph, perform the following calculations in $R$.
 ## 1 
 Form the A matrix. Then, introduce decay and form the $B$ matrix as we did in the course notes.
 
-![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20605/Assignment%2010/matrix.PNG)
-
 ```{r}
-A <- matrix(data = c(0,0.5,0.5,0,0,0, 
-                     0,0,0,0,0,0,
-                     0.33,0.33,0,0,0.33,0,
-                     0,0,0,0,0.5,0.5,
-                     0,0,0,0.5,0,0.5,
-                     0,0,0,1,0,0), nrow = 6,  byrow = TRUE)
+A <- matrix(data = c(0, 0,  1/3,  0,   0, 0, 
+                          1/2, 0,  1/3,  0,   0, 0,
+                          1/2, 0,  0,    0,   0, 0,
+                           0, 0,  0,    0,   1/2, 1,
+                           0, 0,  1/3, 1/2,   0, 0,
+                           0, 0,  0,   1/2,  1/2, 0), 
+                  nrow = 6,  byrow = TRUE)
 A
 ```
 
-> Now we introduce decay to create the $B$ matrix using the equation: $B = 0.85 * A + \frac{0.15}{n}$
+```{r, cache=TRUE}
+r <- as.matrix(c(1/6, 1/6, 1/6, 1/6, 1/6, 1/6))
+r <- A %*% r 
+r
+```
+
+As we can see this matches $r_f$ from our notes. We should also address the dangling node for node 2. A simple solution is to replace the zero column with 1/N as per the following resource http://home.ie.cuhk.edu.hk/~wkshum/papers/pagerank.pdf.
+
+```{r, cache=TRUE}
+A2 <- A
+A2[,2] <- 1/nrow(A)
+A2
+```
+
+\newpage
+
+Now we introduce decay to create the $B$ matrix using the equation: $B = 0.85 * A + \frac{0.15}{n}$
 
 ```{r}
-B <- 0.85 * A + .15 / nrow(A)
+B <- (0.85 * A2) + (.15 / nrow(A2))
 B
 ```
 
 ## 2 
 
-Start with a uniform rank vector r and perform power iterations on B till convergence. That is, compute the solution $r = B^n * r$. Attempt this for a sufficiently large $n$ so that $r$ actually converges.
+Start with a uniform rank vector r and perform power iterations on $B$ till convergence. That is, compute the solution $r = B^n * r$. Attempt this for a sufficiently large $n$ so that $r$ actually converges.
 
 > Following our notes, we assume equal probability of a user clicking a link so we start with the rank vector r is $r = (.167, .167, .167, .167, .167, .167)$
 
 ```{r}
-library(expm) 
-r <- c(.167, .167, .167, .167, .167, .167)
-n <- 40
-(B %^% n) %*% r
+r <- c(1/6, 1/6, 1/6, 1/6, 1/6, 1/6)
 
-A %*% r
+power_int <- function(M, n, x){
+             x <- matrix.power(M, n) %*% r
+             return(as.matrix(x))
+             }
 
+i <- 1 
+while(all(power_int(B, i, r) != power_int(B, i-1, r))){
+i <- i + 1 
+} 
+i
 ```
 
+It appears that r converges at `r i`. 
 
+```{r}
+power_int(B, 63, r)
+```
+
+\newpage
 
 ## 3 
 
 Compute the eigen-decomposition of $B$ and verify that you indeed get an eigenvalue of 1 as the largest eigenvalue and that its corresponding eigenvector is the same vector that you obtained in the previous power iteration method. Further, this eigenvector has all positive entries and it sums to 1.
 
-```{r}
-
+```{r, cache = TRUE, warning=FALSE, message=FALSE}
+B.e <- eigen(B)
+max(as.numeric(B.e$values))
 ```
+
+The largest eigenvalue is 1.
+
+```{r, cache = TRUE, warning=FALSE, message=FALSE}
+x <- as.matrix(as.numeric(B.e$vectors[,1]))
+1/sum(x) * x
+```
+
+The results show that the vector is the same as obtaind in the previous power method. 
+
+Furthermore, the sum of the vector is `r sum(1/sum(x) * x)` which is equal to 1. 
+
 
 \newpage
 
@@ -86,21 +127,26 @@ Compute the eigen-decomposition of $B$ and verify that you indeed get an eigenva
 library(igraph)
 ```
 
-Use the $graph$ package in R and its $page.rank$ method to compute the Page Rank of the graph as given in A. Note that you don't need to apply decay. The package starts with a connected graph and applies decay internally. Verify that you do get the same PageRank vector as the two approaches above. Please document all your experiments in an R Markdown document.
+Use the $igraph$ package in R and its $page.rank$ method to compute the Page Rank of the graph as given in A. Note that you don't need to apply decay. The package starts with a connected graph and applies decay internally. Verify that you do get the same PageRank vector as the two approaches above. Please document all your experiments in an R Markdown document.
 
 ```{r, warning=FALSE, message=FALSE}
 library(igraph)
-df <- data.frame(from=c(1,1,3,3,3,4,4,5,5,6),
+df <- data.frame(from = c(1,1,3,3,3,4,4,5,5,6),
                  to = c(2,3,1,2,5,5,6,4,6,4),
-             weight = c(1,1,1,1,1,1,1,1,1,1))
+                 weight = c(1,1,1,1,1,1,1,1,1,1))
 g <- graph.data.frame(df, directed = TRUE)
-results <- page_rank(g, algo = c("power"))
+results <- page_rank(g)
 v <- matrix(results$vector, ncol = 1)
 v
-
 ```
 
-```{r, cache=TRUE}
+```{r}
+power_int(B, 63, r)
+```
+
+Although the order is different, the PageRank vector is similar to the vector obtained previously.
+
+```{r, cache=TRUE, fig.height=3.5, fig.width=6}
 igraph::plot.igraph(g)
 ```
 
