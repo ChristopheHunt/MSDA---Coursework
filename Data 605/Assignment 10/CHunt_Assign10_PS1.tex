@@ -69,6 +69,7 @@
 \newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{{#1}}}
 \newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{{#1}}}}
 \newcommand{\NormalTok}[1]{{#1}}
+\usepackage{longtable,booktabs}
 \usepackage{graphicx,grffile}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
@@ -165,11 +166,124 @@ did in the course notes.
 \caption{}
 \end{figure}
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{A <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\DataTypeTok{data =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\FloatTok{0.5}\NormalTok{,}\FloatTok{0.5}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{, }
+                     \DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}
+                     \FloatTok{0.33}\NormalTok{,}\FloatTok{0.33}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\FloatTok{0.33}\NormalTok{,}\DecValTok{0}\NormalTok{,}
+                     \DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\FloatTok{0.5}\NormalTok{,}\FloatTok{0.5}\NormalTok{,}
+                     \DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\FloatTok{0.5}\NormalTok{,}\DecValTok{0}\NormalTok{,}\FloatTok{0.5}\NormalTok{,}
+                     \DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{), }\DataTypeTok{nrow =} \DecValTok{6}\NormalTok{,  }\DataTypeTok{byrow =} \OtherTok{TRUE}\NormalTok{)}
+\NormalTok{A}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}rrrrrr@{}}
+\toprule
+0.00 & 0.50 & 0.5 & 0.0 & 0.00 & 0.0\tabularnewline
+0.00 & 0.00 & 0.0 & 0.0 & 0.00 & 0.0\tabularnewline
+0.33 & 0.33 & 0.0 & 0.0 & 0.33 & 0.0\tabularnewline
+0.00 & 0.00 & 0.0 & 0.0 & 0.50 & 0.5\tabularnewline
+0.00 & 0.00 & 0.0 & 0.5 & 0.00 & 0.5\tabularnewline
+0.00 & 0.00 & 0.0 & 1.0 & 0.00 & 0.0\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{quote}
+Now we introduce decay to create the \(B\) matrix using the equation:
+\(B = 0.85 * A + \frac{0.15}{n}\)
+\end{quote}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{B <-}\StringTok{ }\FloatTok{0.85} \NormalTok{*}\StringTok{ }\NormalTok{A +}\StringTok{ }\NormalTok{.}\DecValTok{15} \NormalTok{/}\StringTok{ }\KeywordTok{nrow}\NormalTok{(A)}
+\NormalTok{B}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}rrrrrr@{}}
+\toprule
+0.0250 & 0.4500 & 0.450 & 0.025 & 0.0250 & 0.025\tabularnewline
+0.0250 & 0.0250 & 0.025 & 0.025 & 0.0250 & 0.025\tabularnewline
+0.3055 & 0.3055 & 0.025 & 0.025 & 0.3055 & 0.025\tabularnewline
+0.0250 & 0.0250 & 0.025 & 0.025 & 0.4500 & 0.450\tabularnewline
+0.0250 & 0.0250 & 0.025 & 0.450 & 0.0250 & 0.450\tabularnewline
+0.0250 & 0.0250 & 0.025 & 0.875 & 0.0250 & 0.025\tabularnewline
+\bottomrule
+\end{longtable}
+
 \subsection{2}\label{section-1}
 
 Start with a uniform rank vector r and perform power iterations on B
-till convergence. That is, compute the solution \(r = B^n x r\). Attempt
+till convergence. That is, compute the solution \(r = B^n * r\). Attempt
 this for a sufficiently large \(n\) so that \(r\) actually converges.
+
+\begin{quote}
+Following our notes, we assume equal probability of a user clicking a
+link so we start with the rank vector r is
+\(r = (.167, .167, .167, .167, .167, .167)\)
+\end{quote}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(expm) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: package 'expm' was built under R version 3.3.3
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: Matrix
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'expm'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:Matrix':
+## 
+##     expm
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{r <-}\StringTok{ }\KeywordTok{c}\NormalTok{(.}\DecValTok{167}\NormalTok{, .}\DecValTok{167}\NormalTok{, .}\DecValTok{167}\NormalTok{, .}\DecValTok{167}\NormalTok{, .}\DecValTok{167}\NormalTok{, .}\DecValTok{167}\NormalTok{)}
+\NormalTok{n <-}\StringTok{ }\DecValTok{40}
+\NormalTok{(B %^%}\StringTok{ }\NormalTok{n) %*%}\StringTok{ }\NormalTok{r}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}r@{}}
+\toprule
+0.0100757\tabularnewline
+0.0026836\tabularnewline
+0.0138653\tabularnewline
+0.0251686\tabularnewline
+0.0251686\tabularnewline
+0.0251686\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{A %*%}\StringTok{ }\NormalTok{r}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}r@{}}
+\toprule
+0.16700\tabularnewline
+0.00000\tabularnewline
+0.16533\tabularnewline
+0.16700\tabularnewline
+0.16700\tabularnewline
+0.16700\tabularnewline
+\bottomrule
+\end{longtable}
 
 \subsection{3}\label{section-2}
 
@@ -179,11 +293,13 @@ eigenvector is the same vector that you obtained in the previous power
 iteration method. Further, this eigenvector has all positive entries and
 it sums to 1.
 
+\newpage
+
 \subsection{4}\label{section-3}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(graph)}
+\KeywordTok{library}\NormalTok{(igraph)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -193,6 +309,38 @@ apply decay. The package starts with a connected graph and applies decay
 internally. Verify that you do get the same PageRank vector as the two
 approaches above. Please document all your experiments in an R Markdown
 document.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(igraph)}
+\NormalTok{df <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{from=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{6}\NormalTok{),}
+                 \DataTypeTok{to =} \KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{6}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{6}\NormalTok{,}\DecValTok{4}\NormalTok{),}
+             \DataTypeTok{weight =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{))}
+\NormalTok{g <-}\StringTok{ }\KeywordTok{graph.data.frame}\NormalTok{(df, }\DataTypeTok{directed =} \OtherTok{TRUE}\NormalTok{)}
+\NormalTok{results <-}\StringTok{ }\KeywordTok{page_rank}\NormalTok{(g, }\DataTypeTok{algo =} \KeywordTok{c}\NormalTok{(}\StringTok{"power"}\NormalTok{))}
+\NormalTok{v <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(results$vector, }\DataTypeTok{ncol =} \DecValTok{1}\NormalTok{)}
+\NormalTok{v}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}r@{}}
+\toprule
+0.0395097\tabularnewline
+0.0440479\tabularnewline
+0.3705699\tabularnewline
+0.2052394\tabularnewline
+0.2833665\tabularnewline
+0.0572665\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{igraph::}\KeywordTok{plot.igraph}\NormalTok{(g)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{CHunt_Assign10_PS1_files/figure-latex/unnamed-chunk-8-1.pdf}
 
 
 \end{document}

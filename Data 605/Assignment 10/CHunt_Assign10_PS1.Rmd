@@ -17,6 +17,11 @@ output:
 always_allow_html: yes
 ---
 
+```{r, include = FALSE}
+library(knitr)
+library(printr)
+```
+
 # 1. Problem Set
 
 Playing with PageRank You'll verify for yourself that PageRank works by performing calculations on a small universe of web pages. Let's use the 6 page universe that we had in the course notes.
@@ -30,16 +35,72 @@ Form the A matrix. Then, introduce decay and form the $B$ matrix as we did in th
 
 ![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20605/Assignment%2010/matrix.PNG)
 
+```{r}
+A <- matrix(data = c(0,0.5,0.5,0,0,0, 
+                     0,0,0,0,0,0,
+                     0.33,0.33,0,0,0.33,0,
+                     0,0,0,0,0.5,0.5,
+                     0,0,0,0.5,0,0.5,
+                     0,0,0,1,0,0), nrow = 6,  byrow = TRUE)
+A
+```
+
+> Now we introduce decay to create the $B$ matrix using the equation: $B = 0.85 * A + \frac{0.15}{n}$
+
+```{r}
+B <- 0.85 * A + .15 / nrow(A)
+B
+```
+
 ## 2 
-Start with a uniform rank vector r and perform power iterations on B till convergence. That is, compute the solution $r = B^n x r$. Attempt this for a sufficiently large $n$ so that $r$ actually converges.
+
+Start with a uniform rank vector r and perform power iterations on B till convergence. That is, compute the solution $r = B^n * r$. Attempt this for a sufficiently large $n$ so that $r$ actually converges.
+
+> Following our notes, we assume equal probability of a user clicking a link so we start with the rank vector r is $r = (.167, .167, .167, .167, .167, .167)$
+
+```{r}
+library(expm) 
+r <- c(.167, .167, .167, .167, .167, .167)
+n <- 40
+(B %^% n) %*% r
+
+A %*% r
+
+```
+
+
 
 ## 3 
+
 Compute the eigen-decomposition of $B$ and verify that you indeed get an eigenvalue of 1 as the largest eigenvalue and that its corresponding eigenvector is the same vector that you obtained in the previous power iteration method. Further, this eigenvector has all positive entries and it sums to 1.
+
+```{r}
+
+```
+
+\newpage
 
 ## 4
 
 ```{r, warning=FALSE, message=FALSE}
-library(graph)
+library(igraph)
 ```
 
 Use the $graph$ package in R and its $page.rank$ method to compute the Page Rank of the graph as given in A. Note that you don't need to apply decay. The package starts with a connected graph and applies decay internally. Verify that you do get the same PageRank vector as the two approaches above. Please document all your experiments in an R Markdown document.
+
+```{r, warning=FALSE, message=FALSE}
+library(igraph)
+df <- data.frame(from=c(1,1,3,3,3,4,4,5,5,6),
+                 to = c(2,3,1,2,5,5,6,4,6,4),
+             weight = c(1,1,1,1,1,1,1,1,1,1))
+g <- graph.data.frame(df, directed = TRUE)
+results <- page_rank(g, algo = c("power"))
+v <- matrix(results$vector, ncol = 1)
+v
+
+```
+
+```{r, cache=TRUE}
+igraph::plot.igraph(g)
+```
+
