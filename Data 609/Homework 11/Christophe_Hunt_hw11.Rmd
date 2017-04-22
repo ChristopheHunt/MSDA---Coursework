@@ -1,0 +1,28 @@
+---
+title: "Homework 12"
+author: "Christophe Hunt"
+date: "April 22, 2017"
+output:
+  pdf_document:
+    fig_caption: yes
+    keep_tex: yes
+    includes:
+      in_header: header.tex
+    number_sections: yes
+    toc: yes
+    toc_depth: 2
+  html_document:
+    toc: yes
+    toc_depth: '2'
+always_allow_html: yes
+---
+
+# Page 529: problem 1
+
+# Page 529: problem 6
+
+# Page 536: problem 7
+
+# Page 546: problem 1
+
+# Page 566: problem 1
