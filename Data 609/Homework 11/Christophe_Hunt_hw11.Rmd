@@ -64,12 +64,14 @@ $\frac{d^2f(y)}{dy^2} = \frac{d\frac{ay^{a-1}-y^ab}{e^{by}}}{dy}$
 $\frac{d^2f(y)}{dy^2} = \frac{e^{by}\{a(a-1)y^{a-2}-ay{a-1}\}-(ay^{a-1}-y^a)be^{by}}{e^{2by}}$
 
 
+Substitute the value of 0 :
 
-The function $f(y) = \frac{y^a}{e^{by}}$ has first derivative:     
-$f'(y) = y^{a-1}e^{-by}(a-by)$ 
-$f'(y) = \frac{d}{dy}(\frac{y^a}{e^{by}})$        
-$f'(y) = y^a(\frac{d}{dy}(e^{-by})) + e^{-by}(\frac{d}{dy}(y^a))$     
-$f'(y) = \frac{\frac{d}{dy}(y^a)}{e^{by}} + \frac{\frac{d}{dy}(-(by))}{e^{by}}ya$      
-$f'(y) = \frac{\frac{d}{dy}(y^a)}{e^{by}} + \frac{-b\frac{d}{dy}(y)ya}{e^{by}}$       
-$f'(y) = \frac{\frac{d}{dy}(y^a)}{e^{by}} + \frac{1by^a}{e^{by}}$      
-$f'(y) = \frac{by^a}{e^{by}} + \frac{ay^{a-1}}{e^{by}}$      
+$\frac{d^2f(y)}{dy^2} = 0$
+
+Substitute the value of $y=\frac{a}{b}$
+
+$\frac{d^2f(y)}{dy^2} = \frac{(\frac{a}{b})^{a-2}x-a}{e^a}$
+
+
+As $a$ and $b$ are positive constants, the second derivative is less than zero and hence it is poroved that $y=\frac{a}{b}$ is a unique critical point that yields the relative maximum.
+
