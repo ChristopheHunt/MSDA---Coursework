@@ -17,12 +17,42 @@ output:
 always_allow_html: yes
 ---
 
+\newpage
+
 # Page 529: problem 1
+
+Verify that the given function pair is a solution to the first-order system. 
+
+$x = -e^t$, $y = e^t$       
+$\frac{dx}{dt} = -y$, $\frac{dy}{dt} = -x$      
+
+$\frac{dx}{dt} = \frac{d}{dt}(-e^t) = e^t = y$ ; $\frac{dx}{dt} = -y$   
+
+$\frac{dy}{dt} = \frac{d}{dt}(e^t) = -e^t = x$ ; $\frac{dy}{dt} = -x$   
+
+\newpage
 
 # Page 529: problem 6
 
-# Page 536: problem 7
+Find and classify the rest points of the given autonomous system. 
+
+$\frac{dx}{dt} = -(y-1)$, $\frac{dy}{dt} = x-2$
+
+The rest point of the system is a point in the phase plane for which $f(x,y) = 0 and g(x,y) = 0$, then both the derivatives $\frac{dx}{dt} = 0$ and $\frac{dy}{dt}= 0$. 
+
+when $y = 1$, $\frac{dx}{dt} = -(1-1)$; $\frac{dx}{dt}= 0$    
+when $x = 2$, $\frac{dy}{dt} = 2 - 2$; $\frac{dy}{dt} = 0$   
+
+$(2,1)$ is the rest point of the autonomous system $\frac{dx}{dt} = -(y-1)$, $\frac{dy}{dt} = x-2$   
 
 # Page 546: problem 1
 
+Apply the first and second derivative tests to the function 
+
+$f(y) = y^a/e^{by}$ to show that $f(y) = y^a/e^{by}$
+
+
 # Page 566: problem 1
+
+Use Euler's method to solve the first-order system subject to the specificed intial conditions. Use the given step size $\Delta{t}$ and calculate the first three approximateions $(x_1, y_1), (x_2, y_2), and (x_3, y_3)$. Then repeat your calculations for $\Delta t/2$. Compare your approximations with the values of the given analytic solutions
+

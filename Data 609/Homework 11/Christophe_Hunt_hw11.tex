@@ -1,0 +1,153 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Homework 12},
+            pdfauthor={Christophe Hunt},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+  \title{Homework 12}
+  \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+  \author{Christophe Hunt}
+  \preauthor{\centering\large\emph}
+  \postauthor{\par}
+  \predate{\centering\large\emph}
+  \postdate{\par}
+  \date{April 22, 2017}
+
+\usepackage{relsize}
+\usepackage{setspace}
+\usepackage{amsmath,amsfonts,amsthm}
+\usepackage[sfdefault]{roboto}
+\usepackage[T1]{fontenc}
+\usepackage{float}
+\usepackage{multirow}
+\usepackage{mathtools}
+\usepackage{tikz}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\newpage
+
+\section{Page 529: problem 1}\label{page-529-problem-1}
+
+Verify that the given function pair is a solution to the first-order
+system.
+
+\(x = -e^t\), \(y = e^t\)\\
+\(\frac{dx}{dt} = -y\), \(\frac{dy}{dt} = -x\)
+
+\(\frac{dx}{dt} = \frac{d}{dt}(-e^t) = e^t = y\) ;
+\(\frac{dx}{dt} = -y\)
+
+\(\frac{dy}{dt} = \frac{d}{dt}(e^t) = -e^t = x\) ;
+\(\frac{dy}{dt} = -x\)
+
+\newpage
+
+\section{Page 529: problem 6}\label{page-529-problem-6}
+
+Find and classify the rest points of the given autonomous system.
+
+\(\frac{dx}{dt} = -(y-1)\), \(\frac{dy}{dt} = x-2\)
+
+The rest point of the system is a point in the phase plane for which
+\(f(x,y) = 0 and g(x,y) = 0\), then both the derivatives
+\(\frac{dx}{dt} = 0\) and \(\frac{dy}{dt}= 0\).
+
+when \(y = 1\), \(\frac{dx}{dt} = -(1-1)\); \(\frac{dx}{dt}= 0\)\\
+when \(x = 2\), \(\frac{dy}{dt} = 2 - 2\); \(\frac{dy}{dt} = 0\)
+
+\((2,1)\) is the rest point of the autonomous system
+\(\frac{dx}{dt} = -(y-1)\), \(\frac{dy}{dt} = x-2\)
+
+\section{Page 546: problem 1}\label{page-546-problem-1}
+
+Apply the first and second derivative tests to the function
+
+\(f(y) = y^a/e^{by}\) to show that \(f(y) = y^a/e^{by}\)
+
+\section{Page 566: problem 1}\label{page-566-problem-1}
+
+Use Euler's method to solve the first-order system subject to the
+specificed intial conditions. Use the given step size \(\Delta{t}\) and
+calculate the first three approximateions
+\((x_1, y_1), (x_2, y_2), and (x_3, y_3)\). Then repeat your
+calculations for \(\Delta t/2\). Compare your approximations with the
+values of the given analytic solutions
+
+
+\end{document}
