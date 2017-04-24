@@ -2,7 +2,19 @@
 title: "Assignment 11"
 author: "Christophe Hunt"
 date: "April 23, 2017"
-output: pdf_document
+output:
+  pdf_document:
+    fig_caption: yes
+    keep_tex: yes
+    includes:
+      in_header: header.tex
+    number_sections: yes
+    toc: yes
+    toc_depth: 2
+  html_document:
+    toc: yes
+    toc_depth: '2'
+always_allow_html: yes
 ---
 
 ```{r, include = FALSE}
@@ -10,18 +22,18 @@ library(stargazer)
 library(tidyverse)
 ```
 
-Using R's lm function, perform regression analysis and measure the significance of the independent variables for the following two data sets. 
+Using R's lm function, perform regression analysis and measure the significance of the independent variables for the following two data sets.
 
 In the first case, you are evaluating the statement that we hear that Maximum Heart Rate of a person is related to their age by the following equation:
 
-MaxHR = 220 - Age  
+MaxHR = 220 - Age
 
 You have been given the following sample:
 
-Age 18 23 25 35 65 54 34 56 72 19 23 42 18 39 37     
-MaxHR 202 186 187 180 156 169 174 172 153 199 193 174 198 183 178  
+Age 18 23 25 35 65 54 34 56 72 19 23 42 18 39 37
+MaxHR 202 186 187 180 156 169 174 172 153 199 193 174 198 183 178
 
-Perform a linear regression analysis fitting the Max Heart Rate to Age using the lm function in R. What is the resulting equation? 
+Perform a linear regression analysis fitting the Max Heart Rate to Age using the lm function in R. What is the resulting equation?
 
 ```{r, results='asis', cache = TRUE}
 library(stargazer)
@@ -31,13 +43,13 @@ fit <- lm(MaxHR~Age)
 stargazer(fit, header = FALSE)
 ```
 
-Is the effect of Age on Max HR significant? 
+Is the effect of Age on Max HR significant?
 
-> Yes, the effect of Age on MaxH is significant. We see the p<0.01 for Age which indicates that it is indeed signficiant. We would say anything with a p<0.05 is typically significant (depends on the case). 
+> Yes, the effect of Age on MaxH is significant. We see the p<0.01 for Age which indicates that it is indeed signficiant. We would say anything with a p<0.05 is typically significant (depends on the case).
 
-What is the significance level? 
+What is the significance level?
 
-> The signficance level is p<0.01, the exact value is as follows. 
+> The signficance level is p<0.01, the exact value is as follows.
 
 ```{r , cache = TRUE}
 options(scipen = 999)
@@ -46,7 +58,7 @@ x$`Pr(>F)`[1]
 ```
 
 
-Please also plot the fitted relationship between Max HR and Age. 
+Please also plot the fitted relationship between Max HR and Age.
 
 ```{r, cache = TRUE}
 plot(MaxHR~Age)
@@ -54,9 +66,9 @@ plot(MaxHR~Age)
 
 \newpage
 
-Using the Auto data set from Assignment 5 (also attached here) perform a Linear Regression analysis using mpg as the dependent variable and the other 4 (displacement, horse-power, weight, acceleration) as independent variables. 
+Using the Auto data set from Assignment 5 (also attached here) perform a Linear Regression analysis using mpg as the dependent variable and the other 4 (displacement, horse-power, weight, acceleration) as independent variables.
 
-What is the final linear regression fit equation? 
+What is the final linear regression fit equation?
 
 ```{r, cache = TRUE}
 library(tidyverse)
@@ -68,26 +80,26 @@ colnames(df) <- c("displacement", "horsepower", "weight", "acceleration", "mpg")
 ```
 
 ```{r, results='asis', cache = TRUE}
-fit <- lm(data = df, formula = (mpg ~ displacement +  horsepower + 
+fit <- lm(data = df, formula = (mpg ~ displacement +  horsepower +
                                   weight + acceleration))
 stargazer(fit, header = FALSE)
 ```
 
 \newpage
 
-Which of the 4 independent variables have a significant impact on mpg? 
+Which of the 4 independent variables have a significant impact on mpg?
 
-> Horsepower and weight have a significant impact on mpg. It is unlikely that their values have an impact on mpg merely by chance. 
+> Horsepower and weight have a significant impact on mpg. It is unlikely that their values have an impact on mpg merely by chance.
 
-What are their corresponding significance levels? 
+What are their corresponding significance levels?
 
 ```{r, cache = TRUE}
 summary(fit)[4]
 ```
 
-> The variables corresponding significance levels are horsepower = $0.009$ & weight = $0.0000000002$     
+> The variables corresponding significance levels are horsepower = $0.009$ & weight = $0.0000000002$
 
-What are the standard errors on each of the coefficients?     
+What are the standard errors on each of the coefficients?
 
 ```{r, cache = TRUE}
 summary(fit)[4]$coefficients
@@ -97,14 +109,14 @@ summary(fit)[4]$coefficients
 
 \newpage
 
-Please perform this experiment in two ways. 
+Please perform this experiment in two ways.
 
-First take any random 40 data points from the entire auto data sample and perform the linear regression fit and measure the 95% confidence intervals. 
+First take any random 40 data points from the entire auto data sample and perform the linear regression fit and measure the 95% confidence intervals.
 
 ```{r, results = 'asis', cache = TRUE}
 set.seed(1234)
 df_sample <- sample_n(df, 40)
-fit.samp <- lm(data = df_sample, formula = (mpg ~ displacement +  
+fit.samp <- lm(data = df_sample, formula = (mpg ~ displacement +
                                               horsepower + weight + acceleration))
 stargazer(fit.samp, header = FALSE)
 ```
@@ -118,11 +130,11 @@ kable(print(confint(fit.samp, i, level = 0.95)))
 }
 ```
 
-Then, take the entire data set (all 392 points) and perform linear regression and measure the 95% confidence intervals. 
+Then, take the entire data set (all 392 points) and perform linear regression and measure the 95% confidence intervals.
 
 ```{r, results = 'asis', cache = TRUE}
 set.seed(1234)
-fit <- lm(data = df, formula = (mpg ~ displacement + 
+fit <- lm(data = df, formula = (mpg ~ displacement +
                                   horsepower + weight + acceleration))
 stargazer(fit, header = FALSE)
 ```
@@ -134,7 +146,7 @@ kable(print(confint(fit, i, level = 0.95)))
 }
 ```
 
-> Let's compare the results of the 
+> Let's compare the results of the
 
 ```{r, cache = TRUE}
 names <- colnames(df)[1:4]
@@ -144,8 +156,8 @@ kable(print(confint(fit.samp, i, level = 0.95)))
 }
 ```
 
-Please report the resulting fit equation, their significance values and confidence intervals for each of the two runs. 
+Please report the resulting fit equation, their significance values and confidence intervals for each of the two runs.
 
-Please submit an R-markdown file documenting your experiments. Your submission should include the final linear fits, and their corresponding significance levels. 
+Please submit an R-markdown file documenting your experiments. Your submission should include the final linear fits, and their corresponding significance levels.
 
 In addition, you should clearly state what you concluded from looking at the fit and their significance levels.
