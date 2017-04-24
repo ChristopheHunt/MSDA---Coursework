@@ -48,21 +48,34 @@ $(2,1)$ is the rest point of the autonomous system $\frac{dx}{dt} = -(y-1)$, $\f
 Apply the first and second derivative tests to the function 
 $f(y) = y^a/e^{by}$ to show that $f(y) = y^a/e^{by}$ is a unique critical point that yields the relative maximum $f(a/b)$. Show also that $f(y)$ approaches zero as y tends to infinity. 
 
-first derivative test 
+first derivative:
 
-$\frac{d(\frac{y^a}{e^{by}})}{dy} = 0$      
-$\frac{e^{by}ay^{a-1}-y^abe^{by}}{e^{2by}}=0$      
+$\frac{df(y)}{dy} = 0$    
+$\frac{d(\frac{y^a}{e^{by}})}{dy} = 0$    
 
+Use the product rule:
+$= y^{a}(\frac{d}{dy}(e^{-by})) + e^{-by}(\frac{d}{dy}(y^{a}))$
+ 
+Use the chain rule:
+$= \frac{\frac{d}{dy}(y^a)}{e^{by}}+\frac{\frac{d}{dy}-(by)}{e^{by}} y^a$     
+Factor out constants:
+$= \frac{\frac{d}{dy}(y^a)}{e^{by}} + \frac{-b\frac{d}{dy}(y)}{e^{by}}y^a$  
+The derivative of y is 1:
+$= \frac{\frac{d}{dy}y^a}{e^{by}}-\frac{1 b y^a}{e^by}$  
+ 
+Use the power rule: 
+$= \frac{-b y^a}{e^{by}} + \frac{a y^{a-1}}{e^{by}}$    
 
-$e^{by}ay^{a-1}(a-yb) = 0$
+Answer: $y^{a-1}e^{-by}(a-by)=0$   
+
 Since $e^{by}$ cannot be zero :
+
 $y = \frac{a}{b}~or~y =0$
 
-Second derivative test 
+Second derivative
 
 $\frac{d^2f(y)}{dy^2} = \frac{d\frac{ay^{a-1}-y^ab}{e^{by}}}{dy}$    
 $\frac{d^2f(y)}{dy^2} = \frac{e^{by}\{a(a-1)y^{a-2}-ay{a-1}\}-(ay^{a-1}-y^a)be^{by}}{e^{2by}}$
-
 
 Substitute the value of 0 :
 
@@ -72,6 +85,5 @@ Substitute the value of $y=\frac{a}{b}$
 
 $\frac{d^2f(y)}{dy^2} = \frac{(\frac{a}{b})^{a-2}x-a}{e^a}$
 
-
-As $a$ and $b$ are positive constants, the second derivative is less than zero and hence it is poroved that $y=\frac{a}{b}$ is a unique critical point that yields the relative maximum.
+As $a$ and $b$ are positive, the second derivative is less than zero and therefore it is proved that $y=\frac{a}{b}$ yields the relative maximum.
 
