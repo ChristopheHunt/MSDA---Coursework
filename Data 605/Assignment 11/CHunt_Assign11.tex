@@ -152,8 +152,8 @@ MaxHR = 220 - Age
 
 You have been given the following sample:
 
-Age 18 23 25 35 65 54 34 56 72 19 23 42 18 39 37 MaxHR 202 186 187 180
-156 169 174 172 153 199 193 174 198 183 178
+Age 18 23 25 35 65 54 34 56 72 19 23 42 18 39 37 \newline
+MaxHR 202 186 187 180 156 169 174 172 153 199 193 174 198 183 178
 
 Perform a linear regression analysis fitting the Max Heart Rate to Age
 using the lm function in R. What is the resulting equation?
@@ -201,9 +201,11 @@ Is the effect of Age on Max HR significant?
 \begin{quote}
 Yes, the effect of Age on MaxH is significant. We see the
 p\textless{}0.01 for Age which indicates that it is indeed signficiant.
-We would say anything with a p\textless{}0.05 is typically significant
-(depends on the case).
+We would say anything with a p\textless{}0.05 is typically significant,
+depending on the situation.
 \end{quote}
+
+\newpage
 
 What is the significance level?
 
@@ -410,8 +412,6 @@ F Statistic & 21.396$^{***}$ (df = 4; 35) \\
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(knitr)}
-\NormalTok{confi_df <-}\StringTok{ }\OtherTok{NULL}
 \NormalTok{names <-}\StringTok{ }\KeywordTok{colnames}\NormalTok{(df)[}\DecValTok{1}\NormalTok{:}\DecValTok{4}\NormalTok{]}
 \NormalTok{for (i in names)\{}
 \KeywordTok{kable}\NormalTok{(}\KeywordTok{print}\NormalTok{(}\KeywordTok{confint}\NormalTok{(fit.samp, i, }\DataTypeTok{level =} \FloatTok{0.95}\NormalTok{)))}
@@ -435,7 +435,6 @@ regression and measure the 95\% confidence intervals.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1234}\NormalTok{)}
 \NormalTok{fit <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(}\DataTypeTok{data =} \NormalTok{df, }\DataTypeTok{formula =} \NormalTok{(mpg ~}\StringTok{ }\NormalTok{displacement +}
 \StringTok{                                  }\NormalTok{horsepower +}\StringTok{ }\NormalTok{weight +}\StringTok{ }\NormalTok{acceleration))}
 \KeywordTok{stargazer}\NormalTok{(fit, }\DataTypeTok{header =} \OtherTok{FALSE}\NormalTok{)}
