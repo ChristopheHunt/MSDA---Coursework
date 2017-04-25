@@ -140,6 +140,8 @@
 \setcounter{tocdepth}{2}
 \tableofcontents
 }
+\newpage
+
 Using R's lm function, perform regression analysis and measure the
 significance of the independent variables for the following two data
 sets.
@@ -155,8 +157,12 @@ You have been given the following sample:
 Age 18 23 25 35 65 54 34 56 72 19 23 42 18 39 37 \newline
 MaxHR 202 186 187 180 156 169 174 172 153 199 193 174 198 183 178
 
-Perform a linear regression analysis fitting the Max Heart Rate to Age
-using the lm function in R. What is the resulting equation?
+\section{Perform a linear regression analysis fitting the Max Heart Rate
+to Age using the lm function in
+R.}\label{perform-a-linear-regression-analysis-fitting-the-max-heart-rate-to-age-using-the-lm-function-in-r.}
+
+\subsection{What is the resulting
+equation?}\label{what-is-the-resulting-equation}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -196,7 +202,8 @@ F Statistic & 130.009$^{***}$ (df = 1; 13) \\
 \end{tabular} 
 \end{table}
 
-Is the effect of Age on Max HR significant?
+\subsection{Is the effect of Age on Max HR
+significant?}\label{is-the-effect-of-age-on-max-hr-significant}
 
 \begin{quote}
 Yes, the effect of Age on MaxH is significant. We see the
@@ -207,7 +214,8 @@ depending on the situation.
 
 \newpage
 
-What is the significance level?
+\subsection{What is the significance
+level?}\label{what-is-the-significance-level}
 
 \begin{quote}
 The signficance level is p\textless{}0.01, the exact value is as
@@ -226,7 +234,8 @@ follows.
 ## [1] 0.00000003847987
 \end{verbatim}
 
-Please also plot the fitted relationship between Max HR and Age.
+\subsection{Please also plot the fitted relationship between Max HR and
+Age.}\label{please-also-plot-the-fitted-relationship-between-max-hr-and-age.}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -236,6 +245,10 @@ Please also plot the fitted relationship between Max HR and Age.
 
 \includegraphics{CHunt_Assign11_files/figure-latex/unnamed-chunk-4-1.pdf}
 
+We can see a very clear linear relationship between the two variables.
+This helps in confirming that a linear model should be appropriate for
+this data set.
+
 \newpage
 
 Using the Auto data set from Assignment 5 (also attached here) perform a
@@ -243,7 +256,9 @@ Linear Regression analysis using mpg as the dependent variable and the
 other 4 (displacement, horse-power, weight, acceleration) as independent
 variables.
 
-What is the final linear regression fit equation?
+\section{What is the final linear regression fit equation Using the Auto
+data set from Assignment
+5?}\label{what-is-the-final-linear-regression-fit-equation-using-the-auto-data-set-from-assignment-5}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -303,14 +318,17 @@ F Statistic & 233.434$^{***}$ (df = 4; 387) \\
 
 \newpage
 
-Which of the 4 independent variables have a significant impact on mpg?
+\subsection{Which of the 4 independent variables have a significant
+impact on
+mpg?}\label{which-of-the-4-independent-variables-have-a-significant-impact-on-mpg}
 
 \begin{quote}
 Horsepower and weight have a significant impact on mpg. It is unlikely
 that their values have an impact on mpg merely by chance.
 \end{quote}
 
-What are their corresponding significance levels?
+\subsection{What are their corresponding significance
+levels?}\label{what-are-their-corresponding-significance-levels}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -333,7 +351,8 @@ The variables corresponding significance levels are horsepower =
 \(0.009\) \& weight = \(0.0000000002\)
 \end{quote}
 
-What are the standard errors on each of the coefficients?
+\subsection{What are the standard errors on each of the
+coefficients?}\label{what-are-the-standard-errors-on-each-of-the-coefficients}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -357,11 +376,13 @@ horsepower = \(0.0166\) \& weight = \(0.00081\)
 
 \newpage
 
-Please perform this experiment in two ways.
+\section{Please perform this experiment in two
+ways.}\label{please-perform-this-experiment-in-two-ways.}
 
-First take any random 40 data points from the entire auto data sample
-and perform the linear regression fit and measure the 95\% confidence
-intervals.
+\subsection{First take any random 40 data points from the entire auto
+data sample and perform the linear regression fit and measure the 95\%
+confidence
+intervals.}\label{first-take-any-random-40-data-points-from-the-entire-auto-data-sample-and-perform-the-linear-regression-fit-and-measure-the-95-confidence-intervals.}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -430,8 +451,18 @@ F Statistic & 21.396$^{***}$ (df = 4; 35) \\
 ## acceleration -1.423285 0.596921
 \end{verbatim}
 
-Then, take the entire data set (all 392 points) and perform linear
-regression and measure the 95\% confidence intervals.
+\begin{quote}
+You'll notice that the values that are not significant have confidence
+intervals that cross 0. If the value could be 0, then its possible that
+the independent variable impacts our dependent variable merely by
+chance.
+\end{quote}
+
+\newpage
+
+\subsection{Then, take the entire data set (all 392 points) and perform
+linear regression and measure the 95\% confidence
+intervals.}\label{then-take-the-entire-data-set-all-392-points-and-perform-linear-regression-and-measure-the-95-confidence-intervals.}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -498,8 +529,11 @@ F Statistic & 233.434$^{***}$ (df = 4; 387) \\
 ## acceleration -0.270094 0.2237981
 \end{verbatim}
 
+\newpage
+
 \begin{quote}
-Let's compare the results of the
+Let's compare the results of the model using the larger data set and the
+smaller 40 case sample.
 \end{quote}
 
 \begin{Shaded}
@@ -531,15 +565,16 @@ Let's compare the results of the
 ## acceleration -1.423285 0.596921
 \end{verbatim}
 
-Please report the resulting fit equation, their significance values and
-confidence intervals for each of the two runs.
-
-Please submit an R-markdown file documenting your experiments. Your
-submission should include the final linear fits, and their corresponding
-significance levels.
-
-In addition, you should clearly state what you concluded from looking at
-the fit and their significance levels.
+\begin{quote}
+It is interesting to see how the smaller data set impacts our results.
+It highlights how important each observation can be in obtaining
+significant results. It also highlights why we reject the null
+hypothesis rather than accept the new hypothesis because we can rarely
+be certain an independent variable is the cause of the change in our
+dependent variable. A small observation group can give us erroneous
+results. Hypothesis testing is a powerful tool and one should be aware
+of the possiblity in making Type I \& Type II errors.
+\end{quote}
 
 
 \end{document}
