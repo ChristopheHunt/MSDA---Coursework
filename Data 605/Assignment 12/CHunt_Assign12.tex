@@ -216,7 +216,7 @@ above loop could be improved to return a x,y data frame.
 \NormalTok{for (i in }\DecValTok{1}\NormalTok{:}\DecValTok{8}\NormalTok{)\{}
 \NormalTok{plot_df <-}\StringTok{ }\KeywordTok{rbind}\NormalTok{(plot_df,(}\KeywordTok{unlist}\NormalTok{(cv.err5[[i]])))}
 \NormalTok{\}}
-\KeywordTok{colnames}\NormalTok{(plot_df) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"x"}\NormalTok{, }\StringTok{"y"}\NormalTok{)}
+\KeywordTok{colnames}\NormalTok{(plot_df) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"y"}\NormalTok{, }\StringTok{"x"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -227,7 +227,7 @@ u shape illustrating bias and variance.
 \begin{Highlighting}[]
 \KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =} \KeywordTok{as.data.frame}\NormalTok{(plot_df), }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{x, }\DataTypeTok{y=}\NormalTok{y)) +}\StringTok{ }
 \StringTok{  }\KeywordTok{geom_point}\NormalTok{()+}
-\StringTok{  }\KeywordTok{stat_smooth}\NormalTok{(}\DataTypeTok{span =} \DecValTok{3}\NormalTok{, }\DataTypeTok{method =} \StringTok{"loess"}\NormalTok{)}
+\StringTok{  }\KeywordTok{stat_smooth}\NormalTok{(}\DataTypeTok{span =} \DecValTok{100}\NormalTok{, }\DataTypeTok{method =} \StringTok{"loess"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 

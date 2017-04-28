@@ -77,15 +77,15 @@ plot_df <- NULL
 for (i in 1:8){
 plot_df <- rbind(plot_df,(unlist(cv.err5[[i]])))
 }
-colnames(plot_df) <- c("x", "y")
+colnames(plot_df) <- c("y", "x")
 ```
 
 Plotting the data and adding a smoothing line to illustrate the expected u shape illustrating bias and variance. 
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, warning=FALSE, message=FALSE}
 ggplot(data = as.data.frame(plot_df), aes(x=x, y=y)) + 
   geom_point()+
-  stat_smooth(span = 3, method = "loess")
+  stat_smooth(span = 100, method = "loess")
 ```
 
 Your output should show the characteristic U-shape illustrating the tradeoff between bias and variance.
