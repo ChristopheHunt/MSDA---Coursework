@@ -2,17 +2,67 @@
 title: "Homework 12"
 author: "Christophe Hunt"
 date: "April 27, 2017"
-output: pdf_document
+output:
+  pdf_document:
+    fig_caption: yes
+    keep_tex: yes
+    includes:
+      in_header: header.tex
+    number_sections: yes
+    toc: yes
+    toc_depth: 2
+  html_document:
+    toc: yes
+    toc_depth: '2'
+always_allow_html: yes
 ---
 
-Using the stats and boot libraries in R perform a cross-validation experiment to observe the bias variance tradeoff. You'll use the auto data set from previous assignments. This dataset has 392 observations across 5 variables. We want to fit a polynomial model of various degrees using the glm function in R and then measure the cross validation error using cv.glm function. 
+```{r, include = FALSE}
+library(stargazer)
+library(tidyverse)
+library(stats)
+library(boot)
+```
 
-Fit various polynomial models to compute mpg as a function of the other four variables acceleration, weight, horsepower, and displacement using glm function. For example: glm.fit=glm(mpg~poly(disp+hp+wt+acc,2), data=auto) cv.err5[2]=cv.glm(auto,glm.fit,K=5)$delta[1]; will fit a 2nd degree polynomial function between mpg and the remaining 4 variables and perform 5 iterations of cross-validations. This result will be stored in a cv.err5 array. cv.glm returns the estimated cross validation error and its adjusted value in a variable called delta. 
+# Assignment Introduction
 
-Please see the help on cv.glm to see more information.
+Using the $stats$ and $boot$ libraries in R perform a cross-validation experiment to observe the bias variance tradeoff. You'll use the auto data set from previous assignments. This dataset has 392 observations across 5 variables. We want to fit a polynomial model of various degrees using the $glm$ function in R and then measure the cross validation error using cv.glm function. 
 
-Once you have fit the various polynomials from degree 1 to 8, you can plot the cross validation error function as degree=1:8 plot(degree,cv.err5,type='b') 
+Fit various polynomial models to compute $mpg$ as a function of the other four variables $acceleration, weight, horsepower, and displacement$ using $glm$ function. 
+For example: 
+
+**glm.fit=glm(mpg~poly(disp+hp+wt+acc,2), data=auto)** **cv.err5[2]=cv.glm(auto,glm.fit,K=5)$delta[1]**
+
+will fit a 2nd degree polynomial function between $mpg$ and the remaining 4 variables and perform 5 iterations of cross-validations. This result will be stored in a $cv.err5$ array. $cv.glm$ returns the estimated cross validation error and its adjusted value in a variable called delta. Please see the help on $cv.glm$ to see more information.
+
+Once you have fit the various polynomials from degree 1 to 8, you can plot the cross validation error function as
+
+**degree=1:8**
+**plot(degree,cv.err5,type='b')**  
 
 For you assignment, please create an R-markdown document where you load the auto data set, perform the polynomial fit and then plot the resulting 5 fold cross validation curve.
 
+# Exercise
+
+```{r data load, cache=TRUE}
+library(tidyverse)
+df <- as_tibble(read.table(paste0("https://raw.githubusercontent.com",
+                                 "/ChristopheHunt/MSDA---Coursework",
+                                 "/master/Data%20605/Assignment%2011/",
+                                 "auto-mpg.data")))
+colnames(df) <- c("displacement", "horsepower", "weight", "acceleration", "mpg")
+```
+
+```{r}
+library(stats)
+library(boot)
+cv.err5 <- NULL
+
+for (i in 1:8){
+glm.fit <- glm(mpg~poly(displacement+horsepower+weight+acceleration, i), data = df)
+cv.err5[[i]] <- cv.glm(df, glm.fit, K = 5)$delta[1]
+}
+```
+
 Your output should show the characteristic U-shape illustrating the tradeoff between bias and variance.
+
