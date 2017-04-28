@@ -31,18 +31,21 @@ Using the $stats$ and $boot$ libraries in R perform a cross-validation experimen
 Fit various polynomial models to compute $mpg$ as a function of the other four variables $acceleration, weight, horsepower, and displacement$ using $glm$ function. 
 For example: 
 
-**glm.fit=glm(mpg~poly(disp+hp+wt+acc,2), data=auto)** **cv.err5[2]=cv.glm(auto,glm.fit,K=5)$delta[1]**
+**glm.fit=glm(mpg~poly(disp+hp+wt+acc,2), data=auto)**     
+**cv.err5[2]=cv.glm(auto,glm.fit,K=5)$delta[1]**
 
 will fit a 2nd degree polynomial function between $mpg$ and the remaining 4 variables and perform 5 iterations of cross-validations. This result will be stored in a $cv.err5$ array. $cv.glm$ returns the estimated cross validation error and its adjusted value in a variable called delta. Please see the help on $cv.glm$ to see more information.
 
 Once you have fit the various polynomials from degree 1 to 8, you can plot the cross validation error function as
 
-**degree=1:8**
+**degree=1:8**    
 **plot(degree,cv.err5,type='b')**  
 
 For you assignment, please create an R-markdown document where you load the auto data set, perform the polynomial fit and then plot the resulting 5 fold cross validation curve.
 
 # Exercise
+
+Load in the auto-data
 
 ```{r data load, cache=TRUE}
 library(tidyverse)
@@ -53,15 +56,36 @@ df <- as_tibble(read.table(paste0("https://raw.githubusercontent.com",
 colnames(df) <- c("displacement", "horsepower", "weight", "acceleration", "mpg")
 ```
 
-```{r}
+We modify the provided function and create the for loop for 1 to 8 degree polynomial models. 
+
+```{r, cache=TRUE}
 library(stats)
 library(boot)
-cv.err5 <- NULL
+cv.err5 <- list()
 
 for (i in 1:8){
 glm.fit <- glm(mpg~poly(displacement+horsepower+weight+acceleration, i), data = df)
-cv.err5[[i]] <- cv.glm(df, glm.fit, K = 5)$delta[1]
+
+cv.err5[[i]] <- list(x = cv.glm(df, glm.fit, K = 5)$delta[1], y = i)
 }
+```
+
+The next chunk is to return the list to a x,y data frame. I think the above loop could be improved to return a x,y data frame. 
+
+```{r, cache=TRUE}
+plot_df <- NULL
+for (i in 1:8){
+plot_df <- rbind(plot_df,(unlist(cv.err5[[i]])))
+}
+colnames(plot_df) <- c("x", "y")
+```
+
+Plotting the data and adding a smoothing line to illustrate the expected u shape illustrating bias and variance. 
+
+```{r, cache=TRUE}
+ggplot(data = as.data.frame(plot_df), aes(x=x, y=y)) + 
+  geom_point()+
+  stat_smooth(span = 3, method = "loess")
 ```
 
 Your output should show the characteristic U-shape illustrating the tradeoff between bias and variance.
