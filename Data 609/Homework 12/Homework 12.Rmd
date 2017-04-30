@@ -80,6 +80,87 @@ $y = - \frac{13}{12} + \frac{1}{3}$
 
 min at (x,y) = $(\frac{13}{12}, -\frac{1}{4})$   
 
+\newpage
+
 # Page 591: problem 5
 
+Find the hottest point (x, y, z) along the elliptical orbit
+
+$$4x^2 +y^2 +4z^2 = 16$$
+
+Where the temperature function is:
+
+$$T(x,y,z) = 8x^2 + 4yx - 16z + 600$$
+Maximize $T(x,y,z) 8x^2 + 4yx - 16z + 600$ such that $4x^2 +y^2 +4z^2 = 16$. 
+
+$L(x,y,z,\lambda) = 8x^2 + 4yx - 16z + 600 + \lambda 4x^2 + \lambda y^2 +\lambda 4z^2 -\lambda 16)$
+
+d/dx:
+
+$= 8 (\frac{\partial}{\partial x}(x^2)) + 4y\frac{\partial}{\partial x}(x)) + \frac{\partial}{\partial x}(- 16z) + \frac{\partial}{\partial x}(600) + 4 \lambda \frac{\partial}{\partial x}(x^2) + \frac{\partial}{\partial x}(y^2\lambda) + \frac{\partial}{\partial x} (4z^2\lambda) + \frac{\partial}{\partial x} (-16 \lambda)$
+
+The derivatives of $600$, $-16z$, $-16 \lambda$, $\lambda y^2$, and $4 \lambda z^2$
+
+$= 8 (\frac{\partial}{\partial x}(x^2)) + 4y\frac{\partial}{\partial x}(x) + 4 \lambda \frac{\partial}{\partial x}(x^2)$
+
+Using the power rule:
+
+$= 16x + 4y + 8x\lambda$
+
+d/dy :
+
+$= \frac{\partial}{\partial y}(8x^2) + 4x(\frac{\partial}{\partial y}(y)) + \frac{\partial}{\partial y}(-16z) + \frac{\partial}{\partial y}(600) + \frac{\partial}{\partial y}(4x^2\lambda) + \lambda ( \frac{\partial}{\partial y} (y^2)) +  \frac{\partial}{\partial y}(\lambda4z^2) + \frac{\partial}{\partial y}(-16\lambda)$
+
+The derivative of 600, $8x^2$, -16z, $-16\lambda$, $4\lambda x^2$ and $4 \lambda z^2$:
+
+$= 4x(\frac{\partial}{\partial y}(y))  + \lambda ( \frac{\partial}{\partial y} (y^2))$
+
+Using the power rule:
+
+$= 4x + 2y \lambda$
+
+d/dz:
+
+$\frac{\partial}{\partial z} (8x^2) + \frac{\partial}{\partial z}(4yx) + 16\frac{\partial}{\partial z}(z) + \frac{\partial}{\partial z} \frac{\partial}{\partial z} (600) + \frac{\partial}{\partial z} (4x^2 \lambda) + \frac{\partial}{\partial z} (y^2 \lambda) + 4 \lambda (\frac{\partial}{\partial z} (z^2)) + \frac{\partial}{\partial z} (-16 \lambda)$
+
+The derivative of $600$, $8x^2$, $4xy$, $-16 \lambda$, $4 \lambda x^2$, and $\lambda y^2$ are 0:
+
+$16\frac{\partial}{\partial z}(z) + 4 \lambda (\frac{\partial}{\partial z} (z^2))$
+
+The derivative of x is 1 and using the power rule :
+
+$= -16 + 8z \lambda$
+
+-------
+
+$0 = 16x + 4y + 8x\lambda$  
+$y = -4x + 2x \lambda$  
+
+$0 = 4x + 2y \lambda$  
+$0 = 4x -8x +4x \lambda$  
+$0 = -4x +4x \lambda$  
+$4x = 4x \lambda$  
+$\lambda = 1$  
+
+$0 = -16 + 8z \lambda$
+$0 = -16 + 8z$
+$z = 2$    
+
+$y = -2x$    
+
+$0 = 4x + 2(-2x)$    
+$0 = 0$      
+
+$x = x, y = -2x, z = 2, \lambda = 1$   
+
+$8x^2 + 4(-2x)x - 16(2) + 600$    
+$8x^2 + (-8x^2) + 568$   
+
+Hottest point = $568$    
+
 # Page 599: problem 5
+
+One of the key assumptions underlying the models developed in this section is that the harvest rate equals the growth rate for sustainable yield. The reproduction sub-models in Figures 13.19 and 13.22 suggests that if the current population levels are known, it is possible to estimate the growth rate. The implications of this knowledge is that if a quota for the season is established based on the estimated growth rate, then the fish population can be maintained, increased, or decreased as desired. This quota system might be implemented by requiring all commercial fishermen to register their catch daily and then closing the season when the quota is reached. Discuss the difficulties in determining reproduction models precise enough to be used in this manner. How would you estimate population level? What are the disadvantages of having a quota that varies from year to year? Discuss the practical political difficulties in implemented such a procedure. 
+
+
+
