@@ -21,6 +21,33 @@ always_allow_html: yes
 
 Consider a company that allows back ordering. That is, the company notifies customers that a temporary stock-out exists and that their order will be filled shortly. What considerations might argue for such a policy? What effect does such a policy have on storage costs? Should costs be assigned to stock-outs? Why? How would you make such an assignment? What assumptions are implied by the model in Figure 13.7? Suppose a "loss of goodwill cost" of w dollars per unit per day is assigned to each stock-out. Compute the optimal order quantity Q* and interpret your model.
 
+> What considerations might argue for such a policy? There are times where a product may not be popular but a vendor would like to continue to sell the product to maintain good customer relationships. The product may not sell enough to warrant storing it and the fees associated so the vendor would allow backordering to keep the business. 
+
+> What effect does such a policy have on storage costs? The policy can limit storage fees on low demand products, it is an effective policy and offered by many vendors. It also allows the company to store more popular products. 
+
+> Should costs be assigned to stock-outs? Why?  The costs associated with stock-outs is the "loss of goodwill costs", since the customer does not get the product immediately there is the possiblity they will not purchase or they may no longer purchase from the company. 
+
+> How would you make such an assignment? What assumptions are implied by the model in Figure 13.7?
+
+o = items ordered
+q = quantity of items on hand 
+s = storage cost per unit 
+w = stock out cost per item per unit (goodwill loss)
+d = deliver costs in dollars per delivery 
+t = time intervals between deliveries 
+
+Using 13.3 as a guide:
+
+cost per cycle : $d + s\frac{q}{2}t - w$
+$c = \frac{d}{t} + \frac{sq}{2} - \frac{w}{t}$
+
+Much like 13.3 the quantity is actually the items ordered since the product is on backorder and only ordered when needed. 
+
+cost of stock-outs : $d + s\frac{q}{2}t - w$
+$c = \frac{d}{t} + \frac{sot}{2} - \frac{w}{t}$
+
+$c = -\frac{d}{t^2} + \frac{so}{2} - \frac{w}{t^2}$
+
 \newpage
 
 # Page 585: problem 2
@@ -162,5 +189,11 @@ Hottest point = $568$
 
 One of the key assumptions underlying the models developed in this section is that the harvest rate equals the growth rate for sustainable yield. The reproduction sub-models in Figures 13.19 and 13.22 suggests that if the current population levels are known, it is possible to estimate the growth rate. The implications of this knowledge is that if a quota for the season is established based on the estimated growth rate, then the fish population can be maintained, increased, or decreased as desired. This quota system might be implemented by requiring all commercial fishermen to register their catch daily and then closing the season when the quota is reached. Discuss the difficulties in determining reproduction models precise enough to be used in this manner. How would you estimate population level? What are the disadvantages of having a quota that varies from year to year? Discuss the practical political difficulties in implemented such a procedure. 
 
+> The first difficulty is getting an accurate measure of the current population levels. There are numerous issues in that you simply cannot calculate and count every fish. The methods to count fish, while sophisicated, still are not completely accurate. Additionally, the variations among the populations can be immense, a shortage of food in one location could have reduced the population in that region making a large catch in the region unsustainable. 
 
+> The disadvantages in having a quota change from year to year is education among fisherman. It would be difficult to ensure that fishermen understood that changing quotas and did not overfish. It also makes it difficult for fisherman to estimate the commerical value of a catch, they could be weighing the options of fishing for different species during different seasons and a changing quota would make that difficult. 
+
+> How would you estimate population levels? I would take a sample of an area over time, measuring all possible factors that may be associated with population growth. Then I would apply the model over areas over the same time period to generate a propestice count of the population at the current level. Possible issues is localized events that have larger impacts to the population that my model may not take into account. 
+
+> The political disadvantages is that seasons with a limited overall catch benefits the larger commerical operations and disfavors the smaller operations. The smaller operations may have more political influence in local politics and also may employ more local voters.  
 
