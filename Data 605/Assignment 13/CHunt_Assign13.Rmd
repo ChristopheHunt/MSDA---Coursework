@@ -1,0 +1,65 @@
+---
+title: "Homework 13"
+author: "Christophe Hunt"
+date: "May 6, 2017"
+output:
+  pdf_document:
+    fig_caption: yes
+    keep_tex: yes
+    includes:
+      in_header: header.tex
+    number_sections: yes
+    toc: yes
+    toc_depth: 2
+  html_document:
+    toc: yes
+    toc_depth: '2'
+always_allow_html: yes
+---
+
+\newpage
+
+# Write a program to compute the derivative of $f(x) = x^3 + 2x^2$ at any value of $x$. 
+
+```{r}
+deriv_limit <- function(func, x, h){
+               f <- function(x) {eval(parse(text = func))}
+               return((f(x + h) - f(x)) / h)
+               }
+
+deriv_limit(func = ('x^3 + 2*x^2'), x = 2, h = 0.000001)
+deriv_limit(func = ('x^3 + 2*x^2'), x = 20, h = 0.000001)
+```
+
+Test using the analytic form
+
+```{r, cache=TRUE}
+deriv_analytic <- function(func, val, var){
+                      f_x <- D(parse(text = func), var) 
+                      assign(var, val)
+                      return(eval(f_x))
+                    }
+deriv_analytic(func = 'x^3 + 2*x^2', val = 2, var = 'x')
+deriv_analytic(func = 'x^3 + 2*x^2', val = 20, var = 'x')
+```
+
+Your function should take in a value of x and return back an approximation to the derivative of $f(x)$ evaluated at that value. You should not use the analytical form of the derivative to compute it. Instead, you should compute this approximation using limits.
+
+# Now, write a program to compute the area under the curve for the function $3x^2+4x$ in the range x = $[1, 3]$. 
+
+```{r}
+auc <- function(func, range = seq(from = 1, to = 3, by = 0.000001)){
+        return(sum((function(x) {eval(parse(text = func))})(range) * 0.000001))
+       }
+auc(func = '3*x^2+4*x')
+```
+
+You should first split the range into many small intervals using some really small $\delta x$ value (say 1e-6) and then compute the approximation to the area under the curve.
+
+# Please solve these problems analytically (i.e. by working out the math) and submit your answers.
+
+## Use integration by parts to solve for Rsin(x)cos(x)dx 
+
+## Use integration by parts to solve for Rx2exdx
+
+## What is d dx (x cos(x)
