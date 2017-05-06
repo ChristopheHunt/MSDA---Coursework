@@ -228,13 +228,42 @@ approximation to the area under the curve.
 the math) and submit your
 answers.}\label{please-solve-these-problems-analytically-i.e.by-working-out-the-math-and-submit-your-answers.}
 
-\subsection{Use integration by parts to solve for
-Rsin(x)cos(x)dx}\label{use-integration-by-parts-to-solve-for-rsinxcosxdx}
+\subsection{\texorpdfstring{Use integration by parts to solve for
+\(\int sin(x)cos(x)dx\)}{Use integration by parts to solve for \textbackslash{}int sin(x)cos(x)dx}}\label{use-integration-by-parts-to-solve-for-int-sinxcosxdx}
 
-\subsection{Use integration by parts to solve for
-Rx2exdx}\label{use-integration-by-parts-to-solve-for-rx2exdx}
+Substitute u = cos(X) and du = -sin(x)dx: \(-\int udu\)\\
+u = \(\frac{u^2}{2}\)\\
+Therefore: = \(-\frac{u^2}{2} + C\)\\
+Substitute back u = cos(x) : = \(-\frac{1}{2}cos^2(x) + C\)
 
-\subsection{What is d dx (x cos(x)}\label{what-is-d-dx-x-cosx}
+\subsection{\texorpdfstring{Use integration by parts to solve for
+\(\int x^2e^xdx\)}{Use integration by parts to solve for \textbackslash{}int x\^{}2e\^{}xdx}}\label{use-integration-by-parts-to-solve-for-int-x2exdx}
+
+For \(e^xx^2\):\\
+\(\int fdg = fg - \int gdf\)\\
+f = \(x^2\), dg = \(e^xdx\), df = \(2xdx\), g = \(e^x\);
+=\(e^x x^2 - 2 \int e^x xdx\)\\
+For \(e^xx\): \(\int fdg = fg - \int gdf\) f = \(x\), dg = \(e^xdx\), df
+= \(dx\), g = \(e^x\): = \(-2e^xx+e^xx^2+2 \int e^x dx\) The integral of
+\(e^x\) is \(e^x\): = \(e^xx^2-2e^xx+2e^x + C\)
+
+\subsection{\texorpdfstring{What is
+\(\frac{d}{dx}(x cos(x))\)?}{What is \textbackslash{}frac\{d\}\{dx\}(x cos(x))?}}\label{what-is-fracddxx-cosx}
+
+Use the product rule,
+\(\frac{d}{dx}(uv) = v\frac{du}{dx} + u\frac{du}{dv}\) where u =x and v
+= \(cos(x)\): = \(cos(x)(\frac{d}{dx}(x))+x(\frac{d}{dx}(cos(x)))\)\\
+The derivative of x is 1: = \(cos(x)+x(\frac{d}{dx}(cos(x)))\) The
+derivative of cos(x) is -sin(x): = \(cos(x) - sin(x)x\)
+
+\subsection{\texorpdfstring{What is
+\(\frac{d}{dx}(e^{x^4})\)?}{What is \textbackslash{}frac\{d\}\{dx\}(e\^{}\{x\^{}4\})?}}\label{what-is-fracddxex4}
+
+Use the chain rule,
+\(\frac{d}{dx}(e^{x^4})=\frac{de^u}{du} \frac{du}{dx}\), where \(u=x^4\)
+and \(\frac{d}{du}(e^u)=e^u\) =\(e^{x^4}(\frac{d}{du}(x^4))\) Use the
+power rule, \(\frac{d}{dx}(x^n)=nx^{n-1}\), where n = 4:
+\(\frac{d}{dx}(x^4)=4x^3\): \(= 4x^3e^{x^4}\)
 
 
 \end{document}
