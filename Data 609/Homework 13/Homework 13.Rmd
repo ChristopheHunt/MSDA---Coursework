@@ -1,0 +1,39 @@
+---
+title: "Homework 13"
+author: "Christophe Hunt"
+date: "May 8, 2017"
+output:
+  pdf_document:
+    fig_caption: yes
+    includes:
+      in_header: header.tex
+    keep_tex: yes
+    number_sections: yes
+    toc: yes
+    toc_depth: 2
+  html_document:
+    toc: yes
+    toc_depth: '2'
+always_allow_html: yes
+---
+\newpage
+
+# Page B-13: problem 4
+How would you go about validating the nuclear arms race model. What data would you collect? Is it possible to obtain the data?
+
+> First we are under the assumption that both sides are engaged in logic behavior for the enemy and friendly strategy. In order to validate the model, we would need to understand which strategy each side is actually engaged it. Obtaining this data would be impossible as neither would want to reveal their strategy and it would change the behavior of the other. 
+
+> Also, the model would need to account for technological advancements. I believe that during the Cold War each side was attempting to develop more advanced weapons which adjusts the curve as if a defense or an offensive weapon other than missiles existed it would impact the curve as the increase in the other technology would need to included in the curve model. 
+
+# Page B-25: problem 1
+Show that when the demand curve is very steep, a tax added to each item sold will fall primarily on consumers. Now show that when the demand curve is more nearly horizontal, the tax is paid mostly by the industry. What if the supply curve is very steep? What if the supply curve is nearly horizontal. 
+
+> I am not a good artist but I have tried to show in the two graphs below is that when the demand curve is very steep, the tax added is nearly identical the price increase. Therefore, the price increase from the tax will fall on the consumer. However, when the demand curve is nearly horizontal the tax increase will have nearly no effect on the price, therefore the industry must be the one to bare the tax increase. 
+
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20609/Homework%2013/Demand_Curve.jpg)
+
+>
+
+
+# Page B-29: problem 1
+Consider the graphical model in Figure 15.27. Argue that if the demand curve fails to shift significantly to the left, an increase in the equilibrium quantity could occur after the crisis.
