@@ -32,7 +32,9 @@ Show that when the demand curve is very steep, a tax added to each item sold wil
 
 ![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20609/Homework%2013/Demand_Curve.jpg)
 
->
+> In the below two graphs I show the process when the supply curve is steep and flat. When the supply curve is steep a tax increase causes the price to increase very little. This means that the industry will be responsible for the payments of the taxes. However, when the supply curve is very steep the tax increase is fairly close to the price increase. Therefore, we see that the tax will be covered by the consumer in this event. It is interesting how the two curves can have such different impacts from taxes. 
+
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20609/Homework%2013/Supply_Curve.jpg)
 
 
 # Page B-29: problem 1
