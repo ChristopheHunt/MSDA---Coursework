@@ -16,6 +16,11 @@ output:
     toc_depth: '2'
 always_allow_html: yes
 ---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(fig.width=6, fig.height=4) 
+```
+
 \newpage
 
 # Page B-13: problem 4
@@ -25,6 +30,8 @@ How would you go about validating the nuclear arms race model. What data would y
 
 > Also, the model would need to account for technological advancements. I believe that during the Cold War each side was attempting to develop more advanced weapons which adjusts the curve as if a defense or an offensive weapon other than missiles existed it would impact the curve as the increase in the other technology would need to included in the curve model. 
 
+\newpage
+
 # Page B-25: problem 1
 Show that when the demand curve is very steep, a tax added to each item sold will fall primarily on consumers. Now show that when the demand curve is more nearly horizontal, the tax is paid mostly by the industry. What if the supply curve is very steep? What if the supply curve is nearly horizontal. 
 
@@ -32,10 +39,18 @@ Show that when the demand curve is very steep, a tax added to each item sold wil
 
 ![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20609/Homework%2013/Demand_Curve.jpg)
 
+\newpage
+
 > In the below two graphs I show the process when the supply curve is steep and flat. When the supply curve is steep a tax increase causes the price to increase very little. This means that the industry will be responsible for the payments of the taxes. However, when the supply curve is very steep the tax increase is fairly close to the price increase. Therefore, we see that the tax will be covered by the consumer in this event. It is interesting how the two curves can have such different impacts from taxes. 
 
 ![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20609/Homework%2013/Supply_Curve.jpg)
 
 
 # Page B-29: problem 1
+
 Consider the graphical model in Figure 15.27. Argue that if the demand curve fails to shift significantly to the left, an increase in the equilibrium quantity could occur after the crisis.
+
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20609/Homework%2013/figure_15.27.PNG)
+
+> 
+
