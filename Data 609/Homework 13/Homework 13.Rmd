@@ -17,10 +17,6 @@ output:
 always_allow_html: yes
 ---
 
-```{r, include = FALSE}
-knitr::opts_chunk$set(fig.width=6, fig.height=4) 
-```
-
 \newpage
 
 # Page B-13: problem 4
@@ -45,6 +41,7 @@ Show that when the demand curve is very steep, a tax added to each item sold wil
 
 ![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20609/Homework%2013/Supply_Curve.jpg)
 
+\newpage
 
 # Page B-29: problem 1
 
