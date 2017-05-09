@@ -47,7 +47,8 @@ Show that when the demand curve is very steep, a tax added to each item sold wil
 
 Consider the graphical model in Figure 15.27. Argue that if the demand curve fails to shift significantly to the left, an increase in the equilibrium quantity could occur after the crisis.
 
-![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20609/Homework%2013/figure_15.27.PNG)
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20609/Homework%2013/figure_15.27%20wedits.PNG)
 
-> 
+> If the demand curve fails to shift significantly to the left, we see that the supply curve has a significant decrease. This is due to the oil industry developing new sources or changing to other available resources such as the natural gas boom in the US. I believe this behavior was recently seen as the price of gas dropped when oil producing countries continued to produce oil even when demand did not increase as a way of driving out competition as others could not produce as much oil at the lower price. I have highlighted below in red the change in the equilibrium price brought on if the demand curve fails to shift. 
 
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20609/Homework%2013/figure_15.27%20wedits.png)
