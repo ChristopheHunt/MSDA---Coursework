@@ -1,0 +1,196 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Final Project},
+            pdfauthor={Christophe Hunt},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+  \title{Final Project}
+  \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+  \author{Christophe Hunt}
+  \preauthor{\centering\large\emph}
+  \postauthor{\par}
+  \predate{\centering\large\emph}
+  \postdate{\par}
+  \date{May 13, 2017}
+
+\usepackage{relsize}
+\usepackage{setspace}
+\usepackage{amsmath,amsfonts,amsthm}
+\usepackage[sfdefault]{roboto}
+\usepackage[T1]{fontenc}
+\usepackage{float}
+\usepackage{multirow}
+\usepackage{mathtools}
+\usepackage{tikz}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+Pick one of the quantitative independent variables from the training
+data set (train.csv) , and define that variable as X.
+
+Pick SalePrice as the dependent variable, and define it as Y for the
+next analysis.
+
+\section{Probability}\label{probability}
+
+Calculate as a minimum the below probabilities a through c.
+
+Assume the small letter ``x'' is estimated as the 4th quartile of the X
+variable, and the small letter ``y'' is estimated as the 2nd quartile of
+the Y variable. Interpret the meaning of all probabilities.
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\item
+\begin{verbatim}
+$P(X>x | Y>y)$  
+\end{verbatim}
+\item
+  \(P(X>x, Y>y)\)
+\item
+  \(P(X<x | Y>y)\)
+\end{enumerate}
+
+Does splitting the training data in this fashion make them independent?
+
+In other words, does \(P(X|Y)=P(X)P(Y))\)?
+
+Check mathematically, and then evaluate by running a Chi Square test for
+association.
+
+You might have to research this.
+
+\section{Descriptive and Inferential
+Statistics.}\label{descriptive-and-inferential-statistics.}
+
+Provide univariate descriptive statistics and appropriate plots for both
+variables.
+
+Provide a scatterplot of X and Y.
+
+Transform both variables simultaneously using Box-Cox transformations.\\
+You might have to research this.
+
+Using the transformed variables, run a correlation analysis and
+interpret.
+
+Test the hypothesis that the correlation between these variables is 0
+and provide a 99\% confidence interval.
+
+Discuss the meaning of your analysis.
+
+\section{Linear Algebra and
+Correlation.}\label{linear-algebra-and-correlation.}
+
+Invert your correlation matrix. (This is known as the precision matrix
+and contains variance inflation factors on the diagonal.) Multiply the
+correlation matrix by the precision matrix, and then multiply the
+precision matrix by the correlation matrix.
+
+\section{Calculus-Based Probability \&
+Statistics}\label{calculus-based-probability-statistics}
+
+Many times, it makes sense to fit a closed form distribution to data.
+For your non-transformed independent variable, location shift it so that
+the minimum value is above zero.
+
+Then load the MASS package and run fitdistr to fit a density function of
+your choice. (See
+\url{https://stat.ethz.ch/R-manual/R-devel/library/MASS/html/fitdistr.html}
+).
+
+Find the optimal value of the parameters for this distribution, and then
+take 1000 samples from this distribution (e.g., rexp(1000, ???) for an
+exponential).
+
+Plot a histogram and compare it with a histogram of your non-transformed
+original variable.
+
+\section{Modeling}\label{modeling}
+
+Build some type of regression model and submit your model to the
+competition board.\\
+Provide your complete model summary and results with analysis.
+
+Report your Kaggle.com user name and score.
+
+Multiply the correlation matrix by the precision matrix, and then
+multiply the precision matrix by the correlation matrix.
+
+
+\end{document}
