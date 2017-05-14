@@ -90,7 +90,7 @@ Transform both variables simultaneously using Box-Cox transformations.
 
 > I am using the `BoxCox.lambda` function from the `forecast` package to determine the necessary transformations for the two variables.
 
-```{r box cox table, echo=FALSE, cache=TRUE, eval=TRUE}
+```{r box cox table, cache=TRUE, eval=TRUE}
 library(forecast)
 library(knitr)
 l1 <- BoxCox.lambda(as.numeric(sub.train.df$SalePrice))
@@ -138,37 +138,62 @@ LotArea & $log(LotArea)$
 
 [^2]: [By Understanding Both the Concept of Transformation and the Box-Cox Method, Practitioners Will Be Better Prepared to Work with Non-normal Data.](https://www.isixsigma.com/tools-templates/normality/making-data-normal-using-box-cox-power-transformation/) . "Making Data Normal Using Box-Cox Power Transformation." ISixSigma. N.p., n.d. Web. 29 Oct. 2016.
 
+##TODO Expand on the correlation analysis
 
 Using the transformed variables, run a correlation analysis and interpret.
 
-```{r}
+```{r, cache=TRUE, eval=TRUE}
 sub.train.df.trans <- sub.train.df %>% 
                       mutate(SalePrice = SalePrice^(-.5), 
                              LotArea = log(LotArea))
 
-sub.train.cor <- cor.test(sub.train.df$SalePrice, 
-                          sub.train.df$LotArea, 
+sub.train.cor <- cor.test(sub.train.df.trans$SalePrice, 
+                          sub.train.df.trans$LotArea, 
                           method = "pearson", conf.level = .99)
 sub.train.cor
 ```
 
-> The p-value of the correlation test is 2.2e-16 which is less than the significance level of alpha at .05. We are using the standard alpha as there is no indication another any other value for alpha should be used. We can therefore say that lot size and sale price are significantly correlated with a correlation coefficient of 0.264. 
+> The p-value of the correlation test is 2.2e-16 which is less than the significance level of alpha at .05. We are using the standard alpha as there is no indication another any other value for alpha should be used. We can therefore say that the log of lot size and sale price raised to the -.5 power are significantly correlated with a negative correlation coefficient of -0.386. 
 
 Test the hypothesis that the correlation between these variables is 0 and provide a 99% confidence interval.  
 
-> The correlation test has specifically done that for us and we can safely reject the null hypothesis as we see that our 99% confidence interval exists at the values (0.200, 0.325) with a p-value < 2.2e-16.
+> The correlation test has specifically done that for us and we can safely reject the null hypothesis as we see that our 99% confidence interval exists at the values (-0.441, -0.327) with a p-value < 2.2e-16.
 
 Discuss the meaning of your analysis.
 
-> This means two possible things could have occured, there is no correlation and this data set is pulled from an unusual population of house sales. Or, more likely with the values obtained, our assumption of 0 correlation is incorect and we have obtained a very typical data set and must reject the null hypothesis. 
+> This means two possible things could have occured, there is no correlation and this data set is pulled from an unusual set of house sales. Or, more likely with the values obtained, our assumption of 0 correlation is incorect and we have obtained a very typical data set and must reject the null hypothesis because correlation does exist. 
 
 # Linear Algebra and Correlation.  
 
-Invert your correlation matrix.(This is known as the precision matrix and contains variance inflation factors on the diagonal.) Multiply the correlation matrix by the precision matrix, and then multiply the precision matrix by the correlation matrix.
+```{r correlation matrix}
+A <- cor(sub.train.df.trans)
+A
+```
+Invert your correlation matrix.(This is known as the precision matrix and contains variance inflation factors on the diagonal.)
+
+```{r precision matrix}
+B <- solve(A)
+B
+```
+
+ Multiply the correlation matrix by the precision matrix, and then multiply the precision matrix by the correlation matrix.
+ 
+```{r}
+corr.by.pre.M <- A %*% B
+corr.by.pre.M
+pre.by.corr.M <- B %*% A
+pre.by.corr.M
+```
 
 # Calculus-Based Probability & Statistics
 
-Many times, it makes sense to fit a closed form distribution to data. For your non-transformed independent variable, location shift it so that the minimum value is above zero.  
+Many times, it makes sense to fit a closed form distribution to data. For your non-transformed independent variable, location shift it so that the minimum value is above zero.
+
+```{r}
+min(sub.train.df$LotArea)
+```
+
+> For the independent variable chosen, there are no zero values observed. This makes sense as we would expect the lot area to have some value and I would expect it to never be unobserved (at least estimates would be used). 
 
 Then load the MASS package and run fitdistr to fit a density function of your choice. (See  https://stat.ethz.ch/R-manual/R-devel/library/MASS/html/fitdistr.html). 
 

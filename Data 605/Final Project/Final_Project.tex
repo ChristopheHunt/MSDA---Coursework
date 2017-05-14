@@ -248,6 +248,21 @@ I am using the \texttt{BoxCox.lambda} function from the
 the two variables.
 \end{quote}
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(forecast)}
+\KeywordTok{library}\NormalTok{(knitr)}
+\NormalTok{l1 <-}\StringTok{ }\KeywordTok{BoxCox.lambda}\NormalTok{(}\KeywordTok{as.numeric}\NormalTok{(sub.train.df$SalePrice))}
+\NormalTok{l2 <-}\StringTok{ }\KeywordTok{BoxCox.lambda}\NormalTok{(}\KeywordTok{as.numeric}\NormalTok{(sub.train.df$LotArea))}
+
+\NormalTok{lamdas <-}\StringTok{ }\KeywordTok{c}\NormalTok{(l1, l2)}
+\NormalTok{Variables <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"SalePrice"}\NormalTok{, }\StringTok{"LotArea"}\NormalTok{)}
+\NormalTok{dfBoxCox <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(}\KeywordTok{cbind}\NormalTok{(}\KeywordTok{round}\NormalTok{(}\KeywordTok{as.numeric}\NormalTok{(lamdas),}\DecValTok{4}\NormalTok{), Variables))}
+\KeywordTok{colnames}\NormalTok{(dfBoxCox) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"$}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{lambda$"}\NormalTok{, }\StringTok{"Variables"}\NormalTok{)}
+\KeywordTok{kable}\NormalTok{(dfBoxCox, }\DataTypeTok{align =} \KeywordTok{c}\NormalTok{(}\StringTok{"c"}\NormalTok{, }\StringTok{"c"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
 \begin{longtable}[]{@{}cc@{}}
 \toprule
 \(\lambda\) & Variables\tabularnewline
@@ -297,6 +312,9 @@ LotArea & $log(LotArea)$
 
 \setlength{\tabcolsep}{6pt}
 
+\subsection{TODO Expand on the correlation
+analysis}\label{todo-expand-on-the-correlation-analysis}
+
 Using the transformed variables, run a correlation analysis and
 interpret.
 
@@ -306,8 +324,8 @@ interpret.
 \StringTok{                      }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{SalePrice =} \NormalTok{SalePrice^(-.}\DecValTok{5}\NormalTok{), }
                              \DataTypeTok{LotArea =} \KeywordTok{log}\NormalTok{(LotArea))}
 
-\NormalTok{sub.train.cor <-}\StringTok{ }\KeywordTok{cor.test}\NormalTok{(sub.train.df$SalePrice, }
-                          \NormalTok{sub.train.df$LotArea, }
+\NormalTok{sub.train.cor <-}\StringTok{ }\KeywordTok{cor.test}\NormalTok{(sub.train.df.trans$SalePrice, }
+                          \NormalTok{sub.train.df.trans$LotArea, }
                           \DataTypeTok{method =} \StringTok{"pearson"}\NormalTok{, }\DataTypeTok{conf.level =} \NormalTok{.}\DecValTok{99}\NormalTok{)}
 \NormalTok{sub.train.cor}
 \end{Highlighting}
@@ -317,22 +335,23 @@ interpret.
 ## 
 ##  Pearson's product-moment correlation
 ## 
-## data:  sub.train.df$SalePrice and sub.train.df$LotArea
-## t = 10.445, df = 1458, p-value < 2.2e-16
+## data:  sub.train.df.trans$SalePrice and sub.train.df.trans$LotArea
+## t = -15.968, df = 1458, p-value < 2.2e-16
 ## alternative hypothesis: true correlation is not equal to 0
 ## 99 percent confidence interval:
-##  0.2000196 0.3254375
+##  -0.4417063 -0.3269282
 ## sample estimates:
-##       cor 
-## 0.2638434
+##        cor 
+## -0.3858091
 \end{verbatim}
 
 \begin{quote}
 The p-value of the correlation test is 2.2e-16 which is less than the
 significance level of alpha at .05. We are using the standard alpha as
 there is no indication another any other value for alpha should be used.
-We can therefore say that lot size and sale price are significantly
-correlated with a correlation coefficient of 0.264.
+We can therefore say that the log of lot size and sale price raised to
+the -.5 power are significantly correlated with a negative correlation
+coefficient of -0.386.
 \end{quote}
 
 Test the hypothesis that the correlation between these variables is 0
@@ -341,26 +360,80 @@ and provide a 99\% confidence interval.
 \begin{quote}
 The correlation test has specifically done that for us and we can safely
 reject the null hypothesis as we see that our 99\% confidence interval
-exists at the values (0.200, 0.325) with a p-value \textless{} 2.2e-16.
+exists at the values (-0.441, -0.327) with a p-value \textless{}
+2.2e-16.
 \end{quote}
 
 Discuss the meaning of your analysis.
 
 \begin{quote}
 This means two possible things could have occured, there is no
-correlation and this data set is pulled from an unusual population of
-house sales. Or, more likely with the values obtained, our assumption of
-0 correlation is incorect and we have obtained a very typical data set
-and must reject the null hypothesis.
+correlation and this data set is pulled from an unusual set of house
+sales. Or, more likely with the values obtained, our assumption of 0
+correlation is incorect and we have obtained a very typical data set and
+must reject the null hypothesis because correlation does exist.
 \end{quote}
 
 \section{Linear Algebra and
 Correlation.}\label{linear-algebra-and-correlation.}
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{A <-}\StringTok{ }\KeywordTok{cor}\NormalTok{(sub.train.df.trans)}
+\NormalTok{A}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##            SalePrice    LotArea
+## SalePrice  1.0000000 -0.3858091
+## LotArea   -0.3858091  1.0000000
+\end{verbatim}
+
 Invert your correlation matrix.(This is known as the precision matrix
-and contains variance inflation factors on the diagonal.) Multiply the
-correlation matrix by the precision matrix, and then multiply the
-precision matrix by the correlation matrix.
+and contains variance inflation factors on the diagonal.)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{B <-}\StringTok{ }\KeywordTok{solve}\NormalTok{(A)}
+\NormalTok{B}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##           SalePrice   LotArea
+## SalePrice 1.1748792 0.4532792
+## LotArea   0.4532792 1.1748792
+\end{verbatim}
+
+Multiply the correlation matrix by the precision matrix, and then
+multiply the precision matrix by the correlation matrix.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{corr.by.pre.M <-}\StringTok{ }\NormalTok{A %*%}\StringTok{ }\NormalTok{B}
+\NormalTok{corr.by.pre.M}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##               SalePrice LotArea
+## SalePrice  1.000000e+00       0
+## LotArea   -5.551115e-17       1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pre.by.corr.M <-}\StringTok{ }\NormalTok{B %*%}\StringTok{ }\NormalTok{A}
+\NormalTok{pre.by.corr.M}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##              SalePrice       LotArea
+## SalePrice 1.000000e+00 -1.110223e-16
+## LotArea   5.551115e-17  1.000000e+00
+\end{verbatim}
 
 \section{Calculus-Based Probability \&
 Statistics}\label{calculus-based-probability-statistics}
@@ -368,6 +441,23 @@ Statistics}\label{calculus-based-probability-statistics}
 Many times, it makes sense to fit a closed form distribution to data.
 For your non-transformed independent variable, location shift it so that
 the minimum value is above zero.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{min}\NormalTok{(sub.train.df$LotArea)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1300
+\end{verbatim}
+
+\begin{quote}
+For the independent variable chosen, there are no zero values observed.
+This makes sense as we would expect the lot area to have some value and
+I would expect it to never be unobserved (at least estimates would be
+used).
+\end{quote}
 
 Then load the MASS package and run fitdistr to fit a density function of
 your choice. (See
