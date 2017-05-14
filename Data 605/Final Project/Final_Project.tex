@@ -29,6 +29,47 @@
             pdfborder={0 0 0},
             breaklinks=true}
 \urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{{#1}}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{{#1}}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\ImportTok}[1]{{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{{#1}}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{{#1}}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{{#1}}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{{#1}}}}
+\newcommand{\BuiltInTok}[1]{{#1}}
+\newcommand{\ExtensionTok}[1]{{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{{#1}}}
+\newcommand{\RegionMarkerTok}[1]{{#1}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{{#1}}}}
+\newcommand{\NormalTok}[1]{{#1}}
+\usepackage{longtable,booktabs}
 \usepackage{graphicx,grffile}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
@@ -92,6 +133,16 @@
 \usepackage{multirow}
 \usepackage{mathtools}
 \usepackage{tikz}
+\usepackage{ragged2e}
+
+% https://github.com/jacbar/studia/blob/master/semestr-vii/inz-tymon/main/header.pandoc#L10
+\usepackage{lscape}
+\usepackage{pdfpages}
+\usepackage{geometry}
+
+% pandoc does not parse latex env - https://groups.google.com/forum/?fromgroups=#!topic/pandoc-discuss/oZETB5Ii1Cw
+\newcommand{\blandscape}{\begin{landscape}}
+\newcommand{\elandscape}{\end{landscape}}
 
 \begin{document}
 \maketitle
@@ -101,10 +152,31 @@
 \tableofcontents
 }
 Pick one of the quantitative independent variables from the training
-data set (train.csv) , and define that variable as X.
+data set (train.csv), and define that variable as X.
 
 Pick SalePrice as the dependent variable, and define it as Y for the
 next analysis.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(tidyverse)}
+\NormalTok{train.df <-}\StringTok{ }\KeywordTok{as_tibble}\NormalTok{(}\KeywordTok{read.csv}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20605/Final%20Project/train.csv"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sub.train.df <-}\StringTok{ }\NormalTok{train.df[, }\KeywordTok{c}\NormalTok{(}\StringTok{"SalePrice"}\NormalTok{, }\StringTok{"LotArea"}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{quote}
+The variable we will set to X is LotArea, which is defined as the Lot
+size in square feet. I chose this because an anecdotal assumption is
+that the larger the lot size is the higher the sale price. However,
+living in NYC there are tiny lots in very desirable places that have a
+high price so I believe there may be some interesting patterns here.
+\end{quote}
 
 \section{Probability}\label{probability}
 
@@ -116,10 +188,23 @@ the Y variable. Interpret the meaning of all probabilities.
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi}.}
+\tightlist
 \item
-\begin{verbatim}
-$P(X>x | Y>y)$  
-\end{verbatim}
+  \(P(X>x | Y>y)\)
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{prob.x <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{qrtx =} \KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{quantile}\NormalTok{(sub.train.df$LotArea)[}\DecValTok{4}\NormalTok{]), }\DataTypeTok{mean =} \KeywordTok{mean}\NormalTok{(sub.train.df$LotArea), }\DataTypeTok{std =} \KeywordTok{sd}\NormalTok{(sub.train.df$LotArea))}
+\NormalTok{qrtx <-}\StringTok{ }
+
+\NormalTok{qrty <-}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{quantile}\NormalTok{(sub.train.df$SalePrice)[}\DecValTok{2}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{1}
 \item
   \(P(X>x, Y>y)\)
 \item
@@ -143,8 +228,71 @@ variables.
 
 Provide a scatterplot of X and Y.
 
-Transform both variables simultaneously using Box-Cox transformations.\\
-You might have to research this.
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(sub.train.df, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \NormalTok{LotArea, }\DataTypeTok{y =} \NormalTok{SalePrice)) +}\StringTok{ }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{shape =} \DecValTok{1}\NormalTok{) +}\StringTok{ }
+\StringTok{    }\KeywordTok{theme_light}\NormalTok{() +}\StringTok{ }\KeywordTok{scale_y_continuous}\NormalTok{(}\DataTypeTok{labels =} \NormalTok{dollar)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Final_Project_files/figure-latex/scatter plot-1.pdf}
+
+Transform both variables simultaneously using Box-Cox transformations.
+
+\begin{quote}
+I am using the \texttt{BoxCox.lambda} function from the
+\texttt{forecast} package to determine the necessary transformations for
+the two variables.
+\end{quote}
+
+\begin{longtable}[]{@{}cc@{}}
+\toprule
+\(\lambda\) & Variables\tabularnewline
+\midrule
+\endhead
+-0.3308 & SalePrice\tabularnewline
+-0.1268 & LotArea\tabularnewline
+\bottomrule
+\end{longtable}
+
+\centering
+
+Common Box-Cox Transformations\footnote{Osborne, Jason W. ``Improving
+  your data transformations: Applying the Box-Cox transformation.''
+  Practical Assessment, Research \& Evaluation 15.12 (2010): 1-9.}
+\footnote{\href{https://www.isixsigma.com/tools-templates/normality/making-data-normal-using-box-cox-power-transformation/}{By
+  Understanding Both the Concept of Transformation and the Box-Cox
+  Method, Practitioners Will Be Better Prepared to Work with Non-normal
+  Data.} . ``Making Data Normal Using Box-Cox Power Transformation.''
+  ISixSigma. N.p., n.d. Web. 29 Oct. 2016.}
+
+\setlength{\tabcolsep}{12pt}
+
+\begin{tabular}{ c c }
+\hline
+$\lambda$ & Y' \\ \hline
+-0.5 &  $Y^{-0.5}~=~\frac{1}{\sqrt{(Y)}}$ \\
+0   & $\log(Y)$ \\
+.25  & $\sqrt[4]{Y}$
+\end{tabular}
+
+\justifying
+
+Lambda values were truncated to the nearest tenth that match a common
+transformation as per the below table.
+
+\centering
+
+\begin{tabular}{ c c }
+\hline
+variable & variable transformation \\ \hline
+SalePrice & $SalePrice^{-0.5}$ \\
+LotArea & $log(LotArea)$ 
+\end{tabular}
+
+\justifying
+
+\setlength{\tabcolsep}{6pt}
 
 Using the transformed variables, run a correlation analysis and
 interpret.
@@ -157,7 +305,7 @@ Discuss the meaning of your analysis.
 \section{Linear Algebra and
 Correlation.}\label{linear-algebra-and-correlation.}
 
-Invert your correlation matrix. (This is known as the precision matrix
+Invert your correlation matrix.(This is known as the precision matrix
 and contains variance inflation factors on the diagonal.) Multiply the
 correlation matrix by the precision matrix, and then multiply the
 precision matrix by the correlation matrix.
@@ -171,11 +319,10 @@ the minimum value is above zero.
 
 Then load the MASS package and run fitdistr to fit a density function of
 your choice. (See
-\url{https://stat.ethz.ch/R-manual/R-devel/library/MASS/html/fitdistr.html}
-).
+\url{https://stat.ethz.ch/R-manual/R-devel/library/MASS/html/fitdistr.html}).
 
 Find the optimal value of the parameters for this distribution, and then
-take 1000 samples from this distribution (e.g., rexp(1000, ???) for an
+take 1000 samples from this distribution (e.g., rexp(1000) for an
 exponential).
 
 Plot a histogram and compare it with a histogram of your non-transformed
@@ -184,7 +331,8 @@ original variable.
 \section{Modeling}\label{modeling}
 
 Build some type of regression model and submit your model to the
-competition board.\\
+competition board.
+
 Provide your complete model summary and results with analysis.
 
 Report your Kaggle.com user name and score.

@@ -17,9 +17,28 @@ output:
 always_allow_html: yes
 ---
 
-Pick one of the quantitative independent variables from the training data set (train.csv) , and define that variable as  X.  
+```{r load libraries, include=FALSE}
+library(tidyverse)
+library(scales)
+library(forecast)
+library(knitr)
+```
+
+
+Pick one of the quantitative independent variables from the training data set (train.csv), and define that variable as X.
 
 Pick SalePrice as the dependent variable, and define it as Y for the next analysis.   
+
+```{r read train data, message = FALSE, message=FALSE, tidy=TRUE, cache=TRUE}
+library(tidyverse)
+train.df  <- as_tibble(read.csv("https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20605/Final%20Project/train.csv"))
+```
+
+```{r subset train data,  message = FALSE, message=FALSE, tidy=TRUE, cache=TRUE}
+sub.train.df <- train.df[,c("SalePrice", "LotArea")]
+```
+
+> The variable we will set to X is LotArea, which is defined as the Lot size in square feet. I chose this because an anecdotal assumption is that the larger the lot size is the higher the sale price. However, living in NYC there are tiny lots in very desirable places that have a high price so I believe there may be some interesting patterns here. 
 
 # Probability   
 
@@ -27,11 +46,19 @@ Calculate as a minimum the below probabilities a through c.
 
 Assume the small letter "x" is estimated as the 4th quartile of the X variable, and the small letter "y" is estimated as the 2nd quartile of the Y variable.  Interpret the meaning of all probabilities.  
 
-  a.	$P(X>x | Y>y)$	
+  a. $P(X>x | Y>y)$	    
   
-  b.  $P(X>x, Y>y)$	
+```{r,message = FALSE, message=FALSE, cache=TRUE}
+prob.x <- list(qrtx = as.numeric(quantile(sub.train.df$LotArea)[4]), mean = mean(sub.train.df$LotArea), std = sd(sub.train.df$LotArea))
+qrtx <- 
+
+qrty <- as.numeric(quantile(sub.train.df$SalePrice)[2])
+```
+
   
-  c.  $P(X<x | Y>y)$
+  b. $P(X>x, Y>y)$	
+  
+  c. $P(X<x | Y>y)$
 
 Does splitting the training data in this fashion make them independent? 
 
@@ -48,8 +75,64 @@ Provide univariate descriptive statistics and appropriate plots for both variabl
 
 Provide a scatterplot of X and Y.
 
+```{r scatter plot,  message = FALSE, message=FALSE, tidy=TRUE, cache=TRUE}
+ggplot(sub.train.df, aes(x = LotArea, y = SalePrice)) +
+    geom_point(shape=1) +
+    theme_light() +
+    scale_y_continuous(labels = dollar)
+```
+
 Transform both variables simultaneously using Box-Cox transformations.  
-You might have to research this. 
+
+> I am using the `BoxCox.lambda` function from the `forecast` package to determine the necessary transformations for the two variables.
+
+```{r box cox table, echo=FALSE, cache=TRUE, eval=TRUE}
+library(forecast)
+library(knitr)
+l1 <- BoxCox.lambda(as.numeric(sub.train.df$SalePrice))
+l2 <- BoxCox.lambda(as.numeric(sub.train.df$LotArea))
+
+lamdas <- c(l1, l2)
+Variables <- c("SalePrice", "LotArea")
+dfBoxCox <- as.data.frame(cbind(round(as.numeric(lamdas),4), Variables))
+colnames(dfBoxCox) <- c("$\\lambda$", "Variables")
+kable(dfBoxCox, align = c("c", "c"))
+```
+
+\centering
+
+Common Box-Cox Transformations[^1] [^2]
+
+\setlength{\tabcolsep}{12pt}
+
+\begin{tabular}{ c c }
+\hline
+$\lambda$ & Y' \\ \hline
+-0.5 &	$Y^{-0.5}~=~\frac{1}{\sqrt{(Y)}}$ \\
+0	& $\log(Y)$ \\
+.25  & $\sqrt[4]{Y}$
+\end{tabular}
+
+\justifying
+
+Lambda values were truncated to the nearest tenth that match a common transformation as per the below table.
+
+\centering
+
+\begin{tabular}{ c c }
+\hline
+variable & variable transformation \\ \hline
+SalePrice & $SalePrice^{-0.5}$ \\
+LotArea & $log(LotArea)$ 
+\end{tabular}
+
+\justifying
+
+\setlength{\tabcolsep}{6pt}
+
+[^1]: Osborne, Jason W. "Improving your data transformations: Applying the Box-Cox transformation." Practical Assessment, Research & Evaluation 15.12 (2010): 1-9.
+
+[^2]: [By Understanding Both the Concept of Transformation and the Box-Cox Method, Practitioners Will Be Better Prepared to Work with Non-normal Data.](https://www.isixsigma.com/tools-templates/normality/making-data-normal-using-box-cox-power-transformation/) . "Making Data Normal Using Box-Cox Power Transformation." ISixSigma. N.p., n.d. Web. 29 Oct. 2016.
 
 Using the transformed variables, run a correlation analysis and interpret.
 
@@ -59,24 +142,23 @@ Discuss the meaning of your analysis.
 
 # Linear Algebra and Correlation.  
 
-Invert your correlation matrix. (This is known as the precision matrix and contains variance inflation factors on the diagonal.) Multiply the correlation matrix by the precision matrix, and then multiply the precision matrix by the correlation matrix.
+Invert your correlation matrix.(This is known as the precision matrix and contains variance inflation factors on the diagonal.) Multiply the correlation matrix by the precision matrix, and then multiply the precision matrix by the correlation matrix.
 
 # Calculus-Based Probability & Statistics
 
-Many times, it makes sense to fit a closed form distribution to data.  For your non-transformed independent variable, location shift it so that the minimum value is above zero.  
+Many times, it makes sense to fit a closed form distribution to data. For your non-transformed independent variable, location shift it so that the minimum value is above zero.  
 
-Then load the MASS package and run fitdistr to fit a density function of your choice.  (See  https://stat.ethz.ch/R-manual/R-devel/library/MASS/html/fitdistr.html ). 
+Then load the MASS package and run fitdistr to fit a density function of your choice. (See  https://stat.ethz.ch/R-manual/R-devel/library/MASS/html/fitdistr.html). 
 
-Find the optimal value of the parameters for this distribution, and then take 1000 samples from this distribution (e.g., rexp(1000, ???) for an exponential).
+Find the optimal value of the parameters for this distribution, and then take 1000 samples from this distribution (e.g., rexp(1000) for an exponential).
 
 Plot a histogram and compare it with a histogram of your non-transformed original variable.   
 
 # Modeling
 Build some type of regression model and submit your model to the competition board.  
+
 Provide your complete model summary and results with analysis. 
 
 Report your Kaggle.com user name and score.
 
-
 Multiply the correlation matrix by the precision matrix, and then multiply the precision matrix by the correlation matrix.
-

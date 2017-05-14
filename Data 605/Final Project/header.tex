@@ -7,3 +7,13 @@
 \usepackage{multirow}
 \usepackage{mathtools}
 \usepackage{tikz}
+\usepackage{ragged2e}
+
+% https://github.com/jacbar/studia/blob/master/semestr-vii/inz-tymon/main/header.pandoc#L10
+\usepackage{lscape}
+\usepackage{pdfpages}
+\usepackage{geometry}
+
+% pandoc does not parse latex env - https://groups.google.com/forum/?fromgroups=#!topic/pandoc-discuss/oZETB5Ii1Cw
+\newcommand{\blandscape}{\begin{landscape}}
+\newcommand{\elandscape}{\end{landscape}}
