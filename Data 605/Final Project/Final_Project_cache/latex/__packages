@@ -10,3 +10,6 @@ scales
 forecast
 knitr
 stargazer
+MASS
+survival
+fitdistrplus

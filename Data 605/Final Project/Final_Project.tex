@@ -380,15 +380,19 @@ Correlation.}\label{linear-algebra-and-correlation.}
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{A <-}\StringTok{ }\KeywordTok{cor}\NormalTok{(sub.train.df.trans)}
-\NormalTok{A}
+\KeywordTok{kable}\NormalTok{(A)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-##            SalePrice    LotArea
-## SalePrice  1.0000000 -0.3858091
-## LotArea   -0.3858091  1.0000000
-\end{verbatim}
+\begin{longtable}[]{@{}lrr@{}}
+\toprule
+& SalePrice & LotArea\tabularnewline
+\midrule
+\endhead
+SalePrice & 1.0000000 & -0.3858091\tabularnewline
+LotArea & -0.3858091 & 1.0000000\tabularnewline
+\bottomrule
+\end{longtable}
 
 Invert your correlation matrix.(This is known as the precision matrix
 and contains variance inflation factors on the diagonal.)
@@ -396,15 +400,19 @@ and contains variance inflation factors on the diagonal.)
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{B <-}\StringTok{ }\KeywordTok{solve}\NormalTok{(A)}
-\NormalTok{B}
+\KeywordTok{kable}\NormalTok{(B)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-##           SalePrice   LotArea
-## SalePrice 1.1748792 0.4532792
-## LotArea   0.4532792 1.1748792
-\end{verbatim}
+\begin{longtable}[]{@{}lrr@{}}
+\toprule
+& SalePrice & LotArea\tabularnewline
+\midrule
+\endhead
+SalePrice & 1.1748792 & 0.4532792\tabularnewline
+LotArea & 0.4532792 & 1.1748792\tabularnewline
+\bottomrule
+\end{longtable}
 
 Multiply the correlation matrix by the precision matrix, and then
 multiply the precision matrix by the correlation matrix.
@@ -412,28 +420,36 @@ multiply the precision matrix by the correlation matrix.
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{corr.by.pre.M <-}\StringTok{ }\NormalTok{A %*%}\StringTok{ }\NormalTok{B}
-\NormalTok{corr.by.pre.M}
+\KeywordTok{kable}\NormalTok{(corr.by.pre.M)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-##               SalePrice LotArea
-## SalePrice  1.000000e+00       0
-## LotArea   -5.551115e-17       1
-\end{verbatim}
+\begin{longtable}[]{@{}lrr@{}}
+\toprule
+& SalePrice & LotArea\tabularnewline
+\midrule
+\endhead
+SalePrice & 1 & 0\tabularnewline
+LotArea & 0 & 1\tabularnewline
+\bottomrule
+\end{longtable}
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{pre.by.corr.M <-}\StringTok{ }\NormalTok{B %*%}\StringTok{ }\NormalTok{A}
-\NormalTok{pre.by.corr.M}
+\KeywordTok{kable}\NormalTok{(pre.by.corr.M)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-##              SalePrice       LotArea
-## SalePrice 1.000000e+00 -1.110223e-16
-## LotArea   5.551115e-17  1.000000e+00
-\end{verbatim}
+\begin{longtable}[]{@{}lrr@{}}
+\toprule
+& SalePrice & LotArea\tabularnewline
+\midrule
+\endhead
+SalePrice & 1 & 0\tabularnewline
+LotArea & 0 & 1\tabularnewline
+\bottomrule
+\end{longtable}
 
 \section{Calculus-Based Probability \&
 Statistics}\label{calculus-based-probability-statistics}
@@ -448,9 +464,7 @@ the minimum value is above zero.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-## [1] 1300
-\end{verbatim}
+{[}1{]} 1300
 
 \begin{quote}
 For the independent variable chosen, there are no zero values observed.
@@ -459,9 +473,59 @@ I would expect it to never be unobserved (at least estimates would be
 used).
 \end{quote}
 
+\begin{quote}
+However, if a shift was required something like the below could be used.
+\end{quote}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{shift <-}\StringTok{ }\NormalTok{sub.train.df$LotArea +}\StringTok{ }\DecValTok{1} 
+\end{Highlighting}
+\end{Shaded}
+
 Then load the MASS package and run fitdistr to fit a density function of
 your choice. (See
 \url{https://stat.ethz.ch/R-manual/R-devel/library/MASS/html/fitdistr.html}).
+
+\begin{quote}
+First lets look at what distrubtion would best fit our data
+\end{quote}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(fitdistrplus)}
+\KeywordTok{descdist}\NormalTok{(sub.train.df$LotArea)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Final_Project_files/figure-latex/unnamed-chunk-5-1.pdf}
+
+\begin{verbatim}
+## summary statistics
+## ------
+## min:  1300   max:  215245 
+## median:  9478.5 
+## mean:  10516.83 
+## estimated sd:  9981.265 
+## estimated skewness:  12.20769 
+## estimated kurtosis:  206.2433
+\end{verbatim}
+
+\section{TODO figure out why beta distribution is not
+working}\label{todo-figure-out-why-beta-distribution-is-not-working}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(MASS)}
+\KeywordTok{fitdistr}\NormalTok{(}\KeywordTok{as.numeric}\NormalTok{(sub.train.df$LotArea), }\DataTypeTok{densfun =} \StringTok{"normal"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       mean          sd    
+##   10516.8281    9977.8461 
+##  (  261.1322) (  184.6483)
+\end{verbatim}
 
 Find the optimal value of the parameters for this distribution, and then
 take 1000 samples from this distribution (e.g., rexp(1000) for an

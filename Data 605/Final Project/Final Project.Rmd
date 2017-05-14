@@ -23,6 +23,8 @@ library(scales)
 library(forecast)
 library(knitr)
 library(stargazer)
+library(MASS)
+library(fitdistrplus)
 ```
 
 
@@ -142,7 +144,7 @@ LotArea & $log(LotArea)$
 
 Using the transformed variables, run a correlation analysis and interpret.
 
-```{r, cache=TRUE, eval=TRUE}
+```{r, cache=TRUE, eval=TRUE, results='markup'}
 sub.train.df.trans <- sub.train.df %>% 
                       mutate(SalePrice = SalePrice^(-.5), 
                              LotArea = log(LotArea))
@@ -165,37 +167,59 @@ Discuss the meaning of your analysis.
 
 # Linear Algebra and Correlation.  
 
-```{r correlation matrix}
+```{r correlation matrix, cache=TRUE, eval=TRUE, results='asis'}
 A <- cor(sub.train.df.trans)
-A
+kable(A)
 ```
+
+     
 Invert your correlation matrix.(This is known as the precision matrix and contains variance inflation factors on the diagonal.)
 
-```{r precision matrix}
+```{r precision matrix, cache=TRUE, eval=TRUE, results='asis'}
 B <- solve(A)
-B
+kable(B)
 ```
 
  Multiply the correlation matrix by the precision matrix, and then multiply the precision matrix by the correlation matrix.
  
-```{r}
+```{r matrix multiplication, cache=TRUE, eval=TRUE, results='asis'}
 corr.by.pre.M <- A %*% B
-corr.by.pre.M
+kable(corr.by.pre.M)
 pre.by.corr.M <- B %*% A
-pre.by.corr.M
+kable(pre.by.corr.M)
 ```
 
 # Calculus-Based Probability & Statistics
 
 Many times, it makes sense to fit a closed form distribution to data. For your non-transformed independent variable, location shift it so that the minimum value is above zero.
 
-```{r}
+```{r, cache=TRUE, eval=TRUE, results='asis'}
 min(sub.train.df$LotArea)
 ```
 
 > For the independent variable chosen, there are no zero values observed. This makes sense as we would expect the lot area to have some value and I would expect it to never be unobserved (at least estimates would be used). 
 
+> However, if a shift was required something like the below could be used. 
+
+```{r, cache=TRUE, eval=TRUE, results='asis'}
+shift <- sub.train.df$LotArea + 1 
+```
+
 Then load the MASS package and run fitdistr to fit a density function of your choice. (See  https://stat.ethz.ch/R-manual/R-devel/library/MASS/html/fitdistr.html). 
+
+> First lets look at what distrubtion would best fit our data
+
+```{r}
+library(fitdistrplus)
+descdist(sub.train.df$LotArea)
+```
+
+#TODO figure out why beta distribution is not working 
+
+```{r}
+library(MASS)
+fitdistr(as.numeric(sub.train.df$LotArea), densfun = "normal")
+```
 
 Find the optimal value of the parameters for this distribution, and then take 1000 samples from this distribution (e.g., rexp(1000) for an exponential).
 
