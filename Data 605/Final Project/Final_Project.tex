@@ -195,10 +195,13 @@ the Y variable. Interpret the meaning of all probabilities.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{prob.x <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{qrtx =} \KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{quantile}\NormalTok{(sub.train.df$LotArea)[}\DecValTok{4}\NormalTok{]), }\DataTypeTok{mean =} \KeywordTok{mean}\NormalTok{(sub.train.df$LotArea), }\DataTypeTok{std =} \KeywordTok{sd}\NormalTok{(sub.train.df$LotArea))}
-\NormalTok{qrtx <-}\StringTok{ }
+\NormalTok{prob.x <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{qrtx =} \KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{quantile}\NormalTok{(sub.train.df$LotArea)[}\DecValTok{4}\NormalTok{]), }
+               \DataTypeTok{mean =} \KeywordTok{mean}\NormalTok{(sub.train.df$LotArea), }
+               \DataTypeTok{std =} \KeywordTok{sd}\NormalTok{(sub.train.df$LotArea))}
 
-\NormalTok{qrty <-}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{quantile}\NormalTok{(sub.train.df$SalePrice)[}\DecValTok{2}\NormalTok{])}
+\NormalTok{prob.y <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{qrtx =} \KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{quantile}\NormalTok{(sub.train.df$SalePrice)[}\DecValTok{2}\NormalTok{]), }
+               \DataTypeTok{mean =} \KeywordTok{mean}\NormalTok{(sub.train.df$SalePrice), }
+               \DataTypeTok{std =} \KeywordTok{sd}\NormalTok{(sub.train.df$SalePrice))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -297,10 +300,59 @@ LotArea & $log(LotArea)$
 Using the transformed variables, run a correlation analysis and
 interpret.
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sub.train.df.trans <-}\StringTok{ }\NormalTok{sub.train.df %>%}\StringTok{ }
+\StringTok{                      }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{SalePrice =} \NormalTok{SalePrice^(-.}\DecValTok{5}\NormalTok{), }
+                             \DataTypeTok{LotArea =} \KeywordTok{log}\NormalTok{(LotArea))}
+
+\NormalTok{sub.train.cor <-}\StringTok{ }\KeywordTok{cor.test}\NormalTok{(sub.train.df$SalePrice, }
+                          \NormalTok{sub.train.df$LotArea, }
+                          \DataTypeTok{method =} \StringTok{"pearson"}\NormalTok{, }\DataTypeTok{conf.level =} \NormalTok{.}\DecValTok{99}\NormalTok{)}
+\NormalTok{sub.train.cor}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Pearson's product-moment correlation
+## 
+## data:  sub.train.df$SalePrice and sub.train.df$LotArea
+## t = 10.445, df = 1458, p-value < 2.2e-16
+## alternative hypothesis: true correlation is not equal to 0
+## 99 percent confidence interval:
+##  0.2000196 0.3254375
+## sample estimates:
+##       cor 
+## 0.2638434
+\end{verbatim}
+
+\begin{quote}
+The p-value of the correlation test is 2.2e-16 which is less than the
+significance level of alpha at .05. We are using the standard alpha as
+there is no indication another any other value for alpha should be used.
+We can therefore say that lot size and sale price are significantly
+correlated with a correlation coefficient of 0.264.
+\end{quote}
+
 Test the hypothesis that the correlation between these variables is 0
 and provide a 99\% confidence interval.
 
+\begin{quote}
+The correlation test has specifically done that for us and we can safely
+reject the null hypothesis as we see that our 99\% confidence interval
+exists at the values (0.200, 0.325) with a p-value \textless{} 2.2e-16.
+\end{quote}
+
 Discuss the meaning of your analysis.
+
+\begin{quote}
+This means two possible things could have occured, there is no
+correlation and this data set is pulled from an unusual population of
+house sales. Or, more likely with the values obtained, our assumption of
+0 correlation is incorect and we have obtained a very typical data set
+and must reject the null hypothesis.
+\end{quote}
 
 \section{Linear Algebra and
 Correlation.}\label{linear-algebra-and-correlation.}

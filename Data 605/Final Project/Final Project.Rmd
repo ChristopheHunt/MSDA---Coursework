@@ -22,6 +22,7 @@ library(tidyverse)
 library(scales)
 library(forecast)
 library(knitr)
+library(stargazer)
 ```
 
 
@@ -49,10 +50,13 @@ Assume the small letter "x" is estimated as the 4th quartile of the X variable, 
   a. $P(X>x | Y>y)$	    
   
 ```{r,message = FALSE, message=FALSE, cache=TRUE}
-prob.x <- list(qrtx = as.numeric(quantile(sub.train.df$LotArea)[4]), mean = mean(sub.train.df$LotArea), std = sd(sub.train.df$LotArea))
-qrtx <- 
+prob.x <- list(qrtx = as.numeric(quantile(sub.train.df$LotArea)[4]), 
+               mean = mean(sub.train.df$LotArea), 
+               std = sd(sub.train.df$LotArea))
 
-qrty <- as.numeric(quantile(sub.train.df$SalePrice)[2])
+prob.y <- list(qrtx = as.numeric(quantile(sub.train.df$SalePrice)[2]), 
+               mean = mean(sub.train.df$SalePrice), 
+               std = sd(sub.train.df$SalePrice))
 ```
 
   
@@ -75,7 +79,7 @@ Provide univariate descriptive statistics and appropriate plots for both variabl
 
 Provide a scatterplot of X and Y.
 
-```{r scatter plot,  message = FALSE, message=FALSE, tidy=TRUE, cache=TRUE}
+```{r scatter plot,  message = FALSE, message=FALSE, tidy=TRUE, cache=TRUE, fig.height=4, fig.width=6}
 ggplot(sub.train.df, aes(x = LotArea, y = SalePrice)) +
     geom_point(shape=1) +
     theme_light() +
@@ -134,11 +138,29 @@ LotArea & $log(LotArea)$
 
 [^2]: [By Understanding Both the Concept of Transformation and the Box-Cox Method, Practitioners Will Be Better Prepared to Work with Non-normal Data.](https://www.isixsigma.com/tools-templates/normality/making-data-normal-using-box-cox-power-transformation/) . "Making Data Normal Using Box-Cox Power Transformation." ISixSigma. N.p., n.d. Web. 29 Oct. 2016.
 
+
 Using the transformed variables, run a correlation analysis and interpret.
+
+```{r}
+sub.train.df.trans <- sub.train.df %>% 
+                      mutate(SalePrice = SalePrice^(-.5), 
+                             LotArea = log(LotArea))
+
+sub.train.cor <- cor.test(sub.train.df$SalePrice, 
+                          sub.train.df$LotArea, 
+                          method = "pearson", conf.level = .99)
+sub.train.cor
+```
+
+> The p-value of the correlation test is 2.2e-16 which is less than the significance level of alpha at .05. We are using the standard alpha as there is no indication another any other value for alpha should be used. We can therefore say that lot size and sale price are significantly correlated with a correlation coefficient of 0.264. 
 
 Test the hypothesis that the correlation between these variables is 0 and provide a 99% confidence interval.  
 
+> The correlation test has specifically done that for us and we can safely reject the null hypothesis as we see that our 99% confidence interval exists at the values (0.200, 0.325) with a p-value < 2.2e-16.
+
 Discuss the meaning of your analysis.
+
+> This means two possible things could have occured, there is no correlation and this data set is pulled from an unusual population of house sales. Or, more likely with the values obtained, our assumption of 0 correlation is incorect and we have obtained a very typical data set and must reject the null hypothesis. 
 
 # Linear Algebra and Correlation.  
 
