@@ -25,6 +25,9 @@ library(knitr)
 library(stargazer)
 library(MASS)
 library(fitdistrplus)
+library(caret)
+library(Hmisc)
+library(doParallel)
 ```
 
 
@@ -180,7 +183,7 @@ B <- solve(A)
 kable(B)
 ```
 
- Multiply the correlation matrix by the precision matrix, and then multiply the precision matrix by the correlation matrix.
+Multiply the correlation matrix by the precision matrix, and then multiply the precision matrix by the correlation matrix.
  
 ```{r matrix multiplication, cache=TRUE, eval=TRUE, results='asis'}
 corr.by.pre.M <- A %*% B
@@ -209,14 +212,14 @@ Then load the MASS package and run fitdistr to fit a density function of your ch
 
 > First lets look at what distrubtion would best fit our data
 
-```{r}
+```{r, cache=TRUE, eval=TRUE, results='asis'}
 library(fitdistrplus)
 descdist(sub.train.df$LotArea)
 ```
 
 #TODO figure out why beta distribution is not working 
 
-```{r}
+```{r, cache=TRUE, eval=TRUE, results='asis'}
 library(MASS)
 fitdistr(as.numeric(sub.train.df$LotArea), densfun = "normal")
 ```
@@ -226,10 +229,40 @@ Find the optimal value of the parameters for this distribution, and then take 10
 Plot a histogram and compare it with a histogram of your non-transformed original variable.   
 
 # Modeling
+
 Build some type of regression model and submit your model to the competition board.  
+
+```{r}
+library(caret)
+#set up dummy columns
+dummies <- dummyVars(SalePrice ~ ., data = train.df)
+train.df.dum <- as.data.frame(predict(dummies, newdata = train.df))
+train.df.dum <- as.data.frame(train.df.dum %>% dplyr::select(-starts_with(c("Alley"))))
+```
+
+```{r}
+library(missForest)
+registerDoParallel(cl = makeCluster(25), cores = 100)
+set.seed(1234)
+train.df.dum.imp <- train.df.dum %>% missForest(maxiter = 10, ntree = 100, replace = TRUE, parallelize = 'forests', verbose = TRUE) #Takes approximately 1 hour to process
+write.csv(train.df.dum.imp$ximp,"imputed_training_data.csv", row.names = FALSE) #wrote imputed_data to csv file due to processing time taken by missForest
+```
+
+```{r, cache=TRUE, eval=TRUE, results='asis'}
+library(caret)
+sbf(train.df$LotArea, train.df$SalePrice)
+
+fit <- sbf(form = SalePrice ~ .,
+           data = train.df, 
+           method = "svmLinear",
+           trControl = trainControl(method = "none", 
+                                    classProbs = TRUE),
+           preProc = c("center", "scale"))
+
+```
+
 
 Provide your complete model summary and results with analysis. 
 
 Report your Kaggle.com user name and score.
 
-Multiply the correlation matrix by the precision matrix, and then multiply the precision matrix by the correlation matrix.
