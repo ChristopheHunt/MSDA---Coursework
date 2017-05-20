@@ -151,16 +151,29 @@
 \setcounter{tocdepth}{2}
 \tableofcontents
 }
+\section{Variable}\label{variable}
+
 Pick one of the quantitative independent variables from the training
 data set (train.csv), and define that variable as X.
 
 Pick SalePrice as the dependent variable, and define it as Y for the
 next analysis.
 
+\subsection{Variable Picked}\label{variable-picked}
+
+\begin{quote}
+The variable we will set to X is LotArea, which is defined as the Lot
+size in square feet. I chose LotArea because an anecdotal assumption is
+that the larger the lot size is the higher the sale price. However,
+living in NYC, I know that tiny lots in very desirable places have sold
+for a high price so I believe there may be some interesting varability.
+\end{quote}
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{library}\NormalTok{(tidyverse)}
-\NormalTok{train.df <-}\StringTok{ }\KeywordTok{as_tibble}\NormalTok{(}\KeywordTok{read.csv}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20605/Final%20Project/train.csv"}\NormalTok{))}
+\NormalTok{train.df <-}\StringTok{ }\KeywordTok{as_tibble}\NormalTok{(}\KeywordTok{read.csv}\NormalTok{(}\KeywordTok{paste}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/"}\NormalTok{, }\StringTok{"ChristopheHunt/"}\NormalTok{, }
+    \StringTok{"MSDA---Coursework/master"}\NormalTok{, }\StringTok{"/Data%20605/Final%20Project/train.csv"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{""}\NormalTok{)))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -170,14 +183,6 @@ next analysis.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{quote}
-The variable we will set to X is LotArea, which is defined as the Lot
-size in square feet. I chose this because an anecdotal assumption is
-that the larger the lot size is the higher the sale price. However,
-living in NYC there are tiny lots in very desirable places that have a
-high price so I believe there may be some interesting patterns here.
-\end{quote}
-
 \section{Probability}\label{probability}
 
 Calculate as a minimum the below probabilities a through c.
@@ -186,40 +191,88 @@ Assume the small letter ``x'' is estimated as the 4th quartile of the X
 variable, and the small letter ``y'' is estimated as the 2nd quartile of
 the Y variable. Interpret the meaning of all probabilities.
 
-\begin{enumerate}
-\def\labelenumi{\alph{enumi}.}
-\tightlist
-\item
-  \(P(X>x | Y>y)\)
-\end{enumerate}
-
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{prob.x <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{qrtx =} \KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{quantile}\NormalTok{(sub.train.df$LotArea)[}\DecValTok{4}\NormalTok{]), }
-               \DataTypeTok{mean =} \KeywordTok{mean}\NormalTok{(sub.train.df$LotArea), }
-               \DataTypeTok{std =} \KeywordTok{sd}\NormalTok{(sub.train.df$LotArea))}
+\NormalTok{prob.x <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{qrt =} \KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{quantile}\NormalTok{(sub.train.df$LotArea)[}\DecValTok{4}\NormalTok{]))}
 
-\NormalTok{prob.y <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{qrtx =} \KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{quantile}\NormalTok{(sub.train.df$SalePrice)[}\DecValTok{2}\NormalTok{]), }
-               \DataTypeTok{mean =} \KeywordTok{mean}\NormalTok{(sub.train.df$SalePrice), }
-               \DataTypeTok{std =} \KeywordTok{sd}\NormalTok{(sub.train.df$SalePrice))}
+\NormalTok{prob.y <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{qrt =} \KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{quantile}\NormalTok{(sub.train.df$SalePrice)[}\DecValTok{2}\NormalTok{]))}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{enumerate}
-\def\labelenumi{\alph{enumi}.}
-\setcounter{enumi}{1}
-\item
-  \(P(X>x, Y>y)\)
-\item
-  \(P(X<x | Y>y)\)
-\end{enumerate}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{prob.y.x <-}\StringTok{ }\NormalTok{sub.train.df %>%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{greaterLotArea =} \KeywordTok{ifelse}\NormalTok{(LotArea >=}\StringTok{ }\NormalTok{prob.x$qrt, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{), }
+                                     \DataTypeTok{lesserLotArea =} \KeywordTok{ifelse}\NormalTok{(LotArea <}\StringTok{ }\NormalTok{prob.x$qrt, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{), }
+                                     \DataTypeTok{greaterSalePrice =} \KeywordTok{ifelse}\NormalTok{(SalePrice >=}\StringTok{ }\NormalTok{prob.y$qrt,}\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{), }
+                                     \DataTypeTok{lesserSalePrice =} \KeywordTok{ifelse}\NormalTok{(SalePrice <}\StringTok{ }\NormalTok{prob.y$qrt,}\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{\texorpdfstring{a.
+\(P(X>x | Y>y)\)}{a. P(X\textgreater{}x \textbar{} Y\textgreater{}y)}}\label{a.-pxx-yy}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a <-}\StringTok{ }\NormalTok{(}\KeywordTok{sum}\NormalTok{(}\KeywordTok{ifelse}\NormalTok{(prob.y.x$greaterLotArea ==}\StringTok{ }\DecValTok{1} \NormalTok{&}\StringTok{ }
+\StringTok{                   }\NormalTok{prob.y.x$greaterSalePrice ==}\StringTok{ }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{)) }
+      \NormalTok{/}\StringTok{ }\KeywordTok{nrow}\NormalTok{(prob.y.x)) /}\StringTok{ }\NormalTok{((}\KeywordTok{sum}\NormalTok{(prob.y.x$greaterLotArea) /}\StringTok{ }\KeywordTok{nrow}\NormalTok{(prob.y.x)))}
+\NormalTok{a}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.9369863
+\end{verbatim}
+
+\subsection{\texorpdfstring{b.
+\(P(X>x, Y>y)\)}{b. P(X\textgreater{}x, Y\textgreater{}y)}}\label{b.-pxx-yy}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{b <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(}\KeywordTok{ifelse}\NormalTok{(prob.y.x$greaterLotArea ==}\StringTok{ }\DecValTok{1} \NormalTok{&}\StringTok{ }\NormalTok{prob.y.x$greaterSalePrice ==}\StringTok{ }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{))/}\KeywordTok{nrow}\NormalTok{(prob.y.x)}
+\NormalTok{b}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.2342466
+\end{verbatim}
+
+\subsection{\texorpdfstring{c.
+\(P(X<x | Y>y)\)}{c. P(X\textless{}x \textbar{} Y\textgreater{}y)}}\label{c.-pxx-yy}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{c <-}\StringTok{ }\NormalTok{(}\KeywordTok{sum}\NormalTok{(}\KeywordTok{ifelse}\NormalTok{(prob.y.x$lesserLotArea ==}\StringTok{ }\DecValTok{1} \NormalTok{&}\StringTok{ }\NormalTok{prob.y.x$greaterSalePrice ==}\StringTok{ }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{)) /}\StringTok{ }\KeywordTok{nrow}\NormalTok{(prob.y.x)) /}\StringTok{ }\NormalTok{((}\KeywordTok{sum}\NormalTok{(prob.y.x$lesserLotArea) /}\StringTok{ }\KeywordTok{nrow}\NormalTok{(prob.y.x)))}
+\NormalTok{c}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.6876712
+\end{verbatim}
 
 Does splitting the training data in this fashion make them independent?
 
-In other words, does \(P(X|Y)=P(X)P(Y))\)?
+In other words, does \(P(X|Y)=P(X)P(Y)\)?
 
 Check mathematically, and then evaluate by running a Chi Square test for
 association.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{prob.table <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(}\KeywordTok{rbind}\NormalTok{(}\KeywordTok{cbind}\NormalTok{(}\KeywordTok{sum}\NormalTok{(prob.y.x$lesserLotArea), }\KeywordTok{sum}\NormalTok{(prob.y.x$greaterLotArea)), }\KeywordTok{cbind}\NormalTok{(}\KeywordTok{sum}\NormalTok{(prob.y.x$lesserSalePrice), }\KeywordTok{sum}\NormalTok{(prob.y.x$greaterSalePrice))))}
+\KeywordTok{chisq.test}\NormalTok{(prob.table)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Pearson's Chi-squared test with Yates' continuity correction
+## 
+## data:  prob.table
+## X-squared = 728, df = 1, p-value < 2.2e-16
+\end{verbatim}
 
 You might have to research this.
 
@@ -488,7 +541,7 @@ your choice. (See
 \url{https://stat.ethz.ch/R-manual/R-devel/library/MASS/html/fitdistr.html}).
 
 \begin{quote}
-First lets look at what distrubtion would best fit our data
+First lets look at what distrubtion would best fit our data.
 \end{quote}
 
 \begin{Shaded}
@@ -498,34 +551,23 @@ First lets look at what distrubtion would best fit our data
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Final_Project_files/figure-latex/unnamed-chunk-5-1.pdf}
+\subsection{\texorpdfstring{\protect\includegraphics{Final_Project_files/figure-latex/unnamed-chunk-11-1.pdf}
+summary statistics}{ summary statistics}}\label{summary-statistics}
 
-\begin{verbatim}
-## summary statistics
-## ------
-## min:  1300   max:  215245 
-## median:  9478.5 
-## mean:  10516.83 
-## estimated sd:  9981.265 
-## estimated skewness:  12.20769 
-## estimated kurtosis:  206.2433
-\end{verbatim}
+min: 1300 max: 215245 median: 9478.5 mean: 10516.83 estimated sd:
+9981.265 estimated skewness: 12.20769 estimated kurtosis: 206.2433
 
-\section{TODO figure out why beta distribution is not
-working}\label{todo-figure-out-why-beta-distribution-is-not-working}
+\begin{quote}
+There were too many issues in attempting to fit the beta distribution so
+the next best theoretical distribution was used - lognormal.
+\end{quote}
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{library}\NormalTok{(MASS)}
-\KeywordTok{fitdistr}\NormalTok{(}\KeywordTok{as.numeric}\NormalTok{(sub.train.df$LotArea), }\DataTypeTok{densfun =} \StringTok{"normal"}\NormalTok{)}
+\NormalTok{fit.log <-}\StringTok{ }\KeywordTok{fitdistr}\NormalTok{(sub.train.df$LotArea, }\DataTypeTok{densfun =} \StringTok{"log-normal"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-##       mean          sd    
-##   10516.8281    9977.8461 
-##  (  261.1322) (  184.6483)
-\end{verbatim}
 
 Find the optimal value of the parameters for this distribution, and then
 take 1000 samples from this distribution (e.g., rexp(1000) for an
@@ -539,12 +581,67 @@ original variable.
 Build some type of regression model and submit your model to the
 competition board.
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(caret)}
+\CommentTok{#set up dummy columns}
+\NormalTok{dummies <-}\StringTok{ }\KeywordTok{dummyVars}\NormalTok{(SalePrice ~}\StringTok{ }\NormalTok{., }\DataTypeTok{data =} \NormalTok{train.df)}
+\NormalTok{train.df.dum <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(}\KeywordTok{predict}\NormalTok{(dummies, }\DataTypeTok{newdata =} \NormalTok{train.df))}
+\NormalTok{train.df.dum <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(train.df.dum %>%}\StringTok{ }\NormalTok{dplyr::}\KeywordTok{select}\NormalTok{(-}\KeywordTok{starts_with}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{"Alley"}\NormalTok{))))}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{EVAL SET TO FALSE}\label{eval-set-to-false}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(missForest)}
+\KeywordTok{registerDoParallel}\NormalTok{(}\DataTypeTok{cl =} \KeywordTok{makeCluster}\NormalTok{(}\DecValTok{25}\NormalTok{), }\DataTypeTok{cores =} \DecValTok{100}\NormalTok{)}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1234}\NormalTok{)}
+\NormalTok{train.df.dum.imp <-}\StringTok{ }\NormalTok{train.df.dum %>%}\StringTok{ }\KeywordTok{missForest}\NormalTok{(}\DataTypeTok{maxiter =} \DecValTok{10}\NormalTok{, }\DataTypeTok{ntree =} \DecValTok{100}\NormalTok{, }\DataTypeTok{replace =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{parallelize =} \StringTok{'forests'}\NormalTok{, }\DataTypeTok{verbose =} \OtherTok{TRUE}\NormalTok{) }\CommentTok{#Takes approximately 1 hour to process}
+\KeywordTok{write.csv}\NormalTok{(train.df.dum.imp$ximp,}\StringTok{"imputed_training_data.csv"}\NormalTok{, }\DataTypeTok{row.names =} \OtherTok{FALSE}\NormalTok{) }\CommentTok{#wrote imputed_data to csv file due to processing time taken by missForest}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(caret)}
+\KeywordTok{sbf}\NormalTok{(train.df$LotArea, train.df$SalePrice)}
+
+\NormalTok{fit <-}\StringTok{ }\KeywordTok{sbf}\NormalTok{(}\DataTypeTok{form =} \NormalTok{SalePrice ~}\StringTok{ }\NormalTok{.,}
+           \DataTypeTok{data =} \NormalTok{train.df, }
+           \DataTypeTok{method =} \StringTok{"svmLinear"}\NormalTok{,}
+           \DataTypeTok{trControl =} \KeywordTok{trainControl}\NormalTok{(}\DataTypeTok{method =} \StringTok{"none"}\NormalTok{, }
+                                    \DataTypeTok{classProbs =} \OtherTok{TRUE}\NormalTok{),}
+           \DataTypeTok{preProc =} \KeywordTok{c}\NormalTok{(}\StringTok{"center"}\NormalTok{, }\StringTok{"scale"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(leaps)}
+\KeywordTok{library}\NormalTok{(MASS)}
+\KeywordTok{regsubsets}\NormalTok{(SalePrice ~}\StringTok{ }\NormalTok{Id +}\StringTok{ }\NormalTok{MSSubClass +}\StringTok{ }\NormalTok{MSZoning  +}\StringTok{ }\NormalTok{LotArea +}\StringTok{ }\NormalTok{Street +}\StringTok{ }\NormalTok{LotShape +}\StringTok{ }\NormalTok{LandContour +}\StringTok{ }\NormalTok{Utilities +}\StringTok{ }\NormalTok{LotConfig +}\StringTok{ }\NormalTok{LandSlope +}\StringTok{ }\NormalTok{Neighborhood +}\StringTok{ }\NormalTok{Condition1 +}\StringTok{ }\NormalTok{Condition2 +}\StringTok{ }\NormalTok{BldgType +}\StringTok{ }\NormalTok{HouseStyle +}\StringTok{ }\NormalTok{OverallQual +}\StringTok{ }\NormalTok{OverallCond +}\StringTok{ }\NormalTok{YearBuilt +}\StringTok{ }\NormalTok{YearRemodAdd +}\StringTok{ }\NormalTok{RoofStyle +}\StringTok{ }\NormalTok{RoofMatl +}\StringTok{ }\NormalTok{Exterior1st +}\StringTok{ }\NormalTok{Exterior2nd +}\StringTok{ }\NormalTok{MasVnrType +}\StringTok{ }\NormalTok{MasVnrArea +}\StringTok{ }\NormalTok{ExterQual +}\StringTok{ }\NormalTok{ExterCond +}\StringTok{ }\NormalTok{Foundation +}\StringTok{ }\NormalTok{BsmtQual +}\StringTok{ }\NormalTok{BsmtCond +}\StringTok{ }\NormalTok{BsmtExposure +}\StringTok{ }\NormalTok{BsmtFinType1 +}\StringTok{ }\NormalTok{BsmtFinSF1 +}\StringTok{ }\NormalTok{BsmtFinType2 +}\StringTok{ }\NormalTok{BsmtFinSF2 +}\StringTok{ }\NormalTok{BsmtUnfSF +}\StringTok{ }\NormalTok{TotalBsmtSF +}\StringTok{ }\NormalTok{Heating +}\StringTok{ }\NormalTok{HeatingQC +}\StringTok{ }\NormalTok{CentralAir +}\StringTok{ }\NormalTok{Electrical +}\StringTok{ }\NormalTok{X1stFlrSF +}\StringTok{ }\NormalTok{X2ndFlrSF +}\StringTok{ }\NormalTok{LowQualFinSF +}\StringTok{ }\NormalTok{GrLivArea +}\StringTok{ }\NormalTok{BsmtFullBath +}\StringTok{ }\NormalTok{BsmtHalfBath +}\StringTok{ }\NormalTok{FullBath +}\StringTok{ }\NormalTok{HalfBath +}\StringTok{ }\NormalTok{BedroomAbvGr +}\StringTok{ }\NormalTok{KitchenAbvGr +}\StringTok{ }\NormalTok{KitchenQual +}\StringTok{ }\NormalTok{TotRmsAbvGrd +}\StringTok{ }\NormalTok{Functional +}\StringTok{ }\NormalTok{Fireplaces +}\StringTok{ }\NormalTok{FireplaceQu +}\StringTok{ }\NormalTok{GarageType +}\StringTok{ }\NormalTok{GarageYrBlt +}\StringTok{ }\NormalTok{GarageFinish +}\StringTok{ }\NormalTok{GarageCars +}\StringTok{ }\NormalTok{GarageArea +}\StringTok{ }\NormalTok{GarageQual +}\StringTok{ }\NormalTok{GarageCond +}\StringTok{ }\NormalTok{PavedDrive +}\StringTok{ }\NormalTok{WoodDeckSF +}\StringTok{ }\NormalTok{OpenPorchSF +}\StringTok{ }\NormalTok{EnclosedPorch +}\StringTok{ }\NormalTok{X3SsnPorch +}\StringTok{ }\NormalTok{ScreenPorch +}\StringTok{ }\NormalTok{PoolArea +}\StringTok{ }\NormalTok{PoolQC +}\StringTok{ }\NormalTok{Fence +}\StringTok{ }\NormalTok{MiscFeature +}\StringTok{ }\NormalTok{MiscVal, }\DataTypeTok{data =} \NormalTok{train.df.dum.imp, }\DataTypeTok{nvmax =} \DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(lme4)}
+\KeywordTok{library}\NormalTok{(nlme)}
+\KeywordTok{library}\NormalTok{(arm)}
+\CommentTok{#testing the random effect}
+\CommentTok{#a first model}
+\NormalTok{mod1<-}\KeywordTok{lme}\NormalTok{(SalePrice~LotArea+SaleCondition,}\DataTypeTok{data=}\NormalTok{train.df, }\DataTypeTok{random=}\NormalTok{~}\DecValTok{1}\NormalTok{|SaleCondition, }\DataTypeTok{method=}\StringTok{"REML"}\NormalTok{)}
+
+\KeywordTok{anova}\NormalTok{(mod1)}
+\KeywordTok{predict}\NormalTok{(mod1, train.df)}
+\end{Highlighting}
+\end{Shaded}
+
 Provide your complete model summary and results with analysis.
 
 Report your Kaggle.com user name and score.
-
-Multiply the correlation matrix by the precision matrix, and then
-multiply the precision matrix by the correlation matrix.
 
 
 \end{document}

@@ -13,3 +13,10 @@ stargazer
 MASS
 survival
 fitdistrplus
+lattice
+caret
+Formula
+Hmisc
+foreach
+iterators
+doParallel

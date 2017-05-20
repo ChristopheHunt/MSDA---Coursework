@@ -30,21 +30,26 @@ library(Hmisc)
 library(doParallel)
 ```
 
+# Variable
 
 Pick one of the quantitative independent variables from the training data set (train.csv), and define that variable as X.
 
 Pick SalePrice as the dependent variable, and define it as Y for the next analysis.   
 
+## Variable Picked 
+
+> The variable we will set to X is LotArea, which is defined as the Lot size in square feet. I chose LotArea because an anecdotal assumption is that the larger the lot size is the higher the sale price. However, living in NYC, I know that tiny lots in very desirable places have sold for a high price so I believe there may be some interesting varability. 
+
 ```{r read train data, message = FALSE, message=FALSE, tidy=TRUE, cache=TRUE}
 library(tidyverse)
-train.df  <- as_tibble(read.csv("https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20605/Final%20Project/train.csv"))
+train.df  <- as_tibble(read.csv(paste("https://raw.githubusercontent.com/", "ChristopheHunt/",
+                                      "MSDA---Coursework/master", 
+                                      "/Data%20605/Final%20Project/train.csv", sep = "")))
 ```
 
 ```{r subset train data,  message = FALSE, message=FALSE, tidy=TRUE, cache=TRUE}
 sub.train.df <- train.df[,c("SalePrice", "LotArea")]
 ```
-
-> The variable we will set to X is LotArea, which is defined as the Lot size in square feet. I chose this because an anecdotal assumption is that the larger the lot size is the higher the sale price. However, living in NYC there are tiny lots in very desirable places that have a high price so I believe there may be some interesting patterns here. 
 
 # Probability   
 
@@ -52,15 +57,10 @@ Calculate as a minimum the below probabilities a through c.
 
 Assume the small letter "x" is estimated as the 4th quartile of the X variable, and the small letter "y" is estimated as the 2nd quartile of the Y variable.  Interpret the meaning of all probabilities.  
 
-  
 ```{r,message = FALSE, message=FALSE, cache=TRUE}
-prob.x <- list(qrt = as.numeric(quantile(sub.train.df$LotArea)[4]), 
-               mean = mean(sub.train.df$LotArea), 
-               std = sd(sub.train.df$LotArea))
+prob.x <- list(qrt = as.numeric(quantile(sub.train.df$LotArea)[4]))
 
-prob.y <- list(qrt = as.numeric(quantile(sub.train.df$SalePrice)[2]),
-               mean = mean(sub.train.df$SalePrice), 
-               std = sd(sub.train.df$SalePrice))
+prob.y <- list(qrt = as.numeric(quantile(sub.train.df$SalePrice)[2]))
 ```
 
 ```{r}
@@ -70,42 +70,46 @@ prob.y.x <- sub.train.df %>% mutate(greaterLotArea = ifelse(LotArea >= prob.x$qr
                                      lesserSalePrice = ifelse(SalePrice < prob.y$qrt,1, 0))
 ```
 
-  a. $P(X>x | Y>y)$	    
+##  a. $P(X>x | Y>y)$	    
 
 ```{r}
-a <- (sum(ifelse(prob.y.x$greaterLotArea == 1 & prob.y.x$greaterSalePrice == 1, 1, 0)) /nrow(prob.y.x)) / ((sum(prob.y.x$greaterLotArea) / nrow(prob.y.x)))
+a <- (sum(ifelse(prob.y.x$greaterLotArea == 1 & 
+                   prob.y.x$greaterSalePrice == 1, 1, 0)) 
+      / nrow(prob.y.x)) / ((sum(prob.y.x$greaterLotArea) / nrow(prob.y.x)))
 a
 ```
 
-  b. $P(X>x, Y>y)$	
+##  b. $P(X>x, Y>y)$	
   
 ```{r}
 b <- sum(ifelse(prob.y.x$greaterLotArea == 1 & prob.y.x$greaterSalePrice == 1, 1, 0))/nrow(prob.y.x)
 b
 ```
 
-  
-  c. $P(X<x | Y>y)$
+##  c. $P(X<x | Y>y)$
   
 ```{r}
-c <- (sum(ifelse(prob.y.x$lesserLotArea == 1 & prob.y.x$greaterSalePrice == 1, 1, 0)) /nrow(prob.y.x)) / ((sum(prob.y.x$lesserLotArea) / nrow(prob.y.x)))
+c <- (sum(ifelse(prob.y.x$lesserLotArea == 1 & prob.y.x$greaterSalePrice == 1, 1, 0)) / nrow(prob.y.x)) / ((sum(prob.y.x$lesserLotArea) / nrow(prob.y.x)))
 c
 ```
 
-
 Does splitting the training data in this fashion make them independent? 
 
-In other words, does $P(X|Y)=P(X)P(Y))$?   
+In other words, does $P(X|Y)=P(X)P(Y)$?   
+
+```{r}
+
+```
+
 
 Check mathematically, and then evaluate by running a Chi Square test for association.  
 
 ```{r}
-prob.table <- rbind(cbind(sum()))
+prob.table <- as.data.frame(rbind(cbind(sum(prob.y.x$lesserLotArea), sum(prob.y.x$greaterLotArea)), cbind(sum(prob.y.x$lesserSalePrice), sum(prob.y.x$greaterSalePrice))))
+chisq.test(prob.table)
 ```
 
-
-You might have to research this.  
-
+You might have to research this.
 
 # Descriptive and Inferential Statistics. 
 
@@ -204,7 +208,6 @@ A <- cor(sub.train.df.trans)
 kable(A)
 ```
 
-     
 Invert your correlation matrix.(This is known as the precision matrix and contains variance inflation factors on the diagonal.)
 
 ```{r precision matrix, cache=TRUE, eval=TRUE, results='asis'}
@@ -237,20 +240,20 @@ min(sub.train.df$LotArea)
 shift <- sub.train.df$LotArea + 1 
 ```
 
-Then load the MASS package and run fitdistr to fit a density function of your choice. (See  https://stat.ethz.ch/R-manual/R-devel/library/MASS/html/fitdistr.html). 
+Then load the MASS package and run fitdistr to fit a density function of your choice. (See  https://stat.ethz.ch/R-manual/R-devel/library/MASS/html/fitdistr.html).   
 
-> First lets look at what distrubtion would best fit our data
+> First lets look at what distrubtion would best fit our data.     
 
 ```{r, cache=TRUE, eval=TRUE, results='asis'}
 library(fitdistrplus)
 descdist(sub.train.df$LotArea)
 ```
 
-#TODO figure out why beta distribution is not working 
+> There were too many issues in attempting to fit the beta distribution so the next best theoretical distribution was used - lognormal. 
 
 ```{r, cache=TRUE, eval=TRUE, results='asis'}
 library(MASS)
-fitdistr(as.numeric(sub.train.df$LotArea), densfun = "beta", start=list(shape1=0.1,shape2=0.1))
+fit.log <- fitdistr(sub.train.df$LotArea, densfun = "log-normal")
 ```
 
 
@@ -270,7 +273,8 @@ train.df.dum <- as.data.frame(predict(dummies, newdata = train.df))
 train.df.dum <- as.data.frame(train.df.dum %>% dplyr::select(-starts_with(c("Alley"))))
 ```
 
-```{r}
+##EVAL SET TO FALSE
+```{r, eval=FALSE}
 library(missForest)
 registerDoParallel(cl = makeCluster(25), cores = 100)
 set.seed(1234)
@@ -278,7 +282,7 @@ train.df.dum.imp <- train.df.dum %>% missForest(maxiter = 10, ntree = 100, repla
 write.csv(train.df.dum.imp$ximp,"imputed_training_data.csv", row.names = FALSE) #wrote imputed_data to csv file due to processing time taken by missForest
 ```
 
-```{r, cache=TRUE, eval=TRUE, results='asis'}
+```{r, cache=TRUE, eval=FALSE, results='asis'}
 library(caret)
 sbf(train.df$LotArea, train.df$SalePrice)
 
@@ -291,14 +295,14 @@ fit <- sbf(form = SalePrice ~ .,
 
 ```
 
-```{r}
+```{r, eval=FALSE}
 library(leaps)
 library(MASS)
 regsubsets(SalePrice ~ Id + MSSubClass + MSZoning  + LotArea + Street + LotShape + LandContour + Utilities + LotConfig + LandSlope + Neighborhood + Condition1 + Condition2 + BldgType + HouseStyle + OverallQual + OverallCond + YearBuilt + YearRemodAdd + RoofStyle + RoofMatl + Exterior1st + Exterior2nd + MasVnrType + MasVnrArea + ExterQual + ExterCond + Foundation + BsmtQual + BsmtCond + BsmtExposure + BsmtFinType1 + BsmtFinSF1 + BsmtFinType2 + BsmtFinSF2 + BsmtUnfSF + TotalBsmtSF + Heating + HeatingQC + CentralAir + Electrical + X1stFlrSF + X2ndFlrSF + LowQualFinSF + GrLivArea + BsmtFullBath + BsmtHalfBath + FullBath + HalfBath + BedroomAbvGr + KitchenAbvGr + KitchenQual + TotRmsAbvGrd + Functional + Fireplaces + FireplaceQu + GarageType + GarageYrBlt + GarageFinish + GarageCars + GarageArea + GarageQual + GarageCond + PavedDrive + WoodDeckSF + OpenPorchSF + EnclosedPorch + X3SsnPorch + ScreenPorch + PoolArea + PoolQC + Fence + MiscFeature + MiscVal, data = train.df.dum.imp, nvmax = 10)
 ```
 
 
-```{r}
+```{r, eval=FALSE}
 library(lme4)
 library(nlme)
 library(arm)
