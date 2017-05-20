@@ -97,19 +97,27 @@ Does splitting the training data in this fashion make them independent?
 
 In other words, does $P(X|Y)=P(X)P(Y)$?   
 
-```{r}
+> I am understanding this to mean does the probability of X>x given Y>y, which was answered for in part a. above, equal the probability of X>x mutiplied by Y>y
 
+## Checked Mathematically
+```{r}
+X <- sum(prob.y.x$greaterLotArea)/ nrow(prob.y.x)
+Y <- sum(prob.y.x$greaterSalePrice) / nrow(prob.y.x)
+X * Y
 ```
 
+```{r}
+a == (X * Y)
+```
 
-Check mathematically, and then evaluate by running a Chi Square test for association.  
+## Chi Square test for association.  
 
 ```{r}
 prob.table <- as.data.frame(rbind(cbind(sum(prob.y.x$lesserLotArea), sum(prob.y.x$greaterLotArea)), cbind(sum(prob.y.x$lesserSalePrice), sum(prob.y.x$greaterSalePrice))))
 chisq.test(prob.table)
 ```
 
-You might have to research this.
+> We see that the p-value is quite low, lower than the assumptive .05, so we therefore reject the null hypothesis that the values are independent of each other. 
 
 # Descriptive and Inferential Statistics. 
 
