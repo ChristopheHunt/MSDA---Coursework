@@ -119,6 +119,10 @@ chisq.test(prob.table)
 
 > We see that the p-value is quite low, lower than the assumptive .05, so we therefore reject the null hypothesis that the values are independent of each other. 
 
+![]() [^3]
+
+[^3] By KonradVoelkel (Own work) [Public domain], via Wikimedia Commons
+
 # Descriptive and Inferential Statistics. 
 
 Provide univariate descriptive statistics and appropriate plots for both variables.   
@@ -184,7 +188,7 @@ LotArea & $log(LotArea)$
 
 [^2]: [By Understanding Both the Concept of Transformation and the Box-Cox Method, Practitioners Will Be Better Prepared to Work with Non-normal Data.](https://www.isixsigma.com/tools-templates/normality/making-data-normal-using-box-cox-power-transformation/) . "Making Data Normal Using Box-Cox Power Transformation." ISixSigma. N.p., n.d. Web. 29 Oct. 2016.
 
-##TODO Expand on the correlation analysis
+## Correlation Analysis
 
 Using the transformed variables, run a correlation analysis and interpret.
 
