@@ -63,7 +63,7 @@ prob.x <- list(qrt = as.numeric(quantile(sub.train.df$LotArea)[4]))
 prob.y <- list(qrt = as.numeric(quantile(sub.train.df$SalePrice)[2]))
 ```
 
-```{r}
+```{r, cache=TRUE}
 prob.y.x <- sub.train.df %>% mutate(greaterLotArea = ifelse(LotArea >= prob.x$qrt, 1, 0), 
                                      lesserLotArea = ifelse(LotArea < prob.x$qrt, 1, 0), 
                                      greaterSalePrice = ifelse(SalePrice >= prob.y$qrt,1, 0), 
@@ -72,7 +72,7 @@ prob.y.x <- sub.train.df %>% mutate(greaterLotArea = ifelse(LotArea >= prob.x$qr
 
 ##  a. $P(X>x | Y>y)$	    
 
-```{r}
+```{r, cache=TRUE}
 a <- (sum(ifelse(prob.y.x$greaterLotArea == 1 & 
                    prob.y.x$greaterSalePrice == 1, 1, 0)) 
       / nrow(prob.y.x)) / ((sum(prob.y.x$greaterLotArea) / nrow(prob.y.x)))
@@ -81,14 +81,14 @@ a
 
 ##  b. $P(X>x, Y>y)$	
   
-```{r}
+```{r, cache=TRUE}
 b <- sum(ifelse(prob.y.x$greaterLotArea == 1 & prob.y.x$greaterSalePrice == 1, 1, 0))/nrow(prob.y.x)
 b
 ```
 
 ##  c. $P(X<x | Y>y)$
   
-```{r}
+```{r, cache=TRUE}
 c <- (sum(ifelse(prob.y.x$lesserLotArea == 1 & prob.y.x$greaterSalePrice == 1, 1, 0)) / nrow(prob.y.x)) / ((sum(prob.y.x$lesserLotArea) / nrow(prob.y.x)))
 c
 ```
@@ -100,32 +100,45 @@ In other words, does $P(X|Y)=P(X)P(Y)$?
 > I am understanding this to mean does the probability of X>x given Y>y, which was answered for in part a. above, equal the probability of X>x mutiplied by Y>y
 
 ## Checked Mathematically
-```{r}
+```{r, cache=TRUE}
 X <- sum(prob.y.x$greaterLotArea)/ nrow(prob.y.x)
 Y <- sum(prob.y.x$greaterSalePrice) / nrow(prob.y.x)
 X * Y
 ```
 
-```{r}
+```{r, cache=TRUE}
 a == (X * Y)
 ```
 
 ## Chi Square test for association.  
 
-```{r}
+```{r, cache=TRUE}
 prob.table <- as.data.frame(rbind(cbind(sum(prob.y.x$lesserLotArea), sum(prob.y.x$greaterLotArea)), cbind(sum(prob.y.x$lesserSalePrice), sum(prob.y.x$greaterSalePrice))))
 chisq.test(prob.table)
 ```
 
-> We see that the p-value is quite low, lower than the assumptive .05, so we therefore reject the null hypothesis that the values are independent of each other. 
+> We see that the p-value is quite low, lower than the assumptive .05, so we therefore reject the null hypothesis that the values are independent of each other. The below venn diagram from Wikipedia may provide a clearer understanding of the differences in these measures.
 
-![]() [^3]
-
-[^3] By KonradVoelkel (Own work) [Public domain], via Wikimedia Commons
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20605/Final%20Project/Entropy-mutual-information-relative-entropy-relation-diagram.PNG |250x250) By KonradVoelkel (Own work) [Public domain], via Wikimedia Commons   
 
 # Descriptive and Inferential Statistics. 
 
-Provide univariate descriptive statistics and appropriate plots for both variables.   
+Provide univariate descriptive statistics and appropriate plots for both variables.
+
+```{r, cache=TRUE, results='asis'}
+description <- describe(sub.train.df["LotArea"])
+latex(description, file = '')
+```
+
+> The histogram shows a right skewed distribution, which is not unexpected, as we see houses with similar lot areas in cities with fewer houses having large lot areas. 
+
+
+```{r, cache=TRUE, results='asis'}
+description <- describe(sub.train.df["SalePrice"])
+latex(description, file = '')
+```
+
+> As we can see from the histogram the shape of the data is near normal. It is interesting to think about how lot area does not follow the same shape, this would hold with our original assumption that where the house is located has more impact than the size of the lot area. 
 
 Provide a scatterplot of X and Y.
 
