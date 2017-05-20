@@ -52,28 +52,57 @@ Calculate as a minimum the below probabilities a through c.
 
 Assume the small letter "x" is estimated as the 4th quartile of the X variable, and the small letter "y" is estimated as the 2nd quartile of the Y variable.  Interpret the meaning of all probabilities.  
 
-  a. $P(X>x | Y>y)$	    
   
 ```{r,message = FALSE, message=FALSE, cache=TRUE}
-prob.x <- list(qrtx = as.numeric(quantile(sub.train.df$LotArea)[4]), 
+prob.x <- list(qrt = as.numeric(quantile(sub.train.df$LotArea)[4]), 
                mean = mean(sub.train.df$LotArea), 
                std = sd(sub.train.df$LotArea))
 
-prob.y <- list(qrtx = as.numeric(quantile(sub.train.df$SalePrice)[2]), 
+prob.y <- list(qrt = as.numeric(quantile(sub.train.df$SalePrice)[2]),
                mean = mean(sub.train.df$SalePrice), 
                std = sd(sub.train.df$SalePrice))
 ```
 
-  
+```{r}
+prob.y.x <- sub.train.df %>% mutate(greaterLotArea = ifelse(LotArea >= prob.x$qrt, 1, 0), 
+                                     lesserLotArea = ifelse(LotArea < prob.x$qrt, 1, 0), 
+                                     greaterSalePrice = ifelse(SalePrice >= prob.y$qrt,1, 0), 
+                                     lesserSalePrice = ifelse(SalePrice < prob.y$qrt,1, 0))
+```
+
+  a. $P(X>x | Y>y)$	    
+
+```{r}
+a <- (sum(ifelse(prob.y.x$greaterLotArea == 1 & prob.y.x$greaterSalePrice == 1, 1, 0)) /nrow(prob.y.x)) / ((sum(prob.y.x$greaterLotArea) / nrow(prob.y.x)))
+a
+```
+
   b. $P(X>x, Y>y)$	
   
+```{r}
+b <- sum(ifelse(prob.y.x$greaterLotArea == 1 & prob.y.x$greaterSalePrice == 1, 1, 0))/nrow(prob.y.x)
+b
+```
+
+  
   c. $P(X<x | Y>y)$
+  
+```{r}
+c <- (sum(ifelse(prob.y.x$lesserLotArea == 1 & prob.y.x$greaterSalePrice == 1, 1, 0)) /nrow(prob.y.x)) / ((sum(prob.y.x$lesserLotArea) / nrow(prob.y.x)))
+c
+```
+
 
 Does splitting the training data in this fashion make them independent? 
 
 In other words, does $P(X|Y)=P(X)P(Y))$?   
 
 Check mathematically, and then evaluate by running a Chi Square test for association.  
+
+```{r}
+prob.table <- rbind(cbind(sum()))
+```
+
 
 You might have to research this.  
 
@@ -221,8 +250,9 @@ descdist(sub.train.df$LotArea)
 
 ```{r, cache=TRUE, eval=TRUE, results='asis'}
 library(MASS)
-fitdistr(as.numeric(sub.train.df$LotArea), densfun = "normal")
+fitdistr(as.numeric(sub.train.df$LotArea), densfun = "beta", start=list(shape1=0.1,shape2=0.1))
 ```
+
 
 Find the optimal value of the parameters for this distribution, and then take 1000 samples from this distribution (e.g., rexp(1000) for an exponential).
 
@@ -259,6 +289,25 @@ fit <- sbf(form = SalePrice ~ .,
                                     classProbs = TRUE),
            preProc = c("center", "scale"))
 
+```
+
+```{r}
+library(leaps)
+library(MASS)
+regsubsets(SalePrice ~ Id + MSSubClass + MSZoning  + LotArea + Street + LotShape + LandContour + Utilities + LotConfig + LandSlope + Neighborhood + Condition1 + Condition2 + BldgType + HouseStyle + OverallQual + OverallCond + YearBuilt + YearRemodAdd + RoofStyle + RoofMatl + Exterior1st + Exterior2nd + MasVnrType + MasVnrArea + ExterQual + ExterCond + Foundation + BsmtQual + BsmtCond + BsmtExposure + BsmtFinType1 + BsmtFinSF1 + BsmtFinType2 + BsmtFinSF2 + BsmtUnfSF + TotalBsmtSF + Heating + HeatingQC + CentralAir + Electrical + X1stFlrSF + X2ndFlrSF + LowQualFinSF + GrLivArea + BsmtFullBath + BsmtHalfBath + FullBath + HalfBath + BedroomAbvGr + KitchenAbvGr + KitchenQual + TotRmsAbvGrd + Functional + Fireplaces + FireplaceQu + GarageType + GarageYrBlt + GarageFinish + GarageCars + GarageArea + GarageQual + GarageCond + PavedDrive + WoodDeckSF + OpenPorchSF + EnclosedPorch + X3SsnPorch + ScreenPorch + PoolArea + PoolQC + Fence + MiscFeature + MiscVal, data = train.df.dum.imp, nvmax = 10)
+```
+
+
+```{r}
+library(lme4)
+library(nlme)
+library(arm)
+#testing the random effect
+#a first model
+mod1<-lme(SalePrice~LotArea+SaleCondition,data=train.df, random=~1|SaleCondition, method="REML")
+
+anova(mod1)
+predict(mod1, train.df)
 ```
 
 
