@@ -82,14 +82,17 @@ a
 ##  b. $P(X>x, Y>y)$	
   
 ```{r, cache=TRUE}
-b <- sum(ifelse(prob.y.x$greaterLotArea == 1 & prob.y.x$greaterSalePrice == 1, 1, 0))/nrow(prob.y.x)
+b <- sum(ifelse(prob.y.x$greaterLotArea == 1 & 
+                  prob.y.x$greaterSalePrice == 1, 1, 0))/nrow(prob.y.x)
 b
 ```
 
 ##  c. $P(X<x | Y>y)$
   
 ```{r, cache=TRUE}
-c <- (sum(ifelse(prob.y.x$lesserLotArea == 1 & prob.y.x$greaterSalePrice == 1, 1, 0)) / nrow(prob.y.x)) / ((sum(prob.y.x$lesserLotArea) / nrow(prob.y.x)))
+c <- (sum(ifelse(prob.y.x$lesserLotArea == 1 & 
+                   prob.y.x$greaterSalePrice == 1, 1, 0))
+      / nrow(prob.y.x)) / ((sum(prob.y.x$lesserLotArea) / nrow(prob.y.x)))
 c
 ```
 
@@ -99,7 +102,8 @@ In other words, does $P(X|Y)=P(X)P(Y)$?
 
 > I am understanding this to mean does the probability of X>x given Y>y, which was answered for in part a. above, equal the probability of X>x mutiplied by Y>y
 
-## Checked Mathematically
+## Mathematical Check for $P(X|Y)=P(X)P(Y)$
+
 ```{r, cache=TRUE}
 X <- sum(prob.y.x$greaterLotArea)/ nrow(prob.y.x)
 Y <- sum(prob.y.x$greaterSalePrice) / nrow(prob.y.x)
@@ -117,9 +121,13 @@ prob.table <- as.data.frame(rbind(cbind(sum(prob.y.x$lesserLotArea), sum(prob.y.
 chisq.test(prob.table)
 ```
 
-> We see that the p-value is quite low, lower than the assumptive .05, so we therefore reject the null hypothesis that the values are independent of each other. The below venn diagram from Wikipedia may provide a clearer understanding of the differences in these measures.
+> We see that the p-value is quite low, lower than the assumptive .05, so we therefore reject the null hypothesis that the values are independent of each other. 
 
-![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20605/Final%20Project/Entropy-mutual-information-relative-entropy-relation-diagram.PNG |250x250) By KonradVoelkel (Own work) [Public domain], via Wikimedia Commons   
+The below venn diagram from Wikipedia may provide a clearer understanding of the differences in these measures:
+
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20605/Final%20Project/Entropy-mutual-information-relative-entropy-relation-diagram.PNG) [^4]
+
+[^4] By KonradVoelkel (Own work) [Public domain], via Wikimedia Commons   
 
 # Descriptive and Inferential Statistics. 
 
@@ -130,15 +138,14 @@ description <- describe(sub.train.df["LotArea"])
 latex(description, file = '')
 ```
 
-> The histogram shows a right skewed distribution, which is not unexpected, as we see houses with similar lot areas in cities with fewer houses having large lot areas. 
-
+> The histogram in the upper right corner of the table shows a right skewed distribution, which is not surprising since houses in cities would likely have similar relatively smaller lot areas versus instances of large lot areas. 
 
 ```{r, cache=TRUE, results='asis'}
 description <- describe(sub.train.df["SalePrice"])
 latex(description, file = '')
 ```
 
-> As we can see from the histogram the shape of the data is near normal. It is interesting to think about how lot area does not follow the same shape, this would hold with our original assumption that where the house is located has more impact than the size of the lot area. 
+> As we can see from the histogram the shape of the data is near normal. It is interesting to visualize that lot area does not follow the same shape, this would hold with our original assumption that where the house is located has more impact than the size of the lot area. 
 
 Provide a scatterplot of X and Y.
 
@@ -257,7 +264,7 @@ Many times, it makes sense to fit a closed form distribution to data. For your n
 min(sub.train.df$LotArea)
 ```
 
-> For the independent variable chosen, there are no zero values observed. This makes sense as we would expect the lot area to have some value and I would expect it to never be unobserved (at least estimates would be used). 
+> For the independent variable chosen, there are no zero values observed. This makes sense as we would expect the lot area to have some value and I would expect it to never be unobserved (an assumption that at least estimates would be used without a true figure). 
 
 > However, if a shift was required something like the below could be used. 
 
@@ -269,26 +276,64 @@ Then load the MASS package and run fitdistr to fit a density function of your ch
 
 > First lets look at what distrubtion would best fit our data.     
 
-```{r, cache=TRUE, eval=TRUE, results='asis'}
+```{r, cache=TRUE, eval=TRUE}
 library(fitdistrplus)
-descdist(sub.train.df$LotArea)
+descdist(sub.train.df$LotArea, discrete=FALSE, boot=500)
 ```
 
-> There were too many issues in attempting to fit the beta distribution so the next best theoretical distribution was used - lognormal. 
+> There were too many issues in attempting to fit the beta distribution so the next best theoretical distribution was used - log normal. 
 
-```{r, cache=TRUE, eval=TRUE, results='asis'}
+```{r, cache=TRUE, eval=TRUE}
 library(MASS)
 fit.log <- fitdistr(sub.train.df$LotArea, densfun = "log-normal")
+fit.log
+```
+```{r, cache=TRUE, eval=TRUE}
+hist(log(sub.train.df$LotArea), prob=TRUE, xlab = "Log of Lot Area", main = "")
+curve(dnorm(x, fit.log$estimate[1], fit.log$estimate[2]), col="red", lwd=2, add=T)
 ```
 
+> From our density plot, the distribution looks quite good. 
 
 Find the optimal value of the parameters for this distribution, and then take 1000 samples from this distribution (e.g., rexp(1000) for an exponential).
 
-Plot a histogram and compare it with a histogram of your non-transformed original variable.   
+```{r, cache=TRUE, eval=TRUE}
+set.seed(1234)
+sample <- rlnorm(1000, meanlog = fit.log$estimate[1], sdlog = fit.log$estimate[2])
+```
+
+Plot a histogram and compare it with a histogram of your non-transformed original variable. 
+
+```{r, cache=TRUE, eval=TRUE}
+hist(sample, pch = 20, breaks = 25, col = rgb(1,0,0,0.5), xlim = c(0,50000), ylim = c(0,500), main = 'Overlapping Histogram', xlab = 'Variable') 
+hist(sub.train.df$LotArea, pch = 20, breaks = 100, col = rgb(0,0,1,0.5), add = T) 
+#https://www.r-bloggers.com/overlapping-histogram-in-r/
+legend("topright", c("Sample", "Actual"), col=c(rgb(1,0,0,0.5), rgb(0,0,1,0.5)), lwd=10)
+```
+
+ 
+
+> It is clear that the distributions are very similar. Plotting them overlapping gives a clear visual of how similar the distributions, note that x has been limited and does not extend out for extreme values of x. 
 
 # Modeling
 
 Build some type of regression model and submit your model to the competition board.  
+
+```{r, results='asis'}
+description <- describe(train.df)
+latex(description, file = '')
+```
+
+
+```{r}
+library(leaps)
+#paste(colnames(train.df %>% select(-SalePrice)), collapse = " + ")
+subsetModel <- regsubsets(SalePrice ~ Id + MSSubClass + MSZoning + LotFrontage + LotArea + Street + Alley + LotShape + LandContour + Utilities + LotConfig + LandSlope + Neighborhood + Condition1 + Condition2 + BldgType + HouseStyle + OverallQual + OverallCond + YearBuilt + YearRemodAdd + RoofStyle + RoofMatl + Exterior1st + Exterior2nd + MasVnrType + MasVnrArea + ExterQual + ExterCond + Foundation + BsmtQual + BsmtCond + BsmtExposure + BsmtFinType1 + BsmtFinSF1 + BsmtFinType2 + BsmtFinSF2 + BsmtUnfSF + TotalBsmtSF + Heating + HeatingQC + CentralAir + Electrical + X1stFlrSF + X2ndFlrSF + LowQualFinSF + GrLivArea + BsmtFullBath + BsmtHalfBath + FullBath + HalfBath + BedroomAbvGr + KitchenAbvGr + KitchenQual + TotRmsAbvGrd + Functional + Fireplaces + FireplaceQu + GarageType + GarageYrBlt + GarageFinish + GarageCars + GarageArea + GarageQual + GarageCond + PavedDrive + WoodDeckSF + OpenPorchSF + EnclosedPorch + X3SsnPorch + ScreenPorch + PoolArea + PoolQC + Fence + MiscFeature + MiscVal + MoSold + YrSold + SaleType, data = train.df, nbest = 1)
+summary <- summary(subsetModel)
+kable(t(summary$outmat))
+```
+
+
 
 ```{r}
 library(caret)

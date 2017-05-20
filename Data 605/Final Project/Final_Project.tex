@@ -229,7 +229,8 @@ the Y variable. Interpret the meaning of all probabilities.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{b <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(}\KeywordTok{ifelse}\NormalTok{(prob.y.x$greaterLotArea ==}\StringTok{ }\DecValTok{1} \NormalTok{&}\StringTok{ }\NormalTok{prob.y.x$greaterSalePrice ==}\StringTok{ }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{))/}\KeywordTok{nrow}\NormalTok{(prob.y.x)}
+\NormalTok{b <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(}\KeywordTok{ifelse}\NormalTok{(prob.y.x$greaterLotArea ==}\StringTok{ }\DecValTok{1} \NormalTok{&}\StringTok{ }
+\StringTok{                  }\NormalTok{prob.y.x$greaterSalePrice ==}\StringTok{ }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{))/}\KeywordTok{nrow}\NormalTok{(prob.y.x)}
 \NormalTok{b}
 \end{Highlighting}
 \end{Shaded}
@@ -243,7 +244,9 @@ the Y variable. Interpret the meaning of all probabilities.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{c <-}\StringTok{ }\NormalTok{(}\KeywordTok{sum}\NormalTok{(}\KeywordTok{ifelse}\NormalTok{(prob.y.x$lesserLotArea ==}\StringTok{ }\DecValTok{1} \NormalTok{&}\StringTok{ }\NormalTok{prob.y.x$greaterSalePrice ==}\StringTok{ }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{)) /}\StringTok{ }\KeywordTok{nrow}\NormalTok{(prob.y.x)) /}\StringTok{ }\NormalTok{((}\KeywordTok{sum}\NormalTok{(prob.y.x$lesserLotArea) /}\StringTok{ }\KeywordTok{nrow}\NormalTok{(prob.y.x)))}
+\NormalTok{c <-}\StringTok{ }\NormalTok{(}\KeywordTok{sum}\NormalTok{(}\KeywordTok{ifelse}\NormalTok{(prob.y.x$lesserLotArea ==}\StringTok{ }\DecValTok{1} \NormalTok{&}\StringTok{ }
+\StringTok{                   }\NormalTok{prob.y.x$greaterSalePrice ==}\StringTok{ }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{))}
+      \NormalTok{/}\StringTok{ }\KeywordTok{nrow}\NormalTok{(prob.y.x)) /}\StringTok{ }\NormalTok{((}\KeywordTok{sum}\NormalTok{(prob.y.x$lesserLotArea) /}\StringTok{ }\KeywordTok{nrow}\NormalTok{(prob.y.x)))}
 \NormalTok{c}
 \end{Highlighting}
 \end{Shaded}
@@ -262,7 +265,8 @@ given Y\textgreater{}y, which was answered for in part a. above, equal
 the probability of X\textgreater{}x mutiplied by Y\textgreater{}y
 \end{quote}
 
-\subsection{Checked Mathematically}\label{checked-mathematically}
+\subsection{\texorpdfstring{Mathematical Check for
+\(P(X|Y)=P(X)P(Y)\)}{Mathematical Check for P(X\textbar{}Y)=P(X)P(Y)}}\label{mathematical-check-for-pxypxpy}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -307,12 +311,17 @@ association.}\label{chi-square-test-for-association.}
 \begin{quote}
 We see that the p-value is quite low, lower than the assumptive .05, so
 we therefore reject the null hypothesis that the values are independent
-of each other. The below venn diagram from Wikipedia may provide a
-clearer understanding of the differences in these measures.
+of each other.
 \end{quote}
 
-\includegraphics{https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data\%20605/Final\%20Project/Entropy-mutual-information-relative-entropy-relation-diagram.PNG\%20\%7C250x250}
-By KonradVoelkel (Own work) {[}Public domain{]}, via Wikimedia Commons
+The below venn diagram from Wikipedia may provide a clearer
+understanding of the differences in these measures:
+
+\includegraphics{https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data\%20605/Final\%20Project/Entropy-mutual-information-relative-entropy-relation-diagram.PNG}
+{[}\^{}4{]}
+
+{[}\^{}4{]} By KonradVoelkel (Own work) {[}Public domain{]}, via
+Wikimedia Commons
 
 \section{Descriptive and Inferential
 Statistics.}\label{descriptive-and-inferential-statistics.}
@@ -376,9 +385,9 @@ lowest :   1300   1477   1491   1526   1533, highest:  70761 115149 159000 16466
 }\end{spacing}
 
 \begin{quote}
-The histogram shows a right skewed distribution, which is not
-unexpected, as we see houses with similar lot areas in cities with fewer
-houses having large lot areas.
+The histogram shows a right skewed distribution, which is not unexpected
+since houses in cities would likely have similar lot areas versus the
+rarer instances of large variable lot areas.
 \end{quote}
 
 \begin{Shaded}
@@ -706,8 +715,8 @@ the minimum value is above zero.
 \begin{quote}
 For the independent variable chosen, there are no zero values observed.
 This makes sense as we would expect the lot area to have some value and
-I would expect it to never be unobserved (at least estimates would be
-used).
+I would expect it to never be unobserved (an assumption that at least
+estimates would be used without a true figure).
 \end{quote}
 
 \begin{quote}
@@ -731,34 +740,85 @@ First lets look at what distrubtion would best fit our data.
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{library}\NormalTok{(fitdistrplus)}
-\KeywordTok{descdist}\NormalTok{(sub.train.df$LotArea)}
+\KeywordTok{descdist}\NormalTok{(sub.train.df$LotArea, }\DataTypeTok{discrete=}\OtherTok{FALSE}\NormalTok{, }\DataTypeTok{boot=}\DecValTok{500}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\subsection{\texorpdfstring{\protect\includegraphics{Final_Project_files/figure-latex/unnamed-chunk-14-1.pdf}
-summary statistics}{ summary statistics}}\label{summary-statistics}
+\includegraphics{Final_Project_files/figure-latex/unnamed-chunk-14-1.pdf}
 
-min: 1300 max: 215245 median: 9478.5 mean: 10516.83 estimated sd:
-9981.265 estimated skewness: 12.20769 estimated kurtosis: 206.2433
+\begin{verbatim}
+## summary statistics
+## ------
+## min:  1300   max:  215245 
+## median:  9478.5 
+## mean:  10516.83 
+## estimated sd:  9981.265 
+## estimated skewness:  12.20769 
+## estimated kurtosis:  206.2433
+\end{verbatim}
 
 \begin{quote}
 There were too many issues in attempting to fit the beta distribution so
-the next best theoretical distribution was used - lognormal.
+the next best theoretical distribution was used - log normal.
 \end{quote}
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{library}\NormalTok{(MASS)}
 \NormalTok{fit.log <-}\StringTok{ }\KeywordTok{fitdistr}\NormalTok{(sub.train.df$LotArea, }\DataTypeTok{densfun =} \StringTok{"log-normal"}\NormalTok{)}
+\NormalTok{fit.log}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+##      meanlog        sdlog   
+##   9.110838240   0.517270830 
+##  (0.013537596) (0.009572526)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{hist}\NormalTok{(}\KeywordTok{log}\NormalTok{(sub.train.df$LotArea), }\DataTypeTok{prob=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{xlab =} \StringTok{"Log of Lot Area"}\NormalTok{, }\DataTypeTok{main =} \StringTok{""}\NormalTok{)}
+\KeywordTok{curve}\NormalTok{(}\KeywordTok{dnorm}\NormalTok{(x, fit.log$estimate[}\DecValTok{1}\NormalTok{], fit.log$estimate[}\DecValTok{2}\NormalTok{]), }\DataTypeTok{col=}\StringTok{"red"}\NormalTok{, }\DataTypeTok{lwd=}\DecValTok{2}\NormalTok{, }\DataTypeTok{add=}\NormalTok{T)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Final_Project_files/figure-latex/unnamed-chunk-16-1.pdf}
+
+\begin{quote}
+From our density plot, the distribution looks quite good.
+\end{quote}
 
 Find the optimal value of the parameters for this distribution, and then
 take 1000 samples from this distribution (e.g., rexp(1000) for an
 exponential).
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1234}\NormalTok{)}
+\NormalTok{sample <-}\StringTok{ }\KeywordTok{rlnorm}\NormalTok{(}\DecValTok{1000}\NormalTok{, }\DataTypeTok{meanlog =} \NormalTok{fit.log$estimate[}\DecValTok{1}\NormalTok{], }\DataTypeTok{sdlog =} \NormalTok{fit.log$estimate[}\DecValTok{2}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{hist}\NormalTok{(sample, }\DataTypeTok{pch =} \DecValTok{20}\NormalTok{, }\DataTypeTok{breaks =} \DecValTok{25}\NormalTok{, }\DataTypeTok{col =} \KeywordTok{rgb}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\FloatTok{0.5}\NormalTok{), }\DataTypeTok{xlim =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{50000}\NormalTok{), }\DataTypeTok{ylim =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{500}\NormalTok{), }\DataTypeTok{main =} \StringTok{'Overlapping Histogram'}\NormalTok{, }\DataTypeTok{xlab =} \StringTok{'Variable'}\NormalTok{) }
+\KeywordTok{hist}\NormalTok{(sub.train.df$LotArea, }\DataTypeTok{pch =} \DecValTok{20}\NormalTok{, }\DataTypeTok{breaks =} \DecValTok{100}\NormalTok{, }\DataTypeTok{col =} \KeywordTok{rgb}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\FloatTok{0.5}\NormalTok{), }\DataTypeTok{add =} \NormalTok{T) }
+\CommentTok{#https://www.r-bloggers.com/overlapping-histogram-in-r/}
+\KeywordTok{legend}\NormalTok{(}\StringTok{"topright"}\NormalTok{, }\KeywordTok{c}\NormalTok{(}\StringTok{"Sample"}\NormalTok{, }\StringTok{"Actual"}\NormalTok{), }\DataTypeTok{col=}\KeywordTok{c}\NormalTok{(}\KeywordTok{rgb}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\FloatTok{0.5}\NormalTok{), }\KeywordTok{rgb}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\FloatTok{0.5}\NormalTok{)), }\DataTypeTok{lwd=}\DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Final_Project_files/figure-latex/unnamed-chunk-18-1.pdf}
+
 Plot a histogram and compare it with a histogram of your non-transformed
 original variable.
+
+\begin{quote}
+It is clear that the distributions are very similar. Plotting them
+overlapping gives a clear visual of how similar the distributions, note
+that x has been limited and does not extend out for extreme values of x.
+\end{quote}
 
 \section{Modeling}\label{modeling}
 
