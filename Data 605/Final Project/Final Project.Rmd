@@ -28,6 +28,9 @@ library(fitdistrplus)
 library(caret)
 library(Hmisc)
 library(doParallel)
+library(DAAG)
+library(car)
+library(data.table)
 ```
 
 # Variable
@@ -319,70 +322,54 @@ legend("topright", c("Sample", "Actual"), col=c(rgb(1,0,0,0.5), rgb(0,0,1,0.5)),
 
 Build some type of regression model and submit your model to the competition board.  
 
-```{r, results='asis'}
-description <- describe(train.df)
+```{r, results='asis', cache=TRUE}
+description <- describe(train.df %>% dplyr::select(-Id, -SalePrice))
 latex(description, file = '')
 ```
 
+> In the variable listing we see many columns with NA values. To simplify our model lets exclude any columns with NAs. 
 
-```{r}
+```{r, eval=TRUE, warning=FALSE, message=FALSE, cache=TRUE}
 library(leaps)
-#paste(colnames(train.df %>% select(-SalePrice)), collapse = " + ")
-subsetModel <- regsubsets(SalePrice ~ Id + MSSubClass + MSZoning + LotFrontage + LotArea + Street + Alley + LotShape + LandContour + Utilities + LotConfig + LandSlope + Neighborhood + Condition1 + Condition2 + BldgType + HouseStyle + OverallQual + OverallCond + YearBuilt + YearRemodAdd + RoofStyle + RoofMatl + Exterior1st + Exterior2nd + MasVnrType + MasVnrArea + ExterQual + ExterCond + Foundation + BsmtQual + BsmtCond + BsmtExposure + BsmtFinType1 + BsmtFinSF1 + BsmtFinType2 + BsmtFinSF2 + BsmtUnfSF + TotalBsmtSF + Heating + HeatingQC + CentralAir + Electrical + X1stFlrSF + X2ndFlrSF + LowQualFinSF + GrLivArea + BsmtFullBath + BsmtHalfBath + FullBath + HalfBath + BedroomAbvGr + KitchenAbvGr + KitchenQual + TotRmsAbvGrd + Functional + Fireplaces + FireplaceQu + GarageType + GarageYrBlt + GarageFinish + GarageCars + GarageArea + GarageQual + GarageCond + PavedDrive + WoodDeckSF + OpenPorchSF + EnclosedPorch + X3SsnPorch + ScreenPorch + PoolArea + PoolQC + Fence + MiscFeature + MiscVal + MoSold + YrSold + SaleType, data = train.df, nbest = 1)
-summary <- summary(subsetModel)
+train.df.2 <- train.df[ , colSums(is.na(train.df)) == 0]
+subsetModel <- regsubsets(SalePrice ~ ., data = train.df.2, 
+                          nbest = 1, really.big = T,  method = "seqrep")
+summary <- summary(subsetModel, matrix.logical = TRUE)
 kable(t(summary$outmat))
 ```
 
-
+Based on the last best model we will limit the data set to the following variables MSSubClass, NeighborhoodNoRidge, NeighborhoodNridgHt, NeighborhoodStoneBr, OverallQual, YearRemodAdd, BsmtFinSF1, GrLivArea, GarageCars. 
 
 ```{r}
-library(caret)
-#set up dummy columns
-dummies <- dummyVars(SalePrice ~ ., data = train.df)
-train.df.dum <- as.data.frame(predict(dummies, newdata = train.df))
-train.df.dum <- as.data.frame(train.df.dum %>% dplyr::select(-starts_with(c("Alley"))))
+library(DAAG)
+fit <- lm(SalePrice ~ MSSubClass + Neighborhood + OverallQual + YearRemodAdd + BsmtFinSF1 + GrLivArea + GarageCars, data = train.df)
+p <- par(mfrow=c(2,2))
+plot(fit)
+par(p)
 ```
 
-##EVAL SET TO FALSE
-```{r, eval=FALSE}
-library(missForest)
-registerDoParallel(cl = makeCluster(25), cores = 100)
-set.seed(1234)
-train.df.dum.imp <- train.df.dum %>% missForest(maxiter = 10, ntree = 100, replace = TRUE, parallelize = 'forests', verbose = TRUE) #Takes approximately 1 hour to process
-write.csv(train.df.dum.imp$ximp,"imputed_training_data.csv", row.names = FALSE) #wrote imputed_data to csv file due to processing time taken by missForest
+I am slightly concerned that the residual plot does not look like a shotgun pattern. My assumption is that the high influence points and/or outliers may be impacting the model. Outlier treatment may improve the model but the model is currently sufficient for our purposes. 
+
+```{r}
+library(car)
+library(data.table)
+lmfit <- setDT(as.data.frame(car::vif(fit)), keep.rownames = TRUE)[]
+lmfit$Adjusted_GVIF <- (lmfit$`GVIF^(1/(2*Df))`^2)
+kable(lmfit, align = c("l", "c", "c", "c", "c"))
 ```
 
-```{r, cache=TRUE, eval=FALSE, results='asis'}
-library(caret)
-sbf(train.df$LotArea, train.df$SalePrice)
+Using GVIF^(1/(2*Df)) [^6] in order to verify that the VIF threshold of 5 for multicollinearity is not exceed. Fortunately, we find that no variable exceeds the threshold and we do not need to adjust for multicollinearity.
 
-fit <- sbf(form = SalePrice ~ .,
-           data = train.df, 
-           method = "svmLinear",
-           trControl = trainControl(method = "none", 
-                                    classProbs = TRUE),
-           preProc = c("center", "scale"))
+[^6]: "Which Variance Inflation Factor Should I Be Using: $GVIF$ or $text{GVIF}^{1/(2cdottext{df})}$?" R. N.p., n.d. Web. 13 Nov. 2016.
 
+## The final model
+
+```{r, results='asis', cache=TRUE}
+stargazer(fit, header = FALSE, no.space = TRUE, 
+          style = "all2", font.size = "normalsize", 
+          single.row = TRUE, intercept.bottom = FALSE)
 ```
 
-```{r, eval=FALSE}
-library(leaps)
-library(MASS)
-regsubsets(SalePrice ~ Id + MSSubClass + MSZoning  + LotArea + Street + LotShape + LandContour + Utilities + LotConfig + LandSlope + Neighborhood + Condition1 + Condition2 + BldgType + HouseStyle + OverallQual + OverallCond + YearBuilt + YearRemodAdd + RoofStyle + RoofMatl + Exterior1st + Exterior2nd + MasVnrType + MasVnrArea + ExterQual + ExterCond + Foundation + BsmtQual + BsmtCond + BsmtExposure + BsmtFinType1 + BsmtFinSF1 + BsmtFinType2 + BsmtFinSF2 + BsmtUnfSF + TotalBsmtSF + Heating + HeatingQC + CentralAir + Electrical + X1stFlrSF + X2ndFlrSF + LowQualFinSF + GrLivArea + BsmtFullBath + BsmtHalfBath + FullBath + HalfBath + BedroomAbvGr + KitchenAbvGr + KitchenQual + TotRmsAbvGrd + Functional + Fireplaces + FireplaceQu + GarageType + GarageYrBlt + GarageFinish + GarageCars + GarageArea + GarageQual + GarageCond + PavedDrive + WoodDeckSF + OpenPorchSF + EnclosedPorch + X3SsnPorch + ScreenPorch + PoolArea + PoolQC + Fence + MiscFeature + MiscVal, data = train.df.dum.imp, nvmax = 10)
-```
-
-
-```{r, eval=FALSE}
-library(lme4)
-library(nlme)
-library(arm)
-#testing the random effect
-#a first model
-mod1<-lme(SalePrice~LotArea+SaleCondition,data=train.df, random=~1|SaleCondition, method="REML")
-
-anova(mod1)
-predict(mod1, train.df)
-```
 
 
 Provide your complete model summary and results with analysis. 
