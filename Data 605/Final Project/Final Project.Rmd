@@ -25,7 +25,6 @@ library(knitr)
 library(stargazer)
 library(MASS)
 library(fitdistrplus)
-library(caret)
 library(Hmisc)
 library(doParallel)
 library(DAAG)
@@ -352,7 +351,32 @@ plot(fit)
 par(p)
 ```
 
-I am slightly concerned that the residual plot does not look like a shotgun pattern. My assumption is that the high influence points and/or outliers may be impacting the model. Outlier treatment may improve the model but the model is currently sufficient for our purposes. 
+I am slightly concerned that the residual plot does not look like a shotgun pattern. My assumption is that the high influence points and/or outliers may be impacting the model. Therefore, lets use robust linear regression to account for these issues. 
+
+```{r}
+BC.MSSubClass <- BoxCox.lambda(as.numeric(train.df$MSSubClass))
+BC.Neighborhood <- BoxCox.lambda(as.numeric(train.df$Neighborhood))
+BC.OverallQual <- BoxCox.lambda(as.numeric(train.df$OverallQual))
+BC.YearRemodAdd <- BoxCox.lambda(as.numeric(train.df$YearRemodAdd))
+BC.BsmtFinSF1 <- BoxCox.lambda(as.numeric(train.df$BsmtFinSF1))
+BC.GrLivArea <- BoxCox.lambda(as.numeric(train.df$GrLivArea))
+BC.GarageCars <- BoxCox.lambda(as.numeric(train.df$GarageCars))
+```
+
+
+```{r}
+library(DAAG)
+fit <- rlm(SalePrice ~ MSSubClass + Neighborhood + 
+            OverallQual + I(YearRemodAdd)^2 + I(BsmtFinSF1) + 
+            GrLivArea + GarageCars, SalePrice, data = train.df, k2 = 1.345, wt.method = c("inv.var"), maxit = 20)
+
+#p <- par(mfrow=c(2,2))
+plot(fit)
+par(p)
+```
+
+
+
 
 ```{r}
 library(car)
@@ -381,10 +405,13 @@ Prediction results with test data set
 First there are some observations that are missing values included in our model. For this reason, we will use imputation to complete the cases so our predictions can be carried out. 
 
 ```{r, eval=FALSE}
+test.df  <- as_tibble(read.csv(paste("https://raw.githubusercontent.com/", "ChristopheHunt/",
+                                      "MSDA---Coursework/master", 
+                                      "/Data%20605/Final%20Project/test.csv", sep = "")))
 library(missForest)
 registerDoParallel(cl = makeCluster(8), cores = 8)
 set.seed(1234)
-test.df.dum.imp <- as.data.frame(test.df %>% dplyr::select(Id, MSSubClass, Neighborhood, OverallQual, YearRemodAdd, BsmtFinSF1, GrLivArea,GarageCars)) %>% missForest(maxiter = 10, ntree = 100, replace = TRUE, parallelize = 'forests', verbose = TRUE) 
+test.df.imp <- as.data.frame(test.df %>% dplyr::select(Id, MSSubClass, Neighborhood, OverallQual, YearRemodAdd, BsmtFinSF1, GrLivArea,GarageCars)) %>% missForest(maxiter = 10, ntree = 100, replace = TRUE, parallelize = 'forests', verbose = TRUE) 
 write.csv(test.df.imp$ximp,"imputed_test_data.csv", row.names = FALSE) #wrote imputed_data to csv file due to processing time taken by missForest
 ```
 
@@ -392,7 +419,7 @@ write.csv(test.df.imp$ximp,"imputed_test_data.csv", row.names = FALSE) #wrote im
 ```{r}
 test.df  <- as_tibble(read.csv(paste("https://raw.githubusercontent.com/", "ChristopheHunt/",
                                       "MSDA---Coursework/master", 
-                                      "/Data%20605/Final%20Project/test.csv", sep = "")))
+                                      "/Data%20605/Final%20Project/imputed_test_data.csv", sep = "")))
 
 SalePrice.predict <- predict.lm(fit, type = "response", newdata = test.df)
 test.df.wpredict <- cbind(test.df %>% dplyr::select(Id), round(SalePrice.predict,0)) 

@@ -4168,11 +4168,28 @@ F Statistic & 231.137$^{***}$ (df = 30; 1429)  (p = 0.000) \\
 
 Prediction results with test data set
 
+First there are some observations that are missing values included in
+our model. For this reason, we will use imputation to complete the cases
+so our predictions can be carried out.
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{test.df  <-}\StringTok{ }\KeywordTok{as_tibble}\NormalTok{(}\KeywordTok{read.csv}\NormalTok{(}\KeywordTok{paste}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/"}\NormalTok{, }\StringTok{"ChristopheHunt/"}\NormalTok{,}
                                       \StringTok{"MSDA---Coursework/master"}\NormalTok{, }
                                       \StringTok{"/Data%20605/Final%20Project/test.csv"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{""}\NormalTok{)))}
+\KeywordTok{library}\NormalTok{(missForest)}
+\KeywordTok{registerDoParallel}\NormalTok{(}\DataTypeTok{cl =} \KeywordTok{makeCluster}\NormalTok{(}\DecValTok{8}\NormalTok{), }\DataTypeTok{cores =} \DecValTok{8}\NormalTok{)}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1234}\NormalTok{)}
+\NormalTok{test.df.imp <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(test.df %>%}\StringTok{ }\NormalTok{dplyr::}\KeywordTok{select}\NormalTok{(Id, MSSubClass, Neighborhood, OverallQual, YearRemodAdd, BsmtFinSF1, GrLivArea,GarageCars)) %>%}\StringTok{ }\KeywordTok{missForest}\NormalTok{(}\DataTypeTok{maxiter =} \DecValTok{10}\NormalTok{, }\DataTypeTok{ntree =} \DecValTok{100}\NormalTok{, }\DataTypeTok{replace =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{parallelize =} \StringTok{'forests'}\NormalTok{, }\DataTypeTok{verbose =} \OtherTok{TRUE}\NormalTok{) }
+\KeywordTok{write.csv}\NormalTok{(test.df.imp$ximp,}\StringTok{"imputed_test_data.csv"}\NormalTok{, }\DataTypeTok{row.names =} \OtherTok{FALSE}\NormalTok{) }\CommentTok{#wrote imputed_data to csv file due to processing time taken by missForest}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{test.df  <-}\StringTok{ }\KeywordTok{as_tibble}\NormalTok{(}\KeywordTok{read.csv}\NormalTok{(}\KeywordTok{paste}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/"}\NormalTok{, }\StringTok{"ChristopheHunt/"}\NormalTok{,}
+                                      \StringTok{"MSDA---Coursework/master"}\NormalTok{, }
+                                      \StringTok{"/Data%20605/Final%20Project/imputed_test_data.csv"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{""}\NormalTok{)))}
 
 \NormalTok{SalePrice.predict <-}\StringTok{ }\KeywordTok{predict.lm}\NormalTok{(fit, }\DataTypeTok{type =} \StringTok{"response"}\NormalTok{, }\DataTypeTok{newdata =} \NormalTok{test.df)}
 \NormalTok{test.df.wpredict <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(test.df %>%}\StringTok{ }\NormalTok{dplyr::}\KeywordTok{select}\NormalTok{(Id), }\KeywordTok{round}\NormalTok{(SalePrice.predict,}\DecValTok{0}\NormalTok{)) }
