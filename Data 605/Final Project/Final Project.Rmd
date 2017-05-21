@@ -169,14 +169,18 @@ latex(description, file = '')
 
 ## Scatterplot of X and Y
 
-```{r scatter plot,  message = FALSE, message=FALSE, tidy=TRUE, cache=TRUE, fig.height=3.5, fig.width=5}
+```{r scatter plot,  message = FALSE, message=FALSE, cache=TRUE, fig.height=6, fig.width=7}
 ggplot(sub.train.df, aes(x = LotArea, y = SalePrice)) +
     geom_point(shape=1) +
     theme_light() +
     scale_y_continuous(labels = dollar)
 ```
 
-Transform both variables simultaneously using Box-Cox transformations.  
+> I expected this type of scatter plot based on my anecdotal assumption of cities vs rural areas. I would think that the differences within the city limits have high variance in price but less variation in lot area. My assumption is that the large lot areas at the mid sale price is likely in a rural area. 
+
+\newpage
+
+## Box-Cox transformations.  
 
 > I am using the `BoxCox.lambda` function from the `forecast` package to determine the necessary transformations for the two variables.
 
@@ -208,10 +212,11 @@ $\lambda$ & Y' \\ \hline
 \end{tabular}
 
 \justifying
-
-Lambda values were truncated to the nearest tenth that match a common transformation as per the below table.
-
+***
 \centering
+
+Lambda values were truncated to the nearest tenth    
+that match a common transformation as per the below table.
 
 \begin{tabular}{ c c }
 \hline
@@ -228,9 +233,11 @@ LotArea & $log(LotArea)$
 
 [^2]: [By Understanding Both the Concept of Transformation and the Box-Cox Method, Practitioners Will Be Better Prepared to Work with Non-normal Data.](https://www.isixsigma.com/tools-templates/normality/making-data-normal-using-box-cox-power-transformation/) . "Making Data Normal Using Box-Cox Power Transformation." ISixSigma. N.p., n.d. Web. 29 Oct. 2016.
 
+\newpage
+
 ## Correlation Analysis
 
-Using the transformed variables, run a correlation analysis and interpret.
+### Correlation analysis and interpetation
 
 ```{r, cache=TRUE, eval=TRUE, results='markup'}
 sub.train.df.trans <- sub.train.df %>% 
@@ -245,29 +252,33 @@ sub.train.cor
 
 > The p-value of the correlation test is 2.2e-16 which is less than the significance level of alpha at .05. We are using the standard alpha as there is no indication another any other value for alpha should be used. We can therefore say that the log of lot size and sale price raised to the -.5 power are significantly correlated with a negative correlation coefficient of -0.386. 
 
-Test the hypothesis that the correlation between these variables is 0 and provide a 99% confidence interval.  
+### Null hypothesis test at a 99% confidence interval.  
 
 > The correlation test has specifically done that for us and we can safely reject the null hypothesis as we see that our 99% confidence interval exists at the values (-0.441, -0.327) with a p-value < 2.2e-16.
 
-Discuss the meaning of your analysis.
+### Analysis Discussion
 
 > This means two possible things could have occured, there is no correlation and this data set is pulled from an unusual set of house sales. Or, more likely with the values obtained, our assumption of 0 correlation is incorect and we have obtained a very typical data set and must reject the null hypothesis because correlation does exist. 
 
+\newpage
+
 # Linear Algebra and Correlation.  
+
+## Correlation Matrix
 
 ```{r correlation matrix, cache=TRUE, eval=TRUE, results='asis'}
 A <- cor(sub.train.df.trans)
 kable(A)
 ```
 
-Invert your correlation matrix.(This is known as the precision matrix and contains variance inflation factors on the diagonal.)
+## Inverted correlation matrix (percision matrix)
 
 ```{r precision matrix, cache=TRUE, eval=TRUE, results='asis'}
 B <- solve(A)
 kable(B)
 ```
 
-Multiply the correlation matrix by the precision matrix, and then multiply the precision matrix by the correlation matrix.
+## Multiply the correlation matrix by the precision matrix, and then multiply the precision matrix by the correlation matrix.
  
 ```{r matrix multiplication, cache=TRUE, eval=TRUE, results='asis'}
 corr.by.pre.M <- A %*% B
@@ -276,7 +287,11 @@ pre.by.corr.M <- B %*% A
 kable(pre.by.corr.M)
 ```
 
+\newpage
+
 # Calculus-Based Probability & Statistics
+
+## Location Shift 
 
 Many times, it makes sense to fit a closed form distribution to data. For your non-transformed independent variable, location shift it so that the minimum value is above zero.
 
@@ -292,16 +307,23 @@ min(sub.train.df$LotArea)
 shift <- sub.train.df$LotArea + 1 
 ```
 
+\newpage
+
+## Mass and `fitdistr`
+
 Then load the MASS package and run fitdistr to fit a density function of your choice. (See  https://stat.ethz.ch/R-manual/R-devel/library/MASS/html/fitdistr.html).   
 
-> First lets look at what distrubtion would best fit our data.     
+### Best fit distribution.     
 
-```{r, cache=TRUE, eval=TRUE}
+```{r, cache=TRUE, eval=TRUE, fig.width=7}
 library(fitdistrplus)
 descdist(sub.train.df$LotArea, discrete=FALSE, boot=500)
 ```
+\newpage
 
-> There were too many issues in attempting to fit the beta distribution so the next best theoretical distribution was used - log normal. 
+## Fitting Distribution
+
+There were too many issues in attempting to fit the `beta` distribution so the next best theoretical distribution was used - `log normal`. 
 
 ```{r, cache=TRUE, eval=TRUE}
 library(MASS)
@@ -313,7 +335,11 @@ hist(log(sub.train.df$LotArea), prob=TRUE, xlab = "Log of Lot Area", main = "")
 curve(dnorm(x, fit.log$estimate[1], fit.log$estimate[2]), col="red", lwd=2, add=T)
 ```
 
-> From our density plot, the distribution looks quite good. 
+Our density plot indicates that the log normal distribution fits quite well.
+
+\newpage
+
+## Sampling
 
 Find the optimal value of the parameters for this distribution, and then take 1000 samples from this distribution (e.g., rexp(1000) for an exponential).
 
@@ -325,67 +351,115 @@ sample <- rlnorm(1000, meanlog = fit.log$estimate[1], sdlog = fit.log$estimate[2
 Plot a histogram and compare it with a histogram of your non-transformed original variable. 
 
 ```{r, cache=TRUE, eval=TRUE}
-hist(sample, pch = 20, breaks = 25, col = rgb(1,0,0,0.5), xlim = c(0,50000), ylim = c(0,500), main = 'Overlapping Histogram', xlab = 'Variable') 
-hist(sub.train.df$LotArea, pch = 20, breaks = 100, col = rgb(0,0,1,0.5), add = T) 
+hist(sample, pch = 20, breaks = 25, col = rgb(1,0,0,0.5), 
+     xlim = c(0,50000), ylim = c(0,500), 
+     main = 'Overlapping Histogram', xlab = 'Lot Area') 
+hist(sub.train.df$LotArea, pch = 20, breaks = 100, 
+     col = rgb(0,0,1,0.5), add = T) 
 #https://www.r-bloggers.com/overlapping-histogram-in-r/
 legend("topright", c("Sample", "Actual"), col=c(rgb(1,0,0,0.5), rgb(0,0,1,0.5)), lwd=10)
 ```
 
  
 
-> It is clear that the distributions are very similar. Plotting them overlapping gives a clear visual of how similar the distributions, note that x has been limited and does not extend out for extreme values of x. 
+> It is clear that the distributions are very similar. Plotting them together gives a clear visual of how similar the distributions are and note that x has been limited to not extend to extreme values. 
+
+\newpage
 
 # Modeling
 
-Build some type of regression model and submit your model to the competition board.  
+## Regression model.  
+
+### Variable Exploration
 
 ```{r, results='asis', cache=TRUE}
-description <- describe(train.df %>% dplyr::select(-Id, -SalePrice))
+description <- describe(train.df %>% dplyr::select(-Id, -SalePrice), descript = "Training Data Set")
 latex(description, file = '')
 ```
 
-> In the variable listing we see many columns with NA values. To simplify our model lets exclude any columns with NAs. 
+## Variable Selection
+
+In the previous tables we see a number of variables with `NAs`. For simplicity, we will exclude the columns containing `NAs` and attempt to identify the variables of greatest importance.  
+
+## Variable Subset Matrix 
+
+\footnotesize
 
 ```{r, eval=TRUE, warning=FALSE, message=FALSE, cache=TRUE}
 library(leaps)
 train.df.2 <- train.df[ , colSums(is.na(train.df)) == 0]
-subsetModel <- regsubsets(SalePrice ~ ., data = train.df.2, 
-                          nbest = 1, really.big = T,  method = "seqrep")
-summary <- summary(subsetModel, matrix.logical = TRUE)
+subsetModel <- suppressMessages(regsubsets(SalePrice ~ ., data = train.df.2, 
+                          nbest = 1, really.big = T,  method = "seqrep"))
+summary <- summary(subsetModel, matrix = TRUE)
 kable(t(summary$outmat))
 ```
 
-Based on the last best model we will limit the data set to the following variables MSSubClass, NeighborhoodNoRidge, NeighborhoodNridgHt, NeighborhoodStoneBr, OverallQual, YearRemodAdd, BsmtFinSF1, GrLivArea, GarageCars. 
+\normalsize
 
-```{r,cache=TRUE}
-library(DAAG)
+\newpage
+
+## First Model 
+
+Based on the last best model we will limit the data set to the following variables `MSSubClass, NeighborhoodNoRidge, NeighborhoodNridgHt, NeighborhoodStoneBr, OverallQual, YearRemodAdd, BsmtFinSF1, GrLivArea, GarageCars`. 
+
+```{r,cache=TRUE, results='asis'}
 fit <- lm(SalePrice ~ MSSubClass + Neighborhood + 
             OverallQual + YearRemodAdd + BsmtFinSF1 + 
             GrLivArea + GarageCars, data = train.df)
 
-p <- par(mfrow=c(2,2))
-plot(fit)
-par(p)
+stargazer(fit, header = FALSE, no.space = TRUE, 
+          style = "all2", font.size = "footnotesize", 
+          single.row = TRUE, intercept.bottom = FALSE)
 ```
 
-I am slightly concerned that the residual plot does not look like a shotgun pattern. My assumption is that the high influence points and/or outliers may be impacting the model. Therefore, we will exclude the high influence points and also use the lambda value `r round(BoxCox.lambda(as.numeric(train.df$YearRemodAdd)),4)` of the `YearRemodAdd` from our Box Cox method in our final model. I also took the log of SalePrice as we began to get negative predictions after removing the high influence points.
+\newpage
+
+### Diagnostic Plots
+
+```{r,cache=TRUE, fig.height=6.5, fig.width=7}
+p <- par(mfrow=c(2,2))
+plot(fit)
+```
+
+The residual plot does not look like a shotgun pattern and we may be violating the assumption of random variance. My assumption is that the high influence points and/or outliers may be impacting the model. Therefore, we will exclude the high influence points from our final model. We will also take the log of SalePrice as we began to get negative predictions after removing the high influence points.
+
+\newpage
+
+## Final Model
 
 ```{r, cache=TRUE}
-library(DAAG)
 train.df.2 <- train.df[-c(524, 1299),]
 fit <- lm(I(log(SalePrice)) ~ MSSubClass + Neighborhood + 
             OverallQual + YearRemodAdd + BsmtFinSF1 + 
             GrLivArea + GarageCars, data = train.df.2)
 ```
 
-```{r, include=FALSE, cache=TRUE}
+
+```{r, results='asis', cache=TRUE, echo=FALSE}
+stargazer(fit, header = FALSE, no.space = TRUE, 
+          style = "all2", font.size = "footnotesize", 
+          single.row = TRUE, intercept.bottom = FALSE, title = "Final Model")
+```
+
+There are some interesting coeffecients in our final model. It is unsurprising that we see certain neighboorhoods have greater impact to the sale price but it is interesting to see the specific ones. I am also surprised that the number of cars that a garage can hold has such a great impact. Intuitively, it makes sense that more cars indicates greater wealth and a higher sale price but it was expected to see it represented in our model. 
+
+\newpage
+
+### Diagnostic Plots
+
+```{r, cache=TRUE, fig.height=6.5, fig.width=7}
 fit.plot <- lm(log(SalePrice) ~ MSSubClass + Neighborhood + 
             OverallQual + YearRemodAdd + BsmtFinSF1 + 
             GrLivArea + GarageCars, data = train.df.2)
 p <- par(mfrow=c(2,2))
 plot(fit.plot)
-par(p)
 ```
+
+Now we see a more random variance in our diagnostic plots and I am more comfortable with our model. Taking the log of our outcome variable has improved our ability to validate this model. 
+
+\newpage
+
+### Multicollinearity
 
 ```{r, cache=TRUE}
 library(car)
@@ -399,42 +473,54 @@ Using GVIF^(1/(2*Df)) [^6] in order to verify that the VIF threshold of 5 for mu
 
 [^6]: "Which Variance Inflation Factor Should I Be Using: $GVIF$ or $text{GVIF}^{1/(2cdottext{df})}$?" R. N.p., n.d. Web. 13 Nov. 2016.
 
-## The final model
-
-Provide your complete model summary and results with analysis. 
-
-```{r, results='asis', cache=TRUE}
-stargazer(fit, header = FALSE, no.space = TRUE, 
-          style = "all2", font.size = "normalsize", 
-          single.row = TRUE, intercept.bottom = FALSE)
-```
-
-Prediction results with test data set
+## Prediction results with test data set using final model
 
 First there are some observations that are missing values included in our model. For this reason, we will use imputation to complete the cases so our predictions can be carried out. 
 
 ```{r, eval=FALSE}
-test.df  <- as_tibble(read.csv(paste("https://raw.githubusercontent.com/", "ChristopheHunt/",
+test.df  <- as_tibble(read.csv(paste("https://raw.githubusercontent.com/",
+                                     "ChristopheHunt/",
                                       "MSDA---Coursework/master", 
-                                      "/Data%20605/Final%20Project/test.csv", sep = "")))
+                                      "/Data%20605/Final%20Project/test.csv", 
+                                     sep = "")))
+```
+
+### Imputation
+
+The test data provided by Kaggle has `NAs` for some of our independent variables. As such, we will use a non-parametic method of imputation so that we can run our final model.
+
+```{r, eval=FALSE}
 library(missForest)
 registerDoParallel(cl = makeCluster(8), cores = 8)
 set.seed(1234)
-test.df.imp <- as.data.frame(test.df %>% dplyr::select(Id, MSSubClass, Neighborhood, OverallQual, OverallCond, YearBuilt, YrSold, YearRemodAdd, BsmtFinSF1, GrLivArea,GarageCars)) %>% missForest(maxiter = 10, ntree = 100, replace = TRUE, parallelize = 'forests', verbose = TRUE) 
-write.csv(test.df.imp$ximp,"imputed_test_data.csv", row.names = FALSE) #wrote imputed_data to csv file due to processing time taken by missForest
+test.df.imp <- as.data.frame(test.df %>% dplyr::select(Id, MSSubClass, Neighborhood,
+                                                       OverallQual, OverallCond, 
+                                                       YearBuilt, YrSold,
+                                                       YearRemodAdd, BsmtFinSF1, 
+                                                       GrLivArea,GarageCars)) %>% 
+  missForest(maxiter = 10, ntree = 100, 
+             replace = TRUE, parallelize = 'forests', verbose = TRUE) 
+
+write.csv(test.df.imp$ximp,"imputed_test_data.csv", row.names = FALSE) 
+#imputed_data to csv file due to processing time taken by missForest
 ```
 
+## Prediction results
 
-```{r, cache=TRUE}
-test.df  <- as_tibble(read.csv(paste("https://raw.githubusercontent.com/", "ChristopheHunt/",
+```{r, cache=TRUE, results='asis'}
+test.df  <- as_tibble(read.csv(paste("https://raw.githubusercontent.com/",
+                                     "ChristopheHunt/",
                                       "MSDA---Coursework/master", 
-                                      "/Data%20605/Final%20Project/imputed_test_data.csv", sep = "")))
+                                      "/Data%20605/Final%20Project/imputed_test_data.csv", 
+                                     sep = "")))
 
 SalePrice.predict <- exp(predict.lm(fit, type = "response", newdata = test.df))
 test.df.wpredict <- cbind(test.df %>% dplyr::select(Id), round(SalePrice.predict,0)) 
 colnames(test.df.wpredict)[2] <- c("SalePrice")
-pandoc.table(head(test.df.wpredict), split.table = Inf)
+kable(head(test.df.wpredict), split.table = Inf)
 ```
+
+### Prediction results for submission
 
 ```{r, cache=TRUE}
 gz1 <- gzfile("submission.csv.gz", "w")
@@ -442,7 +528,9 @@ write.csv(test.df.wpredict, gz1, row.names = FALSE)
 close(gz1)
 ```
 
+## Kaggle Results
 
-Kaggle.com user name : Blastophe
-Kaggle.com score :  0.15033
+Kaggle.com user name: `Blastophe`  
+
+Kaggle.com score: `0.15033`
 

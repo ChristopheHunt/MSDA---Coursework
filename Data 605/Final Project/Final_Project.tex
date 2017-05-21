@@ -499,14 +499,26 @@ is located has more impact than the size of the lot area.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{ggplot}\NormalTok{(sub.train.df, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \NormalTok{LotArea, }\DataTypeTok{y =} \NormalTok{SalePrice)) +}\StringTok{ }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{shape =} \DecValTok{1}\NormalTok{) +}\StringTok{ }
-\StringTok{    }\KeywordTok{theme_light}\NormalTok{() +}\StringTok{ }\KeywordTok{scale_y_continuous}\NormalTok{(}\DataTypeTok{labels =} \NormalTok{dollar)}
+\KeywordTok{ggplot}\NormalTok{(sub.train.df, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \NormalTok{LotArea, }\DataTypeTok{y =} \NormalTok{SalePrice)) +}
+\StringTok{    }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{shape=}\DecValTok{1}\NormalTok{) +}
+\StringTok{    }\KeywordTok{theme_light}\NormalTok{() +}
+\StringTok{    }\KeywordTok{scale_y_continuous}\NormalTok{(}\DataTypeTok{labels =} \NormalTok{dollar)}
 \end{Highlighting}
 \end{Shaded}
 
 \includegraphics{Final_Project_files/figure-latex/scatter plot-1.pdf}
 
-Transform both variables simultaneously using Box-Cox transformations.
+\begin{quote}
+I expected this type of scatter plot based on my anecdotal assumption of
+cities vs rural areas. I would think that the differences within the
+city limits have high variance in price but less variation in lot area.
+My assumption is that the large lot areas at the mid sale price is
+likely in a rural area.
+\end{quote}
+
+\newpage
+
+\subsection{Box-Cox transformations.}\label{box-cox-transformations.}
 
 \begin{quote}
 I am using the \texttt{BoxCox.lambda} function from the
@@ -561,11 +573,10 @@ $\lambda$ & Y' \\ \hline
 \end{tabular}
 
 \justifying
+*** \centering
 
-Lambda values were truncated to the nearest tenth that match a common
-transformation as per the below table.
-
-\centering
+Lambda values were truncated to the nearest tenth\\
+that match a common transformation as per the below table.
 
 \begin{tabular}{ c c }
 \hline
@@ -578,10 +589,12 @@ LotArea & $log(LotArea)$
 
 \setlength{\tabcolsep}{6pt}
 
+\newpage
+
 \subsection{Correlation Analysis}\label{correlation-analysis}
 
-Using the transformed variables, run a correlation analysis and
-interpret.
+\subsubsection{Correlation analysis and
+interpetation}\label{correlation-analysis-and-interpetation}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -619,8 +632,8 @@ the -.5 power are significantly correlated with a negative correlation
 coefficient of -0.386.
 \end{quote}
 
-Test the hypothesis that the correlation between these variables is 0
-and provide a 99\% confidence interval.
+\subsubsection{Null hypothesis test at a 99\% confidence
+interval.}\label{null-hypothesis-test-at-a-99-confidence-interval.}
 
 \begin{quote}
 The correlation test has specifically done that for us and we can safely
@@ -629,7 +642,7 @@ exists at the values (-0.441, -0.327) with a p-value \textless{}
 2.2e-16.
 \end{quote}
 
-Discuss the meaning of your analysis.
+\subsubsection{Analysis Discussion}\label{analysis-discussion}
 
 \begin{quote}
 This means two possible things could have occured, there is no
@@ -639,8 +652,12 @@ correlation is incorect and we have obtained a very typical data set and
 must reject the null hypothesis because correlation does exist.
 \end{quote}
 
+\newpage
+
 \section{Linear Algebra and
 Correlation.}\label{linear-algebra-and-correlation.}
+
+\subsection{Correlation Matrix}\label{correlation-matrix}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -659,8 +676,8 @@ LotArea & -0.3858091 & 1.0000000\tabularnewline
 \bottomrule
 \end{longtable}
 
-Invert your correlation matrix.(This is known as the precision matrix
-and contains variance inflation factors on the diagonal.)
+\subsection{Inverted correlation matrix (percision
+matrix)}\label{inverted-correlation-matrix-percision-matrix}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -679,8 +696,9 @@ LotArea & 0.4532792 & 1.1748792\tabularnewline
 \bottomrule
 \end{longtable}
 
-Multiply the correlation matrix by the precision matrix, and then
-multiply the precision matrix by the correlation matrix.
+\subsection{Multiply the correlation matrix by the precision matrix, and
+then multiply the precision matrix by the correlation
+matrix.}\label{multiply-the-correlation-matrix-by-the-precision-matrix-and-then-multiply-the-precision-matrix-by-the-correlation-matrix.}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -716,8 +734,12 @@ LotArea & 0 & 1\tabularnewline
 \bottomrule
 \end{longtable}
 
+\newpage
+
 \section{Calculus-Based Probability \&
 Statistics}\label{calculus-based-probability-statistics}
+
+\subsection{Location Shift}\label{location-shift}
 
 Many times, it makes sense to fit a closed form distribution to data.
 For your non-transformed independent variable, location shift it so that
@@ -748,13 +770,16 @@ However, if a shift was required something like the below could be used.
 \end{Highlighting}
 \end{Shaded}
 
+\newpage
+
+\subsection{\texorpdfstring{Mass and
+\texttt{fitdistr}}{Mass and fitdistr}}\label{mass-and-fitdistr}
+
 Then load the MASS package and run fitdistr to fit a density function of
 your choice. (See
 \url{https://stat.ethz.ch/R-manual/R-devel/library/MASS/html/fitdistr.html}).
 
-\begin{quote}
-First lets look at what distrubtion would best fit our data.
-\end{quote}
+\subsubsection{Best fit distribution.}\label{best-fit-distribution.}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -776,10 +801,13 @@ First lets look at what distrubtion would best fit our data.
 ## estimated kurtosis:  206.2433
 \end{verbatim}
 
-\begin{quote}
-There were too many issues in attempting to fit the beta distribution so
-the next best theoretical distribution was used - log normal.
-\end{quote}
+\newpage
+
+\subsection{Fitting Distribution}\label{fitting-distribution}
+
+There were too many issues in attempting to fit the \texttt{beta}
+distribution so the next best theoretical distribution was used -
+\texttt{log\ normal}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -804,9 +832,12 @@ the next best theoretical distribution was used - log normal.
 
 \includegraphics{Final_Project_files/figure-latex/unnamed-chunk-16-1.pdf}
 
-\begin{quote}
-From our density plot, the distribution looks quite good.
-\end{quote}
+Our density plot indicates that the log normal distribution fits quite
+well.
+
+\newpage
+
+\subsection{Sampling}\label{sampling}
 
 Find the optimal value of the parameters for this distribution, and then
 take 1000 samples from this distribution (e.g., rexp(1000) for an
@@ -824,8 +855,11 @@ original variable.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{hist}\NormalTok{(sample, }\DataTypeTok{pch =} \DecValTok{20}\NormalTok{, }\DataTypeTok{breaks =} \DecValTok{25}\NormalTok{, }\DataTypeTok{col =} \KeywordTok{rgb}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\FloatTok{0.5}\NormalTok{), }\DataTypeTok{xlim =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{50000}\NormalTok{), }\DataTypeTok{ylim =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{500}\NormalTok{), }\DataTypeTok{main =} \StringTok{'Overlapping Histogram'}\NormalTok{, }\DataTypeTok{xlab =} \StringTok{'Variable'}\NormalTok{) }
-\KeywordTok{hist}\NormalTok{(sub.train.df$LotArea, }\DataTypeTok{pch =} \DecValTok{20}\NormalTok{, }\DataTypeTok{breaks =} \DecValTok{100}\NormalTok{, }\DataTypeTok{col =} \KeywordTok{rgb}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\FloatTok{0.5}\NormalTok{), }\DataTypeTok{add =} \NormalTok{T) }
+\KeywordTok{hist}\NormalTok{(sample, }\DataTypeTok{pch =} \DecValTok{20}\NormalTok{, }\DataTypeTok{breaks =} \DecValTok{25}\NormalTok{, }\DataTypeTok{col =} \KeywordTok{rgb}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\FloatTok{0.5}\NormalTok{), }
+     \DataTypeTok{xlim =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{50000}\NormalTok{), }\DataTypeTok{ylim =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{500}\NormalTok{), }
+     \DataTypeTok{main =} \StringTok{'Overlapping Histogram'}\NormalTok{, }\DataTypeTok{xlab =} \StringTok{'Lot Area'}\NormalTok{) }
+\KeywordTok{hist}\NormalTok{(sub.train.df$LotArea, }\DataTypeTok{pch =} \DecValTok{20}\NormalTok{, }\DataTypeTok{breaks =} \DecValTok{100}\NormalTok{, }
+     \DataTypeTok{col =} \KeywordTok{rgb}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\FloatTok{0.5}\NormalTok{), }\DataTypeTok{add =} \NormalTok{T) }
 \CommentTok{#https://www.r-bloggers.com/overlapping-histogram-in-r/}
 \KeywordTok{legend}\NormalTok{(}\StringTok{"topright"}\NormalTok{, }\KeywordTok{c}\NormalTok{(}\StringTok{"Sample"}\NormalTok{, }\StringTok{"Actual"}\NormalTok{), }\DataTypeTok{col=}\KeywordTok{c}\NormalTok{(}\KeywordTok{rgb}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\FloatTok{0.5}\NormalTok{), }\KeywordTok{rgb}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\FloatTok{0.5}\NormalTok{)), }\DataTypeTok{lwd=}\DecValTok{10}\NormalTok{)}
 \end{Highlighting}
@@ -835,24 +869,27 @@ original variable.
 
 \begin{quote}
 It is clear that the distributions are very similar. Plotting them
-overlapping gives a clear visual of how similar the distributions, note
-that x has been limited and does not extend out for extreme values of x.
+together gives a clear visual of how similar the distributions are and
+note that x has been limited to not extend to extreme values.
 \end{quote}
+
+\newpage
 
 \section{Modeling}\label{modeling}
 
-Build some type of regression model and submit your model to the
-competition board.
+\subsection{Regression model.}\label{regression-model.}
+
+\subsubsection{Variable Exploration}\label{variable-exploration}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{description <-}\StringTok{ }\KeywordTok{describe}\NormalTok{(train.df %>%}\StringTok{ }\NormalTok{dplyr::}\KeywordTok{select}\NormalTok{(-Id, -SalePrice))}
+\NormalTok{description <-}\StringTok{ }\KeywordTok{describe}\NormalTok{(train.df %>%}\StringTok{ }\NormalTok{dplyr::}\KeywordTok{select}\NormalTok{(-Id, -SalePrice), }\DataTypeTok{descript =} \StringTok{"Training Data Set"}\NormalTok{)}
 \KeywordTok{latex}\NormalTok{(description, }\DataTypeTok{file =} \StringTok{''}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{spacing}{0.7}
-\begin{center}\textbf{ train.df \%$>$\% dplyr::select(-Id, -SalePrice) \\ 79 Variables~~~~~ 1460 ~Observations}\end{center}
+\begin{center}\textbf{ Training Data Set \\ 79 Variables~~~~~ 1460 ~Observations}\end{center}
 \smallskip\hrule\smallskip{\small
 \vbox{\noindent\textbf{MSSubClass}\setlength{\unitlength}{0.001in}\hfill\begin{picture}(1.5,.1)(1500,0)\linethickness{0.6pt}
 \put(0,0){\line(0,1){100}}
@@ -3644,17 +3681,22 @@ Proportion   0.069   0.003   0.008   0.014   0.821   0.086
 }
 }\end{spacing}
 
-\begin{quote}
-In the variable listing we see many columns with NA values. To simplify
-our model lets exclude any columns with NAs.
-\end{quote}
+\subsection{Variable Selection}\label{variable-selection}
+
+In the previous tables we see a number of variables with \texttt{NAs}.
+For simplicity, we will exclude the columns containing \texttt{NAs} and
+attempt to identify the variables of greatest importance.
+
+\subsection{Variable Subset Matrix}\label{variable-subset-matrix}
+
+\footnotesize
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{library}\NormalTok{(leaps)}
 \NormalTok{train.df}\FloatTok{.2} \NormalTok{<-}\StringTok{ }\NormalTok{train.df[ , }\KeywordTok{colSums}\NormalTok{(}\KeywordTok{is.na}\NormalTok{(train.df)) ==}\StringTok{ }\DecValTok{0}\NormalTok{]}
-\NormalTok{subsetModel <-}\StringTok{ }\KeywordTok{regsubsets}\NormalTok{(SalePrice ~}\StringTok{ }\NormalTok{., }\DataTypeTok{data =} \NormalTok{train.df}\FloatTok{.2}\NormalTok{, }
-                          \DataTypeTok{nbest =} \DecValTok{1}\NormalTok{, }\DataTypeTok{really.big =} \NormalTok{T,  }\DataTypeTok{method =} \StringTok{"seqrep"}\NormalTok{)}
+\NormalTok{subsetModel <-}\StringTok{ }\KeywordTok{suppressMessages}\NormalTok{(}\KeywordTok{regsubsets}\NormalTok{(SalePrice ~}\StringTok{ }\NormalTok{., }\DataTypeTok{data =} \NormalTok{train.df}\FloatTok{.2}\NormalTok{, }
+                          \DataTypeTok{nbest =} \DecValTok{1}\NormalTok{, }\DataTypeTok{really.big =} \NormalTok{T,  }\DataTypeTok{method =} \StringTok{"seqrep"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3664,7 +3706,7 @@ our model lets exclude any columns with NAs.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{summary <-}\StringTok{ }\KeywordTok{summary}\NormalTok{(subsetModel, }\DataTypeTok{matrix.logical =} \OtherTok{TRUE}\NormalTok{)}
+\NormalTok{summary <-}\StringTok{ }\KeywordTok{summary}\NormalTok{(subsetModel, }\DataTypeTok{matrix =} \OtherTok{TRUE}\NormalTok{)}
 \KeywordTok{kable}\NormalTok{(}\KeywordTok{t}\NormalTok{(summary$outmat))}
 \end{Highlighting}
 \end{Shaded}
@@ -3675,429 +3717,392 @@ our model lets exclude any columns with NAs.
 8 ( 1 ) & 9 ( 1 )\tabularnewline
 \midrule
 \endhead
-Id & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE\tabularnewline
-MSSubClass & FALSE & FALSE & FALSE & FALSE & FALSE & TRUE & TRUE & TRUE
-& TRUE\tabularnewline
-MSZoningFV & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-MSZoningRH & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-MSZoningRL & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-MSZoningRM & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-LotArea & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE
-& FALSE\tabularnewline
-StreetPave & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-LotShapeIR2 & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-LotShapeIR3 & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-LotShapeReg & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-LandContourHLS & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-LandContourLow & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-LandContourLvl & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-UtilitiesNoSeWa & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE
-& FALSE & FALSE\tabularnewline
-LotConfigCulDSac & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE
-& FALSE & FALSE\tabularnewline
-LotConfigFR2 & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-LotConfigFR3 & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-LotConfigInside & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE
-& FALSE & FALSE\tabularnewline
-LandSlopeMod & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-LandSlopeSev & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-NeighborhoodBlueste & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE & FALSE\tabularnewline
-NeighborhoodBrDale & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE & FALSE\tabularnewline
-NeighborhoodBrkSide & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE & FALSE\tabularnewline
-NeighborhoodClearCr & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE & FALSE\tabularnewline
-NeighborhoodCollgCr & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE & FALSE\tabularnewline
-NeighborhoodCrawfor & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE & FALSE\tabularnewline
-NeighborhoodEdwards & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE & FALSE\tabularnewline
-NeighborhoodGilbert & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE & FALSE\tabularnewline
-NeighborhoodIDOTRR & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE & FALSE\tabularnewline
-NeighborhoodMeadowV & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE & FALSE\tabularnewline
-NeighborhoodMitchel & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE & FALSE\tabularnewline
-NeighborhoodNAmes & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE & FALSE\tabularnewline
-NeighborhoodNoRidge & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & TRUE & TRUE\tabularnewline
-NeighborhoodNPkVill & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE & FALSE\tabularnewline
-NeighborhoodNridgHt & FALSE & FALSE & FALSE & FALSE & TRUE & TRUE & TRUE
-& TRUE & TRUE\tabularnewline
-NeighborhoodNWAmes & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE & FALSE\tabularnewline
-NeighborhoodOldTown & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE & FALSE\tabularnewline
-NeighborhoodSawyer & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE & FALSE\tabularnewline
-NeighborhoodSawyerW & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE & FALSE\tabularnewline
-NeighborhoodSomerst & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE & FALSE\tabularnewline
-NeighborhoodStoneBr & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-TRUE & TRUE & TRUE\tabularnewline
-NeighborhoodSWISU & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE & FALSE\tabularnewline
-NeighborhoodTimber & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE & FALSE\tabularnewline
-NeighborhoodVeenker & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE & FALSE\tabularnewline
-Condition1Feedr & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE
-& FALSE & FALSE\tabularnewline
-Condition1Norm & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-Condition1PosA & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-Condition1PosN & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-Condition1RRAe & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-Condition1RRAn & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-Condition1RRNe & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-Condition1RRNn & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-Condition2Feedr & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE
-& FALSE & FALSE\tabularnewline
-Condition2Norm & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-Condition2PosA & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-Condition2PosN & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-Condition2RRAe & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-Condition2RRAn & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-Condition2RRNn & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-BldgType2fmCon & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-BldgTypeDuplex & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-BldgTypeTwnhs & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-BldgTypeTwnhsE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-HouseStyle1.5Unf & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE
-& FALSE & FALSE\tabularnewline
-HouseStyle1Story & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE
-& FALSE & FALSE\tabularnewline
-HouseStyle2.5Fin & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE
-& FALSE & FALSE\tabularnewline
-HouseStyle2.5Unf & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE
-& FALSE & FALSE\tabularnewline
-HouseStyle2Story & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE
-& FALSE & FALSE\tabularnewline
-HouseStyleSFoyer & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE
-& FALSE & FALSE\tabularnewline
-HouseStyleSLvl & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-OverallQual & TRUE & TRUE & TRUE & TRUE & TRUE & TRUE & TRUE & TRUE &
-TRUE\tabularnewline
-OverallCond & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-YearBuilt & FALSE & FALSE & FALSE & FALSE & FALSE & TRUE & TRUE & TRUE &
-FALSE\tabularnewline
-YearRemodAdd & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & TRUE\tabularnewline
-RoofStyleGable & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-RoofStyleGambrel & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE
-& FALSE & FALSE\tabularnewline
-RoofStyleHip & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-RoofStyleMansard & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE
-& FALSE & FALSE\tabularnewline
-RoofStyleShed & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-RoofMatlCompShg & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE
-& FALSE & FALSE\tabularnewline
-RoofMatlMembran & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE
-& FALSE & FALSE\tabularnewline
-RoofMatlMetal & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-RoofMatlRoll & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-RoofMatlTar\&Grv & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE
-& FALSE & FALSE\tabularnewline
-RoofMatlWdShake & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE
-& FALSE & FALSE\tabularnewline
-RoofMatlWdShngl & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE
-& FALSE & FALSE\tabularnewline
-Exterior1stAsphShn & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE & FALSE\tabularnewline
-Exterior1stBrkComm & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE & FALSE\tabularnewline
-Exterior1stBrkFace & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE & FALSE\tabularnewline
-Exterior1stCBlock & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE & FALSE\tabularnewline
-Exterior1stCemntBd & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE & FALSE\tabularnewline
-Exterior1stHdBoard & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE & FALSE\tabularnewline
-Exterior1stImStucc & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE & FALSE\tabularnewline
-Exterior1stMetalSd & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE & FALSE\tabularnewline
-Exterior1stPlywood & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE & FALSE\tabularnewline
-Exterior1stStone & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE
-& FALSE & FALSE\tabularnewline
-Exterior1stStucco & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE & FALSE\tabularnewline
-Exterior1stVinylSd & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE & FALSE\tabularnewline
-Exterior1stWd Sdng & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE & FALSE\tabularnewline
-Exterior1stWdShing & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE & FALSE\tabularnewline
-Exterior2ndAsphShn & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE & FALSE\tabularnewline
-Exterior2ndBrk Cmn & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE & FALSE\tabularnewline
-Exterior2ndBrkFace & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE & FALSE\tabularnewline
-Exterior2ndCBlock & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE & FALSE\tabularnewline
-Exterior2ndCmentBd & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE & FALSE\tabularnewline
-Exterior2ndHdBoard & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE & FALSE\tabularnewline
-Exterior2ndImStucc & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE & FALSE\tabularnewline
-Exterior2ndMetalSd & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE & FALSE\tabularnewline
-Exterior2ndOther & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE
-& FALSE & FALSE\tabularnewline
-Exterior2ndPlywood & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE & FALSE\tabularnewline
-Exterior2ndStone & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE
-& FALSE & FALSE\tabularnewline
-Exterior2ndStucco & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE & FALSE\tabularnewline
-Exterior2ndVinylSd & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE & FALSE\tabularnewline
-Exterior2ndWd Sdng & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE & FALSE\tabularnewline
-Exterior2ndWd Shng & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE & FALSE\tabularnewline
-ExterQualFa & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-ExterQualGd & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-ExterQualTA & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-ExterCondFa & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-ExterCondGd & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-ExterCondPo & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-ExterCondTA & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-FoundationCBlock & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE
-& FALSE & FALSE\tabularnewline
-FoundationPConc & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE
-& FALSE & FALSE\tabularnewline
-FoundationSlab & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-FoundationStone & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE
-& FALSE & FALSE\tabularnewline
-FoundationWood & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-BsmtFinSF1 & FALSE & FALSE & TRUE & TRUE & TRUE & TRUE & TRUE & TRUE &
-TRUE\tabularnewline
-BsmtFinSF2 & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-BsmtUnfSF & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-TotalBsmtSF & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-HeatingGasA & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-HeatingGasW & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-HeatingGrav & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-HeatingOthW & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-HeatingWall & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-HeatingQCFa & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-HeatingQCGd & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-HeatingQCPo & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-HeatingQCTA & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-CentralAirY & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-X1stFlrSF & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-X2ndFlrSF & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-LowQualFinSF & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-GrLivArea & FALSE & TRUE & TRUE & TRUE & TRUE & TRUE & TRUE & TRUE &
-TRUE\tabularnewline
-BsmtFullBath & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-BsmtHalfBath & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-FullBath & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE
-& FALSE\tabularnewline
-HalfBath & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE
-& FALSE\tabularnewline
-BedroomAbvGr & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-KitchenAbvGr & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-KitchenQualFa & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-KitchenQualGd & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-KitchenQualTA & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-TotRmsAbvGrd & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-FunctionalMaj2 & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-FunctionalMin1 & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-FunctionalMin2 & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-FunctionalMod & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-FunctionalSev & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-FunctionalTyp & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-Fireplaces & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-GarageCars & FALSE & FALSE & FALSE & TRUE & TRUE & FALSE & FALSE & FALSE
-& TRUE\tabularnewline
-GarageArea & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-PavedDriveP & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-PavedDriveY & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-WoodDeckSF & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-OpenPorchSF & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-EnclosedPorch & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-X3SsnPorch & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-ScreenPorch & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-PoolArea & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE
-& FALSE\tabularnewline
-MiscVal & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE
-& FALSE\tabularnewline
-MoSold & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE\tabularnewline
-YrSold & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE\tabularnewline
-SaleTypeCon & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-SaleTypeConLD & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-SaleTypeConLI & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-SaleTypeConLw & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-SaleTypeCWD & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-SaleTypeNew & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-SaleTypeOth & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-SaleTypeWD & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE\tabularnewline
-SaleConditionAdjLand & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE & FALSE\tabularnewline
-SaleConditionAlloca & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE & FALSE\tabularnewline
-SaleConditionFamily & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE & FALSE\tabularnewline
-SaleConditionNormal & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE & FALSE\tabularnewline
-SaleConditionPartial & FALSE & FALSE & FALSE & FALSE & FALSE & FALSE &
-FALSE & FALSE & FALSE\tabularnewline
+Id & & & & & & & & &\tabularnewline
+MSSubClass & & & & & & * & * & * & *\tabularnewline
+MSZoningFV & & & & & & & & &\tabularnewline
+MSZoningRH & & & & & & & & &\tabularnewline
+MSZoningRL & & & & & & & & &\tabularnewline
+MSZoningRM & & & & & & & & &\tabularnewline
+LotArea & & & & & & & & &\tabularnewline
+StreetPave & & & & & & & & &\tabularnewline
+LotShapeIR2 & & & & & & & & &\tabularnewline
+LotShapeIR3 & & & & & & & & &\tabularnewline
+LotShapeReg & & & & & & & & &\tabularnewline
+LandContourHLS & & & & & & & & &\tabularnewline
+LandContourLow & & & & & & & & &\tabularnewline
+LandContourLvl & & & & & & & & &\tabularnewline
+UtilitiesNoSeWa & & & & & & & & &\tabularnewline
+LotConfigCulDSac & & & & & & & & &\tabularnewline
+LotConfigFR2 & & & & & & & & &\tabularnewline
+LotConfigFR3 & & & & & & & & &\tabularnewline
+LotConfigInside & & & & & & & & &\tabularnewline
+LandSlopeMod & & & & & & & & &\tabularnewline
+LandSlopeSev & & & & & & & & &\tabularnewline
+NeighborhoodBlueste & & & & & & & & &\tabularnewline
+NeighborhoodBrDale & & & & & & & & &\tabularnewline
+NeighborhoodBrkSide & & & & & & & & &\tabularnewline
+NeighborhoodClearCr & & & & & & & & &\tabularnewline
+NeighborhoodCollgCr & & & & & & & & &\tabularnewline
+NeighborhoodCrawfor & & & & & & & & &\tabularnewline
+NeighborhoodEdwards & & & & & & & & &\tabularnewline
+NeighborhoodGilbert & & & & & & & & &\tabularnewline
+NeighborhoodIDOTRR & & & & & & & & &\tabularnewline
+NeighborhoodMeadowV & & & & & & & & &\tabularnewline
+NeighborhoodMitchel & & & & & & & & &\tabularnewline
+NeighborhoodNAmes & & & & & & & & &\tabularnewline
+NeighborhoodNoRidge & & & & & & & & * & *\tabularnewline
+NeighborhoodNPkVill & & & & & & & & &\tabularnewline
+NeighborhoodNridgHt & & & & & * & * & * & * & *\tabularnewline
+NeighborhoodNWAmes & & & & & & & & &\tabularnewline
+NeighborhoodOldTown & & & & & & & & &\tabularnewline
+NeighborhoodSawyer & & & & & & & & &\tabularnewline
+NeighborhoodSawyerW & & & & & & & & &\tabularnewline
+NeighborhoodSomerst & & & & & & & & &\tabularnewline
+NeighborhoodStoneBr & & & & & & & * & * & *\tabularnewline
+NeighborhoodSWISU & & & & & & & & &\tabularnewline
+NeighborhoodTimber & & & & & & & & &\tabularnewline
+NeighborhoodVeenker & & & & & & & & &\tabularnewline
+Condition1Feedr & & & & & & & & &\tabularnewline
+Condition1Norm & & & & & & & & &\tabularnewline
+Condition1PosA & & & & & & & & &\tabularnewline
+Condition1PosN & & & & & & & & &\tabularnewline
+Condition1RRAe & & & & & & & & &\tabularnewline
+Condition1RRAn & & & & & & & & &\tabularnewline
+Condition1RRNe & & & & & & & & &\tabularnewline
+Condition1RRNn & & & & & & & & &\tabularnewline
+Condition2Feedr & & & & & & & & &\tabularnewline
+Condition2Norm & & & & & & & & &\tabularnewline
+Condition2PosA & & & & & & & & &\tabularnewline
+Condition2PosN & & & & & & & & &\tabularnewline
+Condition2RRAe & & & & & & & & &\tabularnewline
+Condition2RRAn & & & & & & & & &\tabularnewline
+Condition2RRNn & & & & & & & & &\tabularnewline
+BldgType2fmCon & & & & & & & & &\tabularnewline
+BldgTypeDuplex & & & & & & & & &\tabularnewline
+BldgTypeTwnhs & & & & & & & & &\tabularnewline
+BldgTypeTwnhsE & & & & & & & & &\tabularnewline
+HouseStyle1.5Unf & & & & & & & & &\tabularnewline
+HouseStyle1Story & & & & & & & & &\tabularnewline
+HouseStyle2.5Fin & & & & & & & & &\tabularnewline
+HouseStyle2.5Unf & & & & & & & & &\tabularnewline
+HouseStyle2Story & & & & & & & & &\tabularnewline
+HouseStyleSFoyer & & & & & & & & &\tabularnewline
+HouseStyleSLvl & & & & & & & & &\tabularnewline
+OverallQual & * & * & * & * & * & * & * & * & *\tabularnewline
+OverallCond & & & & & & & & &\tabularnewline
+YearBuilt & & & & & & * & * & * &\tabularnewline
+YearRemodAdd & & & & & & & & & *\tabularnewline
+RoofStyleGable & & & & & & & & &\tabularnewline
+RoofStyleGambrel & & & & & & & & &\tabularnewline
+RoofStyleHip & & & & & & & & &\tabularnewline
+RoofStyleMansard & & & & & & & & &\tabularnewline
+RoofStyleShed & & & & & & & & &\tabularnewline
+RoofMatlCompShg & & & & & & & & &\tabularnewline
+RoofMatlMembran & & & & & & & & &\tabularnewline
+RoofMatlMetal & & & & & & & & &\tabularnewline
+RoofMatlRoll & & & & & & & & &\tabularnewline
+RoofMatlTar\&Grv & & & & & & & & &\tabularnewline
+RoofMatlWdShake & & & & & & & & &\tabularnewline
+RoofMatlWdShngl & & & & & & & & &\tabularnewline
+Exterior1stAsphShn & & & & & & & & &\tabularnewline
+Exterior1stBrkComm & & & & & & & & &\tabularnewline
+Exterior1stBrkFace & & & & & & & & &\tabularnewline
+Exterior1stCBlock & & & & & & & & &\tabularnewline
+Exterior1stCemntBd & & & & & & & & &\tabularnewline
+Exterior1stHdBoard & & & & & & & & &\tabularnewline
+Exterior1stImStucc & & & & & & & & &\tabularnewline
+Exterior1stMetalSd & & & & & & & & &\tabularnewline
+Exterior1stPlywood & & & & & & & & &\tabularnewline
+Exterior1stStone & & & & & & & & &\tabularnewline
+Exterior1stStucco & & & & & & & & &\tabularnewline
+Exterior1stVinylSd & & & & & & & & &\tabularnewline
+Exterior1stWd Sdng & & & & & & & & &\tabularnewline
+Exterior1stWdShing & & & & & & & & &\tabularnewline
+Exterior2ndAsphShn & & & & & & & & &\tabularnewline
+Exterior2ndBrk Cmn & & & & & & & & &\tabularnewline
+Exterior2ndBrkFace & & & & & & & & &\tabularnewline
+Exterior2ndCBlock & & & & & & & & &\tabularnewline
+Exterior2ndCmentBd & & & & & & & & &\tabularnewline
+Exterior2ndHdBoard & & & & & & & & &\tabularnewline
+Exterior2ndImStucc & & & & & & & & &\tabularnewline
+Exterior2ndMetalSd & & & & & & & & &\tabularnewline
+Exterior2ndOther & & & & & & & & &\tabularnewline
+Exterior2ndPlywood & & & & & & & & &\tabularnewline
+Exterior2ndStone & & & & & & & & &\tabularnewline
+Exterior2ndStucco & & & & & & & & &\tabularnewline
+Exterior2ndVinylSd & & & & & & & & &\tabularnewline
+Exterior2ndWd Sdng & & & & & & & & &\tabularnewline
+Exterior2ndWd Shng & & & & & & & & &\tabularnewline
+ExterQualFa & & & & & & & & &\tabularnewline
+ExterQualGd & & & & & & & & &\tabularnewline
+ExterQualTA & & & & & & & & &\tabularnewline
+ExterCondFa & & & & & & & & &\tabularnewline
+ExterCondGd & & & & & & & & &\tabularnewline
+ExterCondPo & & & & & & & & &\tabularnewline
+ExterCondTA & & & & & & & & &\tabularnewline
+FoundationCBlock & & & & & & & & &\tabularnewline
+FoundationPConc & & & & & & & & &\tabularnewline
+FoundationSlab & & & & & & & & &\tabularnewline
+FoundationStone & & & & & & & & &\tabularnewline
+FoundationWood & & & & & & & & &\tabularnewline
+BsmtFinSF1 & & & * & * & * & * & * & * & *\tabularnewline
+BsmtFinSF2 & & & & & & & & &\tabularnewline
+BsmtUnfSF & & & & & & & & &\tabularnewline
+TotalBsmtSF & & & & & & & & &\tabularnewline
+HeatingGasA & & & & & & & & &\tabularnewline
+HeatingGasW & & & & & & & & &\tabularnewline
+HeatingGrav & & & & & & & & &\tabularnewline
+HeatingOthW & & & & & & & & &\tabularnewline
+HeatingWall & & & & & & & & &\tabularnewline
+HeatingQCFa & & & & & & & & &\tabularnewline
+HeatingQCGd & & & & & & & & &\tabularnewline
+HeatingQCPo & & & & & & & & &\tabularnewline
+HeatingQCTA & & & & & & & & &\tabularnewline
+CentralAirY & & & & & & & & &\tabularnewline
+X1stFlrSF & & & & & & & & &\tabularnewline
+X2ndFlrSF & & & & & & & & &\tabularnewline
+LowQualFinSF & & & & & & & & &\tabularnewline
+GrLivArea & & * & * & * & * & * & * & * & *\tabularnewline
+BsmtFullBath & & & & & & & & &\tabularnewline
+BsmtHalfBath & & & & & & & & &\tabularnewline
+FullBath & & & & & & & & &\tabularnewline
+HalfBath & & & & & & & & &\tabularnewline
+BedroomAbvGr & & & & & & & & &\tabularnewline
+KitchenAbvGr & & & & & & & & &\tabularnewline
+KitchenQualFa & & & & & & & & &\tabularnewline
+KitchenQualGd & & & & & & & & &\tabularnewline
+KitchenQualTA & & & & & & & & &\tabularnewline
+TotRmsAbvGrd & & & & & & & & &\tabularnewline
+FunctionalMaj2 & & & & & & & & &\tabularnewline
+FunctionalMin1 & & & & & & & & &\tabularnewline
+FunctionalMin2 & & & & & & & & &\tabularnewline
+FunctionalMod & & & & & & & & &\tabularnewline
+FunctionalSev & & & & & & & & &\tabularnewline
+FunctionalTyp & & & & & & & & &\tabularnewline
+Fireplaces & & & & & & & & &\tabularnewline
+GarageCars & & & & * & * & & & & *\tabularnewline
+GarageArea & & & & & & & & &\tabularnewline
+PavedDriveP & & & & & & & & &\tabularnewline
+PavedDriveY & & & & & & & & &\tabularnewline
+WoodDeckSF & & & & & & & & &\tabularnewline
+OpenPorchSF & & & & & & & & &\tabularnewline
+EnclosedPorch & & & & & & & & &\tabularnewline
+X3SsnPorch & & & & & & & & &\tabularnewline
+ScreenPorch & & & & & & & & &\tabularnewline
+PoolArea & & & & & & & & &\tabularnewline
+MiscVal & & & & & & & & &\tabularnewline
+MoSold & & & & & & & & &\tabularnewline
+YrSold & & & & & & & & &\tabularnewline
+SaleTypeCon & & & & & & & & &\tabularnewline
+SaleTypeConLD & & & & & & & & &\tabularnewline
+SaleTypeConLI & & & & & & & & &\tabularnewline
+SaleTypeConLw & & & & & & & & &\tabularnewline
+SaleTypeCWD & & & & & & & & &\tabularnewline
+SaleTypeNew & & & & & & & & &\tabularnewline
+SaleTypeOth & & & & & & & & &\tabularnewline
+SaleTypeWD & & & & & & & & &\tabularnewline
+SaleConditionAdjLand & & & & & & & & &\tabularnewline
+SaleConditionAlloca & & & & & & & & &\tabularnewline
+SaleConditionFamily & & & & & & & & &\tabularnewline
+SaleConditionNormal & & & & & & & & &\tabularnewline
+SaleConditionPartial & & & & & & & & &\tabularnewline
 \bottomrule
 \end{longtable}
 
+\normalsize
+
+\newpage
+
+\subsection{First Model}\label{first-model}
+
 Based on the last best model we will limit the data set to the following
-variables MSSubClass, NeighborhoodNoRidge, NeighborhoodNridgHt,
-NeighborhoodStoneBr, OverallQual, YearRemodAdd, BsmtFinSF1, GrLivArea,
-GarageCars.
+variables
+\texttt{MSSubClass,\ NeighborhoodNoRidge,\ NeighborhoodNridgHt,\ NeighborhoodStoneBr,\ OverallQual,\ YearRemodAdd,\ BsmtFinSF1,\ GrLivArea,\ GarageCars}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(DAAG)}
 \NormalTok{fit <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(SalePrice ~}\StringTok{ }\NormalTok{MSSubClass +}\StringTok{ }\NormalTok{Neighborhood +}\StringTok{ }
 \StringTok{            }\NormalTok{OverallQual +}\StringTok{ }\NormalTok{YearRemodAdd +}\StringTok{ }\NormalTok{BsmtFinSF1 +}\StringTok{ }
 \StringTok{            }\NormalTok{GrLivArea +}\StringTok{ }\NormalTok{GarageCars, }\DataTypeTok{data =} \NormalTok{train.df)}
 
+\KeywordTok{stargazer}\NormalTok{(fit, }\DataTypeTok{header =} \OtherTok{FALSE}\NormalTok{, }\DataTypeTok{no.space =} \OtherTok{TRUE}\NormalTok{, }
+          \DataTypeTok{style =} \StringTok{"all2"}\NormalTok{, }\DataTypeTok{font.size =} \StringTok{"footnotesize"}\NormalTok{, }
+          \DataTypeTok{single.row =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{intercept.bottom =} \OtherTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}[!htbp] \centering 
+  \caption{} 
+  \label{} 
+\footnotesize 
+\begin{tabular}{@{\extracolsep{5pt}}lc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{1}{c}{\textit{Dependent variable:}} \\ 
+\cline{2-2} 
+\\[-1.8ex] & SalePrice \\ 
+\hline \\[-1.8ex] 
+ Constant & $-$621,777.700$^{***}$ (111,442.300) \\ 
+  MSSubClass & $-$252.678$^{***}$ (24.405) \\ 
+  NeighborhoodBlueste & $-$12,510.880 (24,882.880) \\ 
+  NeighborhoodBrDale & $-$16,417.030 (11,866.240) \\ 
+  NeighborhoodBrkSide & $-$14,640.440 (9,753.068) \\ 
+  NeighborhoodClearCr & 7,771.633 (10,647.930) \\ 
+  NeighborhoodCollgCr & $-$8,855.995 (8,742.258) \\ 
+  NeighborhoodCrawfor & 7,447.104 (9,729.488) \\ 
+  NeighborhoodEdwards & $-$24,629.000$^{***}$ (9,317.138) \\ 
+  NeighborhoodGilbert & $-$12,303.590 (9,065.933) \\ 
+  NeighborhoodIDOTRR & $-$25,820.490$^{**}$ (10,379.870) \\ 
+  NeighborhoodMeadowV & 1,205.989 (11,879.710) \\ 
+  NeighborhoodMitchel & $-$18,072.460$^{*}$ (9,692.696) \\ 
+  NeighborhoodNAmes & $-$18,834.730$^{**}$ (8,971.063) \\ 
+  NeighborhoodNoRidge & 40,530.480$^{***}$ (10,050.780) \\ 
+  NeighborhoodNPkVill & $-$9,409.847 (13,823.590) \\ 
+  NeighborhoodNridgHt & 49,514.520$^{***}$ (9,100.426) \\ 
+  NeighborhoodNWAmes & $-$21,429.510$^{**}$ (9,344.861) \\ 
+  NeighborhoodOldTown & $-$31,650.010$^{***}$ (9,111.020) \\ 
+  NeighborhoodSawyer & $-$19,047.140$^{**}$ (9,502.205) \\ 
+  NeighborhoodSawyerW & $-$15,759.290$^{*}$ (9,404.611) \\ 
+  NeighborhoodSomerst & 7,011.384 (8,880.182) \\ 
+  NeighborhoodStoneBr & 55,104.420$^{***}$ (10,602.380) \\ 
+  NeighborhoodSWISU & $-$27,693.620$^{**}$ (11,081.320) \\ 
+  NeighborhoodTimber & 3,500.186 (9,974.428) \\ 
+  NeighborhoodVeenker & 25,505.000$^{*}$ (13,027.270) \\ 
+  OverallQual & 16,039.450$^{***}$ (1,094.370) \\ 
+  YearRemodAdd & 310.102$^{***}$ (56.246) \\ 
+  BsmtFinSF1 & 23.326$^{***}$ (2.113) \\ 
+  GrLivArea & 52.970$^{***}$ (2.326) \\ 
+  GarageCars & 11,974.750$^{***}$ (1,614.394) \\ 
+ \hline \\[-1.8ex] 
+Observations & 1,460 \\ 
+R$^{2}$ & 0.829 \\ 
+Adjusted R$^{2}$ & 0.826 \\ 
+Residual Std. Error & 33,181.540 (df = 1429) \\ 
+F Statistic & 231.137$^{***}$ (df = 30; 1429)  (p = 0.000) \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{1}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular} 
+\end{table}
+
+\newpage
+
+\subsubsection{Diagnostic Plots}\label{diagnostic-plots}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \NormalTok{p <-}\StringTok{ }\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow=}\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{))}
 \KeywordTok{plot}\NormalTok{(fit)}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Final_Project_files/figure-latex/unnamed-chunk-21-1.pdf}
+\includegraphics{Final_Project_files/figure-latex/unnamed-chunk-22-1.pdf}
+
+The residual plot does not look like a shotgun pattern and we may be
+violating the assumption of random variance. My assumption is that the
+high influence points and/or outliers may be impacting the model.
+Therefore, we will exclude the high influence points from our final
+model. We will also take the log of SalePrice as we began to get
+negative predictions after removing the high influence points.
+
+\newpage
+
+\subsection{Final Model}\label{final-model}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{par}\NormalTok{(p)}
-\end{Highlighting}
-\end{Shaded}
-
-I am slightly concerned that the residual plot does not look like a
-shotgun pattern. My assumption is that the high influence points and/or
-outliers may be impacting the model. Therefore, we will exclude the high
-influence points and also use the lambda value 1.9999 of the
-\texttt{YearRemodAdd} from our Box Cox method in our final model. I also
-took the log of SalePrice as we began to get negative predictions after
-removing the high influence points.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(DAAG)}
 \NormalTok{train.df}\FloatTok{.2} \NormalTok{<-}\StringTok{ }\NormalTok{train.df[-}\KeywordTok{c}\NormalTok{(}\DecValTok{524}\NormalTok{, }\DecValTok{1299}\NormalTok{),]}
 \NormalTok{fit <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(}\KeywordTok{I}\NormalTok{(}\KeywordTok{log}\NormalTok{(SalePrice)) ~}\StringTok{ }\NormalTok{MSSubClass +}\StringTok{ }\NormalTok{Neighborhood +}\StringTok{ }
 \StringTok{            }\NormalTok{OverallQual +}\StringTok{ }\NormalTok{YearRemodAdd +}\StringTok{ }\NormalTok{BsmtFinSF1 +}\StringTok{ }
 \StringTok{            }\NormalTok{GrLivArea +}\StringTok{ }\NormalTok{GarageCars, }\DataTypeTok{data =} \NormalTok{train.df}\FloatTok{.2}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{table}[!htbp] \centering 
+  \caption{Final Model} 
+  \label{} 
+\footnotesize 
+\begin{tabular}{@{\extracolsep{5pt}}lc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{1}{c}{\textit{Dependent variable:}} \\ 
+\cline{2-2} 
+\\[-1.8ex] & I(log(SalePrice)) \\ 
+\hline \\[-1.8ex] 
+ Constant & 5.914$^{***}$ (0.458) \\ 
+  MSSubClass & $-$0.001$^{***}$ (0.0001) \\ 
+  NeighborhoodBlueste & $-$0.096 (0.102) \\ 
+  NeighborhoodBrDale & $-$0.209$^{***}$ (0.049) \\ 
+  NeighborhoodBrkSide & $-$0.110$^{***}$ (0.040) \\ 
+  NeighborhoodClearCr & 0.067 (0.044) \\ 
+  NeighborhoodCollgCr & $-$0.029 (0.036) \\ 
+  NeighborhoodCrawfor & 0.046 (0.040) \\ 
+  NeighborhoodEdwards & $-$0.126$^{***}$ (0.038) \\ 
+  NeighborhoodGilbert & $-$0.030 (0.037) \\ 
+  NeighborhoodIDOTRR & $-$0.265$^{***}$ (0.043) \\ 
+  NeighborhoodMeadowV & $-$0.157$^{***}$ (0.049) \\ 
+  NeighborhoodMitchel & $-$0.078$^{*}$ (0.040) \\ 
+  NeighborhoodNAmes & $-$0.064$^{*}$ (0.037) \\ 
+  NeighborhoodNoRidge & $-$0.012 (0.042) \\ 
+  NeighborhoodNPkVill & $-$0.061 (0.057) \\ 
+  NeighborhoodNridgHt & 0.072$^{*}$ (0.038) \\ 
+  NeighborhoodNWAmes & $-$0.067$^{*}$ (0.038) \\ 
+  NeighborhoodOldTown & $-$0.212$^{***}$ (0.037) \\ 
+  NeighborhoodSawyer & $-$0.079$^{**}$ (0.039) \\ 
+  NeighborhoodSawyerW & $-$0.078$^{**}$ (0.039) \\ 
+  NeighborhoodSomerst & 0.019 (0.037) \\ 
+  NeighborhoodStoneBr & 0.093$^{**}$ (0.044) \\ 
+  NeighborhoodSWISU & $-$0.131$^{***}$ (0.046) \\ 
+  NeighborhoodTimber & $-$0.004 (0.041) \\ 
+  NeighborhoodVeenker & 0.105$^{**}$ (0.054) \\ 
+  OverallQual & 0.091$^{***}$ (0.005) \\ 
+  YearRemodAdd & 0.003$^{***}$ (0.0002) \\ 
+  BsmtFinSF1 & 0.0002$^{***}$ (0.00001) \\ 
+  GrLivArea & 0.0003$^{***}$ (0.00001) \\ 
+  GarageCars & 0.069$^{***}$ (0.007) \\ 
+ \hline \\[-1.8ex] 
+Observations & 1,457 \\ 
+R$^{2}$ & 0.885 \\ 
+Adjusted R$^{2}$ & 0.882 \\ 
+Residual Std. Error & 0.136 (df = 1426) \\ 
+F Statistic & 365.465$^{***}$ (df = 30; 1426)  (p = 0.000) \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{1}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular} 
+\end{table}
+
+There are some interesting coeffecients in our final model. It is
+unsurprising that we see certain neighboorhoods have greater impact to
+the sale price but it is interesting to see the specific ones. I am also
+surprised that the number of cars that a garage can hold has such a
+great impact. Intuitively, it makes sense that more cars indicates
+greater wealth and a higher sale price but it was expected to see it
+represented in our model.
+
+\newpage
+
+\subsubsection{Diagnostic Plots}\label{diagnostic-plots-1}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fit.plot <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(}\KeywordTok{log}\NormalTok{(SalePrice) ~}\StringTok{ }\NormalTok{MSSubClass +}\StringTok{ }\NormalTok{Neighborhood +}\StringTok{ }
+\StringTok{            }\NormalTok{OverallQual +}\StringTok{ }\NormalTok{YearRemodAdd +}\StringTok{ }\NormalTok{BsmtFinSF1 +}\StringTok{ }
+\StringTok{            }\NormalTok{GrLivArea +}\StringTok{ }\NormalTok{GarageCars, }\DataTypeTok{data =} \NormalTok{train.df}\FloatTok{.2}\NormalTok{)}
+\NormalTok{p <-}\StringTok{ }\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow=}\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\KeywordTok{plot}\NormalTok{(fit.plot)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Final_Project_files/figure-latex/unnamed-chunk-25-1.pdf}
+
+Now we see a more random variance in our diagnostic plots and I am more
+comfortable with our model. Taking the log of our outcome variable has
+improved our ability to validate this model.
+
+\newpage
+
+\subsubsection{Multicollinearity}\label{multicollinearity}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4114,13 +4119,13 @@ removing the high influence points.
 rn & GVIF & Df & GVIF\^{}(1/(2*Df)) & Adjusted\_GVIF\tabularnewline
 \midrule
 \endhead
-MSSubClass & 1.413287 & 1 & 1.188818 & 1.413287\tabularnewline
-Neighborhood & 5.867393 & 24 & 1.037551 & 1.076511\tabularnewline
-OverallQual & 3.005068 & 1 & 1.733513 & 3.005068\tabularnewline
-YearRemodAdd & 1.784353 & 1 & 1.335797 & 1.784353\tabularnewline
-BsmtFinSF1 & 1.241025 & 1 & 1.114013 & 1.241025\tabularnewline
-GrLivArea & 1.990080 & 1 & 1.410702 & 1.990080\tabularnewline
-GarageCars & 1.938661 & 1 & 1.392358 & 1.938661\tabularnewline
+MSSubClass & 1.413403 & 1 & 1.188866 & 1.413403\tabularnewline
+Neighborhood & 5.812676 & 24 & 1.037348 & 1.076091\tabularnewline
+OverallQual & 2.988764 & 1 & 1.728804 & 2.988764\tabularnewline
+YearRemodAdd & 1.784746 & 1 & 1.335944 & 1.784746\tabularnewline
+BsmtFinSF1 & 1.238327 & 1 & 1.112801 & 1.238327\tabularnewline
+GrLivArea & 1.968825 & 1 & 1.403148 & 1.968825\tabularnewline
+GarageCars & 1.936513 & 1 & 1.391587 & 1.936513\tabularnewline
 \bottomrule
 \end{longtable}
 
@@ -4131,73 +4136,8 @@ threshold of 5 for multicollinearity is not exceed. Fortunately, we find
 that no variable exceeds the threshold and we do not need to adjust for
 multicollinearity.
 
-\subsection{The final model}\label{the-final-model}
-
-Provide your complete model summary and results with analysis.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{stargazer}\NormalTok{(fit, }\DataTypeTok{header =} \OtherTok{FALSE}\NormalTok{, }\DataTypeTok{no.space =} \OtherTok{TRUE}\NormalTok{, }
-          \DataTypeTok{style =} \StringTok{"all2"}\NormalTok{, }\DataTypeTok{font.size =} \StringTok{"normalsize"}\NormalTok{, }
-          \DataTypeTok{single.row =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{intercept.bottom =} \OtherTok{FALSE}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{table}[!htbp] \centering 
-  \caption{} 
-  \label{} 
-\normalsize 
-\begin{tabular}{@{\extracolsep{5pt}}lc} 
-\\[-1.8ex]\hline 
-\hline \\[-1.8ex] 
- & \multicolumn{1}{c}{\textit{Dependent variable:}} \\ 
-\cline{2-2} 
-\\[-1.8ex] & I(log(SalePrice)) \\ 
-\hline \\[-1.8ex] 
- Constant & 5.916$^{***}$ (0.458) \\ 
-  MSSubClass & $-$0.001$^{***}$ (0.0001) \\ 
-  NeighborhoodBlueste & $-$0.096 (0.102) \\ 
-  NeighborhoodBrDale & $-$0.209$^{***}$ (0.049) \\ 
-  NeighborhoodBrkSide & $-$0.110$^{***}$ (0.040) \\ 
-  NeighborhoodClearCr & 0.067 (0.044) \\ 
-  NeighborhoodCollgCr & $-$0.029 (0.036) \\ 
-  NeighborhoodCrawfor & 0.046 (0.040) \\ 
-  NeighborhoodEdwards & $-$0.126$^{***}$ (0.038) \\ 
-  NeighborhoodGilbert & $-$0.030 (0.037) \\ 
-  NeighborhoodIDOTRR & $-$0.265$^{***}$ (0.043) \\ 
-  NeighborhoodMeadowV & $-$0.157$^{***}$ (0.049) \\ 
-  NeighborhoodMitchel & $-$0.078$^{**}$ (0.040) \\ 
-  NeighborhoodNAmes & $-$0.064$^{*}$ (0.037) \\ 
-  NeighborhoodNoRidge & $-$0.011 (0.042) \\ 
-  NeighborhoodNPkVill & $-$0.061 (0.057) \\ 
-  NeighborhoodNridgHt & 0.072$^{*}$ (0.037) \\ 
-  NeighborhoodNWAmes & $-$0.067$^{*}$ (0.038) \\ 
-  NeighborhoodOldTown & $-$0.213$^{***}$ (0.037) \\ 
-  NeighborhoodSawyer & $-$0.079$^{**}$ (0.039) \\ 
-  NeighborhoodSawyerW & $-$0.078$^{**}$ (0.039) \\ 
-  NeighborhoodSomerst & 0.019 (0.037) \\ 
-  NeighborhoodStoneBr & 0.093$^{**}$ (0.044) \\ 
-  NeighborhoodSWISU & $-$0.132$^{***}$ (0.046) \\ 
-  NeighborhoodTimber & $-$0.004 (0.041) \\ 
-  NeighborhoodVeenker & 0.105$^{**}$ (0.054) \\ 
-  OverallQual & 0.091$^{***}$ (0.004) \\ 
-  YearRemodAdd & 0.003$^{***}$ (0.0002) \\ 
-  BsmtFinSF1 & 0.0002$^{***}$ (0.00001) \\ 
-  GrLivArea & 0.0003$^{***}$ (0.00001) \\ 
-  GarageCars & 0.069$^{***}$ (0.007) \\ 
- \hline \\[-1.8ex] 
-Observations & 1,458 \\ 
-R$^{2}$ & 0.886 \\ 
-Adjusted R$^{2}$ & 0.884 \\ 
-Residual Std. Error & 0.136 (df = 1427) \\ 
-F Statistic & 369.781$^{***}$ (df = 30; 1427)  (p = 0.000) \\ 
-\hline 
-\hline \\[-1.8ex] 
-\textit{Note:}  & \multicolumn{1}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
-\end{tabular} 
-\end{table}
-
-Prediction results with test data set
+\subsection{Prediction results with test data set using final
+model}\label{prediction-results-with-test-data-set-using-final-model}
 
 First there are some observations that are missing values included in
 our model. For this reason, we will use imputation to complete the cases
@@ -4205,48 +4145,71 @@ so our predictions can be carried out.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{test.df  <-}\StringTok{ }\KeywordTok{as_tibble}\NormalTok{(}\KeywordTok{read.csv}\NormalTok{(}\KeywordTok{paste}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/"}\NormalTok{, }\StringTok{"ChristopheHunt/"}\NormalTok{,}
+\NormalTok{test.df  <-}\StringTok{ }\KeywordTok{as_tibble}\NormalTok{(}\KeywordTok{read.csv}\NormalTok{(}\KeywordTok{paste}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/"}\NormalTok{,}
+                                     \StringTok{"ChristopheHunt/"}\NormalTok{,}
                                       \StringTok{"MSDA---Coursework/master"}\NormalTok{, }
-                                      \StringTok{"/Data%20605/Final%20Project/test.csv"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{""}\NormalTok{)))}
-\KeywordTok{library}\NormalTok{(missForest)}
-\KeywordTok{registerDoParallel}\NormalTok{(}\DataTypeTok{cl =} \KeywordTok{makeCluster}\NormalTok{(}\DecValTok{8}\NormalTok{), }\DataTypeTok{cores =} \DecValTok{8}\NormalTok{)}
-\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1234}\NormalTok{)}
-\NormalTok{test.df.imp <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(test.df %>%}\StringTok{ }\NormalTok{dplyr::}\KeywordTok{select}\NormalTok{(Id, MSSubClass, Neighborhood, OverallQual, OverallCond, YearBuilt, YrSold, YearRemodAdd, BsmtFinSF1, GrLivArea,GarageCars)) %>%}\StringTok{ }\KeywordTok{missForest}\NormalTok{(}\DataTypeTok{maxiter =} \DecValTok{10}\NormalTok{, }\DataTypeTok{ntree =} \DecValTok{100}\NormalTok{, }\DataTypeTok{replace =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{parallelize =} \StringTok{'forests'}\NormalTok{, }\DataTypeTok{verbose =} \OtherTok{TRUE}\NormalTok{) }
-\KeywordTok{write.csv}\NormalTok{(test.df.imp$ximp,}\StringTok{"imputed_test_data.csv"}\NormalTok{, }\DataTypeTok{row.names =} \OtherTok{FALSE}\NormalTok{) }\CommentTok{#wrote imputed_data to csv file due to processing time taken by missForest}
+                                      \StringTok{"/Data%20605/Final%20Project/test.csv"}\NormalTok{, }
+                                     \DataTypeTok{sep =} \StringTok{""}\NormalTok{)))}
 \end{Highlighting}
 \end{Shaded}
 
+\subsubsection{Imputation}\label{imputation}
+
+The test data provided by Kaggle has \texttt{NAs} for some of our
+independent variables. As such, we will use a non-parametic method of
+imputation so that we can run our final model.
+
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{test.df  <-}\StringTok{ }\KeywordTok{as_tibble}\NormalTok{(}\KeywordTok{read.csv}\NormalTok{(}\KeywordTok{paste}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/"}\NormalTok{, }\StringTok{"ChristopheHunt/"}\NormalTok{,}
+\KeywordTok{library}\NormalTok{(missForest)}
+\KeywordTok{registerDoParallel}\NormalTok{(}\DataTypeTok{cl =} \KeywordTok{makeCluster}\NormalTok{(}\DecValTok{8}\NormalTok{), }\DataTypeTok{cores =} \DecValTok{8}\NormalTok{)}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1234}\NormalTok{)}
+\NormalTok{test.df.imp <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(test.df %>%}\StringTok{ }\NormalTok{dplyr::}\KeywordTok{select}\NormalTok{(Id, MSSubClass, Neighborhood,}
+                                                       \NormalTok{OverallQual, OverallCond, }
+                                                       \NormalTok{YearBuilt, YrSold,}
+                                                       \NormalTok{YearRemodAdd, BsmtFinSF1, }
+                                                       \NormalTok{GrLivArea,GarageCars)) %>%}\StringTok{ }
+\StringTok{  }\KeywordTok{missForest}\NormalTok{(}\DataTypeTok{maxiter =} \DecValTok{10}\NormalTok{, }\DataTypeTok{ntree =} \DecValTok{100}\NormalTok{, }
+             \DataTypeTok{replace =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{parallelize =} \StringTok{'forests'}\NormalTok{, }\DataTypeTok{verbose =} \OtherTok{TRUE}\NormalTok{) }
+
+\KeywordTok{write.csv}\NormalTok{(test.df.imp$ximp,}\StringTok{"imputed_test_data.csv"}\NormalTok{, }\DataTypeTok{row.names =} \OtherTok{FALSE}\NormalTok{) }
+\CommentTok{#imputed_data to csv file due to processing time taken by missForest}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Prediction results}\label{prediction-results}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{test.df  <-}\StringTok{ }\KeywordTok{as_tibble}\NormalTok{(}\KeywordTok{read.csv}\NormalTok{(}\KeywordTok{paste}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/"}\NormalTok{,}
+                                     \StringTok{"ChristopheHunt/"}\NormalTok{,}
                                       \StringTok{"MSDA---Coursework/master"}\NormalTok{, }
-                                      \StringTok{"/Data%20605/Final%20Project/imputed_test_data.csv"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{""}\NormalTok{)))}
+                                      \StringTok{"/Data%20605/Final%20Project/imputed_test_data.csv"}\NormalTok{, }
+                                     \DataTypeTok{sep =} \StringTok{""}\NormalTok{)))}
 
 \NormalTok{SalePrice.predict <-}\StringTok{ }\KeywordTok{exp}\NormalTok{(}\KeywordTok{predict.lm}\NormalTok{(fit, }\DataTypeTok{type =} \StringTok{"response"}\NormalTok{, }\DataTypeTok{newdata =} \NormalTok{test.df))}
 \NormalTok{test.df.wpredict <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(test.df %>%}\StringTok{ }\NormalTok{dplyr::}\KeywordTok{select}\NormalTok{(Id), }\KeywordTok{round}\NormalTok{(SalePrice.predict,}\DecValTok{0}\NormalTok{)) }
 \KeywordTok{colnames}\NormalTok{(test.df.wpredict)[}\DecValTok{2}\NormalTok{] <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"SalePrice"}\NormalTok{)}
-\KeywordTok{pandoc.table}\NormalTok{(}\KeywordTok{head}\NormalTok{(test.df.wpredict), }\DataTypeTok{split.table =} \OtherTok{Inf}\NormalTok{)}
+\KeywordTok{kable}\NormalTok{(}\KeywordTok{head}\NormalTok{(test.df.wpredict), }\DataTypeTok{split.table =} \OtherTok{Inf}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-## 
-## ----------------
-##  Id   SalePrice 
-## ---- -----------
-## 1461   116756   
-## 
-## 1462   153721   
-## 
-## 1463   177996   
-## 
-## 1464   188136   
-## 
-## 1465   207064   
-## 
-## 1466   172618   
-## ----------------
-\end{verbatim}
+\begin{longtable}[]{@{}rr@{}}
+\toprule
+Id & SalePrice\tabularnewline
+\midrule
+\endhead
+1461 & 116767\tabularnewline
+1462 & 153700\tabularnewline
+1463 & 177987\tabularnewline
+1464 & 188130\tabularnewline
+1465 & 207117\tabularnewline
+1466 & 172621\tabularnewline
+\bottomrule
+\end{longtable}
+
+\subsubsection{Prediction results for
+submission}\label{prediction-results-for-submission}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4256,7 +4219,11 @@ so our predictions can be carried out.
 \end{Highlighting}
 \end{Shaded}
 
-Kaggle.com user name : Blastophe Kaggle.com score : 0.15033
+\subsection{Kaggle Results}\label{kaggle-results}
+
+Kaggle.com user name: \texttt{Blastophe}
+
+Kaggle.com score: \texttt{0.15033}
 
 
 \end{document}
