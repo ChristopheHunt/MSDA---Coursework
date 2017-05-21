@@ -151,6 +151,8 @@
 \setcounter{tocdepth}{2}
 \tableofcontents
 }
+\newpage
+
 \section{Variable}\label{variable}
 
 Pick one of the quantitative independent variables from the training
@@ -172,8 +174,11 @@ for a high price so I believe there may be some interesting varability.
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{library}\NormalTok{(tidyverse)}
-\NormalTok{train.df <-}\StringTok{ }\KeywordTok{as_tibble}\NormalTok{(}\KeywordTok{read.csv}\NormalTok{(}\KeywordTok{paste}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/"}\NormalTok{, }\StringTok{"ChristopheHunt/"}\NormalTok{, }
-    \StringTok{"MSDA---Coursework/master"}\NormalTok{, }\StringTok{"/Data%20605/Final%20Project/train.csv"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{""}\NormalTok{)))}
+\NormalTok{train.df  <-}\StringTok{ }\KeywordTok{as_tibble}\NormalTok{(}\KeywordTok{read.csv}\NormalTok{(}\KeywordTok{paste}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/"}\NormalTok{, }
+                                      \StringTok{"ChristopheHunt/"}\NormalTok{,}
+                                      \StringTok{"MSDA---Coursework/master"}\NormalTok{, }
+                                      \StringTok{"/Data%20605/Final%20Project/train.csv"}\NormalTok{, }
+                                      \DataTypeTok{sep =} \StringTok{""}\NormalTok{)))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -223,6 +228,8 @@ the Y variable. Interpret the meaning of all probabilities.
 \begin{verbatim}
 ## [1] 0.9369863
 \end{verbatim}
+
+\newpage
 
 \subsection{\texorpdfstring{b.
 \(P(X>x, Y>y)\)}{b. P(X\textgreater{}x, Y\textgreater{}y)}}\label{b.-pxx-yy}
@@ -290,12 +297,17 @@ the probability of X\textgreater{}x mutiplied by Y\textgreater{}y
 ## [1] FALSE
 \end{verbatim}
 
+\newpage
+
 \subsection{Chi Square test for
 association.}\label{chi-square-test-for-association.}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{prob.table <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(}\KeywordTok{rbind}\NormalTok{(}\KeywordTok{cbind}\NormalTok{(}\KeywordTok{sum}\NormalTok{(prob.y.x$lesserLotArea), }\KeywordTok{sum}\NormalTok{(prob.y.x$greaterLotArea)), }\KeywordTok{cbind}\NormalTok{(}\KeywordTok{sum}\NormalTok{(prob.y.x$lesserSalePrice), }\KeywordTok{sum}\NormalTok{(prob.y.x$greaterSalePrice))))}
+\NormalTok{prob.table <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(}\KeywordTok{rbind}\NormalTok{(}\KeywordTok{cbind}\NormalTok{(}\KeywordTok{sum}\NormalTok{(prob.y.x$lesserLotArea), }
+                                        \KeywordTok{sum}\NormalTok{(prob.y.x$greaterLotArea)), }
+                                  \KeywordTok{cbind}\NormalTok{(}\KeywordTok{sum}\NormalTok{(prob.y.x$lesserSalePrice), }
+                                        \KeywordTok{sum}\NormalTok{(prob.y.x$greaterSalePrice))))}
 \KeywordTok{chisq.test}\NormalTok{(prob.table)}
 \end{Highlighting}
 \end{Shaded}
@@ -318,26 +330,28 @@ The below venn diagram from Wikipedia may provide a clearer
 understanding of the differences in these measures:
 
 \includegraphics{https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data\%20605/Final\%20Project/Entropy-mutual-information-relative-entropy-relation-diagram.PNG}
-{[}\^{}4{]}
+\footnote{By KonradVoelkel (Own work) {[}Public domain{]}, via Wikimedia
+  Commons}
 
-{[}\^{}4{]} By KonradVoelkel (Own work) {[}Public domain{]}, via
-Wikimedia Commons
+\newpage
 
 \section{Descriptive and Inferential
 Statistics.}\label{descriptive-and-inferential-statistics.}
 
-Provide univariate descriptive statistics and appropriate plots for both
-variables.
+\subsection{Univariate descriptive statistics and
+plots}\label{univariate-descriptive-statistics-and-plots}
+
+\subsubsection{Lot Area}\label{lot-area}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{description <-}\StringTok{ }\KeywordTok{describe}\NormalTok{(sub.train.df[}\StringTok{"LotArea"}\NormalTok{])}
+\NormalTok{description <-}\StringTok{ }\KeywordTok{describe}\NormalTok{(sub.train.df[}\StringTok{"LotArea"}\NormalTok{],}\DataTypeTok{descript =} \StringTok{"LotArea"}\NormalTok{)}
 \KeywordTok{latex}\NormalTok{(description, }\DataTypeTok{file =} \StringTok{''}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{spacing}{0.7}
-\begin{center}\textbf{ sub.train.df["LotArea"] \\ 1 Variables~~~~~ 1460 ~Observations}\end{center}
+\begin{center}\textbf{ LotArea \\ 1 Variables~~~~~ 1460 ~Observations}\end{center}
 \smallskip\hrule\smallskip{\small
 \vbox{\noindent\textbf{LotArea}\setlength{\unitlength}{0.001in}\hfill\begin{picture}(1.5,.1)(1500,0)\linethickness{0.6pt}
 \put(0,0){\line(0,1){15}}
@@ -387,19 +401,21 @@ lowest :   1300   1477   1491   1526   1533, highest:  70761 115149 159000 16466
 \begin{quote}
 The histogram in the upper right corner of the table shows a right
 skewed distribution, which is not surprising since houses in cities
-would likely have similar relatively smaller lot areas versus instances
-of large lot areas.
+would likely have similar lot areas versus instances of varied rural
+large lot areas.
 \end{quote}
+
+\subsubsection{Sale Price}\label{sale-price}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{description <-}\StringTok{ }\KeywordTok{describe}\NormalTok{(sub.train.df[}\StringTok{"SalePrice"}\NormalTok{])}
+\NormalTok{description <-}\StringTok{ }\KeywordTok{describe}\NormalTok{(sub.train.df[}\StringTok{"SalePrice"}\NormalTok{], }\DataTypeTok{descript =} \StringTok{"SalePrice"}\NormalTok{)}
 \KeywordTok{latex}\NormalTok{(description, }\DataTypeTok{file =} \StringTok{''}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{spacing}{0.7}
-\begin{center}\textbf{ sub.train.df["SalePrice"] \\ 1 Variables~~~~~ 1460 ~Observations}\end{center}
+\begin{center}\textbf{ SalePrice \\ 1 Variables~~~~~ 1460 ~Observations}\end{center}
 \smallskip\hrule\smallskip{\small
 \vbox{\noindent\textbf{SalePrice}\setlength{\unitlength}{0.001in}\hfill\begin{picture}(1.5,.1)(1500,0)\linethickness{0.6pt}
 \put(0,0){\line(0,1){1}}
@@ -477,7 +493,9 @@ shape, this would hold with our original assumption that where the house
 is located has more impact than the size of the lot area.
 \end{quote}
 
-Provide a scatterplot of X and Y.
+\newpage
+
+\subsection{Scatterplot of X and Y}\label{scatterplot-of-x-and-y}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4065,16 +4083,29 @@ GarageCars.
 
 I am slightly concerned that the residual plot does not look like a
 shotgun pattern. My assumption is that the high influence points and/or
-outliers may be impacting the model. Outlier treatment may improve the
-model but the model is currently sufficient for our purposes.
+outliers may be impacting the model. Therefore, we will exclude the high
+influence points and also use the lambda value 1.9999 of the
+\texttt{YearRemodAdd} from our Box Cox method in our final model. I also
+took the log of SalePrice as we began to get negative predictions after
+removing the high influence points.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(DAAG)}
+\NormalTok{train.df}\FloatTok{.2} \NormalTok{<-}\StringTok{ }\NormalTok{train.df[-}\KeywordTok{c}\NormalTok{(}\DecValTok{524}\NormalTok{, }\DecValTok{1299}\NormalTok{),]}
+\NormalTok{fit <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(}\KeywordTok{I}\NormalTok{(}\KeywordTok{log}\NormalTok{(SalePrice)) ~}\StringTok{ }\NormalTok{MSSubClass +}\StringTok{ }\NormalTok{Neighborhood +}\StringTok{ }
+\StringTok{            }\NormalTok{OverallQual +}\StringTok{ }\NormalTok{YearRemodAdd +}\StringTok{ }\NormalTok{BsmtFinSF1 +}\StringTok{ }
+\StringTok{            }\NormalTok{GrLivArea +}\StringTok{ }\NormalTok{GarageCars, }\DataTypeTok{data =} \NormalTok{train.df}\FloatTok{.2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{library}\NormalTok{(car)}
 \KeywordTok{library}\NormalTok{(data.table)}
-\NormalTok{lmfit <-}\StringTok{ }\KeywordTok{setDT}\NormalTok{(}\KeywordTok{as.data.frame}\NormalTok{(car::}\KeywordTok{vif}\NormalTok{(fit)), }\DataTypeTok{keep.rownames =} \OtherTok{TRUE}\NormalTok{)[]}
-\NormalTok{lmfit$Adjusted_GVIF <-}\StringTok{ }\NormalTok{(lmfit$}\StringTok{`}\DataTypeTok{GVIF^(1/(2*Df))}\StringTok{`}\NormalTok{^}\DecValTok{2}\NormalTok{)}
-\KeywordTok{kable}\NormalTok{(lmfit, }\DataTypeTok{align =} \KeywordTok{c}\NormalTok{(}\StringTok{"l"}\NormalTok{, }\StringTok{"c"}\NormalTok{, }\StringTok{"c"}\NormalTok{, }\StringTok{"c"}\NormalTok{, }\StringTok{"c"}\NormalTok{))}
+\NormalTok{rmfit <-}\StringTok{ }\KeywordTok{setDT}\NormalTok{(}\KeywordTok{as.data.frame}\NormalTok{(car::}\KeywordTok{vif}\NormalTok{(fit)), }\DataTypeTok{keep.rownames =} \OtherTok{TRUE}\NormalTok{)[]}
+\NormalTok{rmfit$Adjusted_GVIF <-}\StringTok{ }\NormalTok{(rmfit$}\StringTok{`}\DataTypeTok{GVIF^(1/(2*Df))}\StringTok{`}\NormalTok{^}\DecValTok{2}\NormalTok{)}
+\KeywordTok{kable}\NormalTok{(rmfit, }\DataTypeTok{align =} \KeywordTok{c}\NormalTok{(}\StringTok{"l"}\NormalTok{, }\StringTok{"c"}\NormalTok{, }\StringTok{"c"}\NormalTok{, }\StringTok{"c"}\NormalTok{, }\StringTok{"c"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4083,13 +4114,13 @@ model but the model is currently sufficient for our purposes.
 rn & GVIF & Df & GVIF\^{}(1/(2*Df)) & Adjusted\_GVIF\tabularnewline
 \midrule
 \endhead
-MSSubClass & 1.412246 & 1 & 1.188379 & 1.412246\tabularnewline
-Neighborhood & 5.575916 & 24 & 1.036450 & 1.074228\tabularnewline
-OverallQual & 3.035516 & 1 & 1.742273 & 3.035516\tabularnewline
-YearRemodAdd & 1.786865 & 1 & 1.336737 & 1.786865\tabularnewline
-BsmtFinSF1 & 1.231322 & 1 & 1.109649 & 1.231322\tabularnewline
-GrLivArea & 1.980075 & 1 & 1.407151 & 1.980075\tabularnewline
-GarageCars & 1.928807 & 1 & 1.388815 & 1.928807\tabularnewline
+MSSubClass & 1.413287 & 1 & 1.188818 & 1.413287\tabularnewline
+Neighborhood & 5.867393 & 24 & 1.037551 & 1.076511\tabularnewline
+OverallQual & 3.005068 & 1 & 1.733513 & 3.005068\tabularnewline
+YearRemodAdd & 1.784353 & 1 & 1.335797 & 1.784353\tabularnewline
+BsmtFinSF1 & 1.241025 & 1 & 1.114013 & 1.241025\tabularnewline
+GrLivArea & 1.990080 & 1 & 1.410702 & 1.990080\tabularnewline
+GarageCars & 1.938661 & 1 & 1.392358 & 1.938661\tabularnewline
 \bottomrule
 \end{longtable}
 
@@ -4121,45 +4152,45 @@ Provide your complete model summary and results with analysis.
 \hline \\[-1.8ex] 
  & \multicolumn{1}{c}{\textit{Dependent variable:}} \\ 
 \cline{2-2} 
-\\[-1.8ex] & SalePrice \\ 
+\\[-1.8ex] & I(log(SalePrice)) \\ 
 \hline \\[-1.8ex] 
- Constant & $-$621,777.700$^{***}$ (111,442.300) \\ 
-  MSSubClass & $-$252.678$^{***}$ (24.405) \\ 
-  NeighborhoodBlueste & $-$12,510.880 (24,882.880) \\ 
-  NeighborhoodBrDale & $-$16,417.030 (11,866.240) \\ 
-  NeighborhoodBrkSide & $-$14,640.440 (9,753.068) \\ 
-  NeighborhoodClearCr & 7,771.633 (10,647.930) \\ 
-  NeighborhoodCollgCr & $-$8,855.995 (8,742.258) \\ 
-  NeighborhoodCrawfor & 7,447.104 (9,729.488) \\ 
-  NeighborhoodEdwards & $-$24,629.000$^{***}$ (9,317.138) \\ 
-  NeighborhoodGilbert & $-$12,303.590 (9,065.933) \\ 
-  NeighborhoodIDOTRR & $-$25,820.490$^{**}$ (10,379.870) \\ 
-  NeighborhoodMeadowV & 1,205.989 (11,879.710) \\ 
-  NeighborhoodMitchel & $-$18,072.460$^{*}$ (9,692.696) \\ 
-  NeighborhoodNAmes & $-$18,834.730$^{**}$ (8,971.063) \\ 
-  NeighborhoodNoRidge & 40,530.480$^{***}$ (10,050.780) \\ 
-  NeighborhoodNPkVill & $-$9,409.847 (13,823.590) \\ 
-  NeighborhoodNridgHt & 49,514.520$^{***}$ (9,100.426) \\ 
-  NeighborhoodNWAmes & $-$21,429.510$^{**}$ (9,344.861) \\ 
-  NeighborhoodOldTown & $-$31,650.010$^{***}$ (9,111.020) \\ 
-  NeighborhoodSawyer & $-$19,047.140$^{**}$ (9,502.205) \\ 
-  NeighborhoodSawyerW & $-$15,759.290$^{*}$ (9,404.611) \\ 
-  NeighborhoodSomerst & 7,011.384 (8,880.182) \\ 
-  NeighborhoodStoneBr & 55,104.420$^{***}$ (10,602.380) \\ 
-  NeighborhoodSWISU & $-$27,693.620$^{**}$ (11,081.320) \\ 
-  NeighborhoodTimber & 3,500.186 (9,974.428) \\ 
-  NeighborhoodVeenker & 25,505.000$^{*}$ (13,027.270) \\ 
-  OverallQual & 16,039.450$^{***}$ (1,094.370) \\ 
-  YearRemodAdd & 310.102$^{***}$ (56.246) \\ 
-  BsmtFinSF1 & 23.326$^{***}$ (2.113) \\ 
-  GrLivArea & 52.970$^{***}$ (2.326) \\ 
-  GarageCars & 11,974.750$^{***}$ (1,614.394) \\ 
+ Constant & 5.916$^{***}$ (0.458) \\ 
+  MSSubClass & $-$0.001$^{***}$ (0.0001) \\ 
+  NeighborhoodBlueste & $-$0.096 (0.102) \\ 
+  NeighborhoodBrDale & $-$0.209$^{***}$ (0.049) \\ 
+  NeighborhoodBrkSide & $-$0.110$^{***}$ (0.040) \\ 
+  NeighborhoodClearCr & 0.067 (0.044) \\ 
+  NeighborhoodCollgCr & $-$0.029 (0.036) \\ 
+  NeighborhoodCrawfor & 0.046 (0.040) \\ 
+  NeighborhoodEdwards & $-$0.126$^{***}$ (0.038) \\ 
+  NeighborhoodGilbert & $-$0.030 (0.037) \\ 
+  NeighborhoodIDOTRR & $-$0.265$^{***}$ (0.043) \\ 
+  NeighborhoodMeadowV & $-$0.157$^{***}$ (0.049) \\ 
+  NeighborhoodMitchel & $-$0.078$^{**}$ (0.040) \\ 
+  NeighborhoodNAmes & $-$0.064$^{*}$ (0.037) \\ 
+  NeighborhoodNoRidge & $-$0.011 (0.042) \\ 
+  NeighborhoodNPkVill & $-$0.061 (0.057) \\ 
+  NeighborhoodNridgHt & 0.072$^{*}$ (0.037) \\ 
+  NeighborhoodNWAmes & $-$0.067$^{*}$ (0.038) \\ 
+  NeighborhoodOldTown & $-$0.213$^{***}$ (0.037) \\ 
+  NeighborhoodSawyer & $-$0.079$^{**}$ (0.039) \\ 
+  NeighborhoodSawyerW & $-$0.078$^{**}$ (0.039) \\ 
+  NeighborhoodSomerst & 0.019 (0.037) \\ 
+  NeighborhoodStoneBr & 0.093$^{**}$ (0.044) \\ 
+  NeighborhoodSWISU & $-$0.132$^{***}$ (0.046) \\ 
+  NeighborhoodTimber & $-$0.004 (0.041) \\ 
+  NeighborhoodVeenker & 0.105$^{**}$ (0.054) \\ 
+  OverallQual & 0.091$^{***}$ (0.004) \\ 
+  YearRemodAdd & 0.003$^{***}$ (0.0002) \\ 
+  BsmtFinSF1 & 0.0002$^{***}$ (0.00001) \\ 
+  GrLivArea & 0.0003$^{***}$ (0.00001) \\ 
+  GarageCars & 0.069$^{***}$ (0.007) \\ 
  \hline \\[-1.8ex] 
-Observations & 1,460 \\ 
-R$^{2}$ & 0.829 \\ 
-Adjusted R$^{2}$ & 0.826 \\ 
-Residual Std. Error & 33,181.540 (df = 1429) \\ 
-F Statistic & 231.137$^{***}$ (df = 30; 1429)  (p = 0.000) \\ 
+Observations & 1,458 \\ 
+R$^{2}$ & 0.886 \\ 
+Adjusted R$^{2}$ & 0.884 \\ 
+Residual Std. Error & 0.136 (df = 1427) \\ 
+F Statistic & 369.781$^{***}$ (df = 30; 1427)  (p = 0.000) \\ 
 \hline 
 \hline \\[-1.8ex] 
 \textit{Note:}  & \multicolumn{1}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
@@ -4180,7 +4211,7 @@ so our predictions can be carried out.
 \KeywordTok{library}\NormalTok{(missForest)}
 \KeywordTok{registerDoParallel}\NormalTok{(}\DataTypeTok{cl =} \KeywordTok{makeCluster}\NormalTok{(}\DecValTok{8}\NormalTok{), }\DataTypeTok{cores =} \DecValTok{8}\NormalTok{)}
 \KeywordTok{set.seed}\NormalTok{(}\DecValTok{1234}\NormalTok{)}
-\NormalTok{test.df.imp <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(test.df %>%}\StringTok{ }\NormalTok{dplyr::}\KeywordTok{select}\NormalTok{(Id, MSSubClass, Neighborhood, OverallQual, YearRemodAdd, BsmtFinSF1, GrLivArea,GarageCars)) %>%}\StringTok{ }\KeywordTok{missForest}\NormalTok{(}\DataTypeTok{maxiter =} \DecValTok{10}\NormalTok{, }\DataTypeTok{ntree =} \DecValTok{100}\NormalTok{, }\DataTypeTok{replace =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{parallelize =} \StringTok{'forests'}\NormalTok{, }\DataTypeTok{verbose =} \OtherTok{TRUE}\NormalTok{) }
+\NormalTok{test.df.imp <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(test.df %>%}\StringTok{ }\NormalTok{dplyr::}\KeywordTok{select}\NormalTok{(Id, MSSubClass, Neighborhood, OverallQual, OverallCond, YearBuilt, YrSold, YearRemodAdd, BsmtFinSF1, GrLivArea,GarageCars)) %>%}\StringTok{ }\KeywordTok{missForest}\NormalTok{(}\DataTypeTok{maxiter =} \DecValTok{10}\NormalTok{, }\DataTypeTok{ntree =} \DecValTok{100}\NormalTok{, }\DataTypeTok{replace =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{parallelize =} \StringTok{'forests'}\NormalTok{, }\DataTypeTok{verbose =} \OtherTok{TRUE}\NormalTok{) }
 \KeywordTok{write.csv}\NormalTok{(test.df.imp$ximp,}\StringTok{"imputed_test_data.csv"}\NormalTok{, }\DataTypeTok{row.names =} \OtherTok{FALSE}\NormalTok{) }\CommentTok{#wrote imputed_data to csv file due to processing time taken by missForest}
 \end{Highlighting}
 \end{Shaded}
@@ -4191,7 +4222,7 @@ so our predictions can be carried out.
                                       \StringTok{"MSDA---Coursework/master"}\NormalTok{, }
                                       \StringTok{"/Data%20605/Final%20Project/imputed_test_data.csv"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{""}\NormalTok{)))}
 
-\NormalTok{SalePrice.predict <-}\StringTok{ }\KeywordTok{predict.lm}\NormalTok{(fit, }\DataTypeTok{type =} \StringTok{"response"}\NormalTok{, }\DataTypeTok{newdata =} \NormalTok{test.df)}
+\NormalTok{SalePrice.predict <-}\StringTok{ }\KeywordTok{exp}\NormalTok{(}\KeywordTok{predict.lm}\NormalTok{(fit, }\DataTypeTok{type =} \StringTok{"response"}\NormalTok{, }\DataTypeTok{newdata =} \NormalTok{test.df))}
 \NormalTok{test.df.wpredict <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(test.df %>%}\StringTok{ }\NormalTok{dplyr::}\KeywordTok{select}\NormalTok{(Id), }\KeywordTok{round}\NormalTok{(SalePrice.predict,}\DecValTok{0}\NormalTok{)) }
 \KeywordTok{colnames}\NormalTok{(test.df.wpredict)[}\DecValTok{2}\NormalTok{] <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"SalePrice"}\NormalTok{)}
 \KeywordTok{pandoc.table}\NormalTok{(}\KeywordTok{head}\NormalTok{(test.df.wpredict), }\DataTypeTok{split.table =} \OtherTok{Inf}\NormalTok{)}
@@ -4203,17 +4234,17 @@ so our predictions can be carried out.
 ## ----------------
 ##  Id   SalePrice 
 ## ---- -----------
-## 1461   112993   
+## 1461   116756   
 ## 
-## 1462   161652   
+## 1462   153721   
 ## 
-## 1463   179227   
+## 1463   177996   
 ## 
-## 1464   189533   
+## 1464   188136   
 ## 
-## 1465   246930   
+## 1465   207064   
 ## 
-## 1466   176952   
+## 1466   172618   
 ## ----------------
 \end{verbatim}
 
@@ -4225,7 +4256,7 @@ so our predictions can be carried out.
 \end{Highlighting}
 \end{Shaded}
 
-Kaggle.com user name : Kaggle.com score :
+Kaggle.com user name : Blastophe Kaggle.com score : 0.15033
 
 
 \end{document}

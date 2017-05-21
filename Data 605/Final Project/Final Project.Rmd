@@ -33,6 +33,8 @@ library(data.table)
 library(pander)
 ```
 
+\newpage
+
 # Variable
 
 Pick one of the quantitative independent variables from the training data set (train.csv), and define that variable as X.
@@ -43,11 +45,13 @@ Pick SalePrice as the dependent variable, and define it as Y for the next analys
 
 > The variable we will set to X is LotArea, which is defined as the Lot size in square feet. I chose LotArea because an anecdotal assumption is that the larger the lot size is the higher the sale price. However, living in NYC, I know that tiny lots in very desirable places have sold for a high price so I believe there may be some interesting varability. 
 
-```{r read train data, message = FALSE, message=FALSE, tidy=TRUE, cache=TRUE}
+```{r read train data, message = FALSE, message=FALSE, cache=TRUE}
 library(tidyverse)
-train.df  <- as_tibble(read.csv(paste("https://raw.githubusercontent.com/", "ChristopheHunt/",
+train.df  <- as_tibble(read.csv(paste("https://raw.githubusercontent.com/", 
+                                      "ChristopheHunt/",
                                       "MSDA---Coursework/master", 
-                                      "/Data%20605/Final%20Project/train.csv", sep = "")))
+                                      "/Data%20605/Final%20Project/train.csv", 
+                                      sep = "")))
 ```
 
 ```{r subset train data,  message = FALSE, message=FALSE, tidy=TRUE, cache=TRUE}
@@ -81,6 +85,7 @@ a <- (sum(ifelse(prob.y.x$greaterLotArea == 1 &
       / nrow(prob.y.x)) / ((sum(prob.y.x$greaterLotArea) / nrow(prob.y.x)))
 a
 ```
+\newpage
 
 ##  b. $P(X>x, Y>y)$	
   
@@ -116,11 +121,15 @@ X * Y
 ```{r, cache=TRUE}
 a == (X * Y)
 ```
+\newpage
 
 ## Chi Square test for association.  
 
 ```{r, cache=TRUE}
-prob.table <- as.data.frame(rbind(cbind(sum(prob.y.x$lesserLotArea), sum(prob.y.x$greaterLotArea)), cbind(sum(prob.y.x$lesserSalePrice), sum(prob.y.x$greaterSalePrice))))
+prob.table <- as.data.frame(rbind(cbind(sum(prob.y.x$lesserLotArea), 
+                                        sum(prob.y.x$greaterLotArea)), 
+                                  cbind(sum(prob.y.x$lesserSalePrice), 
+                                        sum(prob.y.x$greaterSalePrice))))
 chisq.test(prob.table)
 ```
 
@@ -130,29 +139,37 @@ The below venn diagram from Wikipedia may provide a clearer understanding of the
 
 ![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20605/Final%20Project/Entropy-mutual-information-relative-entropy-relation-diagram.PNG) [^4]
 
-[^4] By KonradVoelkel (Own work) [Public domain], via Wikimedia Commons   
+[^4]: By KonradVoelkel (Own work) [Public domain], via Wikimedia Commons   
+
+\newpage
 
 # Descriptive and Inferential Statistics. 
 
-Provide univariate descriptive statistics and appropriate plots for both variables.
+## Univariate descriptive statistics and plots
+
+### Lot Area
 
 ```{r, cache=TRUE, results='asis'}
-description <- describe(sub.train.df["LotArea"])
+description <- describe(sub.train.df["LotArea"],descript = "LotArea")
 latex(description, file = '')
 ```
 
-> The histogram in the upper right corner of the table shows a right skewed distribution, which is not surprising since houses in cities would likely have similar relatively smaller lot areas versus instances of large lot areas. 
+> The histogram in the upper right corner of the table shows a right skewed distribution, which is not surprising since houses in cities would likely have similar lot areas versus instances of varied rural large lot areas. 
+
+### Sale Price
 
 ```{r, cache=TRUE, results='asis'}
-description <- describe(sub.train.df["SalePrice"])
+description <- describe(sub.train.df["SalePrice"], descript = "SalePrice")
 latex(description, file = '')
 ```
 
 > As we can see from the histogram the shape of the data is near normal. It is interesting to visualize that lot area does not follow the same shape, this would hold with our original assumption that where the house is located has more impact than the size of the lot area. 
 
-Provide a scatterplot of X and Y.
+\newpage
 
-```{r scatter plot,  message = FALSE, message=FALSE, tidy=TRUE, cache=TRUE, fig.height=4, fig.width=6}
+## Scatterplot of X and Y
+
+```{r scatter plot,  message = FALSE, message=FALSE, tidy=TRUE, cache=TRUE, fig.height=3.5, fig.width=5}
 ggplot(sub.train.df, aes(x = LotArea, y = SalePrice)) +
     geom_point(shape=1) +
     theme_light() +
@@ -340,7 +357,7 @@ kable(t(summary$outmat))
 
 Based on the last best model we will limit the data set to the following variables MSSubClass, NeighborhoodNoRidge, NeighborhoodNridgHt, NeighborhoodStoneBr, OverallQual, YearRemodAdd, BsmtFinSF1, GrLivArea, GarageCars. 
 
-```{r}
+```{r,cache=TRUE}
 library(DAAG)
 fit <- lm(SalePrice ~ MSSubClass + Neighborhood + 
             OverallQual + YearRemodAdd + BsmtFinSF1 + 
@@ -351,39 +368,31 @@ plot(fit)
 par(p)
 ```
 
-I am slightly concerned that the residual plot does not look like a shotgun pattern. My assumption is that the high influence points and/or outliers may be impacting the model. Therefore, lets use robust linear regression to account for these issues. 
+I am slightly concerned that the residual plot does not look like a shotgun pattern. My assumption is that the high influence points and/or outliers may be impacting the model. Therefore, we will exclude the high influence points and also use the lambda value `r round(BoxCox.lambda(as.numeric(train.df$YearRemodAdd)),4)` of the `YearRemodAdd` from our Box Cox method in our final model. I also took the log of SalePrice as we began to get negative predictions after removing the high influence points.
 
-```{r}
-BC.MSSubClass <- BoxCox.lambda(as.numeric(train.df$MSSubClass))
-BC.Neighborhood <- BoxCox.lambda(as.numeric(train.df$Neighborhood))
-BC.OverallQual <- BoxCox.lambda(as.numeric(train.df$OverallQual))
-BC.YearRemodAdd <- BoxCox.lambda(as.numeric(train.df$YearRemodAdd))
-BC.BsmtFinSF1 <- BoxCox.lambda(as.numeric(train.df$BsmtFinSF1))
-BC.GrLivArea <- BoxCox.lambda(as.numeric(train.df$GrLivArea))
-BC.GarageCars <- BoxCox.lambda(as.numeric(train.df$GarageCars))
+```{r, cache=TRUE}
+library(DAAG)
+train.df.2 <- train.df[-c(524, 1299),]
+fit <- lm(I(log(SalePrice)) ~ MSSubClass + Neighborhood + 
+            OverallQual + YearRemodAdd + BsmtFinSF1 + 
+            GrLivArea + GarageCars, data = train.df.2)
 ```
 
-
-```{r}
-library(DAAG)
-fit <- rlm(SalePrice ~ MSSubClass + Neighborhood + 
-            OverallQual + I(YearRemodAdd)^2 + I(BsmtFinSF1) + 
-            GrLivArea + GarageCars, SalePrice, data = train.df, k2 = 1.345, wt.method = c("inv.var"), maxit = 20)
-
-#p <- par(mfrow=c(2,2))
-plot(fit)
+```{r, include=FALSE, cache=TRUE}
+fit.plot <- lm(log(SalePrice) ~ MSSubClass + Neighborhood + 
+            OverallQual + YearRemodAdd + BsmtFinSF1 + 
+            GrLivArea + GarageCars, data = train.df.2)
+p <- par(mfrow=c(2,2))
+plot(fit.plot)
 par(p)
 ```
 
-
-
-
-```{r}
+```{r, cache=TRUE}
 library(car)
 library(data.table)
-lmfit <- setDT(as.data.frame(car::vif(fit)), keep.rownames = TRUE)[]
-lmfit$Adjusted_GVIF <- (lmfit$`GVIF^(1/(2*Df))`^2)
-kable(lmfit, align = c("l", "c", "c", "c", "c"))
+rmfit <- setDT(as.data.frame(car::vif(fit)), keep.rownames = TRUE)[]
+rmfit$Adjusted_GVIF <- (rmfit$`GVIF^(1/(2*Df))`^2)
+kable(rmfit, align = c("l", "c", "c", "c", "c"))
 ```
 
 Using GVIF^(1/(2*Df)) [^6] in order to verify that the VIF threshold of 5 for multicollinearity is not exceed. Fortunately, we find that no variable exceeds the threshold and we do not need to adjust for multicollinearity.
@@ -411,29 +420,29 @@ test.df  <- as_tibble(read.csv(paste("https://raw.githubusercontent.com/", "Chri
 library(missForest)
 registerDoParallel(cl = makeCluster(8), cores = 8)
 set.seed(1234)
-test.df.imp <- as.data.frame(test.df %>% dplyr::select(Id, MSSubClass, Neighborhood, OverallQual, YearRemodAdd, BsmtFinSF1, GrLivArea,GarageCars)) %>% missForest(maxiter = 10, ntree = 100, replace = TRUE, parallelize = 'forests', verbose = TRUE) 
+test.df.imp <- as.data.frame(test.df %>% dplyr::select(Id, MSSubClass, Neighborhood, OverallQual, OverallCond, YearBuilt, YrSold, YearRemodAdd, BsmtFinSF1, GrLivArea,GarageCars)) %>% missForest(maxiter = 10, ntree = 100, replace = TRUE, parallelize = 'forests', verbose = TRUE) 
 write.csv(test.df.imp$ximp,"imputed_test_data.csv", row.names = FALSE) #wrote imputed_data to csv file due to processing time taken by missForest
 ```
 
 
-```{r}
+```{r, cache=TRUE}
 test.df  <- as_tibble(read.csv(paste("https://raw.githubusercontent.com/", "ChristopheHunt/",
                                       "MSDA---Coursework/master", 
                                       "/Data%20605/Final%20Project/imputed_test_data.csv", sep = "")))
 
-SalePrice.predict <- predict.lm(fit, type = "response", newdata = test.df)
+SalePrice.predict <- exp(predict.lm(fit, type = "response", newdata = test.df))
 test.df.wpredict <- cbind(test.df %>% dplyr::select(Id), round(SalePrice.predict,0)) 
 colnames(test.df.wpredict)[2] <- c("SalePrice")
 pandoc.table(head(test.df.wpredict), split.table = Inf)
 ```
 
-```{r}
+```{r, cache=TRUE}
 gz1 <- gzfile("submission.csv.gz", "w")
 write.csv(test.df.wpredict, gz1, row.names = FALSE)
 close(gz1)
 ```
 
 
-Kaggle.com user name : 
-Kaggle.com score : 
+Kaggle.com user name : Blastophe
+Kaggle.com score :  0.15033
 
