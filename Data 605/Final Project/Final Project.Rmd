@@ -1,7 +1,7 @@
 ---
 title: "Final Project"
 author: "Christophe Hunt"
-date: "May 13, 2017"
+date: "May 21, 2017"
 output:
   pdf_document:
     fig_caption: yes
@@ -505,7 +505,7 @@ write.csv(test.df.imp$ximp,"imputed_test_data.csv", row.names = FALSE)
 #imputed_data to csv file due to processing time taken by missForest
 ```
 
-## Prediction results
+### Prediction results
 
 ```{r, cache=TRUE, results='asis'}
 test.df  <- as_tibble(read.csv(paste("https://raw.githubusercontent.com/",
@@ -533,4 +533,6 @@ close(gz1)
 Kaggle.com user name: `Blastophe`  
 
 Kaggle.com score: `0.15033`
+
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20605/Final%20Project/Kaggle_Score.PNG)
 
