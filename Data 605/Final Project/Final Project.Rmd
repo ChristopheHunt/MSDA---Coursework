@@ -31,6 +31,7 @@ library(doParallel)
 library(DAAG)
 library(car)
 library(data.table)
+library(pander)
 ```
 
 # Variable
@@ -342,7 +343,10 @@ Based on the last best model we will limit the data set to the following variabl
 
 ```{r}
 library(DAAG)
-fit <- lm(SalePrice ~ MSSubClass + Neighborhood + OverallQual + YearRemodAdd + BsmtFinSF1 + GrLivArea + GarageCars, data = train.df)
+fit <- lm(SalePrice ~ MSSubClass + Neighborhood + 
+            OverallQual + YearRemodAdd + BsmtFinSF1 + 
+            GrLivArea + GarageCars, data = train.df)
+
 p <- par(mfrow=c(2,2))
 plot(fit)
 par(p)
@@ -364,15 +368,45 @@ Using GVIF^(1/(2*Df)) [^6] in order to verify that the VIF threshold of 5 for mu
 
 ## The final model
 
+Provide your complete model summary and results with analysis. 
+
 ```{r, results='asis', cache=TRUE}
 stargazer(fit, header = FALSE, no.space = TRUE, 
           style = "all2", font.size = "normalsize", 
           single.row = TRUE, intercept.bottom = FALSE)
 ```
 
+Prediction results with test data set
+
+First there are some observations that are missing values included in our model. For this reason, we will use imputation to complete the cases so our predictions can be carried out. 
+
+```{r, eval=FALSE}
+library(missForest)
+registerDoParallel(cl = makeCluster(8), cores = 8)
+set.seed(1234)
+test.df.dum.imp <- as.data.frame(test.df %>% dplyr::select(Id, MSSubClass, Neighborhood, OverallQual, YearRemodAdd, BsmtFinSF1, GrLivArea,GarageCars)) %>% missForest(maxiter = 10, ntree = 100, replace = TRUE, parallelize = 'forests', verbose = TRUE) 
+write.csv(test.df.imp$ximp,"imputed_test_data.csv", row.names = FALSE) #wrote imputed_data to csv file due to processing time taken by missForest
+```
 
 
-Provide your complete model summary and results with analysis. 
+```{r}
+test.df  <- as_tibble(read.csv(paste("https://raw.githubusercontent.com/", "ChristopheHunt/",
+                                      "MSDA---Coursework/master", 
+                                      "/Data%20605/Final%20Project/test.csv", sep = "")))
 
-Report your Kaggle.com user name and score.
+SalePrice.predict <- predict.lm(fit, type = "response", newdata = test.df)
+test.df.wpredict <- cbind(test.df %>% dplyr::select(Id), round(SalePrice.predict,0)) 
+colnames(test.df.wpredict)[2] <- c("SalePrice")
+pandoc.table(head(test.df.wpredict), split.table = Inf)
+```
+
+```{r}
+gz1 <- gzfile("submission.csv.gz", "w")
+write.csv(test.df.wpredict, gz1, row.names = FALSE)
+close(gz1)
+```
+
+
+Kaggle.com user name : 
+Kaggle.com score : 
 

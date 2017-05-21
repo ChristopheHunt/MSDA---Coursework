@@ -4046,7 +4046,10 @@ GarageCars.
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{library}\NormalTok{(DAAG)}
-\NormalTok{fit <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(SalePrice ~}\StringTok{ }\NormalTok{MSSubClass +}\StringTok{ }\NormalTok{Neighborhood +}\StringTok{ }\NormalTok{OverallQual +}\StringTok{ }\NormalTok{YearRemodAdd +}\StringTok{ }\NormalTok{BsmtFinSF1 +}\StringTok{ }\NormalTok{GrLivArea +}\StringTok{ }\NormalTok{GarageCars, }\DataTypeTok{data =} \NormalTok{train.df)}
+\NormalTok{fit <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(SalePrice ~}\StringTok{ }\NormalTok{MSSubClass +}\StringTok{ }\NormalTok{Neighborhood +}\StringTok{ }
+\StringTok{            }\NormalTok{OverallQual +}\StringTok{ }\NormalTok{YearRemodAdd +}\StringTok{ }\NormalTok{BsmtFinSF1 +}\StringTok{ }
+\StringTok{            }\NormalTok{GrLivArea +}\StringTok{ }\NormalTok{GarageCars, }\DataTypeTok{data =} \NormalTok{train.df)}
+
 \NormalTok{p <-}\StringTok{ }\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow=}\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{))}
 \KeywordTok{plot}\NormalTok{(fit)}
 \end{Highlighting}
@@ -4098,6 +4101,8 @@ that no variable exceeds the threshold and we do not need to adjust for
 multicollinearity.
 
 \subsection{The final model}\label{the-final-model}
+
+Provide your complete model summary and results with analysis.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4161,9 +4166,49 @@ F Statistic & 231.137$^{***}$ (df = 30; 1429)  (p = 0.000) \\
 \end{tabular} 
 \end{table}
 
-Provide your complete model summary and results with analysis.
+Prediction results with test data set
 
-Report your Kaggle.com user name and score.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{test.df  <-}\StringTok{ }\KeywordTok{as_tibble}\NormalTok{(}\KeywordTok{read.csv}\NormalTok{(}\KeywordTok{paste}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/"}\NormalTok{, }\StringTok{"ChristopheHunt/"}\NormalTok{,}
+                                      \StringTok{"MSDA---Coursework/master"}\NormalTok{, }
+                                      \StringTok{"/Data%20605/Final%20Project/test.csv"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{""}\NormalTok{)))}
+
+\NormalTok{SalePrice.predict <-}\StringTok{ }\KeywordTok{predict.lm}\NormalTok{(fit, }\DataTypeTok{type =} \StringTok{"response"}\NormalTok{, }\DataTypeTok{newdata =} \NormalTok{test.df)}
+\NormalTok{test.df.wpredict <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(test.df %>%}\StringTok{ }\NormalTok{dplyr::}\KeywordTok{select}\NormalTok{(Id), }\KeywordTok{round}\NormalTok{(SalePrice.predict,}\DecValTok{0}\NormalTok{)) }
+\KeywordTok{colnames}\NormalTok{(test.df.wpredict)[}\DecValTok{2}\NormalTok{] <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"SalePrice"}\NormalTok{)}
+\KeywordTok{pandoc.table}\NormalTok{(}\KeywordTok{head}\NormalTok{(test.df.wpredict), }\DataTypeTok{split.table =} \OtherTok{Inf}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## ----------------
+##  Id   SalePrice 
+## ---- -----------
+## 1461   112993   
+## 
+## 1462   161652   
+## 
+## 1463   179227   
+## 
+## 1464   189533   
+## 
+## 1465   246930   
+## 
+## 1466   176952   
+## ----------------
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gz1 <-}\StringTok{ }\KeywordTok{gzfile}\NormalTok{(}\StringTok{"submission.csv.gz"}\NormalTok{, }\StringTok{"w"}\NormalTok{)}
+\KeywordTok{write.csv}\NormalTok{(test.df.wpredict, gz1, }\DataTypeTok{row.names =} \OtherTok{FALSE}\NormalTok{)}
+\KeywordTok{close}\NormalTok{(gz1)}
+\end{Highlighting}
+\end{Shaded}
+
+Kaggle.com user name : Kaggle.com score :
 
 
 \end{document}
