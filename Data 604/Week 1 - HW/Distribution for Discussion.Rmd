@@ -11,6 +11,8 @@ library(tidyverse)
 library(rbokeh)
 ```
 
+## Distribution 
+> For the first week, we have a simple warm-up exercise for the discussion.  Using R, generate 100 simulations of 30 samples each from a distribution (other than normal) of your choice.  Graph the sampling distribution of means. Graph the sampling distribution of the minimum. 
 
 ```{r, warning=FALSE, message=FALSE}
 library(tidyverse)
@@ -18,21 +20,22 @@ library(rbokeh)
 
 list_x <- NULL
 for(i in 1:1000){
-  x <- rgamma(n = 30, shape = 5)
+  x <- rgamma(30, shape = 1.25, scale = .5)
   list_x[[i]] <- list(values = x, mean = mean(x), min = min(x))
 }
 
-
-figure(width = 600, height = 400, legend_location = "top_left") %>%
+figure(width = 750, height = 450) %>%
   ly_hist(list_x %>% map_dbl("mean"), breaks = 40, freq = FALSE, color = "blue") %>%
   ly_hist(list_x %>% map_dbl("min") , breaks = 40, freq = FALSE, color = "red") %>%
-  x_axis(label = "Value") %>% 
-  theme_legend( background_fill_alpha = 0.95)
+  x_axis(label = "Value") 
 ```
 
 > <span style="color:red">Red</span> = Minimum, <span style="color:blue">Blue</span> = Mean
 
+### What did the simulation of the means demonstrate?  
 
-For the first week, we have a simple warm-up exercise for the discussion.  Using R, generate 100 simulations of 30 samples each from a distribution (other than normal) of your choice.  Graph the sampling distribution of means.  Graph the sampling distribution of the minimum. Share your graphs and your R code. What did the simulation of the means demonstrate?  What about the distribution of the minimum...?  
+> The simulation of the means demonstrate the central limit theorem such that even if samples are taken from a non normal distribution, at a sufficiently large size, the means will approximate a normal distribution. 
 
-(If you are unfamiliar with generating random variates in R, Google can help...  rexp(), runif(), rpoi(),...)
+### What about the distribution of the minimum demonstrate?  
+
+> We see that the theorem does not hold for the minimum values, the distribution of the minimum does not approximate a normal distribution. 
