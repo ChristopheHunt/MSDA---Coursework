@@ -1,0 +1,60 @@
+---
+title: "HA(2.1, 2.3) - Week 1 Homework"
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
+---
+
+```{r, include=FALSE}
+library(fma)
+library(ggfortify)
+library(tidyverse)
+```
+
+2.1  For each of the following series (from the fma package), make a graph of the data. If transforming seems appropriate, do so and describe the effect.
+
+a. Monthly total of people on unemployed benefits in Australia (January 1956-July 1992).
+
+> The monthly total of people is graphed below. Caution should be exercised when plotting # totals as it doesn't account for the proportional change. In this case, it could be that the population of Australia also grew and the change in total unemployed is not as dramatic as the chart suggests. 
+
+```{r, fig.height=4}
+library(fma)
+library(ggfortify)
+data(dole)
+autoplot(dole, xlab = "Year", 
+               ylab = "# of Unemployed \n", 
+               main = "Monthly total of people on unemployed benefits in Australia \n (January 1956-July 1992)")
+```
+
+```{r, fig.height=4}
+
+autoplot(BoxCox(dole, BoxCox.lambda(dole)), xlab = "Year", 
+               ylab = paste0("# of Unemployed \n", "?? = ", round(BoxCox.lambda(dole),2), " \n"),
+               main = "BoxCox Transformation \nMonthly total of people on unemployed benefits in Australia \n(January 1956-July 1992)")
+```
+
+
+
+b. Monthly total of accidental deaths in the United States (January 1973-December 1978).
+
+
+```{r}
+data(usdeaths)
+autoplot(usdeaths)
+```
+
+
+c. Quarterly production of bricks (in millions of units) at Portland, Australia (March 1956-September 1994).
+
+> Hints: 
+data(package="fma") will give a list of the available data.
+To plot a transformed data set, use plot(BoxCox(x,0.5)) where x is the name of the data set and 0.5 is the Box-Cox parameter.
+
+2.3 Consider the daily closing IBM stock prices (data set ibmclose).
+
+a. Produce some plots of the data in order to become familiar with it.
+
+b. Split the data into a training set of 300 observations and a test set of 69 observations.
+
+c. Try various benchmark methods to forecast the training set and compare the results on the test set. Which method did best?
