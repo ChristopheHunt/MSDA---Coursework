@@ -28,9 +28,9 @@ autoplot(dole, xlab = "Year",
 ```
 
 ```{r, fig.height=4}
-
-autoplot(BoxCox(dole, BoxCox.lambda(dole)), xlab = "Year", 
-               ylab = paste0("# of Unemployed \n", "?? = ", round(BoxCox.lambda(dole),2), " \n"),
+autoplot(BoxCox(dole, BoxCox.lambda(dole)), 
+               xlab = "Year", 
+               ylab = paste0("# of Unemployed \n", "lambda = ", round(BoxCox.lambda(dole),2), " \n"),
                main = "BoxCox Transformation \nMonthly total of people on unemployed benefits in Australia \n(January 1956-July 1992)")
 ```
 
@@ -38,14 +38,34 @@ autoplot(BoxCox(dole, BoxCox.lambda(dole)), xlab = "Year",
 
 b. Monthly total of accidental deaths in the United States (January 1973-December 1978).
 
-
-```{r}
+```{r, fig.height=4}
 data(usdeaths)
-autoplot(usdeaths)
+autoplot(usdeaths,
+         ylab="Total Deaths Per Month",
+         xlab="Year",
+         main="Monthly total of accidental deaths in the United States \n(January 1973-December 1978)")
 ```
 
 
+> While the chart is for each month, the days per month are variable so lets adjust for the deaths per day by month to have a more normalized time series. 
+
+```{r, fig.height=4}
+monthdays <- rep(c(31,28,31,30,31,30,31,31,30,31,30,31),6)
+monthdays[38] <- 29 #Leap year adjustment
+
+autoplot(usdeaths/monthdays, ylab="Average Deaths Per Day",
+         xlab="Year",
+         main="Average accidental deaths per day by Month in the United States \n(January 1973-December 1978)")
+```
+
+> Interestingly, there is some smoothing seen in the earlier years of the time series but more dramatic changes later in the series. Since we adjusted for changes in days per month we can further assume that this is a properly normalized data set month over month. 
+
 c. Quarterly production of bricks (in millions of units) at Portland, Australia (March 1956-September 1994).
+
+```{r}
+
+```
+
 
 > Hints: 
 data(package="fma") will give a list of the available data.
@@ -55,6 +75,16 @@ To plot a transformed data set, use plot(BoxCox(x,0.5)) where x is the name of t
 
 a. Produce some plots of the data in order to become familiar with it.
 
+```{r}
+data(ibmclose)
+```
+
+
 b. Split the data into a training set of 300 observations and a test set of 69 observations.
+
+```{r}
+
+```
+
 
 c. Try various benchmark methods to forecast the training set and compare the results on the test set. Which method did best?
