@@ -10,6 +10,7 @@ output:
 library(fma)
 library(ggfortify)
 library(tidyverse)
+library(psych)
 ```
 
 2.1  For each of the following series (from the fma package), make a graph of the data. If transforming seems appropriate, do so and describe the effect.
@@ -63,9 +64,19 @@ autoplot(usdeaths/monthdays, ylab="Average Deaths Per Day",
 c. Quarterly production of bricks (in millions of units) at Portland, Australia (March 1956-September 1994).
 
 ```{r}
-
+data(bricksq)
+autoplot(bricksq,
+         xlab = "Year", 
+               ylab = paste0("# of bricks (in millions of units)"),
+               main = "Quarterly production of bricks (in millions of units) \nPortland, Australia (March 1956-September 1994)")
 ```
 
+```{r}
+autoplot(BoxCox(bricksq, BoxCox.lambda(bricksq)), 
+               xlab = "Year", 
+               ylab = paste0("# of bricks (in millions of units) \n", "lambda = ", round(BoxCox.lambda(bricksq),2), " \n"),
+               main = "BoxCox Transformation \nQuarterly production of bricks (in millions of units) \nPortland, Australia (March 1956-September 1994)")
+```
 
 > Hints: 
 data(package="fma") will give a list of the available data.
@@ -75,16 +86,73 @@ To plot a transformed data set, use plot(BoxCox(x,0.5)) where x is the name of t
 
 a. Produce some plots of the data in order to become familiar with it.
 
+> The sharp downward trend will be challenging for our predictions, it appears to be a shock event and not a normal/seasonal change. We will have to be cautious about our interpretations and predictions when including the shock event. 
+
 ```{r}
+library(psych)
+library(knitr)
 data(ibmclose)
+kable(describe(ibmclose))
+autoplot(ibmclose, 
+               xlab = "\nDay", 
+               ylab = "Close\n",
+               main = "Daily closing IBM stock prices")
 ```
 
+Lagged Plot 
+
+> The lagged plot shows the correlation over lagged periods, it's not entirely surprisingly that previous day close has more impact on the next day's close than several days later. However, it is useful to visualize the impact when attempting to further model.  
+
+```{r}
+lag.plot(ibmclose, lags= 10, do.lines=FALSE)
+```
 
 b. Split the data into a training set of 300 observations and a test set of 69 observations.
 
-```{r}
+> Splitting the data set using the window function for the first 300 observation for training and 69 for the test set. 
 
+```{r}
+ibmclose_train <- window(ibmclose, start=1, end=300)
+ibmclose_test <- window(ibmclose, start=301)
 ```
 
-
 c. Try various benchmark methods to forecast the training set and compare the results on the test set. Which method did best?
+
+> The mean method appears to have performed the worse, which intuitively make sense with the higher performance of the stock before the shock loss event. The Naive and Seasonal Naive performed exactly the same but performed much better looking at the MAE score compared across all three methods. My prefernce would be for naive method based on our analysis of the lag method and how I understand stock performances. It may not be completely appropriate to assume that the stock performs in a seasonal fashion but performance on a short term scale may be indictative of some of the future performance. 
+
+```{r}
+ibmclosefit1 <- meanf(ibmclose_train, h = 69)
+ibmclosefit2 <- rwf(ibmclose_train, h = 69)
+ibmclosefit3 <- snaive(ibmclose_train, h = 69)
+
+plot(ibmclosefit1, col = 1, main="Forecasts for IBM Close")
+lines(ibmclosefit2$mean, col=2)
+lines(ibmclosefit3$mean, col=3)
+lines(ibmclose)
+legend("topright", 
+       cex = .75,
+       lty=1, 
+       col=c(4,2,3), 
+       legend=c("Mean method", 
+                "Naive method", 
+                "Seasonal naive method"))
+```
+
+Mean Method
+
+```{r}
+kable(accuracy(ibmclosefit1, ibmclose_test))
+```
+
+Naive method
+
+```{r}
+kable(accuracy(ibmclosefit2, ibmclose_test))
+```
+
+Seasonal naive method
+
+```{r}
+kable(accuracy(ibmclosefit3, ibmclose_test))
+```
+
