@@ -1,0 +1,36 @@
+---
+title: "HA 6 (HW 6.2)"
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
+---
+
+```{r, include=FALSE}
+library(fma)
+library(ggfortify)
+library(tidyverse)
+library(psych)
+```
+
+2. The data below represent the monthly sales (in thousands) of product A for a plastics manufacturer for years 1 through 5 (data set `plastics`). 
+
+```{r}
+data(plastics)
+```
+
+a. Plot the time series of sales of product A. Can you identify seasonal fluctuations and/or a trend?
+
+b. Use a classical multiplicative decomposition to calculate the trend-cycle and seasonal indices.
+
+c. Do the results support the graphical interpretation from part (a)?
+
+d. Compute and plot the seasonally adjusted data.
+
+e. Change one observation to be an outlier (e.g., add 500 to one observation), and recompute the seasonally adjusted data. What is the effect of the outlier?
+
+f. Does it make any difference if the outlier is near the end rather than in the middle of the time series?
+
+g. Use a random walk with drift to produce forecasts of the seasonally adjusted data.
+
+h. Reseasonalize the results to give forecasts on the original scale. 
