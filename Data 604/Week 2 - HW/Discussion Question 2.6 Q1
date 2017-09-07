@@ -1,0 +1,17 @@
+---
+title: "Discussion Question 2.6 Problem 1"
+author: "Christophe Hunt"
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
+---
+
+### Problem 1.
+
+#### For an M/M/1 queu with mean interarrival time 1.25 minutes and mean service time 1 minute, find all five W~Q~
+
+```{r}
+
+```
+

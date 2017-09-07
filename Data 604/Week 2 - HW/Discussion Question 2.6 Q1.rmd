@@ -1,0 +1,29 @@
+---
+title: "Discussion Question 2.6 Problem 1"
+author: "Christophe Hunt"
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
+---
+
+### For an M/M/1 queue with mean interarrival time 1.25 minutes and mean service time 1 minute, find all five $W_q, W, L_q, L$, and $p$. for each interpret in words. Be sure to state all your units, and the relevant time frame of operation.
+
+* $\mu = 1~minute=\frac{1}{E(S)}$ 
+* $\lambda = \frac{1}{1.25}~minutes~=~0.8~minutes$.
+
+As per our text book, "the steady-state average number in system is $L=\frac{p}{(1-p)}$ and  $p$ is the mean arrival rate $\lambda$ divded by the mean service rate $\mu$ for a single server". Therefore, $p = \frac{\lambda}{\mu}$ or $p = \frac{.8}{1}$ then substitute that to solve for $L$, $L = \frac{.8}{(1-0.8)} = 4$
+
+* $p = .8$
+
+* $L = 4$
+
+### Little's Law 
+
+We now use Little's Law to solve for the remaining values. 
+
+* $L = \lambda W$; $4 = .8 W$;  $W = 5$
+
+* $W = W_q + E(S)$; $5 = W_q + 1$; $W_q = 4$
+
+* $L_q = \lambda W_q$; $L_q = 0.8 * 4$; $L_q = 3.2$
