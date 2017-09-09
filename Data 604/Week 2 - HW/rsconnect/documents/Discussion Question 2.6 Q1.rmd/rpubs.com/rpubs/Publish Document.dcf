@@ -1,0 +1,10 @@
+name: Publish Document
+title:
+username:
+account: rpubs
+server: rpubs.com
+hostUrl: rpubs.com
+appId: https://api.rpubs.com/api/v1/document/305168/bcefd3afb0c54ac5864ea0dcf76d95d9
+bundleId: https://api.rpubs.com/api/v1/document/305168/bcefd3afb0c54ac5864ea0dcf76d95d9
+url: http://rpubs.com/Christophe1/305168
+when: 1504752045.17032

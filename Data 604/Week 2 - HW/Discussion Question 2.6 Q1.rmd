@@ -3,7 +3,7 @@ title: "Discussion Question 2.6 Problem 1"
 author: "Christophe Hunt"
 output:
   prettydoc::html_pretty:
-    theme: cayman
+    theme: leonids
     highlight: github
 ---
 
@@ -27,3 +27,12 @@ We now use Little's Law to solve for the remaining values.
 * $W = W_q + E(S)$; $5 = W_q + 1$; $W_q = 4$
 
 * $L_q = \lambda W_q$; $L_q = 0.8 * 4$; $L_q = 3.2$
+
+
+## Simio Simulation
+
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20604/Week%202%20-%20HW/Model.PNG)
+
+## Results
+
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20604/Week%202%20-%20HW/Results.PNG)
