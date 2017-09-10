@@ -1,36 +1,88 @@
 ---
-title: "HA 6 (HW 6.2)"
+title: "Data 624 - Homework 2"
 output:
   prettydoc::html_pretty:
-    theme: cayman
+    theme: architect
     highlight: github
 ---
 
-```{r, include=FALSE}
+```{r, include = FALSE}
+library(tidyverse)
+library(knitr)
 library(fma)
 library(ggfortify)
-library(tidyverse)
-library(psych)
 ```
 
-2. The data below represent the monthly sales (in thousands) of product A for a plastics manufacturer for years 1 through 5 (data set `plastics`). 
+
+The data below represent the monthly sales (in thousands) of product A for a plastics manufacturer for years 1 through 5 (data set plastics).
 
 ```{r}
-data(plastics)
+library(fma)
+plastics
 ```
 
 a. Plot the time series of sales of product A. Can you identify seasonal fluctuations and/or a trend?
 
+```{r}
+library(ggfortify)
+autoplot(plastics, xlab = "Year", ylab = "monthly sales (in thousands) \n")
+```
+
+> There is clearly seasonal fluctuations here, it shows a trend towards high volume in summer and a sharp dip in winter for lower volume. 
+
 b. Use a classical multiplicative decomposition to calculate the trend-cycle and seasonal indices.
+
+```{r}
+fit <- decompose(plastics, type="multiplicative")
+plot(fit)
+```
 
 c. Do the results support the graphical interpretation from part (a)?
 
+> The results do support the seasonality trend assumption from part (a), it is useful to see the seasonal trend accounting for upward trend in the observed values to highlight the consistent seasonality. 
+
 d. Compute and plot the seasonally adjusted data.
+
+```{r}
+fit <- stl(plastics, t.window = 7, s.window="periodic", robust=TRUE)
+autoplot(seasadj(fit), xlab = "Year", ylab = "seasonally adjusted data monthly sales(in thousands) \n")
+```
+
 
 e. Change one observation to be an outlier (e.g., add 500 to one observation), and recompute the seasonally adjusted data. What is the effect of the outlier?
 
+```{r}
+outlier_plastics <- plastics
+outlier_plastics[34] <- outlier_plastics[30] + 600
+fit <- stl(outlier_plastics, t.window = 7, s.window="periodic", robust=TRUE)
+autoplot(seasadj(fit), xlab = "Year", ylab = "seasonally adjusted data monthly sales \n with outlier (in thousands)  \n")
+```
+
+> Surpisingly, the effect of an outlier has very little impact on the overall trend of the line but does show considerable impact on the line at the point of the outlier. 
+
 f. Does it make any difference if the outlier is near the end rather than in the middle of the time series?
+
+```{r}
+outlier_plastics <- plastics
+outlier_plastics[2] <- outlier_plastics[2] + 600
+fit <- stl(outlier_plastics, t.window = 7, s.window="periodic", robust=TRUE)
+autoplot(seasadj(fit), xlab = "Year", ylab = "seasonally adjusted data monthly sales \n with outlier (in thousands)  \n")
+```
+
+> It does appear that there is an initial smoothing of the line from the outlier at the beginning of the series. The line does return to a similar seasonally adjusted line from the original data which makes sense once the line is further out from the outlier. It does seem intiuitive that with an outlier at the beginning of the time series there is less surrounding data to account for the outlier. 
 
 g. Use a random walk with drift to produce forecasts of the seasonally adjusted data.
 
+```{r}
+fc <- stlf(plastics, method="naive")
+plot(fc)
+```
+
 h. Reseasonalize the results to give forecasts on the original scale. 
+
+```{r}
+fit <- stl(plastics, s.window="periodic", robust=TRUE)
+fitadj <- seasadj(fit)
+plot(naive(fitadj))
+```
+
