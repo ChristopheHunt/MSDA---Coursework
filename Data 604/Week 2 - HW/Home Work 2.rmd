@@ -1,0 +1,44 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+## problem 2 
+
+Assume service times are continuously uniformly distributed between $a~=~0.1$ and $b=1.9$. Note that expected value of the uniform distribution is $(a+b)/2=1$, the same as the expected service time in problem 1. Compare all five of your numerical results to those from problem 1 and explain intuitively with respect to the his change in the service-time distribution. 
+
+* $SD = \sqrt{(b-a)^2/12}$ or SD = 0.5196
+* $\lambda = 1/1.25$ or $\lambda = .8$
+* $E(S) = (.1 + 1.9) / 2$ or $E(S) = 1$
+* $\mu = 1/E(S)$ or $\mu = 1$ 
+* $p = \frac{.8}{1}$ or $p = .8$
+* $W_q = \frac{\lambda(\sigma^2 + 1 / \mu^2)}{2(1-\lambda/\mu)}$ or $W_q = \frac{.8(0.5196^2 + 1 / 1^2)}{2(1-.8/1)}$ or $W_q = 2.54$
+* $W = W_q + 1$ or $W = 3.54$
+* $L = .8 * 3.54$ or $L = 2.83$
+* $L_q = .8 * 2.54$ or $L = 2.032$
+
+
+## problem 3  
+
+Assume the service times are triangulary distributed between $a = 0.1$ and $b = 1.9$, and with the mode at $m = 1.0$. Compare all five of your results to those from Problems 1 and 2. Hint: The expected value of a triangular distribuion between $a$ and $b$ and with mode 
+$m (a < m < b)$, is $(a + m + b)/3$, and the standard deviation is $\sqrt{(a^2 + m^2 + b^2 - am - ab - bm)/18}$.
+
+* $E(S) = (.1 + 1 + 1.9)$ or $E(S) = 1$
+* $SD = (.1^2 + 1.0^2 + 1.9^2 - 0.1*1.0 - 0.1 * 1.9 - 1.9 * 1.0)/18$ or $SD = 0.367$
+* $\lambda = 1/1.25$ or $\lambda = 0.8$
+* $\mu = 1/1$ or $\mu = 1$
+* $p = .8 / 1$ or $p = .8$
+* $W_q = \frac{\lambda(\sigma^2 + 1 / \mu^2)}{2(1-\lambda/\mu)}$ or $W_q = \frac{.8*(0.367^2 + 1 / 1^2)}{2*(1-.8/1)}$ or $W_q = 2.26$
+* $W = 2.26 + 1 or W = 3.26$
+* $L = .8 * 3.26$ or $L = 2.608$
+* $L_q = 0.8 * 2.26$ or $L_  = 1.808$
+
+problem 5 
+
+
+
+problem 12 
+
+
+
+
