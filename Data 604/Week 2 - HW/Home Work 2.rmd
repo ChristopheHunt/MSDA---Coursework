@@ -1,9 +1,17 @@
 ---
-title: "R Notebook"
-output: html_notebook
+title: "2.6 Homework Problems"
+output:
+  prettydoc::html_pretty:
+    theme: architect
+    highlight: github
 ---
 
-## problem 2 
+```{r, include = FALSE}
+library(tidyverse)
+library(queueing)
+```
+
+## Problem 2 
 
 Assume service times are continuously uniformly distributed between $a~=~0.1$ and $b=1.9$. Note that expected value of the uniform distribution is $(a+b)/2=1$, the same as the expected service time in problem 1. Compare all five of your numerical results to those from problem 1 and explain intuitively with respect to the his change in the service-time distribution. 
 
@@ -18,9 +26,9 @@ Assume service times are continuously uniformly distributed between $a~=~0.1$ an
 * $L_q = .8 * 2.54$ or $L = 2.032$
 
 
-## problem 3  
+## Problem 3  
 
-Assume the service times are triangulary distributed between $a = 0.1$ and $b = 1.9$, and with the mode at $m = 1.0$. Compare all five of your results to those from Problems 1 and 2. Hint: The expected value of a triangular distribuion between $a$ and $b$ and with mode 
+Assume the service times are triangularly distributed between $a = 0.1$ and $b = 1.9$, and with the mode at $m = 1.0$. Compare all five of your results to those from Problems 1 and 2. Hint: The expected value of a triangular distribution between $a$ and $b$ and with mode 
 $m (a < m < b)$, is $(a + m + b)/3$, and the standard deviation is $\sqrt{(a^2 + m^2 + b^2 - am - ab - bm)/18}$.
 
 * $E(S) = (.1 + 1 + 1.9)$ or $E(S) = 1$
@@ -33,12 +41,57 @@ $m (a < m < b)$, is $(a + m + b)/3$, and the standard deviation is $\sqrt{(a^2 +
 * $L = .8 * 3.26$ or $L = 2.608$
 * $L_q = 0.8 * 2.26$ or $L_  = 1.808$
 
-problem 5 
+## Problem 5 
+
+M/M/3 queue with mean interarrival time 1.25 minutes and mean service time 3 minutes at each of the three servers. 
+
+```{r}
+library(queueing)
+mmc_3 <- NewInput.MMC(lambda = .8, mu = .3333, c = 3, n = 0, method = 0) %>% 
+         QueueingModel()
+list(L = L(mmc_3), W = W(mmc_3), Wq = Wq(mmc_3), Lq = Lq(mmc_3), Pn = Pn(mmc_3))
+```
+
+## Problem 12 
+
+In the urgent-care clinic of Figure 2.1, suppose that the patients arrive from outside into the clinic (coming from the upper right corner of the figure and always into the Sign in Station) with interarrival times that are exponentially distributed with mean 6 minutes. The number of individual servers at each station and the branching probabilities are all as shown in Figure 2.1. The service times at each node are exponentially distributed with means (all in minutes) of 3 for Sign In, 5 for Registration, 90 for Trauma Rooms, 16 for Exam rooms, and 15 for Treatment Rooms. For each of the five stations, compute the "local" traffic intensity $p_{station}$ there. Will this clinic "work", i.e., be able to handle the external patient load? Why or why not? If you could add a single server to the system, and add it to any of the five stations, where would you add it? Why?
+
+```{r}
+signin <- NewInput.MMC(lambda = 0.166, mu = .3333, c = 2, n = 0, method = 0) %>% 
+         QueueingModel()
+list(L = L(signin), W = W(signin), Wq = Wq(signin), Lq = Lq(signin), Pn = Pn(signin))
+```
+
+```{r}
+registration <- NewInput.MM1(lambda = .15, mu = .2, n = 0) %>% 
+                QueueingModel()
+list(L = L(registration), W = W(registration), Wq = Wq(registration), Lq = Lq(registration), Pn = Pn(registration))
+```
+
+```{r}
+trauma <- NewInput.MMC(lambda=(1/6*0.1), mu = 1/90, c = 2, n = 0, method = 0) %>%
+          QueueingModel()
+list(L = L(trauma), W = W(trauma), Wq = Wq(trauma), Lq = Lq(trauma), Pn = Pn(trauma))
+```
+
+```{r}
+exam <- NewInput.MMC(lambda=(1/6*0.9), mu = 1/16, c = 3, n = 0, method = 0) %>%
+        QueueingModel()
+list(L = L(exam), W = W(exam), Wq = Wq(exam), Lq = Lq(exam), Pn = Pn(exam))
+```
 
 
+```{r}
+treatment <- NewInput.MMC(lambda=(1/6)*((0.9*0.6)+0.1), mu = 1/15, c = 2, n = 0, method = 0) %>%
+             QueueingModel()
+list(L = L(treatment), W = W(treatment), Wq = Wq(treatment), Lq = Lq(treatment), Pn = Pn(treatment))
+```
 
-problem 12 
+It is necessary that P < 1, otherwise the queue length becomes unmanageable. In this case, the values of P < 1 so we can safely assume that the system will "work". 
 
+```{r}
+list(P_signin = RO(signin), P_registration = RO(registration), P_trauma = RO(trauma), P_exam = RO(exam), P_treatment = RO(treatment))
+```
 
-
+Since our bottlenecks are the parts of the system with a P -> 1, we can say that the Exam Room and the Treatment room are the greatest bottleneck and we should add another server to one of those.
 
