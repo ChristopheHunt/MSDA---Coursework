@@ -13,7 +13,7 @@ library(queueing)
 
 ## Problem 2 
 
-Assume service times are continuously uniformly distributed between $a~=~0.1$ and $b=1.9$. Note that expected value of the uniform distribution is $(a+b)/2=1$, the same as the expected service time in problem 1. Compare all five of your numerical results to those from problem 1 and explain intuitively with respect to the his change in the service-time distribution. 
+Assume service times are continuously uniformly distributed between $a~=~0.1$ and $b~=~1.9$. Note that expected value of the uniform distribution is $\frac{(a+b)}{2}~=~1$, the same as the expected service time in problem 1. Compare all five of your numerical results to those from problem 1 and explain intuitively with respect to the his change in the service-time distribution. 
 
 * $SD = \sqrt{(b-a)^2/12}$ or SD = 0.5196
 * $\lambda = 1/1.25$ or $\lambda = .8$
@@ -24,7 +24,6 @@ Assume service times are continuously uniformly distributed between $a~=~0.1$ an
 * $W = W_q + 1$ or $W = 3.54$
 * $L = .8 * 3.54$ or $L = 2.83$
 * $L_q = .8 * 2.54$ or $L = 2.032$
-
 
 ## Problem 3  
 
@@ -44,6 +43,7 @@ $m (a < m < b)$, is $(a + m + b)/3$, and the standard deviation is $\sqrt{(a^2 +
 ## Problem 5 
 
 M/M/3 queue with mean interarrival time 1.25 minutes and mean service time 3 minutes at each of the three servers. 
+
 
 ```{r}
 library(queueing)
