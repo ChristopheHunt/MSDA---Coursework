@@ -1,0 +1,71 @@
+---
+title: "3.5 Problem 17 - Walther Produce Sales"
+output:
+  prettydoc::html_pretty:
+    theme: github
+    highlight: github
+---
+
+```{r, include=FALSE}
+library(tidyverse)
+library(data.table)
+library(scales)
+library(knitr)
+```
+
+
+## 3.5 - Problem \# 17
+
+Walther has a roadside produce stand where he sells oats, peas, beans, and barley. He buys these products at per-point wholesale prices of respectively, \$1.05, \$3.17, \$1.99, and \$0.95.; he sells them at per-pound retail prices of, respectively, \$1.29, \$3.76, \$2.23, and \$1.65. Each day the amount demanded (in pounds) could be as little as zero for each product, and as much as 10, 8, 14, and 11 for oats, peas, beans, and barley, respectively; he sells only whole-pound amounts, no partial pounds. Assume a discrete uniform distribution for daily demand for each product over its range; assume as well that Walther always has enough inventory to satisfy all demand. The summer selling season is 90 days, and demand each day is independent of demand on other days. Create a spreadsheet simulation that will, for each day as well for the whole season, simulate Walther's total cost, total revenue, and total profit. 
+
+```{r}
+library(tidyverse)
+items <- c("oats", "peas", "beans", "barley")
+cost <- c(1.05, 3.17, 1.99, .95)
+revenue <- c(1.29, 3.76, 2.23, 1.65)
+max_demand <- c(10, 8, 14, 11)
+df <- as_tibble(cbind(items, cost, revenue, max_demand))
+kable(df)
+```
+
+### Simulation Total
+
+```{r}
+library(data.table)
+library(scales)
+
+days <- 90
+sim <- NULL
+for (i in items){
+  lbs_sold <- sample(0:df$max_demand[df$items == i], days, replace = TRUE)
+  sim[[i]] <- list(day       =  seq(1:days),
+                   lbs_sold  =  lbs_sold, 
+                   cost      =  lbs_sold * as.numeric(df$cost[df$items == i]),
+                   revenue   =  lbs_sold * as.numeric(df$revenue[df$items == i]))
+}
+
+dollars <- dollar_format(negative_parens = TRUE)
+
+kable(rbindlist(sim, idcol = TRUE) %>% 
+      rename(type = .id) %>%
+      group_by(type) %>%
+      summarise(cost    = -sum(cost),
+                revenue =  sum(revenue)) %>%
+      mutate(profit = revenue + cost) %>%
+      rbind(data.frame(type = "*TOTAL*", 
+                       cost    = sum(.$cost),
+                       revenue = sum(.$revenue),
+                       profit  = sum(.$profit))) %>%
+      mutate_at(vars(-type), funs(. %>% dollars())))
+
+```
+
+## Type sold by each day
+
+```{r}
+library(knitr)
+kable(rbindlist(sim, idcol = TRUE) %>%  rename(type = .id)) 
+```
+
+
+
