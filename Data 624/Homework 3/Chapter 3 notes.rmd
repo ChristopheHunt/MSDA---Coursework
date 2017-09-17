@@ -1,0 +1,49 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+Applied Predictive Modeling - Chapter 3
+
+```{r}
+library(AppliedPredictiveModeling)
+data(segmentationOriginal)
+segData <- subset(segmentationOriginal, Case=="Train")
+cellID <- segData$Cell
+class <- segData$Class
+case <- segData$Case
+segData <- segData[,-c(1:3)]
+statusColNum <- grep("Status", names(segData))
+segData <- segData[,-statusColNum]
+```
+
+```{r}
+library(e1071)
+skewness(segData$AngleCh1)
+skewValues <- apply(segData, 2, skewness)
+head(skewValues)
+```
+
+
+```{r}
+library(caret)
+Ch1AreaTrans <- BoxCoxTrans(segData$AreaCh1)
+Ch1AreaTrans
+```
+
+
+```{r}
+head(segData$AreaCh1)
+predict(Ch1AreaTrans, head(segData$AreaCh1))
+```
+
+```{r}
+(819^(-.9) - 1)/-.9
+```
+
+```{r}
+pcaObject <- prcomp(segData, center = TRUE, scale. = TRUE)
+percentVariance <- pcaObject$sdev^2/sum(pcaObject$sdev^2)*100
+percentVariance[1:3]
+```
+

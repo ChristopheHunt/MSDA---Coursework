@@ -6,6 +6,7 @@ output: html_notebook
 ```{r, include = FALSE}
 library(mlbench)
 library(Hmisc)
+
 ```
 
 3.1
@@ -24,7 +25,7 @@ a. Using visualizations, explore the predictor variables to understand their dis
 ```{r, warning=FALSE, message=FALSE}
 library(corrplot)
 library(PerformanceAnalytics)
-Glass %>% select(-(Type)) %>% cor() %>% chart.Correlation(histogram=TRUE, pch=19)
+Glass %>% dplyr::select(-(Type)) %>% cor() %>% chart.Correlation(histogram=TRUE, pch=19)
 ```
 
 b. Do there appear to be any outliers in the data? Are any predictors skewed?
@@ -38,7 +39,7 @@ ggplot(stack(Glass), aes(x = ind, y = values)) +
 
 > We can see from the boxplots of the variables that there are indeed outliers at a univarite level.
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 library(ggplot2)
 ggplot(stack(Glass), aes(values)) +
       facet_wrap(~ind, scales = "free") + 
@@ -50,7 +51,7 @@ ggplot(stack(Glass), aes(values)) +
 c. Are there any relevant transformations of one or more predictors that might improve the classification model?
 
 ```{r}
-apply(Glass %>% select(-(Type)), 2, BoxCoxTrans)
+apply(Glass %>% dplyr::select(-(Type)), 2, BoxCoxTrans)
 ```
 
 > From our results, it appears that few variables could benefit from transformations but we should be cautious to not create an overly complex model by applying all the transformations thoughtlessly. The variables that could benefit from transformation are RI, Na, Al, Si, and Ca.
@@ -62,6 +63,73 @@ The soybean data can also be found at UC Irvine Machine Learning Repository. Dat
 ```{r}
 library(mlbench)
 data("Soybean")
+```
+
+a. Investigate the frequency distribution for the categorical predictors. Are any of the distributions dengenate in any ways discussed earlier in the chapter? 
+
+```{r}
+t <- melt(apply(Soybean %>% dplyr::select(-plant.stand, -precip, -temp), 2, FUN = table))  %>% 
+     rename(c("Var1" = "Value", "value" = "Count", "L1" = "Variable"))
+
+ggplot(t %>% dplyr::filter(Variable == "Class"), aes(x = Value, y = Count, group = Variable)) +
+      geom_col() +
+      theme(axis.text.x = element_text(angle = 75, hjust = 1, vjust = 1))
+```
+
+```{r,  fig.height=10}
+ggplot(t %>% dplyr::filter(Variable != "Class"), aes(x = Value, y = Count, group = Variable)) +
+      facet_wrap(~Variable, scales = "free") +
+      geom_col()
+```
+
+> A majority of the factor variables show some kind of degeneration from heavy skewness to bimodal distributions. A few like mycelium and sclerotia contain so few observations of another factor it is suspect that the variable contains any predictive value at all. 
+
+b. Roughly 18% of the data is missing. Are there particular predictors that are more likely to be missing? Is the pattern of missing data related to the classes?
+
+```{r,message=FALSE, warning=FALSE}
+Soybean %>%  
+  summarise_each(funs(sum(is.na(.))/nrow(Soybean))) %>% 
+  melt() %>% 
+  ggplot(aes(x = variable, y = value)) +
+              geom_col() +
+             ggtitle("Missing Values") +
+  theme(axis.text.x = element_text(angle = 75, hjust = 1, vjust = 1))
+```
+
+> There are a few predictors that appear to be missing more often, the lodging, server, seed.tmt, and hail all appear to be missing the most often compared to the other predictors. 
+
+```{r,  fig.height=10, message=FALSE, warning=FALSE}
+Soybean %>% 
+  group_by(Class) %>% 
+  summarise_all(funs(sum(is.na(.))/nrow(Soybean))) %>% 
+  melt() %>%
+  ggplot(aes(x = variable, y = value, fill = Class)) +
+             geom_col() +
+             facet_wrap(~variable, scales = "free") +
+             ggtitle("Missing Values by Class") 
+```
+
+> When we look at the predictors by class, it does appear that 2-4-d-injury and phyliosticta-leaf-spot accounts for a significant amount of missing data. It would be interesting to see if the observations are missing by chance or these classes have inhereint issues in the sampling process.
+
+c. Develop a strategy for handling missing data, either by eliminating predictors or imputations?
+
+> My preferred method is to use the missForest package as it is a nonparametric technique so no assumptions of the actual distribution is made. It is a very robust method that applies the random forest algorithm to imput missing data without the need to eliminate predictors. If I could not use missForest, I would likely exclude the two classes we discussed earlier then imput with the mean for a simple approach. 
+
+```{r}
+library(missForest)
+Soybean.imp <- missForest(Soybean)
+```
+
+> The below is the results of our imputation method. 
+
+```{r,  fig.height = 10}
+t <- melt(apply(Soybean.imp$ximp %>% 
+                  dplyr::select(-plant.stand, -precip, -temp), 2, FUN = table)) %>% 
+     rename(c("Var1" = "Value", "value" = "Count", "L1" = "Variable"))
+
+ggplot(t %>% dplyr::filter(Variable != "Class"), aes(x = Value, y = Count, group = Variable)) +
+      facet_wrap(~Variable, scales = "free") +
+      geom_col()
 ```
 
 
