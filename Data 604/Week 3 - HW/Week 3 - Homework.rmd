@@ -1,41 +1,148 @@
 ---
-title: "Chapter 3 - Data 604
-"
-output: html_notebook
+title: "Chapter 3 - Simio and Simulation - Data 604"
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
 ---
 
-Chapter 3
+```{r, include=FALSE}
+library(tidyverse)
+library(data.table)
+library(scales)
+library(knitr)
+library(Hmisc)
+set.seed(1234)
+```
 
 ## Problem 1
 
 > Extend the simulation of throwing two dice in Section 3.2.1 in each of the following ways (one at a time, not cumulatively).
 
-### a. Instead of 50 throws, extend the spreadhseet to make 500 throws and compare your results. Tap the F9 key to get a "fresh" set of randome numbers and thus a fresh set of results. 
+#### a. Instead of 50 throws, extend the spreadhseet to make 500 throws and compare your results. Tap the F9 key to get a "fresh" set of random numbers and thus a fresh set of results. 
+
+```{r, cache=TRUE}
+two_dice_throws <- function(throws, 
+                            die1_prob = (c(1, 1, 1, 1, 1, 1)/6), 
+                            die2_prob = (c(1, 1, 1, 1, 1, 1)/6)){
+  dice_throw  <- list(roll  =  seq(1:throws),
+                      die1  =  sample(1:6, throws, replace = TRUE, prob = die1_prob), 
+                      die2  =  sample(1:6, throws, replace = TRUE, prob = die2_prob))
+  dice_throw$sum <- unlist(lapply(seq(1:throws), function(i) unlist(dice_throw$die1[i]) + 
+                                                             unlist(dice_throw$die2[i])))
+  return(dice_throw)
+}
+
+two_dice_throws(500) %>% lapply(function(x) list(mean(x), 
+                                                 min(x), 
+                                                 max(x))) 
+```
+
+#### b. Load the dice by changing the probabilites of the faces to be something other than uniform at 1/6 for each face. Be careful to exam that your probabilties sum to 1.
 
 ```{r}
+two_dice_throws(500, 
+                die1_prob = (c(.51, 1.7, .29, .5, 1.5, 1.5)/6),
+                die2_prob = c(3, .5, .006, 1.03, 1.454, .01)/6) %>% 
+  lapply(function(x) list(mean(x), min(x), max(x))) 
+```
+
+> I purposely loaded the dice very heavily for 1 in die 2 so that it would be clear how the impact of loading the dice would affect the outcome. Slight loading in die 1 didn't have as dramatic of an impact as die 2. 
+
+#### c. Use @RISK or another Excel add-in for status Monte Carlo, spreadsheet simulation, to make 10,000 throws of the pair of fair dice, and compare your results to the true probabilities of getting the sum equal to each of 2,3,...,12 as well as to the true expected value of 7. 
+
+```{r, fig.height = 4, fig.width = 6}
+t <- two_dice_throws(10000)
+hist(t$sum, breaks = 8)
+list(mean(t$sum), min(t$sum), max(t$sum)) 
+```
+
+> Based on the 10000 simulations of a pair of fair dice, our expected values are very close to the true expected values. The distribution is normal with 7 being the mean expected value of the sum of the two fair dice. 
+
+## Problem 5 
+
+#### In the Monte Carlo integration of Section 3.2.2, add to the spreadsheet calculation of the standard deviation of the 50 individual values, and use that, together with the mean already in cell H4, to compute a 95% confidence interval on the exact integral in cell I4: does your confidence interval contain, or "cover" the exact integral? Repease all of this, but with a 90% confidence interval, and then with a 99% confidence interval. 
+
+```{r}
+set.seed(1234)
+
+mu    <- 5.8
+sigma <- 2.30
+a     <- 4.50
+b     <- 6.70
+
+Xi        <- function(x,y){runif(1, min=0, max=1) * (y - x) + x}
+b_a_fm_Xi <- function(mu, sigma, x, y, xi){(y - x) *  dnorm(xi,  mu, sigma)} 
+
+MC_ <- NULL
+for (i in 1:50){x_i      <- Xi(a,b)
+                MC_[[i]] <- list(i = i, xi = x_i, bafmXi = b_a_fm_Xi(mu, sigma, a, b, x_i))
+}
+
+sd(MC_ %>% map_dbl("bafmXi"))
+
+list(Monte_Carlo = mean(MC_ %>% map_dbl("bafmXi")), 
+     Exact = pnorm(b, mu, sigma) - pnorm(a, mu, sigma),
+     CI_95 = c(left = mean(MC_ %>% map_dbl("bafmXi")) - qnorm(0.95)*(sd(MC_ %>% map_dbl("bafmXi"))/sqrt(50)), 
+              right = mean(MC_ %>% map_dbl("bafmXi")) + qnorm(0.95)*(sd(MC_ %>% map_dbl("bafmXi"))/sqrt(50))),
+     CI_90 = c(left = mean(MC_ %>% map_dbl("bafmXi")) - qnorm(0.90)*(sd(MC_ %>% map_dbl("bafmXi"))/sqrt(50)), 
+              right = mean(MC_ %>% map_dbl("bafmXi")) + qnorm(0.90)*(sd(MC_ %>% map_dbl("bafmXi"))/sqrt(50))),
+     CI_99 = c(left = mean(MC_ %>% map_dbl("bafmXi")) - qnorm(0.99)*(sd(MC_ %>% map_dbl("bafmXi"))/sqrt(50)), 
+              right = mean(MC_ %>% map_dbl("bafmXi")) + qnorm(0.99)*(sd(MC_ %>% map_dbl("bafmXi"))/sqrt(50))))
+```
+> We do see that the confidence intervals of all three, 90%, 95%, and 99% covers the exact integral. This demonstrates the power of the Monte Carlo simuation. 
+
+## Problem 17
+
+#### Walther has a roadside produce stand where he sells oats, peas, beans, and barley. He buys these products at per-point wholesale prices of respectively, \$1.05, \$3.17, \$1.99, and \$0.95.; he sells them at per-pound retail prices of, respectively, \$1.29, \$3.76, \$2.23, and \$1.65. Each day the amount demanded (in pounds) could be as little as zero for each product, and as much as 10, 8, 14, and 11 for oats, peas, beans, and barley, respectively; he sells only whole-pound amounts, no partial pounds. Assume a discrete uniform distribution for daily demand for each product over its range; assume as well that Walther always has enough inventory to satisfy all demand. The summer selling season is 90 days, and demand each day is independent of demand on other days. Create a spreadsheet simulation that will, for each day as well for the whole season, simulate Walther's total cost, total revenue, and total profit. 
+
+```{r}
+library(tidyverse)
+items <- c("oats", "peas", "beans", "barley")
+cost <- c(1.05, 3.17, 1.99, .95)
+revenue <- c(1.29, 3.76, 2.23, 1.65)
+max_demand <- c(10, 8, 14, 11)
+df <- as_tibble(cbind(items, cost, revenue, max_demand))
+kable(df)
+```
+
+### Simulation Total
+
+```{r}
+library(data.table)
+library(scales)
+
+days <- 90
+sim <- NULL
+for (i in items){
+  lbs_sold <- sample(0:df$max_demand[df$items == i], days, replace = TRUE)
+  sim[[i]] <- list(day       =  seq(1:days),
+                   lbs_sold  =  lbs_sold, 
+                   cost      =  lbs_sold * as.numeric(df$cost[df$items == i]),
+                   revenue   =  lbs_sold * as.numeric(df$revenue[df$items == i]))
+}
+
+dollars <- dollar_format(negative_parens = TRUE)
+
+rbindlist(sim, idcol = TRUE) %>% 
+      rename(type = .id) %>%
+      group_by(type) %>%
+      summarise(cost    = -sum(cost),
+                revenue =  sum(revenue)) %>%
+      mutate(profit = revenue + cost) %>%
+      rbind(data.frame(type = "*TOTAL*", 
+                       cost    = sum(.$cost),
+                       revenue = sum(.$revenue),
+                       profit  = sum(.$profit))) %>%
+      mutate_at(vars(-type), funs(. %>% dollars())) %>% 
+      kable()
 
 ```
 
-### b. Load the dice by changing the probabilites of the faces to be something other than uniform at 1/6 for each face. Be careful to exam that your probabilties sum to 1.
+### Type sold by each day
 
 ```{r}
-
-```
-
-### c. Use @RISK or another Excel add-in for status Monte Carlo, spreadsheet simulatoin, to make 10,000 thrwos of the pair of fair dice, and compare your results to the true probabilities of getting the sum equal to each of 2,3,...12 as well as to the true expected value of 7. 
-
-
-Problem 5 
-
-
-
-```{r}
-
-```
-
-Problem 17
-
-```{r}
-
+library(knitr)
+rbindlist(sim, idcol = TRUE) %>%  rename(type = .id) %>% kable()
 ```
 
