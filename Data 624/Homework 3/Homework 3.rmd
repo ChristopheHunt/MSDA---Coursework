@@ -1,0 +1,67 @@
+---
+title: "Homework 624 - Chapter 3"
+output: html_notebook
+---
+
+```{r, include = FALSE}
+library(mlbench)
+library(Hmisc)
+```
+
+3.1
+
+The UC Irvine Machine Learning Repository contains a data set related to glass identification. The data consit of 214 glass samples labeled as one of seven class categories. There are nine predicotrs, including the refrative index and percentages of eight elements: Na, Mg, Al, Si, K, Ca, Ba, and Fe. 
+
+```{r}
+library(mlbench)
+library(Hmisc)
+data(Glass)
+describe(Glass)
+```
+
+a. Using visualizations, explore the predictor variables to understand their distributions as well as the relationships between predictors.
+
+```{r, warning=FALSE, message=FALSE}
+library(corrplot)
+library(PerformanceAnalytics)
+Glass %>% select(-(Type)) %>% cor() %>% chart.Correlation(histogram=TRUE, pch=19)
+```
+
+b. Do there appear to be any outliers in the data? Are any predictors skewed?
+
+```{r, message = FALSE, warning = FALSE}
+library(ggplot2)
+ggplot(stack(Glass), aes(x = ind, y = values)) +
+      facet_wrap(~ind, scales = "free", nrow = 1) + 
+      geom_boxplot()
+```
+
+> We can see from the boxplots of the variables that there are indeed outliers at a univarite level.
+
+```{r}
+library(ggplot2)
+ggplot(stack(Glass), aes(values)) +
+      facet_wrap(~ind, scales = "free") + 
+      geom_histogram()
+```
+
+> Visually, we can see that a couple of our variables are very skewed. The skewed variables are Mg, K, Ba, and Fe with many observations occuring at 0. Our other variables appear to have some slight skewness but not nearly as dramatic as the other variables. 
+
+c. Are there any relevant transformations of one or more predictors that might improve the classification model?
+
+```{r}
+apply(Glass %>% select(-(Type)), 2, BoxCoxTrans)
+```
+
+> From our results, it appears that few variables could benefit from transformations but we should be cautious to not create an overly complex model by applying all the transformations thoughtlessly. The variables that could benefit from transformation are RI, Na, Al, Si, and Ca.
+
+3.2
+
+The soybean data can also be found at UC Irvine Machine Learning Repository. Data was collected to predict diease in 683 Syobeas. The 35 predictors are mostly categorical and include information on the environmental conditions (e.g., temperature, precipitation) and plant conditions (e.g., left spots, mold growth). The outcome labels consist of 19 distinct classes. The data can be loaded via:
+
+```{r}
+library(mlbench)
+data("Soybean")
+```
+
+
