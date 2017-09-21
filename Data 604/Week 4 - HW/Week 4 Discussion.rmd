@@ -1,0 +1,32 @@
+---
+title: "Week 4 Discussion - 14.a"
+output:
+  prettydoc::html_pretty:
+    theme: architect
+    highlight: github
+---
+
+
+```{r, include=FALSE}
+library(tidyverse)
+library(queueing)
+```
+
+## 14. a. M/M/1 queue with arrival rate $\lambda$ = 1 per minute and service rate $\mu$ = 1/.9 per minute.
+
+```{r}
+library(tidyverse)
+library(queueing)
+mmc_1 <- NewInput.MMC(lambda = 1, mu = 1/.9, c = 1, n = 0, method = 0) %>% QueueingModel()
+list(L = L(mmc_1), W = W(mmc_1), Wq = Wq(mmc_1), Lq = Lq(mmc_1), Pn = Pn(mmc_1))
+```
+
+# Model
+
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20604/Week%204%20-%20HW/Model.PNG)
+
+# Simulation Results
+
+25 Hours - Warm up and 25 replication with a confidence interval of [8.793, 9.5906]. I think there are opportunities to try other combinations of warm up and replication but the results look sufficient. 
+
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20604/Week%204%20-%20HW/Simulation%20Results.PNG)
