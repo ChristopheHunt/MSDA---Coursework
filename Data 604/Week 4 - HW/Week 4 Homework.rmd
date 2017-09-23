@@ -42,7 +42,25 @@ Both Models were run for 567 hours (this was an arbiturary decision), with 15 re
 
 ### M/D/1
 
+* $p = \frac{\lambda}{\mu}$ $where~p < 1~for~steady-state$
+* $L_q = \frac{1}{2}(\frac{p^2}{1-p})$
+* $W_q = \frac{p}{2\mu(1-p)}$
+* $W = \frac{1}{\mu}+\frac{p}{2\mu(1-p)}$
+* $L = p + \frac{1}{2}(\frac{p^2}{1-p})$
+
+```{r}
+list(P =  1/1.111, 
+     Lq = .5*(.9^2/(1-.9)), 
+     Wq = .9/((2*1.111)*(1-.9)), 
+     W = (1/1.111) + (.9/((2*1.111)*(1-.9))),
+     L = .9 + .5*((.9^2/(1-.9)))
+     )
+```
+
+
 ![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20604/Week%204%20-%20HW/MD1%20Experiment%20Results.PNG)
+
+> We can see from the results of the experiment that our theoretical values do fall within the upper and lower bounds of our confidence interval values.
 
 ### M/M/1
 
@@ -56,4 +74,4 @@ list(L = L(mmc_1), W = W(mmc_1), Wq = Wq(mmc_1), Lq = Lq(mmc_1), Pn = Pn(mmc_1))
 
 ![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20604/Week%204%20-%20HW/MM1%20Experiment%20Results.PNG)
 
-
+> Again, we see that the results of the experiment's theoretical values do fall within the upper and lower bounds of our confidence interval values.
