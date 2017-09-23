@@ -1,5 +1,5 @@
 ---
-title: "R Notebook"
+title: "Week 4 Homework"
 output: html_notebook
 ---
 
@@ -7,18 +7,39 @@ output: html_notebook
 
 Find all five of the steady-state querieing metrics for an M/D/1 queue, where D denotes a deterministic "distribution", i.e., the associated RV (in this case representing service times) is a constant with no variation at all (also called a degenerate distribution). State parameter conditions for your results to be valid; use the same meaning for $\lambda$, $\mu$, and $p$ as we did in this chapter. Compare your results to those if D were replaced by a distribution with mean equal to the constant value from the orginal D distribution, except having at least some variation. 
 
+For the M/D/1 model:
 
+* $p = \frac{\lambda}{\mu}$ $where~p < 1~for~steady-state$
+* $L_q = \frac{1}{2}(\frac{p^2}{1-p})$
+* $W_q = \frac{p}{2\mu(1-p)}$
+* $W = \frac{1}{\mu}+\frac{p}{2\mu(1-p)}$
+* $L = p + \frac{1}{2}(\frac{p^2}{1-p})$
 
+For a M/M/1 model with the constant value from D: 
+
+* $p = \frac{\lambda}{\mu}$ $where~p < 1~for~steady-state$
+* $L_q = \frac{p^2}{1-p}$
+* $W_q = \frac{(\frac{p^2}{1-p})}{\lambda}$
+* $W = \frac{(\frac{p^2}{1-p})}{\lambda} + \frac{1}{\mu}$
+* $L = \lambda \frac{(\frac{p^2}{1-p})}{\lambda} + \frac{1}{\mu}$
+
+L_q for M/D/1 is half of the  M/M/1 model. Which is interesting, while $p$ remains the same for both models the mean number of those in the queue is half to the M/D/1. 
+
+## Chapter 4 Problem 15
+
+Build a Simio model to confirm and cross-check the steady-state queueing-theoretic results from your solutions to the M/D/1 queue of Problem 9 in Chapter 2. Remember that your Simio model is initialized empty and idle, and that it produces results that are subject to statistical variation, so design and run a Simio Experiment to deal with both of these issues; make your own decisions about things like run length, number of replications, and Warm-Up Period, possibly after some trial and error. For each of the five steady-state queuing metrics, first compute numerical values for the queueing-theoretic steady-state output performance metrics $W_q$, $W$, $L_q$, $L$, and $p$ from your solutions to Problem 9 in Chapter 2, and then compare these with your simulation estimates and confidence intervals. All time units are in minutes, and use minutes as well throughout your Simio model. Take the arrivale rate to be $\lambda$ = 1 per minute, and the service rate to be $\mu$ = 1/.9 per minute. 
 
 ```{r}
 
 ```
 
 
-## Chapter 4 Problem 15
 
-Build a Simio model to confirm and cross-check the steady-state queueing-theoretic results from your solutions to the M/D/1 queue of Problem 9 in Chapter 2. Remember that your Simio model is initialized empty and idle, and that it produces results that are subject to statistical variation, so design and run a Simio Experiment to deal with both of these issues; make your own decisions about things like run length, number of replications, and Warm-Up Period, possibly after some trial and error. For each of the five steady-state queuing metrics, first compute numerical values for the queueing-theoretic steady-state output performance metrics $W_q$, $W$, $L_q$, $L$, and $p$ from your solutions to Problem 9 in Chapter 2, and then compare these with your simulation estimates and confidence intervals. All time units are in minutes, and use minutes as well throughout your Simio model. Take the arrivale rate to be $\lambda$ = 1 per minute, and the service rate to be $\mu$ = 1/.9 per minute. 
-
-
-
+```{r}
+library(tidyverse)
+library(queueing)
+mmc_1 <- NewInput.MMC(lambda = 1, mu = 1/.9, c = 1, n = 0, method = 0) %>% 
+         QueueingModel()
+list(L = L(mmc_1), W = W(mmc_1), Wq = Wq(mmc_1), Lq = Lq(mmc_1), Pn = Pn(mmc_1))
+```
 
