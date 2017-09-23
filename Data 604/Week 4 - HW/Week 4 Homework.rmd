@@ -29,11 +29,15 @@ L_q for M/D/1 is half of the  M/M/1 model. Which is interesting, while $p$ remai
 
 Build a Simio model to confirm and cross-check the steady-state queueing-theoretic results from your solutions to the M/D/1 queue of Problem 9 in Chapter 2. Remember that your Simio model is initialized empty and idle, and that it produces results that are subject to statistical variation, so design and run a Simio Experiment to deal with both of these issues; make your own decisions about things like run length, number of replications, and Warm-Up Period, possibly after some trial and error. For each of the five steady-state queuing metrics, first compute numerical values for the queueing-theoretic steady-state output performance metrics $W_q$, $W$, $L_q$, $L$, and $p$ from your solutions to Problem 9 in Chapter 2, and then compare these with your simulation estimates and confidence intervals. All time units are in minutes, and use minutes as well throughout your Simio model. Take the arrivale rate to be $\lambda$ = 1 per minute, and the service rate to be $\mu$ = 1/.9 per minute. 
 
-```{r}
+Both Models were run for 567 hours (this was an arbiturary decision), with 15 replications at 25 hours of warm up and 25 default replications. The results are as follows:
 
-```
+### M/D/1
 
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20604/Week%204%20-%20HW/MD1%20Experiment%20Results.PNG)
 
+### M/M/1
+
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20604/Week%204%20-%20HW/MM1%20Experiment%20Results.PNG)
 
 ```{r}
 library(tidyverse)
