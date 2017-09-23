@@ -1,7 +1,16 @@
 ---
 title: "Week 4 Homework"
-output: html_notebook
+output:
+  prettydoc::html_pretty:
+    theme: architect
+    highlight: github
 ---
+
+```{r pre-load, include=FALSE}
+library(tidyverse)
+library(queueing)
+```
+
 
 ## Chapter 2 Problem 9 
 
@@ -37,8 +46,6 @@ Both Models were run for 567 hours (this was an arbiturary decision), with 15 re
 
 ### M/M/1
 
-![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20604/Week%204%20-%20HW/MM1%20Experiment%20Results.PNG)
-
 ```{r}
 library(tidyverse)
 library(queueing)
@@ -46,4 +53,7 @@ mmc_1 <- NewInput.MMC(lambda = 1, mu = 1/.9, c = 1, n = 0, method = 0) %>%
          QueueingModel()
 list(L = L(mmc_1), W = W(mmc_1), Wq = Wq(mmc_1), Lq = Lq(mmc_1), Pn = Pn(mmc_1))
 ```
+
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20604/Week%204%20-%20HW/MM1%20Experiment%20Results.PNG)
+
 
