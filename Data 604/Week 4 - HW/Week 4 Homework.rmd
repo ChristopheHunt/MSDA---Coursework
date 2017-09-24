@@ -1,7 +1,16 @@
 ---
 title: "Week 4 Homework"
-output: html_notebook
+output:
+  prettydoc::html_pretty:
+    theme: architect
+    highlight: github
 ---
+
+```{r pre-load, include=FALSE}
+library(tidyverse)
+library(queueing)
+```
+
 
 ## Chapter 2 Problem 9 
 
@@ -29,11 +38,31 @@ L_q for M/D/1 is half of the  M/M/1 model. Which is interesting, while $p$ remai
 
 Build a Simio model to confirm and cross-check the steady-state queueing-theoretic results from your solutions to the M/D/1 queue of Problem 9 in Chapter 2. Remember that your Simio model is initialized empty and idle, and that it produces results that are subject to statistical variation, so design and run a Simio Experiment to deal with both of these issues; make your own decisions about things like run length, number of replications, and Warm-Up Period, possibly after some trial and error. For each of the five steady-state queuing metrics, first compute numerical values for the queueing-theoretic steady-state output performance metrics $W_q$, $W$, $L_q$, $L$, and $p$ from your solutions to Problem 9 in Chapter 2, and then compare these with your simulation estimates and confidence intervals. All time units are in minutes, and use minutes as well throughout your Simio model. Take the arrivale rate to be $\lambda$ = 1 per minute, and the service rate to be $\mu$ = 1/.9 per minute. 
 
-```{r}
+Both Models were run for 567 hours (this was an arbiturary decision), with 15 replications at 25 hours of warm up and 25 default replications. The results are as follows:
 
+### M/D/1
+
+* $p = \frac{\lambda}{\mu}$ $where~p < 1~for~steady-state$
+* $L_q = \frac{1}{2}(\frac{p^2}{1-p})$
+* $W_q = \frac{p}{2\mu(1-p)}$
+* $W = \frac{1}{\mu}+\frac{p}{2\mu(1-p)}$
+* $L = p + \frac{1}{2}(\frac{p^2}{1-p})$
+
+```{r}
+list(P =  1/1.111, 
+     Lq = .5*(.9^2/(1-.9)), 
+     Wq = .9/((2*1.111)*(1-.9)), 
+     W = (1/1.111) + (.9/((2*1.111)*(1-.9))),
+     L = .9 + .5*((.9^2/(1-.9)))
+     )
 ```
 
 
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20604/Week%204%20-%20HW/MD1%20Experiment%20Results.PNG)
+
+> We can see from the results of the experiment that our theoretical values do fall within the upper and lower bounds of our confidence interval values.
+
+### M/M/1
 
 ```{r}
 library(tidyverse)
@@ -43,3 +72,6 @@ mmc_1 <- NewInput.MMC(lambda = 1, mu = 1/.9, c = 1, n = 0, method = 0) %>%
 list(L = L(mmc_1), W = W(mmc_1), Wq = Wq(mmc_1), Lq = Lq(mmc_1), Pn = Pn(mmc_1))
 ```
 
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20604/Week%204%20-%20HW/MM1%20Experiment%20Results.PNG)
+
+> Again, we see that the results of the experiment's theoretical values do fall within the upper and lower bounds of our confidence interval values.

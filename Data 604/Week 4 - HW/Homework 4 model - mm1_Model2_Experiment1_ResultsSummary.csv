@@ -1,0 +1,54 @@
+Scenario,Object Type,Object Name,Data Source,Category,Data Item,Statistic Type,Average,Minimum,Maximum,Half Width,Standard Deviation
+Scenario1,ModelEntity,ModelEntity1,[Population],Content,NumberInSystem,Average,4.95527283306515,4.40670279648164,5.7966676357901,0.190316195765201,0.343632380751596
+Scenario1,ModelEntity,ModelEntity1,[Population],Content,NumberInSystem,Maximum,36,28,44,2.99715758201476,5.41162769282166
+Scenario1,ModelEntity,ModelEntity1,[Population],Content,NumberInSystem,Minimum,0,0,0,0,0
+Scenario1,ModelEntity,ModelEntity1,[Population],FlowTime,TimeInSystem,Average (Minutes),4.94763742493705,4.4649094170285,5.74012998021536,0.173814656081536,0.313837421133127
+Scenario1,ModelEntity,ModelEntity1,[Population],FlowTime,TimeInSystem,Maximum (Minutes),31.9408829703872,24.3644366282376,39.5273548832199,2.73297149435288,4.93461682204584
+Scenario1,ModelEntity,ModelEntity1,[Population],FlowTime,TimeInSystem,Minimum (Minutes),0.899999999999181,0.899999999999181,0.899999999999181,0,0
+Scenario1,ModelEntity,ModelEntity1,[Population],FlowTime,TimeInSystem,Observations,33099.3333333333,32629,33581,135.889829875423,245.360861550803
+Scenario1,ModelEntity,ModelEntity1,[Population],Throughput,NumberCreated,Total,33099.7333333333,32629,33576,135.550304838673,244.747819679962
+Scenario1,ModelEntity,ModelEntity1,[Population],Throughput,NumberDestroyed,Total,33099.3333333333,32629,33581,135.889829875423,245.360861550803
+Scenario1,Server,Server1,[Resource],Capacity,ScheduledUtilization,Percent,90.1074626420222,88.8267928132434,91.4167836365656,0.369693624870451,0.667513870546531
+Scenario1,Server,Server1,[Resource],Capacity,UnitsAllocated,Total,33099.2,32629,33580,135.748765588705,245.106157759099
+Scenario1,Server,Server1,[Resource],Capacity,UnitsScheduled,Average,1,1,1,0,0
+Scenario1,Server,Server1,[Resource],Capacity,UnitsScheduled,Maximum,1,1,1,0,0
+Scenario1,Server,Server1,[Resource],Capacity,UnitsScheduled,Minimum,1,1,1,0,0
+Scenario1,Server,Server1,[Resource],Capacity,UnitsUtilized,Average,0.901074626420222,0.888267928132434,0.914167836365656,0.00369693624870451,0.00667513870546531
+Scenario1,Server,Server1,[Resource],Capacity,UnitsUtilized,Maximum,1,1,1,0,0
+Scenario1,Server,Server1,[Resource],Capacity,UnitsUtilized,Minimum,0,0,0,0,0
+Scenario1,Server,Server1,[Resource],ResourceState,TimeProcessing,Average (Minutes),9.13548059864041,8.02572771359887,10.3999961012555,0.359313967968263,0.648772500699669
+Scenario1,Server,Server1,[Resource],ResourceState,TimeProcessing,Occurrences,3274.53333333333,2906,3659,114.588336845422,206.899170289943
+Scenario1,Server,Server1,[Resource],ResourceState,TimeProcessing,Percent,90.1074626420222,88.8267928132434,91.4167836365656,0.369693624870451,0.667513870546531
+Scenario1,Server,Server1,[Resource],ResourceState,TimeProcessing,Total (Minutes),29789.5271494525,29366.1377040583,30222.3886702486,122.220712382171,220.680085602683
+Scenario1,Server,Server1,[Resource],ResourceState,TimeStarved,Average (Minutes),0.998867223719568,0.970451887160743,1.04266028663449,0.010160864002952,0.0183463203107281
+Scenario1,Server,Server1,[Resource],ResourceState,TimeStarved,Occurrences,3273.8,2906,3658,114.541354990863,206.814340480953
+Scenario1,Server,Server1,[Resource],ResourceState,TimeStarved,Percent,9.89253735797779,8.58321636343437,11.1732071867566,0.369693624870451,0.667513870546531
+Scenario1,Server,Server1,[Resource],ResourceState,TimeStarved,Total (Minutes),3270.47285054746,2837.6113297514,3693.86229594174,122.220712382171,220.680085602683
+Scenario1,Server,Server1,InputBuffer,Content,NumberInStation,Average,4.0541982066451,3.51843486834947,4.88778476317092,0.187350837534899,0.338278169543438
+Scenario1,Server,Server1,InputBuffer,Content,NumberInStation,Maximum,35,27,43,2.99715758201476,5.41162769282166
+Scenario1,Server,Server1,InputBuffer,Content,NumberInStation,Minimum,0,0,0,0,0
+Scenario1,Server,Server1,InputBuffer,HoldingTime,TimeInStation,Average (Minutes),4.04767124840563,3.56491025614126,4.84011316252148,0.173809746826685,0.313828557048148
+Scenario1,Server,Server1,InputBuffer,HoldingTime,TimeInStation,Maximum (Minutes),31.0408829703878,23.4644366282376,38.6273548832207,2.73297149435288,4.93461682204583
+Scenario1,Server,Server1,InputBuffer,HoldingTime,TimeInStation,Minimum (Minutes),0,0,0,0,0
+Scenario1,Server,Server1,InputBuffer,Throughput,NumberEntered,Total,33099.7333333333,32629,33576,135.550304838673,244.747819679962
+Scenario1,Server,Server1,InputBuffer,Throughput,NumberExited,Total,33099.2,32629,33580,135.748765588705,245.106157759099
+Scenario1,Server,Server1,OutputBuffer,Throughput,NumberEntered,Total,33099.3333333333,32629,33581,135.889829875423,245.360861550803
+Scenario1,Server,Server1,OutputBuffer,Throughput,NumberExited,Total,33099.3333333333,32629,33581,135.889829875423,245.360861550803
+Scenario1,Server,Server1,Processing,Content,NumberInStation,Average,0.901074626420222,0.888267928132434,0.914167836365656,0.00369693624870451,0.00667513870546531
+Scenario1,Server,Server1,Processing,Content,NumberInStation,Maximum,1,1,1,0,0
+Scenario1,Server,Server1,Processing,Content,NumberInStation,Minimum,0,0,0,0,0
+Scenario1,Server,Server1,Processing,HoldingTime,TimeInStation,Average (Minutes),0.89999999999934,0.899999999999334,0.899999999999343,1.2655715178899E-15,2.28509902667694E-15
+Scenario1,Server,Server1,Processing,HoldingTime,TimeInStation,Maximum (Minutes),0.900000000001455,0.900000000000034,0.900000000002592,5.54935449612638E-13,1.00198403476451E-12
+Scenario1,Server,Server1,Processing,HoldingTime,TimeInStation,Minimum (Minutes),0.899999999999181,0.899999999999181,0.899999999999181,0,0
+Scenario1,Server,Server1,Processing,Throughput,NumberEntered,Total,33099.2,32629,33580,135.748765588705,245.106157759099
+Scenario1,Server,Server1,Processing,Throughput,NumberExited,Total,33099.3333333333,32629,33581,135.889829875423,245.360861550803
+Scenario1,Sink,Sink1,[DestroyedEntities],FlowTime,TimeInSystem,Average (Minutes),4.94763742493705,4.4649094170285,5.74012998021536,0.173814656081536,0.313837421133127
+Scenario1,Sink,Sink1,[DestroyedEntities],FlowTime,TimeInSystem,Maximum (Minutes),31.9408829703872,24.3644366282376,39.5273548832199,2.73297149435288,4.93461682204584
+Scenario1,Sink,Sink1,[DestroyedEntities],FlowTime,TimeInSystem,Minimum (Minutes),0.899999999999181,0.899999999999181,0.899999999999181,0,0
+Scenario1,Sink,Sink1,[DestroyedEntities],FlowTime,TimeInSystem,Observations,33099.3333333333,32629,33581,135.889829875423,245.360861550803
+Scenario1,Sink,Sink1,InputBuffer,Throughput,NumberEntered,Total,33099.3333333333,32629,33581,135.889829875423,245.360861550803
+Scenario1,Sink,Sink1,InputBuffer,Throughput,NumberExited,Total,33099.3333333333,32629,33581,135.889829875423,245.360861550803
+Scenario1,Source,Source1,OutputBuffer,Throughput,NumberEntered,Total,33099.7333333333,32629,33576,135.550304838673,244.747819679962
+Scenario1,Source,Source1,OutputBuffer,Throughput,NumberExited,Total,33099.7333333333,32629,33576,135.550304838673,244.747819679962
+Scenario1,Source,Source1,Processing,Throughput,NumberEntered,Total,33099.7333333333,32629,33576,135.550304838673,244.747819679962
+Scenario1,Source,Source1,Processing,Throughput,NumberExited,Total,33099.7333333333,32629,33576,135.550304838673,244.747819679962
