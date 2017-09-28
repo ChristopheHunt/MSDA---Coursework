@@ -1,0 +1,19 @@
+---
+title: "Week 5 Discussion"
+output:
+  prettydoc::html_pretty:
+    theme: architect
+    highlight: github
+---
+
+# Chapter 4, problem 13
+
+Modify your model from Problem 1 assuming that you are modeling manufacturing process that involves drilling holes in a steel plate. The drilling machine has capacity for up to 3 parts at a time ($c$ = 3 in queuing terms). The arrival rate should be 120 parts per hour and the processing rate should be 50 parts per hour. Use Google 3D Warehouse to find appropriate symbols for the entities (steel plates) and the server (a drill process or other hole-making device). Add a label to your animation to show how many parts are being processed as the model runs.
+
+Simulation Design:
+
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20604/Week%205%20-%20HW/Model%20for%20Discussion.PNG)
+
+Simulation Results:
+
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20604/Week%205%20-%20HW/Model%20Results.PNG)
