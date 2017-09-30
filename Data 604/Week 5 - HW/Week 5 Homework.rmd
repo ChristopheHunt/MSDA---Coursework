@@ -1,0 +1,51 @@
+---
+title: "Week 5 Homework"
+output:
+  prettydoc::html_pretty:
+    theme: architect
+    highlight: github
+---
+
+```{r, include = FALSE}
+library(tidyverse)
+library(queueing)
+```
+
+
+## Chapter 4 - Week 5 Homework
+
+### Problem 2
+
+Develop a queuing model for the Simio model from Problem 1 and compute the exact values for the steady state time entities spend in the system and the expected number of entities processed in 100 hours.
+
+```{r}
+library(tidyverse)
+library(queueing)
+mmc_1 <- NewInput.MMC(lambda = 120, mu = 190, c = 1, n = 0, method = 0) %>% 
+         QueueingModel()
+list(W = W(mmc_1))
+```
+
+> The expected number of entities processed in 100 hours is 11,984. 
+
+Simio Results
+
+
+### Problem 3 
+
+Using the model from Problem 1, create an experiment that includes 100 replications. Run the experiment and observe the SMORE plot for the time entities spend in the system. Experiment with the various SMORE plot settings - viewing the histogram, rotating the plot, changing upper and lower percentile values.
+
+
+
+### Problem 9
+
+Replicate the model from Problem 1 using Simio processes (i.e. not using objects from the standard library). Compare the run times for this model and the model from problem 1 for 50 replications of length 100 hours. 
+
+> The difference is quite dramatic, the processing time for our original model is 28.6 seconds whereas the process only model completed in 6.2 seconds. For a sufficiently complex model requiring significant resources this alternative model building could be useful to cut down on simulation time. 
+
+### Problem 12 
+
+Animate your model from Problem 1 assuming that you are modeling cashier at a fast food restaurant - the entities represent customers and the server represents the cashier at the cash register. Use Simio's standard symbols for your animation. 
+
+
+
