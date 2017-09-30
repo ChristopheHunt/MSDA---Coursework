@@ -30,11 +30,17 @@ list(W = W(mmc_1))
 
 Simio Results
 
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20604/Week%205%20-%20HW/Problem%202a.PNG)
 
 ### Problem 3 
 
 Using the model from Problem 1, create an experiment that includes 100 replications. Run the experiment and observe the SMORE plot for the time entities spend in the system. Experiment with the various SMORE plot settings - viewing the histogram, rotating the plot, changing upper and lower percentile values.
 
+> These are two different views of SMORE plots using the same results. 
+
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20604/Week%205%20-%20HW/SMORE%20Plot%203a.PNG)
+
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20604/Week%205%20-%20HW/SMORE%20Plot%203b.PNG)
 
 
 ### Problem 9
@@ -47,5 +53,8 @@ Replicate the model from Problem 1 using Simio processes (i.e. not using objects
 
 Animate your model from Problem 1 assuming that you are modeling cashier at a fast food restaurant - the entities represent customers and the server represents the cashier at the cash register. Use Simio's standard symbols for your animation. 
 
+> Adding in the images was meaningful since it allows me to better understand the stations within simulation. 
+
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20604/Week%205%20-%20HW/Simio%203d%20animation.PNG)
 
 
