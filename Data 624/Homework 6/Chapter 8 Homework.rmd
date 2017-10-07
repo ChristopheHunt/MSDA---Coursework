@@ -1,0 +1,52 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+HW  8.1
+Figure 8.24 shows the ACFs for 36 random numbers, 360 random numbers and for 1,000 random numbers.
+
+Explain the differences among these figures. Do they all indicate the data are white noise?
+
+Why are the critical values at different distances from the mean of zero? Why are the autocorrelations different in each figure when they each refer to white noise?
+
+
+HW  8.2
+
+A classic example of a non-stationary series is the daily closing IBM stock prices (data set ibmclose). Use R to plot the daily closing prices for IBM stock and the ACF and PACF. Explain how each plot shows the series is non-stationary and should be differenced.
+
+HW  8.6 
+
+Consider the number of women murdered each year (per 100,000 standard population) in the United States (data set wmurders).
+
+a. By studying appropriate graphs of the series in R, find an appropriate ARIMA(p,d,qp,d,q) model for these data.
+
+b. Should you include a constant in the model? Explain.
+
+c. Write this model in terms of the backshift operator.
+
+d. Fit the model using R and examine the residuals. Is the model satisfactory?
+
+e. Forecast three times ahead. Check your forecasts by hand to make sure you know how they have been calculated.
+
+f. Create a plot of the series with forecasts and prediction intervals for the next three periods shown.
+
+g. Does auto.arima give the same model you have chosen? If not, which model do you think is better?
+
+HW  8.8
+
+Consider the total net generation of electricity (in billion kilowatt hours) by the U.S. electric industry (monthly for the period 1985-1996). (Data set usmelec.) In general there are two peaks per year: in mid-summer and mid-winter.
+
+a. Examine the 12-month moving average of this series to see what kind of trend is involved.
+
+b. Do the data need transforming? If so, find a suitable transformation.
+
+c. Are the data stationary? If not, find an appropriate differencing which yields stationary data.
+
+d. Identify a couple of ARIMA models that might be useful in describing the time series. Which of your models is the best according to their AIC values?
+
+e. Estimate the parameters of your best model and do diagnostic testing on the residuals. Do the residuals resemble white noise? If not, try to find another ARIMA model which fits better.
+
+f. Forecast the next 15 years of generation of electricity by the U.S. electric industry. Get the latest figures from http://data.is/zgRWCO to check on the accuracy of your forecasts.
+
+g. How many years of forecasts do you think are sufficiently accurate to be usable?

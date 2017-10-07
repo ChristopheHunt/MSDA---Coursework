@@ -1,0 +1,47 @@
+---
+title: "DES Chapter 8 - problem 5"
+output:
+  prettydoc::html_pretty:
+    theme: github
+    highlight: github
+---
+
+```{r, include=FALSE}
+library(tidyverse)
+library(scales)
+```
+
+### DES Chapter 8 - problem 5 
+
+```{r}
+library(scales)
+library(tidyverse)
+x <-  seq(from = -3, to = 4, by = .01) %>% 
+      as_tibble()  %>% 
+      mutate(adj_value = case_when(value == -3 ~ 0,
+                                   value > -3  & value <= 0 ~ ((1/2)+(value/6)),
+                                   value >  0  & value < 4 ~ ((1/2)+(value^2/32)),
+                                   value == 4  ~ 1))
+
+ggplot(x, aes(x = value, y = adj_value)) +
+  geom_line() +
+  scale_y_continuous(labels = percent) +
+  ylab("") +
+  ggtitle("cdf")
+```
+
+
+```{r, message=FALSE, warning=FALSE}
+inv_cdf <- function(){z <- runif(1,0,1)
+                      case_when(z == 0 ~ -3,
+                                z > 0  & z < .5  ~ (6*z-3), 
+                                z >= .5 & z < 1  ~ 4*sqrt(2*z-1),
+                                z == 1 ~ 4)
+                     }
+
+L <- NULL
+for (i in seq(1:1000)){L[i] <- inv_cdf()}
+
+hist(unlist(L), main = "Histogram", xlab = "Value")
+```
+
