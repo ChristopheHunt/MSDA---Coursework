@@ -3,23 +3,53 @@ title: "R Notebook"
 output: html_notebook
 ---
 
+```{r}
+library(fma)
+```
+
+
 HW  8.1
+
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20624/Homework%206/8.1.image.PNG)
+
 Figure 8.24 shows the ACFs for 36 random numbers, 360 random numbers and for 1,000 random numbers.
 
 Explain the differences among these figures. Do they all indicate the data are white noise?
 
+We can see that the correlation between previous observations are not exponentially decaying which does indicate these are white noise series. All the figures appear to have varying degress of correlation with the first series having the highest and the last series having the lowest. 
+
 Why are the critical values at different distances from the mean of zero? Why are the autocorrelations different in each figure when they each refer to white noise?
 
+The critical values are determined from the sample size, since the size of each series is different the critical values are also different. The autocorrelations are based on the past values, since the time series are different in sample size the autocorrelations of each series will be different. 
 
 HW  8.2
 
 A classic example of a non-stationary series is the daily closing IBM stock prices (data set ibmclose). Use R to plot the daily closing prices for IBM stock and the ACF and PACF. Explain how each plot shows the series is non-stationary and should be differenced.
 
+```{r}
+library(fma)
+data(ibmclose)
+mfrow=c(1, 2)
+plot(ibmclose)
+plot(diff(ibmclose,1))
+```
+
+The plot of the time series shows trends over time and patters in the long term. The current value is highly correlated with the previous value. Adding a 1 day lag does should some promise in transforming the time series to reach stationarity. 
+
+```{r}
+acf(ibmclose)
+```
+
+
+```{r}
+pacf(ibmclose)
+```
+
 HW  8.6 
 
 Consider the number of women murdered each year (per 100,000 standard population) in the United States (data set wmurders).
 
-a. By studying appropriate graphs of the series in R, find an appropriate ARIMA(p,d,qp,d,q) model for these data.
+a. By studying appropriate graphs of the series in R, find an appropriate ARIMA(p,d,q) model for these data.
 
 b. Should you include a constant in the model? Explain.
 
