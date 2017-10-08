@@ -33,7 +33,21 @@ Model Results
 
 ---
 
-### 4. Consider an office where people come to get their drivers' license. The process involves three steps for arriving customers - reception / application; a vision exam; and a written exam . Assume that customer arrivals are Poisson with a rate of 6 per hour (i.e. inter-arrival time are exponentially distributed with mean 10 minutes). the processing time distributions for the three processes are given in Table 5.8. the office has some person responsible for reception/application and one person responsible for administering the vision exams. The written exam is computer-based and there are three computer stations where customers can take the exam. Develop a Simio model of this system. Assume that the office opens at 9:00 am and closes at 5:00 pm. The performance metrics of interest include the time that customers spend in the system, the utilization of the office employees and the computer stations, and the average and maximum numbers of customers in the reception/application queue, the vision exam queue, and the written exam queue. How many replications should be run in order to be confident about your results? Justify your answer. 
+### 4. Consider an office where people come to get their drivers' license. The process involves three steps for arriving customers - reception/application; a vision exam; and a written exam . Assume that customer arrivals are Poisson with a rate of 6 per hour (i.e. inter-arrival time are exponentially distributed with mean 10 minutes). the processing time distributions for the three processes are given in Table 5.8. the office has some person responsible for reception/application and one person responsible for administering the vision exams. The written exam is computer-based and there are three computer stations where customers can take the exam. Develop a Simio model of this system. Assume that the office opens at 9:00 am and closes at 5:00 pm. The performance metrics of interest include the time that customers spend in the system, the utilization of the office employees and the computer stations, and the average and maximum numbers of customers in the reception/application queue, the vision exam queue, and the written exam queue. How many replications should be run in order to be confident about your results? Justify your answer. 
+
+Model 
+
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20604/Week%206%20-%20HW/DMV%20Model%20Design.PNG)
+
+---
+
+Results
+
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20604/Week%206%20-%20HW/DMV%20Model%20Results.PNG)
+
+I ran the model for 261 replications since that is the approximate number of working days in a year. Through this I could make a reasonable estimate of the productivity, staffing plans, and utilization for a year. 
+
+---
 
 
 ### 5. Animate the model from Problem 4. If you did not already do so, specify a reasonable office layout and us Path object to incorporate customer movement through the office. Make sure that the distances between stations are reasonable for a drivers license office and that the entity speed is appropriate for humans walking. 
