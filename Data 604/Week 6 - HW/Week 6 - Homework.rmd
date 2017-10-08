@@ -52,3 +52,26 @@ I ran the model for 261 replications since that is the approximate number of wor
 
 ### 5. Animate the model from Problem 4. If you did not already do so, specify a reasonable office layout and us Path object to incorporate customer movement through the office. Make sure that the distances between stations are reasonable for a drivers license office and that the entity speed is appropriate for humans walking. 
 
+I chose 2 meters per second instead of the default 1.4 meters per second. A very fast walk is 2.5 meters per second [2], 1.4 meters per second is average, I thought that people would be hoping to get out of the DMV faster and might on average walk slightly faster. 
+
+<sub><sup> [2] Preferred walking speed. (2017, September 8). In Wikipedia, The Free Encyclopedia. Retrieved 16:51, October 8, 2017, from https://en.wikipedia.org/w/index.php?title=Preferred_walking_speed&oldid=799557256 </sup></sub>
+
+I also made the distance from entrance to eye exam 50 meters, eye exam to computer station 20 meters, and then from computer to exit 40 meters. I think this is reasonable distance. 
+
+Model Distances
+
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20604/Week%206%20-%20HW/DMV%20Model%20wAnimation%20distances.PNG)
+
+--- 
+
+Model Design
+
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20604/Week%206%20-%20HW/DMV%20Model%20wAnimation.PNG)
+
+---
+
+Model Results with distances
+
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20604/Week%206%20-%20HW/DMV%20Model%20wAnimation%20Results%20.PNG)
+
+
