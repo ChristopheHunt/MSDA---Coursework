@@ -177,13 +177,54 @@ d. Identify a couple of ARIMA models that might be useful in describing the time
 
 ```{r}
 par(mfrow=c(1, 2))
-acf(diff(usmelec, 1))
-pacf(diff(usmelec,1))
+acf(diff(usmelec,  lag = 12, differences = 1))
+pacf(diff(usmelec, lag = 12, differences = 1))
 ```
 
+Based on the plots the ACF has a postive value at lag 1 and 2 for a non-seasonal MA(2) term, a positive value at PACF at lag 1 for a non-seasonal AR(1), and we know that we will only use a seasonal difference order of 1. The negative values at the first lag for the seasonal PACF and ACF suggest an AR(1) and MA(1) term but the ACF spike is just approaching significance 
+
+```{r}
+arima(usmelec, order = c(1,0,2), seasonal = c(1,1,1))
+```
+
+```{r}
+arima(usmelec, order = c(1,0,2), seasonal = c(1,1,0))
+```
+
+```{r}
+arima(usmelec, order = c(1,0,2), seasonal = c(0,1,1))
+```
+
+The best ARIMA model is ARIMA(1,0,2)(0,1,1)[12] based on the AIC score and interpetability 
 
 e. Estimate the parameters of your best model and do diagnostic testing on the residuals. Do the residuals resemble white noise? If not, try to find another ARIMA model which fits better.
 
+The parameters of the best model are as follows:
+
+```{r}
+fit <- arima(usmelec, order = c(1,0,2), seasonal = c(0,1,1))
+summary(fit)
+```
+
+```{r}
+tsdisplay(fit$residuals)
+```
+
+Since all the spikes are within significance limit the residuals do appear to be white noise. 
+
 f. Forecast the next 15 years of generation of electricity by the U.S. electric industry. Get the latest figures from http://data.is/zgRWCO to check on the accuracy of your forecasts.
 
+```{r}
+plot(forecast(fit, h = (15*12)))
+```
+
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20624/Homework%206/Website%20Image.PNG)
+
+"Electricity: Overview." DataMarket, datamarket.com/data/set/1d9r/electricity-overview#!display=line&ds=1d9r!x0z=8.
+
 g. How many years of forecasts do you think are sufficiently accurate to be usable?
+
+It depends on the use case, if this is just to have a high level understanding of the tragejectory it does that job well for a number of years. However, if accuracy is extremely important than the model has dimishing accuracy even after a few years. However, as best I can tell I believe its accuracte up to year 2000 so ~4 years is about the usuable forecast period for this model. 
+
+
+
