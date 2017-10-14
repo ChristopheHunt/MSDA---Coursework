@@ -1,0 +1,21 @@
+---
+title: "Week 7 - Chapter 5"
+output: html_notebook
+---
+
+Problem #6
+
+In Model 5-2, we assumed that the inspection workers did not overlap between shofts. Modify the model so that the inspectors do overlap for the first hour of one shift and the last hour of the other shift. Compare the results of the two models. Does having the inspectors overlap help?
+
+Problem #7
+
+In the description of Model 5-2, we noted that there is no limit on the number of times that a board may be found in need of rework. Modify Model 5-2 so that if a board fails the inspection more than two times, it is rejected as a bad part. Count the number of obards that are rejected because of 3 or more failures. 
+
+Problem #8 
+
+In the descirption of Model 5-3, we indicated that as part of our model verification, we had predicated the proportions of parts that owuld go to the fast, medium and slow fine-pitch placement machines (38%, 33%, and 29%, respectively). Develop a queiing model to estimate these proprotions. 
+
+Problem #9
+
+See book, question too long to retype. 
+
