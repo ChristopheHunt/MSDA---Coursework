@@ -60,7 +60,24 @@ Problem #9
 
 See book for description of problem. 
 
-> I ran into a challenge in establishing different inter-arrival times for different processes. Below is the model set up and I appreciate any feedback on how to establish the different inter-arrival times for the different processes with a proporational split. 
+I set up the model as below:
+
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20604/Week%207%20-%20HW/Pharmacy%20Model.PNG)
+
+With the following schedule:
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20604/Week%207%20-%20HW/Pharmacy%20Schedule.PNG)
+
+I set states to track when a value changes within the system. I set the customer entity to only leave once they object goes from the cashier and the FromPharma state is set to true. 
+
+Unfortunately, a clear limitation of Simio is calculating the time in system for a particular state which in this case "FaxedIn". It is non-intuitive and non-trivial exercise. 
+
+The below results are the product of 1000 runs. It makes sense that the we would want the pharamcist to be the busiest of the employees as they are the most expensive. Downtime for Cashiers does not hit the bottom line as much as an idle pharmacist. 
+
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20604/Week%207%20-%20HW/Results.PNG)
+
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20604/Week%207%20-%20HW/smore%20plot%20customer%20time.PNG)
+
+> I ran into a challenge in establishing different inter-arrival times for different processes. Below is the model set up and I appreciate any feedback on how to establish the different inter-arrival times for the different processes. 
 
 
 
