@@ -1,12 +1,28 @@
 ---
 title: "Week 7 - Chapter 5"
-output: html_notebook
+output:
+  prettydoc::html_pretty:
+    theme: architect
+    highlight: github
 ---
 
 Problem #6
 
 In Model 5-2, we assumed that the inspection workers did not overlap between shifts. Modify the model so that the inspectors do overlap for the first hour of one shift and the last hour of the other shift. Compare the results of the two models. Does having the inspectors overlap help?
 
+Original Work Schedule 
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20604/Week%207%20-%20HW/Original%20Work%20Schedule.PNG)
+
+Original Work Schedule Results
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20604/Week%207%20-%20HW/Original%20Model.PNG)
+
+Modified Work Schedule
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20604/Week%207%20-%20HW/Modified%20Work%20Schedule.PNG)
+
+Modified Work Schedule Results
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20604/Week%207%20-%20HW/Modified%20Model.PNG)
+
+The overlap in inspectors does not appear to have actually helped, which seems odd to me. I would have thought that adding more hours to the schedule would have improved our output rate. It's very possible this is an issue in my model design. 
 
 Problem #7
 
@@ -14,12 +30,21 @@ In the description of Model 5-2, we noted that there is no limit on the number o
 
 > I originally set up the Model to include the rejection at 3 failed attempts at processing. I changed the parameters back to a simple model without limits on rejection.
 
+No Limits on Rejection
+
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20604/Week%207%20-%20HW/no%20limits%20on%20rejections.PNG)
+
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20604/Week%207%20-%20HW/three%20failures%20rejection.PNG)
 
 Problem #8 
 
 In the description of Model 5-3, we indicated that as part of our model verification, we had predicated the proportions of parts that would go to the fast, medium and slow fine-pitch placement machines (38%, 33%, and 29%, respectively). Develop a queuing model to estimate these proportions. 
 
 >Unfortunately, Simio did not want to route the entities via the node to multiple stations. Unable to verify results. 
+
+Pitch Machine Model Design
+
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20604/Week%207%20-%20HW/pitchmachines.PNG)
 
 Problem #9
 
