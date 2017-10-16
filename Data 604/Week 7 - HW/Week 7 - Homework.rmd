@@ -48,13 +48,19 @@ Pitch Machine Model Design
 
 ![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20604/Week%207%20-%20HW/pitchmachines.PNG)
 
+Model Results 
+
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20604/Week%207%20-%20HW/Pitch%20Machine%20results.PNG)
+
+Node Set up
+
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20604/Week%207%20-%20HW/node%20set%20up%20in%20model.PNG)
+
 Problem #9
 
 See book for description of problem. 
 
 > I ran into a challenge in establishing different inter-arrival times for different processes. Below is the model set up and I appreciate any feedback on how to establish the different inter-arrival times for the different processes with a proporational split. 
-
-
 
 
 
