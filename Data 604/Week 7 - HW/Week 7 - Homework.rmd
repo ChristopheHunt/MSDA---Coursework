@@ -31,16 +31,18 @@ In the description of Model 5-2, we noted that there is no limit on the number o
 > I originally set up the Model to include the rejection at 3 failed attempts at processing. I changed the parameters back to a simple model without limits on rejection.
 
 No Limits on Rejection
-
 ![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20604/Week%207%20-%20HW/no%20limits%20on%20rejections.PNG)
 
+Limits on Rejection 
 ![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20604/Week%207%20-%20HW/three%20failures%20rejection.PNG)
+
+We can see that bad parts spend less time in the system which is great because it frees up the time to process our other good parts.  
 
 Problem #8 
 
 In the description of Model 5-3, we indicated that as part of our model verification, we had predicated the proportions of parts that would go to the fast, medium and slow fine-pitch placement machines (38%, 33%, and 29%, respectively). Develop a queuing model to estimate these proportions. 
 
->Unfortunately, Simio did not want to route the entities via the node to multiple stations. Unable to verify results. 
+>Unfortunately, I could not get Simio to route the entities via the node to multiple stations. The model appeared to only route to the FastPitch server even when the node list was set and the smallest value was set as the selection goal. I would appreciate any feedback since I am the stage where I beginning to believe it may be a bug in my model or an obscure setting that I cannot locate. 
 
 Pitch Machine Model Design
 
