@@ -1,0 +1,42 @@
+---
+title: "Week 8 Discussion Question"
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
+---
+
+## Stratified Sampling 
+
+The purpose behind stratified sampling is to split up our domain into regions and sample points from each region. Allowing each region to provide a proportional share of points and combining to get a better estimate of our example of $\int_{0}^{1} e^{-x}(1+x^2)^{-1} dx$. - http://statweb.stanford.edu/~owen/mc/Ch-var-basic.pdf
+
+"We can achieve more reduction in variance using stratification when the means of the strata are widely disperses than if the means of the strata are approximately equal." - Rizzo, Maria L. Statistical computing with R. Chapman & Hall/CRC, 2008. Below is an example from the text. 
+
+```{r}
+set.strat <- list(M = 120, rows = 20)
+T2 <- numeric(8)
+estimates <- matrix(0, set.strat$rows, 2)
+g <- function (x) {
+       exp(-x - log(1+x^2)) * (x > 0) * (x <1)}
+
+for(i in 1:set.strat$rows){
+  estimates[i, 1] <- mean(g(runif(set.strat$M)))
+  bin <- seq(0, 1, by = 1/length(T2))
+  for (j in 1:length(T2)){
+  T2[[j]] <- mean(g(runif(set.strat$M/length(T2), bin[[j]], bin[[j+1]])))
+  }
+  estimates[i,2] <- mean(T2)
+}
+```
+
+```{r}
+estimates
+apply(estimates, 2, mean)
+```
+
+```{r}
+options(scipen = 999)
+apply(estimates, 2, var)
+```
+
+The text - http://statweb.stanford.edu/~owen/mc/Ch-var-basic.pdf - has a great example of stratified sample for Compound Poisson models for rainfall. 
