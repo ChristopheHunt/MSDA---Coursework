@@ -3,17 +3,54 @@ title: "R Notebook"
 output: html_notebook
 ---
 
-Kelton Chapter 6 problems 1, 2, 3, 4, 5, 8
+```{r, include = FALSE}
+library(xlsx)
+library(fitdistrplus)
+```
 
-1. Use file from text to fit one or more probability distributions, including goodness-of-fit testing and probability plots. What's the recommendtation for a dtirbution to be used in the simuatlion model from which to generate these interarrival times? PRovide the correct Simio expression, heading any parameterization-difference issues.
+Kelton Chapter 6 problems
 
-2. Use file from text to fit one or more probability distributions, including goodness-of-fit testing and probability plots. What's the recommendtation for a dtirbution to be used in the simuatlion model from which to generate these call-duration times? PRovide the correct Simio expression, heading any parameterization-difference issues.
+1. Use file from text to fit one or more probability distributions, including goodness-of-fit testing and probability plots. What's the recommendation for a distribution to be used in the simulation model from which to generate these inter-arrival times? Provide the correct Simio expression, heading any parameterization-difference issues.
 
-3. Use file from text to fit one or more probability distributions, including goodness-of-fit testing and probability plots. What's the recommendtation for a dtirbution to be used in the simuatlion model from which to generate the number of extra tech-support people need for a call? PRovide the correct Simio expression, heading any parameterization-difference issues.
 
-4. Dervie the inverse-CDF formula for geneation random variats from a continuous uniform distribution between real numbers a and b (a < b )
+```{r}
+library(xlsx)
+prob.06.01.df <- read.xlsx("~./GitHub/MSDA---Coursework/Data 604/Week 9 - HW/Problem_Dataset_06_01.xls", sheetIndex = 1)
+```
 
-5. Dervie the inverse-CDF fomula for generation random variates from a Weibull distribution. Look up its definition (including its CDF) in one of the refreences, either book or online, cited in this chapter. Check the simio definition in its documetation to be sure you have your formula parameterized proper. 
+```{r}
+library(fitdistrplus)
+plotdist(prob.06.01.df$X27.88, histo = TRUE)
+descdist(prob.06.01.df$X27.88, boot = 100)
+```
+
+
+```{r}
+dis <- fitdist(prob.06.01.df$X27.88, distr = "exp")
+summary(dis)
+```
+
+
+```{r}
+plot(dis)
+```
+
+2. Use file from text to fit one or more probability distributions, including goodness-of-fit testing and probability plots. What's the recommendation for a distribution to be used in the simulation model from which to generate these call-duration times? Provide the correct Simio expression, heading any parameterization-difference issues.
+
+
+
+
+3. Use file from text to fit one or more probability distributions, including goodness-of-fit testing and probability plots. What's the recommendation for a distribution to be used in the simulation model from which to generate the number of extra tech-support people need for a call? Provide the correct Simio expression, heading any characterization-difference issues.
+
+
+
+4. Derive the inverse-CDF formula for generation random variants from a continuous uniform distribution between real numbers a and b (a < b )
+
+
+
+5. Derive the inverse-CDF formula for generation random variate from a Weibull distribution. Look up its definition (including its CDF) in one of the references, either book or online, cited in this chapter. Check the simio definition in its documentation to be sure you have your formula parameterized proper. 
+
+
 
 8. Problem in text:
 
