@@ -6,6 +6,7 @@ output: html_notebook
 ```{r, include = FALSE}
 library(xlsx)
 library(fitdistrplus)
+library(MASS)
 ```
 
 Kelton Chapter 6 problems
@@ -24,9 +25,58 @@ plotdist(prob.06.01.df$X27.88, histo = TRUE)
 descdist(prob.06.01.df$X27.88, boot = 100)
 ```
 
+> Based on our Cullen and Frey Graph the exponential distribution is our best fit. 
+
+```{r, warning=FALSE}
+dis <- fitdist(prob.06.01.df$X27.88, distr = "exp")
+summary(dis)
+```
 
 ```{r}
-dis <- fitdist(prob.06.01.df$X27.88, distr = "exp")
+plot(dis)
+```
+
+> In Simio it would be "Random.Exponential(0.0867211)"
+
+2. Use file from text to fit one or more probability distributions, including goodness-of-fit testing and probability plots. What's the recommendation for a distribution to be used in the simulation model from which to generate these call-duration times? Provide the correct Simio expression, heading any parameterization-difference issues.
+
+```{r}
+library(fitdistrplus)
+prob.06.02.df <- read.xlsx("~./GitHub/MSDA---Coursework/Data 604/Week 9 - HW/Problem_Dataset_06_02.xls", sheetIndex = 1)
+plotdist(prob.06.02.df$X36.13, histo = TRUE)
+descdist(prob.06.02.df$X36.13, boot = 100)
+```
+
+```{r, warning=FALSE}
+dis <- fitdist(prob.06.02.df$X36.13,  "gamma")
+dis
+```
+
+
+```{r}
+plot(dis)
+```
+```{r}
+coef(dis)
+```
+
+
+> In Simio its Random.Gamma( 4.8173431 , 0.4657621 )
+
+3. Use file from text to fit one or more probability distributions, including goodness-of-fit testing and probability plots. What's the recommendation for a distribution to be used in the simulation model from which to generate the number of extra tech-support people need for a call? Provide the correct Simio expression, heading any characterization-difference issues.
+
+```{r}
+prob.06.03.df <- read.xlsx("~./GitHub/MSDA---Coursework/Data 604/Week 9 - HW/Problem_Dataset_06_03.xls", sheetIndex = 1)
+```
+
+```{r}
+library(fitdistrplus)
+plotdist(prob.06.03.df$X2, histo = TRUE)
+descdist(prob.06.03.df$X2, boot = 100)
+```
+
+```{r}
+dis <- fitdist(prob.06.03.df$X2, distr = "lnorm")
 summary(dis)
 ```
 
@@ -35,21 +85,16 @@ summary(dis)
 plot(dis)
 ```
 
-2. Use file from text to fit one or more probability distributions, including goodness-of-fit testing and probability plots. What's the recommendation for a distribution to be used in the simulation model from which to generate these call-duration times? Provide the correct Simio expression, heading any parameterization-difference issues.
+```{r}
+coef(dis)
+```
 
-
-
-
-3. Use file from text to fit one or more probability distributions, including goodness-of-fit testing and probability plots. What's the recommendation for a distribution to be used in the simulation model from which to generate the number of extra tech-support people need for a call? Provide the correct Simio expression, heading any characterization-difference issues.
-
-
+> In Simio its Random.Lognormal(0.9541848, 0.5408643)
 
 4. Derive the inverse-CDF formula for generation random variants from a continuous uniform distribution between real numbers a and b (a < b )
 
 
-
 5. Derive the inverse-CDF formula for generation random variate from a Weibull distribution. Look up its definition (including its CDF) in one of the references, either book or online, cited in this chapter. Check the simio definition in its documentation to be sure you have your formula parameterized proper. 
-
 
 
 8. Problem in text:
