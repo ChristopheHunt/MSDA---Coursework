@@ -93,9 +93,17 @@ coef(dis)
 
 4. Derive the inverse-CDF formula for generation random variants from a continuous uniform distribution between real numbers a and b (a < b )
 
+CDF
+
+$$f(x) = \int_a^{b} \frac{x-a}{b-a} dx$$
+Inverse
+
+$$f^{-1}(x) = a + (b - a) x$$
 
 5. Derive the inverse-CDF formula for generation random variate from a Weibull distribution. Look up its definition (including its CDF) in one of the references, either book or online, cited in this chapter. Check the simio definition in its documentation to be sure you have your formula parameterized proper. 
 
+$$f(x) = 1 - e^{1-(1/\alpha)x^\beta} $$
+$$f^{-1}(x)= (-\alpha ln(1-u))^{1/\beta}$$
 
 8. Problem in text:
 
