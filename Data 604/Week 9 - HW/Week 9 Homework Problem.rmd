@@ -107,3 +107,61 @@ $$f^{-1}(x)= (-\alpha ln(1-u))^{1/\beta}$$
 
 8. Problem in text:
 
+```{r}
+library(tidyverse)
+produce <- NULL
+
+produce$oats <-  list(cost = 1.05, 
+                      revenue =  1.29,
+                      max_demand = 10, 
+                      sizes = c(0, .5 , 1, 1.5, 2, 3, 4, 5, 7.5, 10),
+                      prob = c(.05, .07, .09, .11, .15, .25, .1, .09, .06, .03)
+                      )
+
+produce$peas <-  list(cost = 3.17, 
+                      revenue =  3.76,
+                      max_demand = 8, 
+                      sizes = c(0, .5, 1, 1.5, 2, 3),
+                      prob = c(.1, .2, .2, .3, .1, .1)
+                      )
+
+produce$beans <-  list(cost = 1.99, 
+                      revenue =  2.23,
+                      max_demand = 14, 
+                      sizes = c(0, 1, 3, 4.5),
+                      prob = c(.2, .4, .3, .1)
+                      )
+
+produce$barley <- list(cost = .95, 
+                      revenue =  1.65,
+                      max_demand = 11, 
+                      sizes = c(0, .5, 1, 3.5),
+                      prob = c(.2, .4, .3, .1)
+                      )
+
+for (i in names(produce)){
+  produce[[i]]["cumprob"] <- list(cumsum(produce[[i]]$prob))
+}
+```
+
+```{r}
+library(data.table)
+
+for (i in names(produce)){
+  x <- NULL
+  for (j in seq(1,90)){
+  x <- append(x, round(runif(1),4))}
+  produce[[i]]["observedprob"] <- list(x)
+  x <- NULL
+  for (t in seq(1,90)){
+  x <- append(x,(produce[[i]]$sizes[sum((produce[[i]]$cumprob - produce[[i]]$prob) <= produce[[i]]$observedprob[[t]])]))
+  }
+  produce[[i]]["lbs.sold"]   <- list(x)
+  produce[[i]]["total.cost"] <- list(produce[[i]]$lbs.sold * produce[[i]]$cost)
+  produce[[i]]["total.rev"]  <- list(produce[[i]]$lbs.sold * produce[[i]]$revenue)
+}
+
+for (i in names(produce)){
+print(paste(i, "profit = ", sum(produce[[i]]$total.rev - produce[[i]]$total.cost)))
+}
+```
