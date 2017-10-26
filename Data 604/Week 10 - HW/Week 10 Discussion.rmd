@@ -1,0 +1,47 @@
+---
+title: "Week 10 - Discussion"
+output:
+  prettydoc::html_pretty:
+    theme: github
+    highlight: github
+---
+
+```{r, include=FALSE}
+library(tidyverse)
+library(scales)
+```
+
+The Rayleigh density [156, (18.76)] is
+
+$$f(x) = \frac{x}{\sigma^2}e^{-x^2/(2\sigma^2)},~~x \geq0,~~ \sigma > 0$$
+Implement a function to generate samples from a Rayleigh distribution using antithetic variables. What is the percent reduction in variance of $\frac{X+X^`}{2}$ compared with $\frac{X_1+X_2}{2}$ for independent $X_1$, $X_2$?
+
+```{r}
+library(tidyverse)
+library(scales)
+
+set.seed(1234)
+
+rayleigh_dist <- function(x, sigma){
+                 return((x/sigma^2) * exp(-x^2)/(2*sigma^2)) 
+                 }
+
+antithetic_rayleigh <- function(n, sig){
+              list_ <- list(u = runif(n)) %>%
+                          c(., list(v = 1 - .$u,
+                                    v2 = runif(n))) %>%
+                          c(., list(ray_dist_u    = rayleigh_dist(.$u, sig),
+                                    ray_dist_v    = rayleigh_dist(.$v, sig),
+                                    ray_dist_v2   = rayleigh_dist(.$v2, sig))) %>%
+                          c(., list(ray_dist_var      = var((.$ray_dist_u + .$ray_dist_v2)/2),
+                                    ray_dist_anti_var = var((.$ray_dist_u + .$ray_dist_v)/2))) 
+              return(list_)
+}
+results <- antithetic_rayleigh(1000, 3)
+
+percent((results$ray_dist_anti_var - results$ray_dist_var ) / results$ray_dist_var)
+```
+
+There is a profound effect on the variance reduction when there is a negative correlation compared to independence. 
+
+Rizzo; Maria L.. Statistical Computing with R (Chapman & Hall/CRC The R Series). 
