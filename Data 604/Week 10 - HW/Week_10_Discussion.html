@@ -81,7 +81,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <span class="kw">set.seed</span>(<span class="dv">1234</span>)
 
 rayleigh_dist &lt;-<span class="st"> </span><span class="cf">function</span>(x, sigma){
-                 <span class="kw">return</span>((x<span class="op">/</span>sigma<span class="op">^</span><span class="dv">2</span>) <span class="op">*</span><span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span>x<span class="op">^</span><span class="dv">2</span>)<span class="op">/</span>(<span class="dv">2</span><span class="op">*</span>sigma<span class="op">^</span><span class="dv">2</span>)) 
+                 <span class="kw">return</span>(sigma <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="op">-</span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw">log</span>(x))) <span class="co">#(x/sigma^2) * exp(-x^2)/(2*sigma^2)) # https://en.wikipedia.org/wiki/Rayleigh_distribution - Generating random variates</span>
                  }
 
 antithetic_rayleigh &lt;-<span class="st"> </span><span class="cf">function</span>(n, sig){
@@ -98,7 +98,7 @@ antithetic_rayleigh &lt;-<span class="st"> </span><span class="cf">function</spa
 results &lt;-<span class="st"> </span><span class="kw">antithetic_rayleigh</span>(<span class="dv">1000</span>, <span class="dv">3</span>)
 
 <span class="kw">percent</span>((results<span class="op">$</span>ray_dist_anti_var <span class="op">-</span><span class="st"> </span>results<span class="op">$</span>ray_dist_var ) <span class="op">/</span><span class="st"> </span>results<span class="op">$</span>ray_dist_var)</code></pre></div>
-<pre><code>## [1] &quot;-47.7%&quot;</code></pre>
+<pre><code>## [1] &quot;-93.9%&quot;</code></pre>
 <p>There is a profound effect on the variance reduction when there is a negative correlation compared to independence.</p>
 <p>Rizzo; Maria L.. Statistical Computing with R (Chapman &amp; Hall/CRC The R Series).</p>
 </section>

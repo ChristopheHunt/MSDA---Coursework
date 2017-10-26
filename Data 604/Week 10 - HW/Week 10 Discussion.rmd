@@ -23,7 +23,7 @@ library(scales)
 set.seed(1234)
 
 rayleigh_dist <- function(x, sigma){
-                 return((x/sigma^2) * exp(-x^2)/(2*sigma^2)) 
+                 return(sigma * sqrt(-2 * log(x))) #(x/sigma^2) * exp(-x^2)/(2*sigma^2)) # https://en.wikipedia.org/wiki/Rayleigh_distribution - Generating random variates
                  }
 
 antithetic_rayleigh <- function(n, sig){
