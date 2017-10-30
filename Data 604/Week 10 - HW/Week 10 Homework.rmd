@@ -1,22 +1,11 @@
 ---
-title: "Kelton Chapter 7 - Problem 6"
+title: "Kelton Chapter 7 - Problem 7"
 output:
   prettydoc::html_pretty:
     theme: github
     highlight: github
 ---
 
-complete any one of 6, 7, or 8. 
-
-6. A small free clinic has a single doctor who sees patients between 8:00 am and noon. She spends 6-14 minutes (an average of 10) with each patient and so can theoretically see 6 patients per hour or a total of 24 patients each day. Staff is currently scheduling patients arrivals every 10 minutes but have found that patients arrive as much as 15 minutes early or 30 minutes late, thus causing disruptions to other patients. Worse, about 10 % of patients never show up at all causing the doctor's time to be wasted and wasting an appointment that could have been used by other sick patients. Staff would like to evaluate alternative scheduling strategies such as scheduling 2-3 arrivals every 20 minutes with the main objective of maximizing the doctors utilization (e.g., she would like to really see 24 patients each day if possible.) Assume that the doctor will stay until all scheduled patients are seen, but she is very unhappy if she needs to stay past 12:30. Measure system performance mainly on the number of patients actually seen, but also consider the average patient waiting time, and how late the doctor must typically stay to see all scheduled patients. 
-
-```{r}
-```
-
-### Most likely will work on this one 
-
 7. Of great concern to emergency-department staff are those patients who on arrival are classified Severe but whose conditions before receiving treatment deteriorates to Urgent, requiring immediate attention and stabilization in the Trauma Rooms. If such deterioration is noticed during the examination state in 10% of the Severe patients, adjust Model 7-2 to reflect this and compare the impact of waiting times and throughput. What assumptions have you made about "immediate attention?". 
 
-
-
-
+> Utilizing the model provided by our text I added the new patient type as Severe to Urgent Patient type. The assumptions taken into account is that this patient type is processed as a Severe Patient until observation. The patient mix is adjusted for this patient type to represent 10% of the original mix of Severe patients, this equates to 3% of the total patient mix. My other assumption about immediate attention is that the patient moves directly from exam to treatment room. I think the immediate attention could mean different things, such as a shorter processing time at the exam room because the patient is quickly triaged as being an urgent patient. In a real-world setting I would interview the business expert to better understand the processing of this kind of patient.  
