@@ -9,3 +9,22 @@ output:
 7. Of great concern to emergency-department staff are those patients who on arrival are classified Severe but whose conditions before receiving treatment deteriorates to Urgent, requiring immediate attention and stabilization in the Trauma Rooms. If such deterioration is noticed during the examination state in 10% of the Severe patients, adjust Model 7-2 to reflect this and compare the impact of waiting times and throughput. What assumptions have you made about "immediate attention?". 
 
 > Utilizing the model provided by our text I added the new patient type as Severe to Urgent Patient type. The assumptions taken into account is that this patient type is processed as a Severe Patient until observation. The patient mix is adjusted for this patient type to represent 10% of the original mix of Severe patients, this equates to 3% of the total patient mix. My other assumption about immediate attention is that the patient moves directly from exam to treatment room. I think the immediate attention could mean different things, such as a shorter processing time at the exam room because the patient is quickly triaged as being an urgent patient. In a real-world setting I would interview the business expert to better understand the processing of this kind of patient.  
+
+## Original Model Results   
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20604/Week%2010%20-%20HW/Results%20for%20original%20model.PNG)
+
+## New Patient Type and Frequency     
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20604/Week%2010%20-%20HW/Patient%20Table%20Change.PNG)
+
+## Patient Sequence with new Patient Type     
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20604/Week%2010%20-%20HW/Patient%20Sequence%20and%20time.PNG)
+
+## Results for New Patient Type 
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20604/Week%2010%20-%20HW/Severe%20to%20Urgent%20stats.PNG)
+
+## New Patient Type Model Results 
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20604/Week%2010%20-%20HW/Full%20Results%20with%20new%20patient%20type.PNG)
+
+## Impact
+
+> The impact is understandable and somewhat intuitive, the Severe to Urgent patient spends the most time in the system since they go through all steps of processing in the ED. They also add to overall processing time and decrease the number of patients that can be processed overall. These patients have such a significant impact on processing time for the entire system that they deserve closer attention if this situation was a real-world example. It is interesting to see how the type of units that require different processing as they change within the system can have such an immediate impact. 
