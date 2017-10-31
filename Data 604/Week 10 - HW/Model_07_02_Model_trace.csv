@@ -1,0 +1,8 @@
+Time(Hours),EntityID,ObjectName,ProcessID,StepName,Action
+1.86327202421036,Severe_Urgent.53,Input@TreatmentRooms,2.TransferFailureLogic,[Notify] DestroyingEntity,Entity 'Severe_Urgent.53' failed to initiate transfer from node
+1.86327202421036,Severe_Urgent.53,Input@TreatmentRooms,2.TransferFailureLogic,[Notify] DestroyingEntity,"Entity 'Severe_Urgent.53' failed to initiate transfer from node 'Input@TreatmentRooms'. The entity is being automatically destroyed. However, this warning may indicate a problem in the modeled logic."
+2.1263590405142,Severe_Urgent.57,Input@TreatmentRooms,8.TransferFailureLogic,[Notify] DestroyingEntity,Entity 'Severe_Urgent.57' failed to initiate transfer from node
+2.1263590405142,Severe_Urgent.57,Input@TreatmentRooms,8.TransferFailureLogic,[Notify] DestroyingEntity,"Entity 'Severe_Urgent.57' failed to initiate transfer from node 'Input@TreatmentRooms'. The entity is being automatically destroyed. However, this warning may indicate a problem in the modeled logic."
+2.94189524733051,Severe_Urgent.60,Output@TreatmentRooms,1.TransferFailureLogic,[Notify] DestroyingEntity,Entity 'Severe_Urgent.60' failed to initiate transfer from node
+2.94189524733051,Severe_Urgent.60,Output@TreatmentRooms,1.TransferFailureLogic,[Notify] DestroyingEntity,"Entity 'Severe_Urgent.60' failed to initiate transfer from node 'Output@TreatmentRooms'. The entity is being automatically destroyed. However, this warning may indicate a problem in the modeled logic."
+
