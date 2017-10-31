@@ -1,5 +1,5 @@
 ---
-title: "R Notebook"
+title: "Chapter 6 Homework"
 output: html_notebook
 ---
 
@@ -7,6 +7,7 @@ output: html_notebook
 library(xlsx)
 library(fitdistrplus)
 library(MASS)
+library(tidyverse)
 ```
 
 Kelton Chapter 6 problems
@@ -162,6 +163,9 @@ for (i in names(produce)){
 }
 
 for (i in names(produce)){
+print(paste(i, "total cost = ", sum(produce[[i]]$total.cost)))
+print(paste(i, "total revenue = ", sum(produce[[i]]$total.rev)))
 print(paste(i, "profit = ", sum(produce[[i]]$total.rev - produce[[i]]$total.cost)))
+  
 }
 ```
