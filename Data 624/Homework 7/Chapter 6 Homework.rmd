@@ -3,11 +3,19 @@ title: "R Notebook"
 output: html_notebook
 ---
 
+```{r, include=FALSE}
+library(AppliedPredictiveModeling)
+library(Amelia)
+library(doParallel)
+library(missForest)
+library(cwhmisc)
+```
+
 # Chapter 6 (HW 6.3)
 
 A chemical manufacturing process for a pharmaceutical product was discussed in Sect. 1.4. In this problem, the objective is the understand the relationship between biological measurements of the raw materials (predictors), measurements of the manufacturing process (predictors), and the response of product yield. Biological predictors cannot be changed but can be used to assess the quality of the raw material before processing. On the other hand, manufacturing process predictors can be changed in the manufacturing process. Improving product yield by 1 % will boost revenu by approximately one hundreed thousand dollars per batch. 
 
-a. Start $ and use the commondas to load the data:
+a. Start $ and use the commands to load the data:
 
 ```{r}
 library(AppliedPredictiveModeling)
@@ -19,13 +27,44 @@ The matrix processPredictors contains the 57 predictors (12 describing the input
 b. A small percentage of cells in the predictor set contains missing values. Use an imputation function to fill in these missing values.
 
 ```{r}
+library(Amelia)
+missmap(ChemicalManufacturingProcess)
+```
+> It appears that the missing values are quite minor and seem to be missing at random. 
 
+```{r}
+library(doParallel)
+library(missForest)
+
+registerDoParallel(cores=3)
+chem.imput <- missForest(ChemicalManufacturingProcess, ntree = 100, parallelize = "forests")$ximp
 ```
 
 c. Split the data into a training and a test set, pre-process the data, and tun a model of your choice from this chapter. What is the optimal value of the performance metric?
 
+```{r}
+library(tidyverse)
+ggcorplot(chem.imput)
+```
+
+
 d. Predict the response for the test set. What is the value of the perofmrance metric and how does this compare with the resampled performance metric on the training set?
+
+```{r}
+
+```
+
 
 e. Which predictors are most important in the model you have trained? Do either the biological or process predictors dominate the list?
 
+```{r}
+
+```
+
+
 f. Explore the relationships between each of the top predictors and the respones. How would this information be helpful in improving yeild in future runs of the manufacturing process?
+
+```{r}
+
+```
+

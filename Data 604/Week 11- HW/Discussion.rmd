@@ -1,7 +1,15 @@
 ---
-title: "9.3 Discussion"
-output: html_notebook
+title: "9.4 Discussion"
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
 ---
+
+```{r, warning=FALSE, message=FALSE}
+library(tidyverse)
+library(scales)
+```
 
 9.4 Implement a random walk Metropolis sampler for generating the standard Laplace distribution (see Exercise 3.2). For the increment, simulate from a normal distribution. Compare the chains generated when different variances are used for the proposal distribution. Also, compute the acceptance rates of each chain.
 
@@ -11,7 +19,7 @@ The standard Laplace distribution which has density $f(x) = \frac{1}{2}e^{-|x|},
 ```{r}
 laplace_dist <- function(x){return((1/2)*exp(-abs(x)))}
 
-RW.Metro.Laplace <- function(n, sigma, x.0, N) { 
+RW.Metro.Laplace <- function(sigma, x.0, N) { 
                       x <- numeric(N) 
                       x[1] <- x.0 
                       u <- runif(N) 
@@ -28,5 +36,23 @@ RW.Metro.Laplace <- function(n, sigma, x.0, N) {
                     }
 ```
 
+```{r}
+N <- 200
+sigma <- c(1/3, 2/3, 1, 3)
+x.0 <- 100
+results <- NULL 
 
-Rizzo; Maria L.. Statistical Computing with R (Chapman & Hall/CRC The R Series) (Page 277). Taylor and Francis CRC ebook account. Kindle Edition. 
+for (i in 1:length(sigma)){
+  a <- c(.05, seq(.1, .9, .1), .95)
+  results[[i]] <- c(sigma_used = sigma[i], N = N, result = 
+                    list(RW.Metro.Laplace(sigma = sigma[i], x.0 = x.0, N = N))) %>% 
+                  c(., accepted.perc = scales::percent(1-unlist(.[[3]]['k'])/N),
+                       quantile = list(quantile(unlist(.[[3]]['x']), a)))
+}
+```
+
+```{r}
+results %>% map(., function(x) c(x[1], x[4], x[5]))
+```
+
+Rizzo; Maria L.. Statistical Computing with R (Chapman & Hall/CRC The R Series) (Page 254). Taylor and Francis CRC ebook account. Kindle Edition. 
