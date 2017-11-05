@@ -1,0 +1,4 @@
+Time(Minutes),EntityID,ObjectName,ProcessID,StepName,Action
+12390.9969975803,--,--,--,--,The maximum number in system limit for entities of type 'RegularCustomer' has been exceeded.
+12390.9969975803,--,--,--,--,Possible causes:
+
