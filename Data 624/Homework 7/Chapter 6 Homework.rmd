@@ -40,15 +40,29 @@ registerDoParallel(cores=3)
 chem.imput <- missForest(ChemicalManufacturingProcess, ntree = 100, parallelize = "forests")$ximp
 ```
 
-c. Split the data into a training and a test set, pre-process the data, and tun a model of your choice from this chapter. What is the optimal value of the performance metric?
+c. Split the data into a training and a test set, pre-process the data, and tune a model of your choice from this chapter. What is the optimal value of the performance metric?
+
+> Splitting the test and training data set 
 
 ```{r}
+set.seed(123)
 library(tidyverse)
-ggcorplot(chem.imput)
+data.set  <- list(num.obs = floor(0.75 * nrow(chem.imput))) %>% 
+              c(., list(org.data.set = chem.imput)) %>%
+              c(., train.index = list(sample(seq_len(nrow(chem.imput)), size = .$num.obs))) %>%
+              c(., train = list(as.data.frame(chem.imput[.$train.index,])), test = list(as.data.frame(chem.imput[-.$train.index,])))
+```
+
+```{r}
+library(psych)
+multi.hist(data.set$org.data.set[1:8])
+multi.hist(data.set$org.data.set[9:16])
+multi.hist(data.set$org.data.set[17:24])
+multi.hist(data.set$org.data.set[25:32])
 ```
 
 
-d. Predict the response for the test set. What is the value of the perofmrance metric and how does this compare with the resampled performance metric on the training set?
+d. Predict the response for the test set. What is the value of the performance metric and how does this compare with the resampled performance metric on the training set?
 
 ```{r}
 
