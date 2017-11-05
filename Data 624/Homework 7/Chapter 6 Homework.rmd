@@ -13,7 +13,7 @@ library(cwhmisc)
 
 # Chapter 6 (HW 6.3)
 
-A chemical manufacturing process for a pharmaceutical product was discussed in Sect. 1.4. In this problem, the objective is the understand the relationship between biological measurements of the raw materials (predictors), measurements of the manufacturing process (predictors), and the response of product yield. Biological predictors cannot be changed but can be used to assess the quality of the raw material before processing. On the other hand, manufacturing process predictors can be changed in the manufacturing process. Improving product yield by 1 % will boost revenu by approximately one hundreed thousand dollars per batch. 
+A chemical manufacturing process for a pharmaceutical product was discussed in Sect. 1.4. In this problem, the objective is the understand the relationship between biological measurements of the raw materials (predictors), measurements of the manufacturing process (predictors), and the response of product yield. Biological predictors cannot be changed but can be used to assess the quality of the raw material before processing. On the other hand, manufacturing process predictors can be changed in the manufacturing process. Improving product yield by 1 % will boost revenue by approximately one hundred thousand dollars per batch. 
 
 a. Start $ and use the commands to load the data:
 
@@ -61,6 +61,27 @@ multi.hist(data.set$org.data.set[17:24])
 multi.hist(data.set$org.data.set[25:32])
 ```
 
+The distributions of several of the variables are noticeably skewed, so we will obtain the box cox transformation lambda
+
+```{r}
+variables.to.transform <- c("BiologicalMaterial04", "ManufacturingProcess01",
+                            "ManufacturingProcess02","ManufacturingProcess03",
+                            "ManufacturingProcess06", "ManufacturingProcess07",
+                            "ManufacturingProcess08","ManufacturingProcess12",
+                            "ManufacturingProcess16","ManufacturingProcess18") 
+
+
+results <- NULL
+for (i in 1:length(variables.to.transform)){
+  results[[i]] <- list(variable = variables.to.transform[[i]],
+                       lambda = BoxCox.lambda(data.set$org.data.set[,variables.to.transform[[i]]]))}
+```
+
+
+```{r}
+
+```
+
 
 d. Predict the response for the test set. What is the value of the performance metric and how does this compare with the resampled performance metric on the training set?
 
@@ -76,7 +97,7 @@ e. Which predictors are most important in the model you have trained? Do either 
 ```
 
 
-f. Explore the relationships between each of the top predictors and the respones. How would this information be helpful in improving yeild in future runs of the manufacturing process?
+f. Explore the relationships between each of the top predictors and the response. How would this information be helpful in improving yield in future runs of the manufacturing process?
 
 ```{r}
 
