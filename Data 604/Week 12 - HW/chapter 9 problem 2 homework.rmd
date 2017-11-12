@@ -1,0 +1,31 @@
+---
+title: "Kelton, Chapter 9 problem 2"
+output:
+  prettydoc::html_pretty:
+    theme: github
+    highlight: github
+---
+
+2. Modify Model 9-1 to support preemption of the Doctor resource for Urgent Patients. In particular, if all doctors are busy when an Urgent patient arrives, the Urgent patient should preempt a doctor from one of the other non-Urgent patients. Compare the results of the models. Would you advise that the emergency department make the corresponding change in the real system. 
+
+> Model Set up
+
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20604/Week%2012%20-%20HW/Model%20Set%20Up.PNG)
+
+> Original results
+
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20604/Week%2012%20-%20HW/Org%20Model%20Results.PNG)
+
+> Interrupting instructions from SimBits
+
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20604/Week%2012%20-%20HW/SimBits%20Instructions%20for%20Interrupting.PNG)
+
+> Add-on process for our interruption
+
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20604/Week%2012%20-%20HW/interrupt%20process.PNG)
+
+> Results after implementing instructions
+
+![](https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20604/Week%2012%20-%20HW/Final%20Model%20Results.PNG)
+
+> The instructions for an interruption process yieled the same results. We can implement this change as it has no discernable impact on processing. I am concerned that this is more of an issue related to the unintuitive nature of Simio than this process having no actual impact so I look forward to any feedback. 
