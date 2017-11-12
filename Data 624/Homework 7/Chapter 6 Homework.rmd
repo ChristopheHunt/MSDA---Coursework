@@ -26,34 +26,26 @@ The matrix processPredictors contains the 57 predictors (12 describing the input
 
 b. A small percentage of cells in the predictor set contains missing values. Use an imputation function to fill in these missing values.
 
-```{r}
+```{r, cache=TRUE}
 library(Amelia)
 missmap(ChemicalManufacturingProcess)
 ```
 > It appears that the missing values are quite minor and seem to be missing at random. 
 
-```{r}
+```{r, cache=TRUE}
 library(doParallel)
 library(missForest)
 
 registerDoParallel(cores=3)
 chem.imput <- missForest(ChemicalManufacturingProcess, ntree = 100, parallelize = "forests")$ximp
+data.set <- list(org.data.set = chem.imput)
 ```
 
 c. Split the data into a training and a test set, pre-process the data, and tune a model of your choice from this chapter. What is the optimal value of the performance metric?
 
-> Splitting the test and training data set 
+> Lets explore the distribution of the variables
 
-```{r}
-set.seed(123)
-library(tidyverse)
-data.set  <- list(num.obs = floor(0.75 * nrow(chem.imput))) %>% 
-              c(., list(org.data.set = chem.imput)) %>%
-              c(., train.index = list(sample(seq_len(nrow(chem.imput)), size = .$num.obs))) %>%
-              c(., train = list(as.data.frame(chem.imput[.$train.index,])), test = list(as.data.frame(chem.imput[-.$train.index,])))
-```
-
-```{r}
+```{r, cache=TRUE}
 library(psych)
 multi.hist(data.set$org.data.set[1:8])
 multi.hist(data.set$org.data.set[9:16])
@@ -63,23 +55,61 @@ multi.hist(data.set$org.data.set[25:32])
 
 The distributions of several of the variables are noticeably skewed, so we will obtain the box cox transformation lambda
 
-```{r}
+```{r, cache=TRUE}
 variables.to.transform <- c("BiologicalMaterial04", "ManufacturingProcess01",
                             "ManufacturingProcess02","ManufacturingProcess03",
                             "ManufacturingProcess06", "ManufacturingProcess07",
                             "ManufacturingProcess08","ManufacturingProcess12",
                             "ManufacturingProcess16","ManufacturingProcess18") 
 
-
 results <- NULL
 for (i in 1:length(variables.to.transform)){
   results[[i]] <- list(variable = variables.to.transform[[i]],
                        lambda = BoxCox.lambda(data.set$org.data.set[,variables.to.transform[[i]]]))}
+results
 ```
 
+> We have our lambda transformations and we can apply them to our data set then set our test and train splices. 
+
+```{r, cache=TRUE}
+trans.data.set <- data.set$org.data.set %>% 
+                    mutate(BiologicalMaterial04.boxcoxtrans = 
+                             BoxCox(BiologicalMaterial04, -0.99992424816297),
+                           ManufacturingProcess01.boxcoxtrans = 
+                             BoxCox(ManufacturingProcess01, 1.99995900720725),
+                           ManufacturingProcess02.boxcoxtrans = 
+                             BoxCox(ManufacturingProcess02, 1.99995900720725),
+                           ManufacturingProcess03.boxcoxtrans = 
+                             BoxCox(ManufacturingProcess03, -0.99992424816297),
+                           ManufacturingProcess06.boxcoxtrans = 
+                             BoxCox(ManufacturingProcess06, -0.99992424816297),
+                           ManufacturingProcess07.boxcoxtrans = 
+                             BoxCox(ManufacturingProcess07,-0.99992424816297),
+                           ManufacturingProcess08.boxcoxtrans = 
+                             BoxCox(ManufacturingProcess08, 1.99992424816297),
+                           ManufacturingProcess12.boxcoxtrans = 
+                             BoxCox(ManufacturingProcess12, 0.0000410225926326142),
+                           ManufacturingProcess16.boxcoxtrans = 
+                             BoxCox(ManufacturingProcess16, 1.99995900720725),
+                           ManufacturingProcess18.boxcoxtrans = 
+                             BoxCox(ManufacturingProcess18, 1.99995900720725))
+```
+
+> Splitting the test and training data set 
 
 ```{r}
+set.seed(123)
+```
 
+```{r, cache=TRUE}
+data.set <- c(data.set, list(trans.data.set = trans.data.set))  %>% 
+            c(., list(train.test.split = floor(0.75 * nrow(chem.imput)))) %>% 
+            c(., train.index = list(sample(seq_len(nrow(chem.imput)), size = .$train.test.split))) %>%
+            c(., train = list(as.data.frame(chem.imput[.$train.index,])), test = list(as.data.frame(chem.imput[-.$train.index,])))
+```
+
+```{r}
+data.set[1]
 ```
 
 
