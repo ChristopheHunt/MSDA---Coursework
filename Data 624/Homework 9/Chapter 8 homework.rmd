@@ -24,9 +24,12 @@ library(caret)
 model1 <- randomForest(y ~., data = simulated, importance = TRUE,
                        ntree = 1000)
 rfImp <- varImp(model1, scale = FALSE)
+rfImp
 ```
 
-Does the random forest model significantly use the uninformative predictors (V6-V10)
+Does the random forest model significantly use the uninformative predictors (V6-V10).
+
+> The random forest does not use the uniformative predictors. In fact, the variable importance is in line with the variable numbering.  
 
 b. Now add an additional predictor that is highly correlated with one of the informative predictors. For Example:
 
@@ -36,6 +39,15 @@ cor(simulated$duplicate1, simulated$V1)
 ```
 
 Fit another random forest model to these data. Did the importance score for V1 change? What happens when you add another predictor that is also highly correlated with V1?
+
+
+```{r}
+model1 <- randomForest(y ~., data = simulated, importance = TRUE,
+                       ntree = 1000)
+rfImp <- varImp(model1, scale = FALSE)
+rfImp
+```
+
 
 c. Use the cforest function in the party package to fit a random forest model using conditional inference trees. The part package function varimp can calculate predictor importance. The conditional argument of that function toggles between the traditional importance measure and the modified version described in Strobl et Al. (2007). Do these importance show the same pattern as the traditional random forest model?
 
