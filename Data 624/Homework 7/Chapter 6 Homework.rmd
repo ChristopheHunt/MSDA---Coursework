@@ -9,6 +9,11 @@ library(Amelia)
 library(doParallel)
 library(missForest)
 library(cwhmisc)
+library(MASS)
+library(forecast)
+library(tidyverse)
+library(pls)
+library(caret)
 ```
 
 # Chapter 6 (HW 6.3)
@@ -105,27 +110,39 @@ set.seed(123)
 data.set <- c(data.set, list(trans.data.set = trans.data.set))  %>% 
             c(., list(train.test.split = floor(0.75 * nrow(chem.imput)))) %>% 
             c(., train.index = list(sample(seq_len(nrow(chem.imput)), size = .$train.test.split))) %>%
-            c(., train = list(as.data.frame(chem.imput[.$train.index,])), test = list(as.data.frame(chem.imput[-.$train.index,])))
+            c(., train = list(as.data.frame(trans.data.set[.$train.index,])), test = list(as.data.frame(trans.data.set[-.$train.index,])))
 ```
+
+> Now we can proceed with the model of choice which is the Partial Least Squares
 
 ```{r}
-data.set[1]
-```
+library(pls)
+chem.plsFit <- plsr(Yield ~ ., data =  data.set$train, validation = "CV")
 
+# Find the number of dimensions with lowest cross validation error
+cv <- RMSEP(chem.plsFit)
+best.dims <- which.min(cv$val[estimate = "adjCV", , ]) - 1
+ 
+chem.plsFit <- plsr(Yield ~ ., data =  data.set$train, ncomp = best.dims)
+```
 
 d. Predict the response for the test set. What is the value of the performance metric and how does this compare with the resampled performance metric on the training set?
 
 ```{r}
-
+chem.plsPredict <- predict(chem.plsFit, data = data.set$test)
 ```
 
 
 e. Which predictors are most important in the model you have trained? Do either the biological or process predictors dominate the list?
 
 ```{r}
-
+library(data.table)
+dt <- setDT(varImp(chem.plsFit), keep.rownames = TRUE)[]
+options(scipen=99)
+dt[order(-Overall)]
 ```
 
+> We do see that a boxcox transformed variable for Biological Material tops the list signifcantly but we do see many more manufacturing process in the top list than biological. 
 
 f. Explore the relationships between each of the top predictors and the response. How would this information be helpful in improving yield in future runs of the manufacturing process?
 
