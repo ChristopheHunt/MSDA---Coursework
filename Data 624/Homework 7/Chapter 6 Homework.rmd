@@ -113,25 +113,47 @@ data.set <- c(data.set, list(trans.data.set = trans.data.set))  %>%
             c(., train = list(as.data.frame(trans.data.set[.$train.index,])), test = list(as.data.frame(trans.data.set[-.$train.index,])))
 ```
 
-> Now we can proceed with the model of choice which is the Partial Least Squares
+> Now we can proceed with the model of choice which is the Partial Least Squares. Note that the evaluation below relied heavily on this rpubs post- https://rpubs.com/omicsdata/pls.
 
 ```{r}
 library(pls)
 chem.plsFit <- plsr(Yield ~ ., data =  data.set$train, validation = "CV")
-
-# Find the number of dimensions with lowest cross validation error
-cv <- RMSEP(chem.plsFit)
-best.dims <- which.min(cv$val[estimate = "adjCV", , ]) - 1
- 
-chem.plsFit <- plsr(Yield ~ ., data =  data.set$train, ncomp = best.dims)
+validationplot(chem.plsFit, val.type="RMSEP")
 ```
+
+> We see a steep increase at 10 components followed by many mountains and valleys. Our intention is to select the most optimal number of components to minimize the RMSE. 
+
+```{r}
+pls.RMSEP <- RMSEP(chem.plsFit, estimate="CV") 
+plot(pls.RMSEP, main="RMSEP PLS Solubility", xlab="components")
+min_comp <- which.min(pls.RMSEP$val)
+points(min_comp, min(pls.RMSEP$val), pch=1, col="red", cex=1.5)
+```
+
+> Our optimal number of components is 4. 
+
+[1] RPubs - Partial Least Square Regression. N.p., n.d. Web. 14 Nov. 2017. - https://rpubs.com/omicsdata/pls
+
 
 d. Predict the response for the test set. What is the value of the performance metric and how does this compare with the resampled performance metric on the training set?
 
+> Our results from our training set 
+
 ```{r}
-chem.plsPredict <- predict(chem.plsFit, data = data.set$test)
+chem.plsPredict.train <-  predict(chem.plsFit, data = data.set$train, ncomp = min_comp)
+pls.eval <- data.frame(obs = data.set$train[,1], pred = chem.plsPredict.train[,1,1])
+defaultSummary(pls.eval)
 ```
 
+> Results from the test set
+
+```{r}
+chem.plsPredict <- predict(chem.plsFit, data = data.set$test, ncomp = min_comp)
+pls.eval <- data.frame(obs = data.set$test[,1], pred = chem.plsPredict[,1,1])
+defaultSummary(pls.eval)
+```
+
+> While our RMSE is within range of both the training and test data set the Rsquared is significantly less for the test set suggesting a model that does not explain much of the variation. This may not be the most optimal model. 
 
 e. Which predictors are most important in the model you have trained? Do either the biological or process predictors dominate the list?
 
@@ -142,11 +164,22 @@ options(scipen=99)
 dt[order(-Overall)]
 ```
 
-> We do see that a boxcox transformed variable for Biological Material tops the list signifcantly but we do see many more manufacturing process in the top list than biological. 
+> We see that the Manufacturing Processes dominate the list for variable importance with a few biological materials having importance.  
 
 f. Explore the relationships between each of the top predictors and the response. How would this information be helpful in improving yield in future runs of the manufacturing process?
 
-```{r}
+> The top manufacturing process is ManufacturingProcess40
 
+```{r}
+data.set$org.data.set %>% select(Yield, ManufacturingProcess40) %>% cor() %>% .[2]
 ```
 
+We see a negative correlation ManufacturingProcess40 and Yield, which suggests that ManufacturingProcess40 represents a process that can decrease the Yield. We cannot say that ManufacturingProcess40 itself decrease Yield, only that a negative relationship exists. 
+
+> The top biological process is BiologicalMaterial12
+
+```{r}
+data.set$org.data.set %>% select(Yield, BiologicalMaterial12) %>% cor() %>% .[2]
+```
+
+We actually see the opposite for the Biological indicator in that there is a positive correlation to Yield. We cannot say that BiologicalMaterial12 itself improves Yield, only that a positive relationship exists. 
