@@ -172,14 +172,29 @@ $(document).ready(function () {
 
 
 <!-- rnb-text-begin -->
-<p>Chapter 7 Homework HW 7.2 and 7.5</p>
-<p>7.2 Friedman (1991) introduced several benchmark data sets created by simulation. One of these simulations used the following nonlinear equation to create data:</p>
-<p><span class="math display">\[y = 10sin(\pi x_1 x_2) + 20(x_3 -0.5)^2+10x_4 +5x_5 + N(0,\sigma^2)\]</span> where the ex values are random variables uniformly distributed between [0,1] (there are also 5 0ther non-informative variables also created in simulation). The package mlbench contains a funciton called mlbench.friedman1 that simulats these data:</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShtbGJlbmNoKVxuc2V0LnNlZWQoMjAwKVxudHJhaW5pbmdEYXRhIDwtIG1sYmVuY2guZnJpZWRtYW4xKDIwMCwgc2QgPSAxKVxudHJhaW5pbmdEYXRhJHggPC0gZGF0YS5mcmFtZSh0cmFpbmluZ0RhdGEkeClcbiNmZWF0dXJlUGxvdCh0cmFpbmluZ0RhdGEkeCwgdHJhaW5pbmdEYXRhJHkpXG50ZXN0RGF0YSA8LSBtbGJlbmNoLmZyaWVkbWFuMSg1MDAwLCBzZCA9IDEpXG50ZXN0RGF0YSR4IDwtIGRhdGEuZnJhbWUodGVzdERhdGEkeClcbmBgYCJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShtbGJlbmNoKVxubGlicmFyeShjYXJldClcbmxpYnJhcnkoQXBwbGllZFByZWRpY3RpdmVNb2RlbGluZylcbmxpYnJhcnkobm5ldClcbmxpYnJhcnkoZWFydGgpXG5saWJyYXJ5KGtlcm5sYWIpXG5saWJyYXJ5KE1BU1MpXG5saWJyYXJ5KGZvcmVjYXN0KVxubGlicmFyeSh0aWR5dmVyc2UpXG5saWJyYXJ5KE1ldHJpY3MpXG5gYGAifQ== -->
 <pre class="r"><code>library(mlbench)
-set.seed(200)
+library(caret)
+library(AppliedPredictiveModeling)
+library(nnet)
+library(earth)
+library(kernlab)
+library(MASS)
+library(forecast)
+library(tidyverse)
+library(Metrics)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Chapter 7 Homework HW 7.2 and 7.5</p>
+<p>7.2 Friedman (1991) introduced several benchmark data sets created by simulation. One of these simulations used the following nonlinear equation to create data:</p>
+<p><span class="math display">\[y = 10sin(\pi x_1 x_2) + 20(x_3 -0.5)^2+10x_4 +5x_5 + N(0,\sigma^2)\]</span> where the ex values are random variables uniformly distributed between [0,1] (there are also 5 0other non-informative variables also created in simulation). The package mlbench contains a function called mlbench.friedman1 that simulates these data:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2V0LnNlZWQoMjAwKVxudHJhaW5pbmdEYXRhIDwtIG1sYmVuY2guZnJpZWRtYW4xKDIwMCwgc2QgPSAxKVxudHJhaW5pbmdEYXRhJHggPC0gZGF0YS5mcmFtZSh0cmFpbmluZ0RhdGEkeClcbiNmZWF0dXJlUGxvdCh0cmFpbmluZ0RhdGEkeCwgdHJhaW5pbmdEYXRhJHkpXG50ZXN0RGF0YSA8LSBtbGJlbmNoLmZyaWVkbWFuMSg1MDAwLCBzZCA9IDEpXG50ZXN0RGF0YSR4IDwtIGRhdGEuZnJhbWUodGVzdERhdGEkeClcbmBgYCJ9 -->
+<pre class="r"><code>set.seed(200)
 trainingData &lt;- mlbench.friedman1(200, sd = 1)
 trainingData$x &lt;- data.frame(trainingData$x)
 #featurePlot(trainingData$x, trainingData$y)
@@ -188,17 +203,100 @@ testData$x &lt;- data.frame(testData$x)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>Tune several modesl on these data.</p>
-<p>Which models appear to give the best performance? Does MARS select informative predictors (those named X1-X15).</p>
+<p>Tune several models on these data.</p>
+<blockquote>
+<p>Training Neural Net</p>
+</blockquote>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubm5ldEZpdCA8LSBubmV0KHRlc3REYXRhJHgsIHRlc3REYXRhJHksXG4gICAgICAgICAgICAgICAgc2l6ZSA9IDUsXG4gICAgICAgICAgICAgICAgZGVjYXkgPSAuMDEsXG4gICAgICAgICAgICAgICAgbWF4aXQgPSA1MDAsXG4gICAgICAgICAgICAgICAgTWF4Tld0cyA9IDUgKiAobmNvbCh0ZXN0RGF0YSR4KSArIDEpICsgNSArIDEpXG5gYGAifQ== -->
+<pre class="r"><code>nnetFit &lt;- nnet(testData$x, testData$y,
+                size = 5,
+                decay = .01,
+                maxit = 500,
+                MaxNWts = 5 * (ncol(testData$x) + 1) + 5 + 1)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiIyB3ZWlnaHRzOiAgNjFcbmluaXRpYWwgIHZhbHVlIDEwOTA0MjMuNTAyNjIzIFxuaXRlciAgMTAgdmFsdWUgMTAyMTAyOC4wNzgyNzVcbml0ZXIgIDIwIHZhbHVlIDEwMTkyMDguMjI3MjA2XG5pdGVyICAzMCB2YWx1ZSAxMDE5MTYxLjA4MzA1MVxuaXRlciAgNDAgdmFsdWUgMTAxOTE1NC4zODAyMDhcbmZpbmFsICB2YWx1ZSAxMDE5MTUzLjg0NDA2MCBcbmNvbnZlcmdlZFxuIn0= -->
+<pre><code># weights:  61
+initial  value 1090423.502623 
+iter  10 value 1021028.078275
+iter  20 value 1019208.227206
+iter  30 value 1019161.083051
+iter  40 value 1019154.380208
+final  value 1019153.844060 
+converged</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucmVzdWx0cyA8LSBwcmVkaWN0KG5uZXRGaXQsIHRyYWluaW5nRGF0YSR4KSAlPiUgY2JpbmQoLix0cmFpbmluZ0RhdGEkeSkgJT4lIGFzLmRhdGEuZnJhbWUoKVxuY29sbmFtZXMocmVzdWx0cykgPC0gYyhcInByZWRpY3RlZFwiLCBcImFjdHVhbFwiKVxucm1zZShyZXN1bHRzJGFjdHVhbCwgcmVzdWx0cyRwcmVkaWN0ZWQpXG5gYGAifQ== -->
+<pre class="r"><code>results &lt;- predict(nnetFit, trainingData$x) %&gt;% cbind(.,trainingData$y) %&gt;% as.data.frame()
+colnames(results) &lt;- c(&quot;predicted&quot;, &quot;actual&quot;)
+rmse(results$actual, results$predicted)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDE0LjI5NjFcbiJ9 -->
+<pre><code>[1] 14.2961</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<blockquote>
+<p>Training MARS</p>
+</blockquote>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWFyc0ZpdCA8LSBlYXJ0aCh0ZXN0RGF0YSR4LCB0ZXN0RGF0YSR5KVxucmVzdWx0cyA8LSBwcmVkaWN0KG1hcnNGaXQsIHRyYWluaW5nRGF0YSR4KSAlPiUgY2JpbmQoLix0cmFpbmluZ0RhdGEkeSkgJT4lIGFzLmRhdGEuZnJhbWUoKVxuY29sbmFtZXMocmVzdWx0cykgPC0gYyhcInByZWRpY3RlZFwiLCBcImFjdHVhbFwiKVxucm1zZShyZXN1bHRzJGFjdHVhbCwgcmVzdWx0cyRwcmVkaWN0ZWQpXG5gYGAifQ== -->
+<pre class="r"><code>marsFit &lt;- earth(testData$x, testData$y)
+results &lt;- predict(marsFit, trainingData$x) %&gt;% cbind(.,trainingData$y) %&gt;% as.data.frame()
+colnames(results) &lt;- c(&quot;predicted&quot;, &quot;actual&quot;)
+rmse(results$actual, results$predicted)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDEuNTA5MjExXG4ifQ== -->
+<pre><code>[1] 1.509211</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<blockquote>
+<p>Train K-Nearest Neighbors</p>
+</blockquote>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxua25uVHVuZSA8LSB0cmFpbih0ZXN0RGF0YSR4LCB0ZXN0RGF0YSR5LCBcbiAgICAgICAgICAgICAgICBtZXRob2QgPSBcImtublwiLCBcbiAgICAgICAgICAgICAgICBwcmVQcm9jID0gYyhcImNlbnRlclwiLCBcInNjYWxlXCIpKVxucmVzdWx0cyA8LSBwcmVkaWN0KGtublR1bmUsIHRyYWluaW5nRGF0YSR4KSAlPiUgY2JpbmQoLix0cmFpbmluZ0RhdGEkeSkgJT4lIGFzLmRhdGEuZnJhbWUoKVxuY29sbmFtZXMocmVzdWx0cykgPC0gYyhcInByZWRpY3RlZFwiLCBcImFjdHVhbFwiKVxucm1zZShyZXN1bHRzJGFjdHVhbCwgcmVzdWx0cyRwcmVkaWN0ZWQpXG5gYGAifQ== -->
+<pre class="r"><code>knnTune &lt;- train(testData$x, testData$y, 
+                method = &quot;knn&quot;, 
+                preProc = c(&quot;center&quot;, &quot;scale&quot;))
+results &lt;- predict(knnTune, trainingData$x) %&gt;% cbind(.,trainingData$y) %&gt;% as.data.frame()
+colnames(results) &lt;- c(&quot;predicted&quot;, &quot;actual&quot;)
+rmse(results$actual, results$predicted)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDIuMDA4ODMyXG4ifQ== -->
+<pre><code>[1] 2.008832</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Which models appear to give the best performance? Does MARS select informative predictors (those named X1-X5).</p>
+<blockquote>
+<p>The model with the lowest performance metric that we are using is the RMSE value of 1.509 for the MARS method.</p>
+</blockquote>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibmNvbCI6MSwibnJvdyI6MTB9LCJyZGYiOiJINHNJQUFBQUFBQUFCZ3R5aVREaWl1QmlZR0JnWW1CbUFaTE1RQ1lMRTVCZ1pHQmg0QVRSRlF3TXpNSmdBUVlHUGlEbWNvaGtBQU9Ia0lEakVXKys3M1lJbUxKK00xOTlnNE9IUjVQTCtzTTlEZzQ4bkFtV2UvUVppQVlvRnJMbUplYW1GZ01aQWtpQzdQNWxxVVdKT1Rsb2FqbUw4c3Yxa05WelFTV1lJa3pnTEVNNHl3ak9Nb1d6ak9Fc016akxITTZ5Z0xNc29Tem1DRU1EZEJjbjV5UVdvN3VZS3lXeEpGRXZyUWpvT0NEdkg1b1c5dnlDa3N6OFBLQW1KbERZc3FKcFppeENFeEFvelFONU0wVTNPYU0wTDF2WHdnanNWMGlrZ0RBdmxPWkNZak5DN0dUNkR6V0xGV29XVzJwZWVtWmVLc3p4T1lsSnFUbFFEaDh3UE1IQnFWZFFsSmxYQXZNS1VMUllyeVMvSkJHbWppczVQd2NtQXZZY3d6OEFlSEJVb2tvQ0FBQT0ifQ== -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Overall"],"name":[1],"type":["dbl"],"align":["right"]}],"data":[{"1":"100.00000","_rn_":"X4"},{"1":"81.26217","_rn_":"X1"},{"1":"66.32322","_rn_":"X2"},{"1":"48.56648","_rn_":"X5"},{"1":"32.09404","_rn_":"X3"},{"1":"0.00000","_rn_":"X6"},{"1":"0.00000","_rn_":"X7"},{"1":"0.00000","_rn_":"X8"},{"1":"0.00000","_rn_":"X9"},{"1":"0.00000","_rn_":"X10"}],"options":{"columns":{"min":{},"max":[10],"total":[1]},"rows":{"min":[10],"max":[10],"total":[10]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<blockquote>
+<p>The MARS method did select variables with the most important of X1-X5 as shown in our previous table.</p>
+</blockquote>
 <p>7.5 Exercise 6.3 describes data for a chemical manufacturing process. Use the same data imputation, data splitting, and pre-processing steps as before and train several nonlinear regression models.</p>
 <ol style="list-style-type: lower-alpha">
-<li><p>Which nonlinear regressoin model gives the optimal resampling and test set performance?</p></li>
-<li><p>Which predictors are the moost important in the optimal nonlinear regressoin model? Do either the biological or process variables dominatre the list? How do the top ten important predictors compare to the top ten predictors from the optimal linear model?</p></li>
-<li><p>Explore the reltionships between the top predicrotres and the response for the predictors that are unique to the optimale nonlinear regression model. Do these plots reveal intuition about the biological or process predictors and their relationship with yield?</p></li>
+<li><p>Which nonlinear regression model gives the optimal re-sampling and test set performance?</p></li>
+<li><p>Which predictors are the most important in the optimal nonlinear regression model? Do either the biological or process variables dominate the list? How do the top ten important predictors compare to the top ten predictors from the optimal linear model?</p></li>
+<li><p>Explore the relationships between the top predictors and the response for the predictors that are unique to the optimal nonlinear regression model. Do these plots reveal intuition about the biological or process predictors and their relationship with yield?</p></li>
 </ol>
 <!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIlIgTm90ZWJvb2siDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQpDaGFwdGVyIDcgSG9tZXdvcmsgSFcgNy4yIGFuZCA3LjUNCg0KNy4yIEZyaWVkbWFuICgxOTkxKSBpbnRyb2R1Y2VkIHNldmVyYWwgYmVuY2htYXJrIGRhdGEgc2V0cyBjcmVhdGVkIGJ5IHNpbXVsYXRpb24uIE9uZSBvZiB0aGVzZSBzaW11bGF0aW9ucyB1c2VkIHRoZSBmb2xsb3dpbmcgbm9ubGluZWFyIGVxdWF0aW9uIHRvIGNyZWF0ZSBkYXRhOg0KDQokJHkgPSAxMHNpbihccGkgeF8xIHhfMikgKyAyMCh4XzMgLTAuNSleMisxMHhfNCArNXhfNSArIE4oMCxcc2lnbWFeMikkJA0Kd2hlcmUgdGhlIGV4IHZhbHVlcyBhcmUgcmFuZG9tIHZhcmlhYmxlcyB1bmlmb3JtbHkgZGlzdHJpYnV0ZWQgYmV0d2VlbiBbMCwxXSAodGhlcmUgYXJlIGFsc28gNSAwdGhlciBub24taW5mb3JtYXRpdmUgdmFyaWFibGVzIGFsc28gY3JlYXRlZCBpbiBzaW11bGF0aW9uKS4gVGhlIHBhY2thZ2UgbWxiZW5jaCBjb250YWlucyBhIGZ1bmNpdG9uIGNhbGxlZCBtbGJlbmNoLmZyaWVkbWFuMSB0aGF0IHNpbXVsYXRzIHRoZXNlIGRhdGE6DQoNCmBgYHtyfQ0KbGlicmFyeShtbGJlbmNoKQ0Kc2V0LnNlZWQoMjAwKQ0KdHJhaW5pbmdEYXRhIDwtIG1sYmVuY2guZnJpZWRtYW4xKDIwMCwgc2QgPSAxKQ0KdHJhaW5pbmdEYXRhJHggPC0gZGF0YS5mcmFtZSh0cmFpbmluZ0RhdGEkeCkNCiNmZWF0dXJlUGxvdCh0cmFpbmluZ0RhdGEkeCwgdHJhaW5pbmdEYXRhJHkpDQp0ZXN0RGF0YSA8LSBtbGJlbmNoLmZyaWVkbWFuMSg1MDAwLCBzZCA9IDEpDQp0ZXN0RGF0YSR4IDwtIGRhdGEuZnJhbWUodGVzdERhdGEkeCkNCmBgYA0KDQpUdW5lIHNldmVyYWwgbW9kZXNsIG9uIHRoZXNlIGRhdGEuDQoNCldoaWNoIG1vZGVscyBhcHBlYXIgdG8gZ2l2ZSB0aGUgYmVzdCBwZXJmb3JtYW5jZT8gRG9lcyBNQVJTIHNlbGVjdCBpbmZvcm1hdGl2ZSBwcmVkaWN0b3JzICh0aG9zZSBuYW1lZCBYMS1YMTUpLg0KDQo3LjUgRXhlcmNpc2UgNi4zIGRlc2NyaWJlcyBkYXRhIGZvciBhIGNoZW1pY2FsIG1hbnVmYWN0dXJpbmcgcHJvY2Vzcy4gVXNlIHRoZSBzYW1lIGRhdGEgaW1wdXRhdGlvbiwgZGF0YSBzcGxpdHRpbmcsIGFuZCBwcmUtcHJvY2Vzc2luZyBzdGVwcyBhcyBiZWZvcmUgYW5kIHRyYWluIHNldmVyYWwgbm9ubGluZWFyIHJlZ3Jlc3Npb24gbW9kZWxzLg0KDQphLiBXaGljaCBub25saW5lYXIgcmVncmVzc29pbiBtb2RlbCBnaXZlcyB0aGUgb3B0aW1hbCByZXNhbXBsaW5nIGFuZCB0ZXN0IHNldCBwZXJmb3JtYW5jZT8NCg0KYi4gV2hpY2ggcHJlZGljdG9ycyBhcmUgdGhlIG1vb3N0IGltcG9ydGFudCBpbiB0aGUgb3B0aW1hbCBub25saW5lYXIgcmVncmVzc29pbiBtb2RlbD8gRG8gZWl0aGVyIHRoZSBiaW9sb2dpY2FsIG9yIHByb2Nlc3MgdmFyaWFibGVzIGRvbWluYXRyZSB0aGUgbGlzdD8gSG93IGRvIHRoZSB0b3AgdGVuIGltcG9ydGFudCBwcmVkaWN0b3JzIGNvbXBhcmUgdG8gdGhlIHRvcCB0ZW4gcHJlZGljdG9ycyBmcm9tIHRoZSBvcHRpbWFsIGxpbmVhciBtb2RlbD8NCg0KYy4gRXhwbG9yZSB0aGUgcmVsdGlvbnNoaXBzIGJldHdlZW4gdGhlIHRvcCBwcmVkaWNyb3RyZXMgYW5kIHRoZSByZXNwb25zZSBmb3IgdGhlIHByZWRpY3RvcnMgdGhhdCBhcmUgdW5pcXVlIHRvIHRoZSBvcHRpbWFsZSBub25saW5lYXIgcmVncmVzc2lvbiBtb2RlbC4gRG8gdGhlc2UgcGxvdHMgcmV2ZWFsIGludHVpdGlvbiBhYm91dCB0aGUgYmlvbG9naWNhbCBvciBwcm9jZXNzIHByZWRpY3RvcnMgYW5kIHRoZWlyIHJlbGF0aW9uc2hpcCB3aXRoIHlpZWxkPyANCg==</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIlIgTm90ZWJvb2siDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQpgYGB7cn0NCmxpYnJhcnkobWxiZW5jaCkNCmxpYnJhcnkoY2FyZXQpDQpsaWJyYXJ5KEFwcGxpZWRQcmVkaWN0aXZlTW9kZWxpbmcpDQpsaWJyYXJ5KG5uZXQpDQpsaWJyYXJ5KGVhcnRoKQ0KbGlicmFyeShrZXJubGFiKQ0KbGlicmFyeShNQVNTKQ0KbGlicmFyeShmb3JlY2FzdCkNCmxpYnJhcnkodGlkeXZlcnNlKQ0KbGlicmFyeShNZXRyaWNzKQ0KYGBgDQoNCkNoYXB0ZXIgNyBIb21ld29yayBIVyA3LjIgYW5kIDcuNQ0KDQo3LjIgRnJpZWRtYW4gKDE5OTEpIGludHJvZHVjZWQgc2V2ZXJhbCBiZW5jaG1hcmsgZGF0YSBzZXRzIGNyZWF0ZWQgYnkgc2ltdWxhdGlvbi4gT25lIG9mIHRoZXNlIHNpbXVsYXRpb25zIHVzZWQgdGhlIGZvbGxvd2luZyBub25saW5lYXIgZXF1YXRpb24gdG8gY3JlYXRlIGRhdGE6DQoNCiQkeSA9IDEwc2luKFxwaSB4XzEgeF8yKSArIDIwKHhfMyAtMC41KV4yKzEweF80ICs1eF81ICsgTigwLFxzaWdtYV4yKSQkDQp3aGVyZSB0aGUgZXggdmFsdWVzIGFyZSByYW5kb20gdmFyaWFibGVzIHVuaWZvcm1seSBkaXN0cmlidXRlZCBiZXR3ZWVuIFswLDFdICh0aGVyZSBhcmUgYWxzbyA1IDBvdGhlciBub24taW5mb3JtYXRpdmUgdmFyaWFibGVzIGFsc28gY3JlYXRlZCBpbiBzaW11bGF0aW9uKS4gVGhlIHBhY2thZ2UgbWxiZW5jaCBjb250YWlucyBhIGZ1bmN0aW9uIGNhbGxlZCBtbGJlbmNoLmZyaWVkbWFuMSB0aGF0IHNpbXVsYXRlcyB0aGVzZSBkYXRhOg0KDQpgYGB7ciwgY2FjaGU9VFJVRX0NCnNldC5zZWVkKDIwMCkNCnRyYWluaW5nRGF0YSA8LSBtbGJlbmNoLmZyaWVkbWFuMSgyMDAsIHNkID0gMSkNCnRyYWluaW5nRGF0YSR4IDwtIGRhdGEuZnJhbWUodHJhaW5pbmdEYXRhJHgpDQojZmVhdHVyZVBsb3QodHJhaW5pbmdEYXRhJHgsIHRyYWluaW5nRGF0YSR5KQ0KdGVzdERhdGEgPC0gbWxiZW5jaC5mcmllZG1hbjEoNTAwMCwgc2QgPSAxKQ0KdGVzdERhdGEkeCA8LSBkYXRhLmZyYW1lKHRlc3REYXRhJHgpDQpgYGANCg0KVHVuZSBzZXZlcmFsIG1vZGVscyBvbiB0aGVzZSBkYXRhLg0KDQo+IFRyYWluaW5nIE5ldXJhbCBOZXQNCg0KYGBge3IsIGNhY2hlID0gVFJVRX0NCm5uZXRGaXQgPC0gbm5ldCh0ZXN0RGF0YSR4LCB0ZXN0RGF0YSR5LA0KICAgICAgICAgICAgICAgIHNpemUgPSA1LA0KICAgICAgICAgICAgICAgIGRlY2F5ID0gLjAxLA0KICAgICAgICAgICAgICAgIG1heGl0ID0gNTAwLA0KICAgICAgICAgICAgICAgIE1heE5XdHMgPSA1ICogKG5jb2wodGVzdERhdGEkeCkgKyAxKSArIDUgKyAxKQ0KDQpyZXN1bHRzIDwtIHByZWRpY3Qobm5ldEZpdCwgdHJhaW5pbmdEYXRhJHgpICU+JSBjYmluZCguLHRyYWluaW5nRGF0YSR5KSAlPiUgYXMuZGF0YS5mcmFtZSgpDQpjb2xuYW1lcyhyZXN1bHRzKSA8LSBjKCJwcmVkaWN0ZWQiLCAiYWN0dWFsIikNCnJtc2UocmVzdWx0cyRhY3R1YWwsIHJlc3VsdHMkcHJlZGljdGVkKQ0KYGBgDQoNCj4gVHJhaW5pbmcgTUFSUw0KDQpgYGB7ciwgY2FjaGUgPSBUUlVFfQ0KbWFyc0ZpdCA8LSBlYXJ0aCh0ZXN0RGF0YSR4LCB0ZXN0RGF0YSR5KQ0KcmVzdWx0cyA8LSBwcmVkaWN0KG1hcnNGaXQsIHRyYWluaW5nRGF0YSR4KSAlPiUgY2JpbmQoLix0cmFpbmluZ0RhdGEkeSkgJT4lIGFzLmRhdGEuZnJhbWUoKQ0KY29sbmFtZXMocmVzdWx0cykgPC0gYygicHJlZGljdGVkIiwgImFjdHVhbCIpDQpybXNlKHJlc3VsdHMkYWN0dWFsLCByZXN1bHRzJHByZWRpY3RlZCkNCmBgYA0KDQo+IFRyYWluIEstTmVhcmVzdCBOZWlnaGJvcnMNCg0KYGBge3IsIGNhY2hlID0gVFJVRX0NCmtublR1bmUgPC0gdHJhaW4odGVzdERhdGEkeCwgdGVzdERhdGEkeSwgDQogICAgICAgICAgICAgICAgbWV0aG9kID0gImtubiIsIA0KICAgICAgICAgICAgICAgIHByZVByb2MgPSBjKCJjZW50ZXIiLCAic2NhbGUiKSkNCnJlc3VsdHMgPC0gcHJlZGljdChrbm5UdW5lLCB0cmFpbmluZ0RhdGEkeCkgJT4lIGNiaW5kKC4sdHJhaW5pbmdEYXRhJHkpICU+JSBhcy5kYXRhLmZyYW1lKCkNCmNvbG5hbWVzKHJlc3VsdHMpIDwtIGMoInByZWRpY3RlZCIsICJhY3R1YWwiKQ0Kcm1zZShyZXN1bHRzJGFjdHVhbCwgcmVzdWx0cyRwcmVkaWN0ZWQpDQpgYGANCg0KV2hpY2ggbW9kZWxzIGFwcGVhciB0byBnaXZlIHRoZSBiZXN0IHBlcmZvcm1hbmNlPyBEb2VzIE1BUlMgc2VsZWN0IGluZm9ybWF0aXZlIHByZWRpY3RvcnMgKHRob3NlIG5hbWVkIFgxLVg1KS4NCg0KPiBUaGUgbW9kZWwgd2l0aCB0aGUgbG93ZXN0IHBlcmZvcm1hbmNlIG1ldHJpYyB0aGF0IHdlIGFyZSB1c2luZyBpcyB0aGUgUk1TRSB2YWx1ZSBvZiAxLjUwOSBmb3IgdGhlIE1BUlMgbWV0aG9kLiANCg0KYGBge3J9DQp2YXJJbXAobWFyc0ZpdCkNCmBgYA0KDQo+IFRoZSBNQVJTIG1ldGhvZCBkaWQgc2VsZWN0IHZhcmlhYmxlcyB3aXRoIHRoZSBtb3N0IGltcG9ydGFudCBvZiBYMS1YNSBhcyBzaG93biBpbiBvdXIgcHJldmlvdXMgdGFibGUuIA0KDQo3LjUgRXhlcmNpc2UgNi4zIGRlc2NyaWJlcyBkYXRhIGZvciBhIGNoZW1pY2FsIG1hbnVmYWN0dXJpbmcgcHJvY2Vzcy4gVXNlIHRoZSBzYW1lIGRhdGEgaW1wdXRhdGlvbiwgZGF0YSBzcGxpdHRpbmcsIGFuZCBwcmUtcHJvY2Vzc2luZyBzdGVwcyBhcyBiZWZvcmUgYW5kIHRyYWluIHNldmVyYWwgbm9ubGluZWFyIHJlZ3Jlc3Npb24gbW9kZWxzLg0KDQoNCmEuIFdoaWNoIG5vbmxpbmVhciByZWdyZXNzaW9uIG1vZGVsIGdpdmVzIHRoZSBvcHRpbWFsIHJlLXNhbXBsaW5nIGFuZCB0ZXN0IHNldCBwZXJmb3JtYW5jZT8NCg0KDQpiLiBXaGljaCBwcmVkaWN0b3JzIGFyZSB0aGUgbW9zdCBpbXBvcnRhbnQgaW4gdGhlIG9wdGltYWwgbm9ubGluZWFyIHJlZ3Jlc3Npb24gbW9kZWw/IERvIGVpdGhlciB0aGUgYmlvbG9naWNhbCBvciBwcm9jZXNzIHZhcmlhYmxlcyBkb21pbmF0ZSB0aGUgbGlzdD8gSG93IGRvIHRoZSB0b3AgdGVuIGltcG9ydGFudCBwcmVkaWN0b3JzIGNvbXBhcmUgdG8gdGhlIHRvcCB0ZW4gcHJlZGljdG9ycyBmcm9tIHRoZSBvcHRpbWFsIGxpbmVhciBtb2RlbD8NCg0KDQpjLiBFeHBsb3JlIHRoZSByZWxhdGlvbnNoaXBzIGJldHdlZW4gdGhlIHRvcCBwcmVkaWN0b3JzIGFuZCB0aGUgcmVzcG9uc2UgZm9yIHRoZSBwcmVkaWN0b3JzIHRoYXQgYXJlIHVuaXF1ZSB0byB0aGUgb3B0aW1hbCBub25saW5lYXIgcmVncmVzc2lvbiBtb2RlbC4gRG8gdGhlc2UgcGxvdHMgcmV2ZWFsIGludHVpdGlvbiBhYm91dCB0aGUgYmlvbG9naWNhbCBvciBwcm9jZXNzIHByZWRpY3RvcnMgYW5kIHRoZWlyIHJlbGF0aW9uc2hpcCB3aXRoIHlpZWxkPyANCg0K</div>
 
 
 

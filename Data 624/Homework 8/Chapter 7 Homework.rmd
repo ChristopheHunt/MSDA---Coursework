@@ -3,15 +3,27 @@ title: "R Notebook"
 output: html_notebook
 ---
 
+```{r}
+library(mlbench)
+library(caret)
+library(AppliedPredictiveModeling)
+library(nnet)
+library(earth)
+library(kernlab)
+library(MASS)
+library(forecast)
+library(tidyverse)
+library(Metrics)
+```
+
 Chapter 7 Homework HW 7.2 and 7.5
 
 7.2 Friedman (1991) introduced several benchmark data sets created by simulation. One of these simulations used the following nonlinear equation to create data:
 
 $$y = 10sin(\pi x_1 x_2) + 20(x_3 -0.5)^2+10x_4 +5x_5 + N(0,\sigma^2)$$
-where the ex values are random variables uniformly distributed between [0,1] (there are also 5 0ther non-informative variables also created in simulation). The package mlbench contains a funciton called mlbench.friedman1 that simulats these data:
+where the ex values are random variables uniformly distributed between [0,1] (there are also 5 0other non-informative variables also created in simulation). The package mlbench contains a function called mlbench.friedman1 that simulates these data:
 
-```{r}
-library(mlbench)
+```{r, cache=TRUE}
 set.seed(200)
 trainingData <- mlbench.friedman1(200, sd = 1)
 trainingData$x <- data.frame(trainingData$x)
@@ -20,14 +32,60 @@ testData <- mlbench.friedman1(5000, sd = 1)
 testData$x <- data.frame(testData$x)
 ```
 
-Tune several modesl on these data.
+Tune several models on these data.
 
-Which models appear to give the best performance? Does MARS select informative predictors (those named X1-X15).
+> Training Neural Net
+
+```{r, cache = TRUE}
+nnetFit <- nnet(testData$x, testData$y,
+                size = 5,
+                decay = .01,
+                maxit = 500,
+                MaxNWts = 5 * (ncol(testData$x) + 1) + 5 + 1)
+
+results <- predict(nnetFit, trainingData$x) %>% cbind(.,trainingData$y) %>% as.data.frame()
+colnames(results) <- c("predicted", "actual")
+rmse(results$actual, results$predicted)
+```
+
+> Training MARS
+
+```{r, cache = TRUE}
+marsFit <- earth(testData$x, testData$y)
+results <- predict(marsFit, trainingData$x) %>% cbind(.,trainingData$y) %>% as.data.frame()
+colnames(results) <- c("predicted", "actual")
+rmse(results$actual, results$predicted)
+```
+
+> Train K-Nearest Neighbors
+
+```{r, cache = TRUE}
+knnTune <- train(testData$x, testData$y, 
+                method = "knn", 
+                preProc = c("center", "scale"))
+results <- predict(knnTune, trainingData$x) %>% cbind(.,trainingData$y) %>% as.data.frame()
+colnames(results) <- c("predicted", "actual")
+rmse(results$actual, results$predicted)
+```
+
+Which models appear to give the best performance? Does MARS select informative predictors (those named X1-X5).
+
+> The model with the lowest performance metric that we are using is the RMSE value of 1.509 for the MARS method. 
+
+```{r}
+varImp(marsFit)
+```
+
+> The MARS method did select variables with the most important of X1-X5 as shown in our previous table. 
 
 7.5 Exercise 6.3 describes data for a chemical manufacturing process. Use the same data imputation, data splitting, and pre-processing steps as before and train several nonlinear regression models.
 
-a. Which nonlinear regressoin model gives the optimal resampling and test set performance?
 
-b. Which predictors are the moost important in the optimal nonlinear regressoin model? Do either the biological or process variables dominatre the list? How do the top ten important predictors compare to the top ten predictors from the optimal linear model?
+a. Which nonlinear regression model gives the optimal re-sampling and test set performance?
 
-c. Explore the reltionships between the top predicrotres and the response for the predictors that are unique to the optimale nonlinear regression model. Do these plots reveal intuition about the biological or process predictors and their relationship with yield? 
+
+b. Which predictors are the most important in the optimal nonlinear regression model? Do either the biological or process variables dominate the list? How do the top ten important predictors compare to the top ten predictors from the optimal linear model?
+
+
+c. Explore the relationships between the top predictors and the response for the predictors that are unique to the optimal nonlinear regression model. Do these plots reveal intuition about the biological or process predictors and their relationship with yield? 
+
