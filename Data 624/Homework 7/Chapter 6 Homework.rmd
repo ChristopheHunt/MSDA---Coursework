@@ -41,6 +41,8 @@ missmap(ChemicalManufacturingProcess)
 library(doParallel)
 library(missForest)
 
+set.seed(1234)
+
 registerDoParallel(cores=3)
 chem.imput <- missForest(ChemicalManufacturingProcess, ntree = 100, parallelize = "forests")$ximp
 data.set <- list(org.data.set = chem.imput)

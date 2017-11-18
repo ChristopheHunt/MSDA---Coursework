@@ -14,6 +14,11 @@ library(MASS)
 library(forecast)
 library(tidyverse)
 library(Metrics)
+library(Amelia)
+library(doParallel)
+library(missForest)
+library(cwhmisc)
+library(pls)
 ```
 
 Chapter 7 Homework HW 7.2 and 7.5
@@ -24,7 +29,7 @@ $$y = 10sin(\pi x_1 x_2) + 20(x_3 -0.5)^2+10x_4 +5x_5 + N(0,\sigma^2)$$
 where the ex values are random variables uniformly distributed between [0,1] (there are also 5 0other non-informative variables also created in simulation). The package mlbench contains a function called mlbench.friedman1 that simulates these data:
 
 ```{r, cache=TRUE}
-set.seed(200)
+set.seed(1234)
 trainingData <- mlbench.friedman1(200, sd = 1)
 trainingData$x <- data.frame(trainingData$x)
 #featurePlot(trainingData$x, trainingData$y)
@@ -60,6 +65,7 @@ rmse(results$actual, results$predicted)
 > Train K-Nearest Neighbors
 
 ```{r, cache = TRUE}
+#At one point I got the error optimismBoot not found, a reinstall of the caret package resolved the issue. You could also install from github - devtools::install_github('topepo/caret/pkg/caret') - https://github.com/topepo/caret/issues/706
 knnTune <- train(testData$x, testData$y, 
                 method = "knn", 
                 preProc = c("center", "scale"))
@@ -70,7 +76,7 @@ rmse(results$actual, results$predicted)
 
 Which models appear to give the best performance? Does MARS select informative predictors (those named X1-X5).
 
-> The model with the lowest performance metric that we are using is the RMSE value of 1.509 for the MARS method. 
+> The model with the lowest performance metric that we are using is the RMSE value of 1.7855 for the MARS method. 
 
 ```{r}
 varImp(marsFit)
@@ -80,6 +86,96 @@ varImp(marsFit)
 
 7.5 Exercise 6.3 describes data for a chemical manufacturing process. Use the same data imputation, data splitting, and pre-processing steps as before and train several nonlinear regression models.
 
+> The below is the minimum steps needed to recreate the data set from Chapter 6. Please see problem from Chapter 6 for complete breakdown for each step and reasons behind the choices. 
+
+```{r}
+library(AppliedPredictiveModeling)
+data("ChemicalManufacturingProcess")
+```
+
+```{r}
+library(doParallel)
+library(missForest)
+
+set.seed(1234)
+
+registerDoParallel(cores=3)
+chem.imput <- missForest(ChemicalManufacturingProcess, ntree = 100, parallelize = "forests")$ximp
+data.set <- list(org.data.set = chem.imput)
+```
+
+```{r, cache=TRUE}
+trans.data.set <- data.set$org.data.set %>% 
+                    mutate(BiologicalMaterial04.boxcoxtrans = 
+                             BoxCox(BiologicalMaterial04, -0.99992424816297),
+                           ManufacturingProcess01.boxcoxtrans = 
+                             BoxCox(ManufacturingProcess01, 1.99995900720725),
+                           ManufacturingProcess02.boxcoxtrans = 
+                             BoxCox(ManufacturingProcess02, 1.99995900720725),
+                           ManufacturingProcess03.boxcoxtrans = 
+                             BoxCox(ManufacturingProcess03, -0.99992424816297),
+                           ManufacturingProcess06.boxcoxtrans = 
+                             BoxCox(ManufacturingProcess06, -0.99992424816297),
+                           ManufacturingProcess07.boxcoxtrans = 
+                             BoxCox(ManufacturingProcess07,-0.99992424816297),
+                           ManufacturingProcess08.boxcoxtrans = 
+                             BoxCox(ManufacturingProcess08, 1.99992424816297),
+                           ManufacturingProcess12.boxcoxtrans = 
+                             BoxCox(ManufacturingProcess12, 0.0000410225926326142),
+                           ManufacturingProcess16.boxcoxtrans = 
+                             BoxCox(ManufacturingProcess16, 1.99995900720725),
+                           ManufacturingProcess18.boxcoxtrans = 
+                             BoxCox(ManufacturingProcess18, 1.99995900720725))
+```
+
+```{r, cache=TRUE}
+data.set <- c(data.set, list(trans.data.set = trans.data.set))  %>% 
+            c(., list(train.test.split = floor(0.75 * nrow(chem.imput)))) %>% 
+            c(., train.index = list(sample(seq_len(nrow(chem.imput)), size = .$train.test.split))) %>%
+            c(., train = list(as.data.frame(trans.data.set[.$train.index,])), test = list(as.data.frame(trans.data.set[-.$train.index,])))
+```
+
+## Model Selection
+
+> Training Neural Net
+
+```{r, cache = TRUE}
+nnetFit <- nnet(data.set$train %>% dplyr::select(-Yield), data.set$train$Yield,
+                size = 5,
+                decay = .01,
+                maxit = 500)
+
+results <- predict(nnetFit,data.set$test %>% dplyr::select(-Yield)) %>% cbind(.,data.set$test$Yield) %>% as.data.frame()
+colnames(results) <- c("predicted", "actual")
+rmse(results$actual, results$predicted)
+```
+
+> Training MARS
+
+```{r, cache = TRUE}
+marsFit <- earth(data.set$train %>% dplyr::select(-Yield), data.set$train$Yield)
+results <- predict(marsFit, data.set$test %>% dplyr::select(-Yield)) %>% cbind(.,data.set$test$Yield) %>% as.data.frame()
+colnames(results) <- c("predicted", "actual")
+rmse(results$actual, results$predicted)
+```
+
+> Train K-Nearest Neighbors
+
+```{r, cache = TRUE}
+#At one point I got the error optimismBoot not found, a reinstall of the caret package resolved the issue. You could also install from github - devtools::install_github('topepo/caret/pkg/caret') - https://github.com/topepo/caret/issues/706
+
+detach("package:doParallel", unload = TRUE)
+detach("package:caret", unload = TRUE)
+library(caret)
+
+knnTune <- train(data.set$train %>% dplyr::select(-Yield), data.set$train$Yield, 
+                method = "knn", 
+                preProc = c("center", "scale"))
+
+results <- predict(knnTune, data.set$test %>% dplyr::select(-Yield)) %>% cbind(.,data.set$test$Yield) %>% as.data.frame()
+colnames(results) <- c("predicted", "actual")
+rmse(results$actual, results$predicted)
+```
 
 a. Which nonlinear regression model gives the optimal re-sampling and test set performance?
 
