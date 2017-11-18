@@ -1,0 +1,29 @@
+---
+title: "Chapter 10 problem 1"
+output:
+  prettydoc::html_pretty:
+    theme: github
+    highlight: github
+---
+
+Kelton, Chapter 10 problem 1
+
+1. Compare and contrast the three ways of creating model logic. What determines your choice when creating a specific object?
+
+"A. The first approach is to create your model hierarchically using a facility model. This approach can also be combined with the use of add-on processes to define custom behavior within the facility objects. This approach is typically used for building up higher level facility components such as a work center comprised of two machines, a worker and tooling. 
+
+B. The second and most flexible approach is to create the object definition behavior from scratch using a process model. This is the approach that was used to create the objects in the Standard Library. 
+
+C. The third approach is to sub-class an existing object definition and then change/extend the behavior of the new object using processes. The approach is typically used when there is an existing object that has behavior similar to the desired object, and can be "tweaked" in terms of property names, descriptions, and behavior to meet the needs of the new object."[1]
+
+The text provides a fairly clear break out of each way to create the model logic and when to use them. 
+
+1. The first method appears to be the most useful when building out a facility with several components that do not need to be completely modeled. So my understanding is that this is certainly useful when modeling the facility itself and there is little usefulness to model all interactions within the facility. 
+
+2. The second method is clear but could lead to a busy model if too many objects are created in this way. For instance is several facilities were involved, modeling out each object separate could create an uncomprehensible model. I am understanding this to be more useful at the macro level. 
+
+3. The third method is essentially a hybrid of the other two methods. It allows for the flexibility of the second method with the customization of the first method. It would be the method of choice when method 2 would work if you could customize it. 
+
+My choice of the methods would be based on the level of modeling. If I was modeling at a macro level I would chose method 1, if I was modeling at a simple micro level I would chose method 2, if I needed to model at a micro level and needed to customize a few properties I would chose method 3. 
+
+[1]Kelton, W. D., Smith, J. S., & Sturrock, D. T. (2014). Simio and simulation: modeling, analysis, applications. S.l.: Simio.
