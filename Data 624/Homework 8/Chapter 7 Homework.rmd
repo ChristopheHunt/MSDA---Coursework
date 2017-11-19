@@ -64,8 +64,10 @@ rmse(results$actual, results$predicted)
 
 > Train K-Nearest Neighbors
 
-```{r, cache = TRUE}
-#At one point I got the error optimismBoot not found, a reinstall of the caret package resolved the issue. You could also install from github - devtools::install_github('topepo/caret/pkg/caret') - https://github.com/topepo/caret/issues/706
+> This method at times will work and other times will not due to a known issue with the latest caret release. The error is "unable to find variable "optimismBoot"", I am leaving the code in to show my attempt but note that this will not run appropriately. 
+
+```{r, cache = TRUE, eval=FALSE}
+#At one point I got the error optimismBoot not found
 knnTune <- train(testData$x, testData$y, 
                 method = "knn", 
                 preProc = c("center", "scale"))
@@ -93,14 +95,13 @@ library(AppliedPredictiveModeling)
 data("ChemicalManufacturingProcess")
 ```
 
-```{r}
-library(doParallel)
+```{r, warning=FALSE, message=FALSE}
 library(missForest)
 
 set.seed(1234)
 
 registerDoParallel(cores=3)
-chem.imput <- missForest(ChemicalManufacturingProcess, ntree = 100, parallelize = "forests")$ximp
+chem.imput <- missForest(ChemicalManufacturingProcess, ntree = 100)$ximp
 data.set <- list(org.data.set = chem.imput)
 ```
 
@@ -159,29 +160,39 @@ colnames(results) <- c("predicted", "actual")
 rmse(results$actual, results$predicted)
 ```
 
-> Train K-Nearest Neighbors
-
-```{r, cache = TRUE}
-#At one point I got the error optimismBoot not found, a reinstall of the caret package resolved the issue. You could also install from github - devtools::install_github('topepo/caret/pkg/caret') - https://github.com/topepo/caret/issues/706
-
-detach("package:doParallel", unload = TRUE)
-detach("package:caret", unload = TRUE)
-library(caret)
-
-knnTune <- train(data.set$train %>% dplyr::select(-Yield), data.set$train$Yield, 
-                method = "knn", 
-                preProc = c("center", "scale"))
-
-results <- predict(knnTune, data.set$test %>% dplyr::select(-Yield)) %>% cbind(.,data.set$test$Yield) %>% as.data.frame()
-colnames(results) <- c("predicted", "actual")
-rmse(results$actual, results$predicted)
-```
+> Attempts to model a K-nearest neighbor was unsuccesful, the caret package appears to have a conflict with optimismboot and is unable to accomodate this data set. https://stackoverflow.com/questions/46244763/caret-train-function-unable-to-find-variable-optimismboot
 
 a. Which nonlinear regression model gives the optimal re-sampling and test set performance?
 
+> The nonlinear regression model with the best test set performance was again the MARS model with an RMSE of 1.401761.
 
 b. Which predictors are the most important in the optimal nonlinear regression model? Do either the biological or process variables dominate the list? How do the top ten important predictors compare to the top ten predictors from the optimal linear model?
 
+```{r}
+library(data.table)
+dt <- setDT(varImp(marsFit), keep.rownames = TRUE)[]
+options(scipen=99)
+dt[order(-Overall)]
+```
+
+> We see that the Manufacturing Processes dominate the list for variable importance with a few biological materials having importance. This is similar to our previous model however we do see a few more biological materials variables. Although we see none of the variables are previous model found important which suggests that the manufacturing processes contain a lot of information on the variance of yield. 
 
 c. Explore the relationships between the top predictors and the response for the predictors that are unique to the optimal nonlinear regression model. Do these plots reveal intuition about the biological or process predictors and their relationship with yield? 
+
+```{r}
+subset.data.set <- data.set$trans.data.set %>% 
+                      select(ManufacturingProcess32, ManufacturingProcess09, 	
+                             ManufacturingProcess13,	ManufacturingProcess33,  
+                             BiologicalMaterial02,	BiologicalMaterial03, 
+                             ManufacturingProcess28, ManufacturingProcess43, 
+                             ManufacturingProcess04, BiologicalMaterial05, Yield)
+```
+
+```{r}
+library(corrplot)
+correlations <- cor(subset.data.set)
+corrplot(correlations, order = "FPC", diag = TRUE)
+```
+
+> The correlation plot provides some insight to these important variables. Yield has a mostly positive correlation with many of hte processes but has the strongest negative correlation with only manufacturing processes from our top 10 variables. We also see some very high correlations with other variables in our top variable set which suggests possible issues of multicollinearity. 
 
