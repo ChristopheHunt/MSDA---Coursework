@@ -40,18 +40,78 @@ cor(simulated$duplicate1, simulated$V1)
 
 Fit another random forest model to these data. Did the importance score for V1 change? What happens when you add another predictor that is also highly correlated with V1?
 
-
 ```{r}
 model1 <- randomForest(y ~., data = simulated, importance = TRUE,
                        ntree = 1000)
 rfImp <- varImp(model1, scale = FALSE)
-rfImp
 ```
 
+```{r}
+library(data.table)
+dt <- setDT(varImp(model1, scale = FALSE), keep.rownames = TRUE)[]
+options(scipen=99)
+dt[order(-Overall)]
+```
 
-c. Use the cforest function in the party package to fit a random forest model using conditional inference trees. The part package function varimp can calculate predictor importance. The conditional argument of that function toggles between the traditional importance measure and the modified version described in Strobl et Al. (2007). Do these importance show the same pattern as the traditional random forest model?
+> We do see that the importance score has been reduced with the duplicate variable. The interaction between the two variables is reducing the signal we receive from using simple one of the variables. 
+
+```{r}
+simulated$duplicate2 <- simulated$V1 + rnorm(200) * .15
+cor(simulated$duplicate2, simulated$V1)
+```
+
+```{r}
+model2 <- randomForest(y ~., data = simulated, importance = TRUE,
+                       ntree = 1000)
+rfImp <- varImp(model2, scale = FALSE)
+```
+
+```{r}
+library(data.table)
+dt <- setDT(varImp(model2, scale = FALSE), keep.rownames = TRUE)[]
+options(scipen=99)
+dt[order(-Overall)]
+```
+
+> We don't any improvements are reductions in the variable importance but it is reducing variable importance of other variables that may be meaningful for other reasons like literature based reasons. 
+
+c. Use the cforest function in the party package to fit a random forest model using conditional inference trees. The party package function varimp can calculate predictor importance. The conditional argument of that function toggles between the traditional importance measure and the modified version described in Strobl et Al. (2007). Do these importance show the same pattern as the traditional random forest model?
+
+```{r}
+library(party)
+fit.cforest <- cforest(y ~., data = simulated)
+```
+
+```{r}
+library(data.table)
+dt <- setDT(party::varimp(fit.cforest, conditional = TRUE) %>% data.frame(), keep.rownames = TRUE)[]
+options(scipen=99)
+dt[order(-.)]
+```
+
+```{r}
+dt <- setDT(party::varimp(fit.cforest, conditional = FALSE) %>% data.frame(), keep.rownames = TRUE)[]
+options(scipen=99)
+dt[order(-.)]
+```
+
+> The top few variables remain at the same level of importance for both models. However, the variable importance is less using conditional inference trees via cpart from the party package.
 
 d. Repeat this process with different tree models, such as boosted trees and Cubist. Does the same pattern occur? 
+
+```{r}
+library(Cubist)
+fit.cubist <- cubist(simulated %>% select(-y), simulated$y, committees = 4)
+fit.cubist
+```
+
+```{r}
+dt <- setDT(varImp(fit.cubist) %>% data.frame(), keep.rownames = TRUE)[]
+options(scipen=99)
+dt[order(-Overall)]
+```
+
+> Using the cubist model we actually get very different results. In fact, the model appears to adjust for the highly correlated variables and gives us variable importance that more closely match our original data set before the added variables.
 
 ## 8.2
 
@@ -63,7 +123,11 @@ In stochastic gradient boosting the bagging fraction and learning rate will gove
 
 a. Why does the model on the right focus its importance on just the first few of predictors, whereas the model on the left spreads importance across more predictors?
 
+
+
 b. Which model do you think would be more predictive of other samples?
+
+
 
 c. How would increasing interaction depth affect the slope of predictor importance for either model in Fig. 8.24? 
 
@@ -71,8 +135,13 @@ c. How would increasing interaction depth affect the slope of predictor importan
 
 Refer to Exercise 6.3 and 7.5 which describe a chemical manufacturing process. Use the same data imputation, data splitting, and pre-processing steps as before and train several tree-based models:
 
+
 a. Which tree-based regression model gives the optimal re sampling and test set performance? 
 
+
+
 b. Which predictors are most important in the optimal tree-based regression model? Do either the biological or process variables dominate the list? How do the top 10 important predictors compare to the top 10 predictors from the optimal linear and nonlinear models?
+
+
 
 c. Plot the optimal single tree with the distribution yields in the terminal nodes. Does this view of the data provide additional knowledge about the biological or process predictors and their relationship with yield? 
