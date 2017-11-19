@@ -117,12 +117,16 @@ dt[order(-Overall)]
 
 Use a simulation to show tree bias with different granularity.
 
+```{r}
+
+```
+
+
 ## 8.3
 
 In stochastic gradient boosting the bagging fraction and learning rate will govern the construction of the trees as they are guided by gradient. Although the optimal values of these parameters should be obtained through the tuning process, it is helpful to understand how the magnitudes of these parameters affect magnitudes of variable importance. Figure 8.24 provides the variable importance plots for boosting using two extreme values for the bagging fraction (0.1 and 0.9) and the learning rate (0.1 and 0.9) for the solubility data. The left-had plot has both parameters set to 0.1, and the right-hand plot has both set to 0.9:
 
 a. Why does the model on the right focus its importance on just the first few of predictors, whereas the model on the left spreads importance across more predictors?
-
 
 
 b. Which model do you think would be more predictive of other samples?
