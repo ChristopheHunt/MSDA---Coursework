@@ -118,9 +118,29 @@ dt[order(-Overall)]
 Use a simulation to show tree bias with different granularity.
 
 ```{r}
+library(mlbench)
+library(tidyverse)
+library(rpart)
+library(rpart.plot)
+library(caret)
 
+data.set <- data.set$x %>% cbind(data.set$classes) %>% data.frame() %>% rename(Y = "X5")
+data.set <- twoClassSim(300, noiseVars = 8, corrVar = 6, corrValue = 0.8)
 ```
 
+```{r}
+r.fit <- rpart(Class ~ ., data=data.set)
+rpart.plot(r.fit)
+```
+
+```{r}
+library(data.table)
+dt <- setDT(varImp(r.fit), keep.rownames = TRUE)[]
+options(scipen=99)
+dt[order(-Overall)]
+```
+
+> We can see the factor variables are not as important as the linear variables. Trees will typically bias towards linear variables as they give more opportunties to split a tree as opposed to factor/categorical variables. However, it's important to know if the splits make sense for the data domain or not. 
 
 ## 8.3
 
@@ -128,9 +148,9 @@ In stochastic gradient boosting the bagging fraction and learning rate will gove
 
 a. Why does the model on the right focus its importance on just the first few of predictors, whereas the model on the left spreads importance across more predictors?
 
+>
 
 b. Which model do you think would be more predictive of other samples?
-
 
 
 c. How would increasing interaction depth affect the slope of predictor importance for either model in Fig. 8.24? 
@@ -140,12 +160,10 @@ c. How would increasing interaction depth affect the slope of predictor importan
 Refer to Exercise 6.3 and 7.5 which describe a chemical manufacturing process. Use the same data imputation, data splitting, and pre-processing steps as before and train several tree-based models:
 
 
-a. Which tree-based regression model gives the optimal re sampling and test set performance? 
-
+a. Which tree-based regression model gives the optimal re-sampling and test set performance? 
 
 
 b. Which predictors are most important in the optimal tree-based regression model? Do either the biological or process variables dominate the list? How do the top 10 important predictors compare to the top 10 predictors from the optimal linear and nonlinear models?
-
 
 
 c. Plot the optimal single tree with the distribution yields in the terminal nodes. Does this view of the data provide additional knowledge about the biological or process predictors and their relationship with yield? 
