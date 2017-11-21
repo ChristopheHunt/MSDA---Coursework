@@ -181,7 +181,7 @@ c. Explore the relationships between the top predictors and the response for the
 
 ```{r}
 subset.data.set <- data.set$trans.data.set %>% 
-                      select(ManufacturingProcess32, ManufacturingProcess09, 	
+                      dplyr::select(ManufacturingProcess32, ManufacturingProcess09, 	
                              ManufacturingProcess13,	ManufacturingProcess33,  
                              BiologicalMaterial02,	BiologicalMaterial03, 
                              ManufacturingProcess28, ManufacturingProcess43, 

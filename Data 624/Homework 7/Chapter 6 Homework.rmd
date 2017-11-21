@@ -173,7 +173,7 @@ f. Explore the relationships between each of the top predictors and the response
 > The top manufacturing process is ManufacturingProcess40
 
 ```{r}
-data.set$org.data.set %>% select(Yield, ManufacturingProcess40) %>% cor() %>% .[2]
+data.set$org.data.set %>% dplyr::select(Yield, ManufacturingProcess40) %>% cor() %>% .[2]
 ```
 
 We see a negative correlation ManufacturingProcess40 and Yield, which suggests that ManufacturingProcess40 represents a process that can decrease the Yield. We cannot say that ManufacturingProcess40 itself decrease Yield, only that a negative relationship exists. 
@@ -181,7 +181,7 @@ We see a negative correlation ManufacturingProcess40 and Yield, which suggests t
 > The top biological process is BiologicalMaterial12
 
 ```{r}
-data.set$org.data.set %>% select(Yield, BiologicalMaterial12) %>% cor() %>% .[2]
+data.set$org.data.set %>% dplyr::select(Yield, BiologicalMaterial12) %>% cor() %>% .[2]
 ```
 
 We actually see the opposite for the Biological indicator in that there is a positive correlation to Yield. We cannot say that BiologicalMaterial12 itself improves Yield, only that a positive relationship exists. 
