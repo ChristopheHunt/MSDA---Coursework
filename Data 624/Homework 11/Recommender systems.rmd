@@ -8,8 +8,6 @@ library(arules)
 ```
 
 
-I am assigning one simple problem on market basket analysis.  
-
 Imagine 10000 receipts sitting on your table. Each receipt represents a transaction with items that were purchased. The receipt is a representation of stuff that went into a customer's basket - and therefore 'Market Basket Analysis'.
 
 That is exactly what the Groceries Data Set contains: a collection of receipts with each line representing 1 receipt and the items purchased. Each line is called a transaction and each column in a row represents an item.
@@ -18,29 +16,38 @@ Here is the dataset = GroceryDataSet.csv (comma separated file)
 
 You assignment is to use R to mine the data for association rules.  You should report support, confidence and lift and your top 10 rules by lift.  Turn in as you would the other problems from HA and KJ.  Due 12/12/17 with the packaged set, HW #2.
 
+# Loading the Data
+
 ```{r, warning=FALSE}
 setwd("C:/Users/DaStophe/Documents/GitHub/MSDA---Coursework/Data 624/Homework 11")
-df <- read.transactions("GroceryDataSet.txt")
+df <- read.transactions("GroceryDataSet.csv", sep = ",", format = c("basket"))
 ```
+
+> Let's look at the first 5 transactions to understand how the data is being loaded. 
 
 ```{r}
 inspect(df[1:5])
 ```
 
-```{r}
-summary(df) 
-itemFrequency(df[, 1:3])
-```
-
+> Now we can review common occurences. We see that vgetables and milk are at the top of the list, which is reassuring. 
 
 ```{r}
-library(arules)
-freq.items <- eclat(df)
+summary(df)
 ```
 
 ```{r}
 itemFrequencyPlot(df, topN = 10)
 ```
 
+> Further we can run the apriori function to determine the associated rules. Because we have so many different choices to purchase we will set a lower support. 100 out 9835 gives us a support value of 0.01016777, we will use an arbitrary confidence of .5. 
 
+```{r}
+rules <- apriori(df, parameter = list(support = 0.01016777, confidence = 0.5))
+```
+
+```{r}
+inspect(sort(rules, by = "lift")[1:10])
+```
+
+> Reporting our top rules by lift we see interesting results. It appears that buying vegetables and fruits suggests that similar purchases of other vegetables are possible. We also see those buying butter, eggs, and other animal products are more apt to buy whole milk. The exercise is informative of the power in this type of analysis. 
 
