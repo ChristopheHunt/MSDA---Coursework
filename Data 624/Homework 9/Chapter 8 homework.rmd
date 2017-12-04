@@ -128,12 +128,13 @@ library(rpart)
 library(rpart.plot)
 library(caret)
 
-data.set <- data.set$x %>% cbind(data.set$classes) %>% data.frame() %>% rename(Y = "X5")
-data.set <- twoClassSim(300, noiseVars = 8, corrVar = 6, corrValue = 0.8)
+data.set <- twoClassSim(300, noiseVars = 8, corrVar = 6, corrValue = 0.8) %>%
+            mutate(TwoFactor1 = as.factor(round(TwoFactor1, 0)),
+                   TwoFactor2 = as.factor(round(TwoFactor2, 0)))
 ```
 
 ```{r}
-r.fit <- rpart(Class ~ ., data=data.set)
+r.fit <- rpart(Linear01 ~ ., data=data.set)
 rpart.plot(r.fit)
 ```
 

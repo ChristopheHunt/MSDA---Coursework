@@ -3,6 +3,8 @@ title: "R Notebook"
 output: html_notebook
 ---
 
+# Recommender Systems
+
 ```{r, include=FALSE}
 library(arules)
 ```
@@ -14,9 +16,9 @@ That is exactly what the Groceries Data Set contains: a collection of receipts w
 
 Here is the dataset = GroceryDataSet.csv (comma separated file)
 
-You assignment is to use R to mine the data for association rules.  You should report support, confidence and lift and your top 10 rules by lift.  Turn in as you would the other problems from HA and KJ.  Due 12/12/17 with the packaged set, HW #2.
+You assignment is to use R to mine the data for association rules.  You should report support, confidence and lift and your top 10 rules by lift.
 
-# Loading the Data
+## Loading the Data
 
 ```{r, warning=FALSE}
 setwd("C:/Users/DaStophe/Documents/GitHub/MSDA---Coursework/Data 624/Homework 11")
