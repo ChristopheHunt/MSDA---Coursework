@@ -57,7 +57,7 @@ library(party)
 
 # Chapter 6 
 
-## Problem HW 6.3
+## Problem 6.3
 
 A chemical manufacturing process for a pharmaceutical product was discussed in Sect. 1.4. In this problem, the objective is the understand the relationship between biological measurements of the raw materials (predictors), measurements of the manufacturing process (predictors), and the response of product yield. Biological predictors cannot be changed but can be used to assess the quality of the raw material before processing. On the other hand, manufacturing process predictors can be changed in the manufacturing process. Improving product yield by 1 % will boost revenue by approximately one hundred thousand dollars per batch. 
 
@@ -574,7 +574,7 @@ So as the learning rate and bagging fraction increase, the importance will be pl
 
 > Interaction depth specifies the tree depth and node splits. As the tree depth increase, and more node splits occur the variable importance becomes spread across more predictors. In both models the variable importance would decrease for the top variables and increase for less important variables. If we have any highly correlated variables we may actually see a swap of importance between the two variables. 
 
-## 8.7
+## Problem 8.7
 
 Refer to Exercise 6.3 and 7.5 which describe a chemical manufacturing process. Use the same data imputation, data splitting, and pre-processing steps as before and train several tree-based models:
 
