@@ -28,6 +28,7 @@ library(nnet)
 library(earth)
 library(kernlab)
 library(Metrics)
+library(party)
 ```
 
 Packages used
@@ -50,6 +51,7 @@ library(nnet)
 library(earth)
 library(kernlab)
 library(Metrics)
+library(party)
 ```
 
 
@@ -231,12 +233,14 @@ data.set$org.data.set %>% dplyr::select(Yield, BiologicalMaterial12) %>% cor() %
 
 We actually see the opposite for the Biological indicator in that there is a positive correlation to Yield. We cannot say that BiologicalMaterial12 itself improves Yield, only that a positive relationship exists. 
 
-# Chapter 7 Homework HW 7.2 and 7.5
+# Chapter 7 
 
-## 7.2 Friedman (1991) introduced several benchmark data sets created by simulation. One of these simulations used the following nonlinear equation to create data:
+## Problem 7.2 
+
+Friedman (1991) introduced several benchmark data sets created by simulation. One of these simulations used the following nonlinear equation to create data:
 
 $$y = 10sin(\pi x_1 x_2) + 20(x_3 -0.5)^2+10x_4 +5x_5 + N(0,\sigma^2)$$
-where the ex values are random variables uniformly distributed between [0,1] (there are also 5 0other non-informative variables also created in simulation). The package mlbench contains a function called mlbench.friedman1 that simulates these data:
+where the ex values are random variables uniformly distributed between [0,1] (there are also 50 other non-informative variables also created in simulation). The package mlbench contains a function called mlbench.friedman1 that simulates these data:
 
 ```{r, cache=TRUE}
 set.seed(1234)
@@ -296,7 +300,8 @@ varImp(marsFit)
 
 > The MARS method did select variables with the most important of X1-X5 as shown in our previous table. 
 
-## 7.5 Exercise 6.3 describes data for a chemical manufacturing process. Use the same data imputation, data splitting, and pre-processing steps as before and train several nonlinear regression models.
+## Problem 7.5 
+Exercise 6.3 describes data for a chemical manufacturing process. Use the same data imputation, data splitting, and pre-processing steps as before and train several nonlinear regression models.
 
 > The below is the minimum steps needed to recreate the data set from Chapter 6. Please see problem from Chapter 6 for complete breakdown for each step and reasons behind the choices. 
 
@@ -410,7 +415,9 @@ corrplot(correlations, order = "FPC", diag = TRUE)
 library(tidyverse)
 ```
 
-## 8.1
+# Chapter 8 
+
+## Problem 8.1
 
 ### Recreate the simulated data from Exercise 7.2:
 
@@ -445,7 +452,7 @@ simulated$duplicate1 <- simulated$V1 + rnorm(200) * .1
 cor(simulated$duplicate1, simulated$V1)
 ```
 
-Fit another random forest model to these data. Did the importance score for V1 change? What happens when you add another predictor that is also highly correlated with V1?
+### Fit another random forest model to these data. Did the importance score for V1 change? What happens when you add another predictor that is also highly correlated with V1?
 
 ```{r, cache = TRUE}
 model1 <- randomForest(y ~., data = simulated, importance = TRUE,
@@ -482,7 +489,7 @@ dt[order(-Overall)]
 
 > We don't any improvements are reductions in the variable importance but it is reducing variable importance of other variables that may be meaningful for other reasons like literature based reasons. 
 
-c. Use the cforest function in the party package to fit a random forest model using conditional inference trees. The party package function varimp can calculate predictor importance. The conditional argument of that function toggles between the traditional importance measure and the modified version described in Strobl et Al. (2007). Do these importance show the same pattern as the traditional random forest model?
+### c. Use the cforest function in the party package to fit a random forest model using conditional inference trees. The party package function varimp can calculate predictor importance. The conditional argument of that function toggles between the traditional importance measure and the modified version described in Strobl et Al. (2007). Do these importance show the same pattern as the traditional random forest model?
 
 ```{r}
 library(party)
@@ -504,7 +511,7 @@ dt[order(-.)]
 
 > The top few variables remain at the same level of importance for both models. However, the variable importance is less using conditional inference trees via cpart from the party package.
 
-d. Repeat this process with different tree models, such as boosted trees and Cubist. Does the same pattern occur? 
+### d. Repeat this process with different tree models, such as boosted trees and Cubist. Does the same pattern occur? 
 
 ```{r}
 library(Cubist)
@@ -520,9 +527,9 @@ dt[order(-Overall)]
 
 > Using the cubist model we actually get very different results. In fact, the model appears to adjust for the highly correlated variables and gives us variable importance that more closely match our original data set before the added variables.
 
-## 8.2
+## Problem 8.2
 
-Use a simulation to show tree bias with different granularity.
+### Use a simulation to show tree bias with different granularity.
 
 ```{r}
 library(mlbench)
@@ -550,20 +557,20 @@ dt[order(-Overall)]
 
 > We can see the factor variables are not as important as the linear variables. Trees will typically bias towards linear variables as they give more opportunties to split a tree as opposed to factor/categorical variables. However, it's important to know if the splits make sense for the data domain or not.  
 
-## 8.3
+## Problem 8.3
 
 In stochastic gradient boosting the bagging fraction and learning rate will govern the construction of the trees as they are guided by gradient. Although the optimal values of these parameters should be obtained through the tuning process, it is helpful to understand how the magnitudes of these parameters affect magnitudes of variable importance. Figure 8.24 provides the variable importance plots for boosting using two extreme values for the bagging fraction (0.1 and 0.9) and the learning rate (0.1 and 0.9) for the solubility data. The left-had plot has both parameters set to 0.1, and the right-hand plot has both set to 0.9:
 
-a. Why does the model on the right focus its importance on just the first few of predictors, whereas the model on the left spreads importance across more predictors?
+### a. Why does the model on the right focus its importance on just the first few of predictors, whereas the model on the left spreads importance across more predictors?
 
 > A learning rate closer to 1 will make less corrections for each tree added to the model. A high bagging fraction closer to 1 indicates more of the data is used which can lead to overfitting. 
 So as the learning rate and bagging fraction increase, the importance will be placed on fewer and fewer predictors. 
 
-b. Which model do you think would be more predictive of other samples?
+### b. Which model do you think would be more predictive of other samples?
 
 > Subsequently, if the parameters increase the model performance will then decrease. Therefore, the model on the left will perform better. Although, I would be cautious about usefulness. If a model uses variables that can't always be reliably captured than a model dependent on very few variables may be more powerful.  
 
-c. How would increasing interaction depth affect the slope of predictor importance for either model in Fig. 8.24? 
+### c. How would increasing interaction depth affect the slope of predictor importance for either model in Fig. 8.24? 
 
 > Interaction depth specifies the tree depth and node splits. As the tree depth increase, and more node splits occur the variable importance becomes spread across more predictors. In both models the variable importance would decrease for the top variables and increase for less important variables. If we have any highly correlated variables we may actually see a swap of importance between the two variables. 
 
@@ -621,7 +628,7 @@ data.set <- c(data.set, list(trans.data.set = trans.data.set))  %>%
             c(., train = list(as.data.frame(trans.data.set[.$train.index,])), test = list(as.data.frame(trans.data.set[-.$train.index,])))
 ```
 
-a. Which tree-based regression model gives the optimal re-sampling and test set performance? 
+### a. Which tree-based regression model gives the optimal re-sampling and test set performance? 
 
 ```{r, warnings = FALSE, error=FALSE}
 ctrl <- trainControl(method = "boot", number = 15)
@@ -653,14 +660,14 @@ gbm.fit   <- train(data.set$train %>%
 plot(gbm.fit)
 ```
 
-The best performing model is the random forest with an $R^2$ value at 61.8.
+### The best performing model is the random forest with an $R^2$ value at 61.8.
 
 ```{r}
 rf.fit$finalModel
 ```
 
 
-b. Which predictors are most important in the optimal tree-based regression model? Do either the biological or process variables dominate the list? How do the top 10 important predictors compare to the top 10 predictors from the optimal linear and nonlinear models?
+### b. Which predictors are most important in the optimal tree-based regression model? Do either the biological or process variables dominate the list? How do the top 10 important predictors compare to the top 10 predictors from the optimal linear and nonlinear models?
 
 ```{r}
 varImp(rf.fit, scale = FALSE)
@@ -670,7 +677,7 @@ varImp(rf.fit, scale = FALSE)
 
 > The top 10 lists between the three methods is almost completely different. However, the non-linear method and the forest models both have ManufacturingProcess32 as the most important variable. 
 
-c. Plot the optimal single tree with the distribution yields in the terminal nodes. Does this view of the data provide additional knowledge about the biological or process predictors and their relationship with yield? 
+### c. Plot the optimal single tree with the distribution yields in the terminal nodes. Does this view of the data provide additional knowledge about the biological or process predictors and their relationship with yield? 
 
 > Random Forest does not natively allow for a plot of this type. I am assuming that the author envisioned another model making the being the best model as my model cannot be used in this way. 
 
@@ -751,7 +758,7 @@ Here is the dataset = GroceryDataSet.csv (comma separated file)
 
 You assignment is to use R to mine the data for association rules.  You should report support, confidence and lift and your top 10 rules by lift.
 
-## Loading the Data
+### Loading the Data
 
 ```{r, warning=FALSE}
 df <- read.transactions("https://raw.githubusercontent.com/ChristopheHunt/MSDA---Coursework/master/Data%20624/Homework%2011/GroceryDataSet.csv", sep = ",", format = c("basket"))
