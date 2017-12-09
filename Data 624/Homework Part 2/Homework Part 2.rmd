@@ -7,7 +7,7 @@ output:
 
 ```{r, echo=FALSE}
 library(knitr)
-opts_chunk$set(cache = TRUE)
+opts_chunk$set(cache = TRUE, message=FALSE, warning=FALSE)
 ```
 
 ```{r, include=FALSE}
@@ -281,10 +281,11 @@ rmse(results$actual, results$predicted)
 > This method at times will work and other times will not due to a known issue with the latest caret release. The error is "unable to find variable "optimismBoot"", I am leaving the code in to show my attempt but note that this will not run appropriately. 
 
 ```{r, cache = TRUE, eval=FALSE}
-#At one point I got the error optimismBoot not found
+#At one point I got the error optimismBoot not found, installing caret from github resolved the issue. 
 knnTune <- train(testData$x, testData$y, 
                 method = "knn", 
-                preProc = c("center", "scale"))
+                preProc = c("center", "scale"),
+                trace = FALSE)
 results <- predict(knnTune, trainingData$x) %>% cbind(.,trainingData$y) %>% as.data.frame()
 colnames(results) <- c("predicted", "actual")
 rmse(results$actual, results$predicted)
@@ -359,7 +360,8 @@ data.set <- c(data.set, list(trans.data.set = trans.data.set))  %>%
 nnetFit <- nnet(data.set$train %>% dplyr::select(-Yield), data.set$train$Yield,
                 size = 5,
                 decay = .01,
-                maxit = 500)
+                maxit = 500,
+                trace = FALSE)
 
 results <- predict(nnetFit,data.set$test %>% dplyr::select(-Yield)) %>% cbind(.,data.set$test$Yield) %>% as.data.frame()
 colnames(results) <- c("predicted", "actual")
@@ -792,3 +794,9 @@ inspect(sort(rules, by = "lift")[1:10])
 
 > Reporting our top rules by lift we see interesting results. It appears that buying vegetables and fruits suggests that similar purchases of other vegetables are possible. We also see those buying butter, eggs, and other animal products are more apt to buy whole milk. The exercise is informative of the power in this type of analysis. 
 
+# Appendix with all code
+
+All code used previous in below section
+
+```{r code=readLines(knitr::purl('~/GitHub/MSDA---Coursework/Data 624/Homework Part 2/Homework Part 2.rmd', documentation = 0)), eval = FALSE}
+```
